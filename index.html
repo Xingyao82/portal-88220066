@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的工具箱 - 88220066.xyz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .tool-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .tool-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        .tool-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+        }
+        .tool-info {
+            flex: 1;
+        }
+        .tool-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .tool-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .arrow {
+            color: #999;
+            font-size: 1.5rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧰 我的工具箱</h1>
+        <p class="subtitle">88220066.xyz</p>
+        
+        <div class="card">
+            <a href="https://xingyao82.github.io/vocab-article-generator/" class="tool-item">
+                <div class="tool-icon">📝</div>
+                <div class="tool-info">
+                    <div class="tool-name">单词文章生成器</div>
+                    <div class="tool-desc">导入单词，AI 自动生成文章</div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+            
+            <a href="https://xingyao82.github.io/dictation-web/" class="tool-item">
+                <div class="tool-icon">🎯</div>
+                <div class="tool-info">
+                    <div class="tool-name">单词听写</div>
+                    <div class="tool-desc">英语单词听写练习工具</div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+            
+            <a href="https://xingyao82.github.io/daily_stock_analysis/" class="tool-item">
+                <div class="tool-icon">📈</div>
+                <div class="tool-info">
+                    <div class="tool-name">股票分析</div>
+                    <div class="tool-desc">AI 驱动的股票分析系统</div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+        </div>
+        
+        <p class="footer">Powered by Cloudflare Pages & GitHub Pages</p>
+    </div>
+</body>
+</html>
