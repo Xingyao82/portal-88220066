@@ -35,7 +35,7 @@
     {
       id: "data-factory",
       name: "开发数据工坊",
-      category: "开发",
+      category: "编程类",
       badge: "DF",
       accent: "#ff8f5c",
       summary: "处理 JSON、YAML、CSV，适合前端、后端和运营数据清洗场景。",
@@ -51,7 +51,7 @@
     {
       id: "markdown-studio",
       name: "Markdown Studio",
-      category: "文档",
+      category: "图片文本类",
       badge: "MD",
       accent: "#2ec4b6",
       summary: "编辑、预览、导出 Markdown 文档，适合文档站、文章草稿和说明页。",
@@ -67,7 +67,7 @@
     {
       id: "text-workshop",
       name: "文本工坊",
-      category: "内容",
+      category: "图片文本类",
       badge: "TX",
       accent: "#f4d35e",
       summary: "做文本清洗、去重、查敏感词，并给标题做基础评分和改写建议。",
@@ -83,7 +83,7 @@
     {
       id: "regex-lab",
       name: "正则实验室",
-      category: "开发",
+      category: "编程类",
       badge: "RX",
       accent: "#6fb7ff",
       summary: "测试正则匹配和替换逻辑，直接查看命中内容、分组和替换结果。",
@@ -99,7 +99,7 @@
     {
       id: "dev-toolbox",
       name: "开发工具箱",
-      category: "开发",
+      category: "编程类",
       badge: "DV",
       accent: "#ff8f5c",
       summary: "Base64、JWT、UUID 和 SHA-256 集中在一个面板里，适合高频小操作。",
@@ -115,7 +115,7 @@
     {
       id: "time-zone",
       name: "时间与时区",
-      category: "开发",
+      category: "编程类",
       badge: "TZ",
       accent: "#2ec4b6",
       summary: "时间戳、ISO 时间、本地时间和多个常用时区同屏联动。",
@@ -131,7 +131,7 @@
     {
       id: "pdf-workbench",
       name: "PDF 工作台",
-      category: "文档",
+      category: "图片文本类",
       badge: "PF",
       accent: "#f4d35e",
       summary: "浏览器内完成 PDF 合并和拆分，适合静态站的小型文档处理。",
@@ -147,7 +147,7 @@
     {
       id: "image-lab",
       name: "图片实验室",
-      category: "设计",
+      category: "图片文本类",
       badge: "IM",
       accent: "#6fb7ff",
       summary: "完成图片压缩、裁剪、加水印和格式导出，适合纯前端工具站。",
@@ -163,7 +163,7 @@
     {
       id: "resume-builder",
       name: "简历生成器",
-      category: "业务",
+      category: "生活类",
       badge: "CV",
       accent: "#ff8f5c",
       summary: "用表单驱动出一版简洁简历，支持预览、打印和 HTML 导出。",
@@ -179,7 +179,7 @@
     {
       id: "invoice-studio",
       name: "报价单工作台",
-      category: "业务",
+      category: "生活类",
       badge: "IV",
       accent: "#2ec4b6",
       summary: "为自由职业者和小团队生成报价单或发票预览，直接计算税额和总价。",
@@ -195,7 +195,7 @@
     {
       id: "calculator-center",
       name: "计算中心",
-      category: "生活",
+      category: "生活类",
       badge: "CL",
       accent: "#f4d35e",
       summary: "房贷、复利、BMI、体脂和热量估算放在同一处，方便做生活和财务测算。",
@@ -211,7 +211,7 @@
     {
       id: "focus-board",
       name: "番茄与任务",
-      category: "效率",
+      category: "生活类",
       badge: "FO",
       accent: "#6fb7ff",
       summary: "带任务清单和习惯勾选的专注工作台，支持本地存储和持续计时。",
@@ -227,7 +227,7 @@
     {
       id: "budget-planner",
       name: "预算规划器",
-      category: "业务",
+      category: "生活类",
       badge: "BG",
       accent: "#ff8f5c",
       summary: "做简单的收入、支出、结余和储蓄目标测算，适合个人与小团队预算。",
@@ -243,7 +243,7 @@
     {
       id: "shift-planner",
       name: "排班生成器",
-      category: "业务",
+      category: "生活类",
       badge: "SH",
       accent: "#2ec4b6",
       summary: "给门店、运营和小团队生成轮班表，支持自定义班次序列和人员偏移。",
@@ -259,7 +259,7 @@
     {
       id: "form-builder",
       name: "表单构建器",
-      category: "业务",
+      category: "生活类",
       badge: "FM",
       accent: "#f4d35e",
       summary: "配置字段后生成 HTML 表单和 JSON Schema，适合配置导出和表单原型。",
@@ -275,7 +275,7 @@
     {
       id: "design-lab",
       name: "设计工坊",
-      category: "设计",
+      category: "图片文本类",
       badge: "DS",
       accent: "#6fb7ff",
       summary: "快速生成配色、渐变、阴影和圆角 CSS，适合前端和设计协同。",
@@ -291,7 +291,7 @@
     {
       id: "poster-maker",
       name: "海报生成器",
-      category: "设计",
+      category: "图片文本类",
       badge: "PS",
       accent: "#ff8f5c",
       summary: "通过画布生成活动海报或社媒封面，适合静态模板化场景。",
@@ -307,7 +307,7 @@
     {
       id: "flow-mapper",
       name: "流程图预览",
-      category: "设计",
+      category: "图片文本类",
       badge: "FL",
       accent: "#2ec4b6",
       summary: "将缩进文本转换成可视化流程图 SVG，适合草拟业务流程和脑图结构。",
