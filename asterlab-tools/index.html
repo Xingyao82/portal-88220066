@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AsterLab Tools | GitHub Pages 多工具前端站</title>
+    <meta
+      name="description"
+      content="一个可直接部署到 GitHub Pages 的精美前端多工具站，覆盖开发、文档、设计、内容、生活与业务场景。"
+    />
+    <meta
+      name="keywords"
+      content="GitHub Pages,前端工具站,JSON工具,Markdown工具,图片压缩,PDF合并,简历生成,排班工具"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="ambient ambient-a"></div>
+      <div class="ambient ambient-b"></div>
+      <div class="ambient ambient-c"></div>
+
+      <header class="hero">
+        <div class="hero-copy reveal">
+          <p class="hero-kicker">AsterLab Tools</p>
+          <h1>把常用工具产品，做成一个能直接上 GitHub Pages 的前端工作台。</h1>
+          <p class="hero-text">
+            一个静态站，集成开发、文档、图片、PDF、设计、效率、排班、简历、报价单和生活计算器。
+            默认本地优先，适合个人项目、作品集与独立工具站。
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary-btn" data-jump="workspace">打开工作台</button>
+            <button class="secondary-btn" data-jump="tool-gallery">浏览全部工具</button>
+          </div>
+
+          <div class="hero-metrics">
+            <article>
+              <span>工具模块</span>
+              <strong id="metric-tool-count">18</strong>
+            </article>
+            <article>
+              <span>部署方式</span>
+              <strong>纯静态 / GitHub Pages</strong>
+            </article>
+            <article>
+              <span>运行逻辑</span>
+              <strong>浏览器本地优先</strong>
+            </article>
+          </div>
+        </div>
+
+        <aside class="hero-panel reveal">
+          <div class="hero-panel-card">
+            <p class="panel-label">站点能力</p>
+            <ul class="panel-list">
+              <li>开发工具箱：JSON、YAML、CSV、正则、哈希、JWT、时间戳</li>
+              <li>内容工作台：Markdown、文本清洗、标题优化、敏感词提示</li>
+              <li>设计工具：配色、渐变、阴影、海报生成、流程图预览</li>
+              <li>业务效率：简历、报价单、记账预算、番茄钟、排班生成</li>
+            </ul>
+          </div>
+
+          <div class="hero-panel-grid">
+            <article>
+              <span>本地存储</span>
+              <strong>收藏与工作状态</strong>
+            </article>
+            <article>
+              <span>导出方式</span>
+              <strong>HTML / TXT / JSON / PDF / PNG</strong>
+            </article>
+            <article>
+              <span>响应布局</span>
+              <strong>桌面与移动端适配</strong>
+            </article>
+            <article>
+              <span>可扩展性</span>
+              <strong>新增模块只需注册工具</strong>
+            </article>
+          </div>
+        </aside>
+      </header>
+
+      <section class="toolbar reveal" id="tool-gallery">
+        <div class="toolbar-left">
+          <label class="search-field" for="tool-search">
+            <span>查找工具</span>
+            <input
+              id="tool-search"
+              type="search"
+              placeholder="例如：JSON、图片、排班、简历、PDF"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+
+        <div class="toolbar-right">
+          <div id="category-chips" class="chip-row" aria-label="工具分类"></div>
+        </div>
+      </section>
+
+      <main class="main-layout">
+        <section class="gallery reveal">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Tool Gallery</p>
+              <h2>全部工具</h2>
+            </div>
+            <div class="section-copy">
+              一个仓库即可托管。点击卡片在下方工作台打开，支持收藏和搜索过滤。
+            </div>
+          </div>
+
+          <div id="tool-grid" class="tool-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="workspace reveal" id="workspace">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Workbench</p>
+              <h2 id="workspace-title">工具工作台</h2>
+            </div>
+            <div class="workspace-actions">
+              <button id="toggle-favorite-btn" class="ghost-btn" type="button">收藏当前工具</button>
+              <button id="open-sample-btn" class="ghost-btn" type="button">载入示例</button>
+            </div>
+          </div>
+
+          <div class="workspace-shell">
+            <aside class="workspace-side">
+              <div class="workspace-meta-card">
+                <p class="meta-label">当前工具</p>
+                <h3 id="active-tool-name">开发数据工坊</h3>
+                <p id="active-tool-summary" class="meta-summary"></p>
+              </div>
+
+              <div class="workspace-meta-card">
+                <p class="meta-label">标签</p>
+                <div id="active-tool-tags" class="tag-row"></div>
+              </div>
+
+              <div class="workspace-meta-card">
+                <p class="meta-label">最近收藏</p>
+                <div id="favorites-list" class="favorites-list"></div>
+              </div>
+
+              <div class="workspace-meta-card">
+                <p class="meta-label">部署说明</p>
+                <p class="meta-small">
+                  这是纯静态站。把当前目录内容推到 GitHub 仓库根目录，或放到 `docs/` 再开启
+                  Pages 即可。
+                </p>
+              </div>
+            </aside>
+
+            <div class="workspace-main">
+              <div id="workspace-panel" class="workspace-panel"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer reveal">
+        <div>
+          <p class="footer-brand">AsterLab Tools</p>
+          <p class="footer-copy">静态前端工具站，适合独立项目、作品集和 GitHub Pages 托管。</p>
+        </div>
+        <div class="footer-links">
+          <a href="README.md">部署说明</a>
+          <a href="#tool-gallery">工具列表</a>
+          <a href="#workspace">工作台</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
