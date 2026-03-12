@@ -23,6 +23,7 @@
     workspacePanel: document.getElementById("workspace-panel"),
     toggleFavoriteBtn: document.getElementById("toggle-favorite-btn"),
     openSampleBtn: document.getElementById("open-sample-btn"),
+    copyDeepLinkBtn: document.getElementById("copy-deep-link-btn"),
     metricToolCount: document.getElementById("metric-tool-count"),
   };
 
@@ -324,22 +325,31 @@
 
   const categories = ["全部", ...new Set(tools.map((tool) => tool.category))];
   const toolMap = new Map(tools.map((tool) => [tool.id, tool]));
+  const urlState = readUrlState();
   const state = {
-    search: "",
-    category: "全部",
+    search: urlState.search,
+    category: urlState.category,
     favorites: loadStorage(STORAGE_KEYS.favorites, []),
-    activeTool: loadStorage(STORAGE_KEYS.lastTool, tools[0].id),
+    activeTool: urlState.toolId || loadStorage(STORAGE_KEYS.lastTool, tools[0].id),
   };
 
   init();
 
   function init() {
+    if (!toolMap.has(state.activeTool)) {
+      state.activeTool = tools[0].id;
+    }
+    if (!categories.includes(state.category)) {
+      state.category = "全部";
+    }
+
     dom.metricToolCount.textContent = String(tools.length);
     bindJumpButtons();
     bindGlobalEvents();
     renderCategoryChips();
     renderToolGrid();
     renderWorkspace();
+    syncUrlState({ replace: true });
   }
 
   function bindJumpButtons() {
@@ -351,9 +361,11 @@
   }
 
   function bindGlobalEvents() {
+    dom.toolSearch.value = state.search;
     dom.toolSearch.addEventListener("input", (event) => {
       state.search = event.target.value.trim().toLowerCase();
       renderToolGrid();
+      syncUrlState({ replace: true });
     });
 
     dom.categoryChips.addEventListener("click", (event) => {
@@ -362,6 +374,7 @@
       state.category = chip.getAttribute("data-category");
       renderCategoryChips();
       renderToolGrid();
+      syncUrlState({ replace: true });
     });
 
     dom.toolGrid.addEventListener("click", (event) => {
@@ -377,6 +390,8 @@
 
     dom.toggleFavoriteBtn.addEventListener("click", () => toggleFavorite(state.activeTool));
     dom.openSampleBtn.addEventListener("click", () => runtime.currentToolApi?.loadSample?.());
+    dom.copyDeepLinkBtn?.addEventListener("click", copyCurrentToolDeepLink);
+    window.addEventListener("popstate", handlePopState);
   }
 
   function renderCategoryChips() {
@@ -482,12 +497,84 @@
     });
   }
 
-  function openTool(toolId) {
+  function openTool(toolId, options = {}) {
     if (!toolMap.has(toolId)) return;
     state.activeTool = toolId;
     renderToolGrid();
     renderWorkspace();
-    document.getElementById("workspace")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    syncUrlState({ replace: options.replaceHistory });
+    if (options.scroll !== false) {
+      document.getElementById("workspace")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function readUrlState() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      toolId: params.get("tool")?.trim() || "",
+      category: params.get("category")?.trim() || "全部",
+      search: params.get("q")?.trim().toLowerCase() || "",
+    };
+  }
+
+  function syncUrlState(options = {}) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("tool", state.activeTool);
+    if (state.category && state.category !== "全部") url.searchParams.set("category", state.category);
+    else url.searchParams.delete("category");
+    if (state.search) url.searchParams.set("q", state.search);
+    else url.searchParams.delete("q");
+    url.hash = "workspace";
+
+    const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+    if (options.replace) window.history.replaceState({}, "", nextUrl);
+    else window.history.pushState({}, "", nextUrl);
+  }
+
+  function handlePopState() {
+    const next = readUrlState();
+    const nextToolId = toolMap.has(next.toolId) ? next.toolId : tools[0].id;
+    const nextCategory = categories.includes(next.category) ? next.category : "全部";
+
+    state.search = next.search;
+    state.category = nextCategory;
+    state.activeTool = nextToolId;
+    dom.toolSearch.value = state.search;
+    renderCategoryChips();
+    renderToolGrid();
+    renderWorkspace();
+  }
+
+  async function copyCurrentToolDeepLink() {
+    const url = new URL(window.location.href);
+    url.searchParams.set("tool", state.activeTool);
+    if (state.category && state.category !== "全部") url.searchParams.set("category", state.category);
+    else url.searchParams.delete("category");
+    if (state.search) url.searchParams.set("q", state.search);
+    else url.searchParams.delete("q");
+    url.hash = "workspace";
+    const text = `${url.pathname}${url.search}${url.hash}`;
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        flashButtonText(dom.copyDeepLinkBtn, "已复制链接");
+      } else {
+        window.prompt("复制当前工具链接", text);
+      }
+    } catch (error) {
+      window.prompt("复制当前工具链接", text);
+    }
+  }
+
+  function flashButtonText(button, text) {
+    if (!button) return;
+    const original = button.textContent;
+    button.textContent = text;
+    window.clearTimeout(button._flashTimer);
+    button._flashTimer = window.setTimeout(() => {
+      button.textContent = original;
+    }, 1800);
   }
 
   function toggleFavorite(toolId) {
