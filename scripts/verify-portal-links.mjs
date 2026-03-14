@@ -28,8 +28,7 @@ ok(appJs.includes('window.addEventListener("popstate", handlePopState)'), "histo
 ok(appJs.includes('copyCurrentToolDeepLink'), "copy deep-link action exists");
 ok(toolsIndex.includes('id="copy-deep-link-btn"'), "deep-link button is present in tools UI");
 ok(portalIndex.includes('href="/asterlab-tools/"'), "portal home links to /asterlab-tools/");
-ok(portalIndex.includes('https://xingyao82.github.io/dictation-web/'), "portal home links to dictation app");
-ok(/target="_blank"\s+rel="noopener noreferrer"/.test(portalIndex), "dictation link uses safe external-link attrs");
+ok(portalIndex.includes('href="/dictation/"'), "portal home links to internal dictation app");
 
 console.log("\nSummary");
 console.log(JSON.stringify({ toolCount: toolIds.length, toolIds: uniqueToolIds }, null, 2));
