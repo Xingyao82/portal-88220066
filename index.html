@@ -3,110 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的工具箱 - 88220066.xyz</title>
+    <title>88220066.xyz · 工具箱与小项目导航</title>
+    <meta name="description" content="88220066.xyz 的个人工具箱与实验项目导航页，集中收录 AsterLab 工具箱、单词听写等实用小工具。">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#667eea">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="88220066.xyz · 工具箱与小项目导航">
+    <meta property="og:description" content="一个干净直接的导航首页，收纳我常用的工具、小实验和在线项目。">
+    <meta property="og:url" content="https://88220066.xyz/">
+    <meta property="og:site_name" content="88220066.xyz">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="88220066.xyz · 工具箱与小项目导航">
+    <meta name="twitter:description" content="集中收录 AsterLab 工具箱、单词听写等实用小工具。">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-start: #667eea;
+            --bg-end: #764ba2;
+            --card-bg: rgba(255,255,255,0.94);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #667eea;
+            --accent-2: #764ba2;
+            --shadow: 0 20px 60px rgba(0,0,0,0.28);
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            width: 100%;
-        }
-        h1 {
+            padding: 24px;
             color: white;
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .container { max-width: 720px; width: 100%; }
+        .hero { text-align: center; margin-bottom: 28px; }
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 3.1rem);
+            margin-bottom: 12px;
+            text-shadow: 2px 4px 16px rgba(0,0,0,0.18);
+            letter-spacing: -0.02em;
         }
         .subtitle {
-            color: rgba(255,255,255,0.9);
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 1.1rem;
+            color: rgba(255,255,255,0.92);
+            font-size: 1.08rem;
+            line-height: 1.7;
+            max-width: 42rem;
+            margin: 0 auto;
         }
         .card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+        .section-title {
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 0.02em;
         }
         .tool-item {
             display: flex;
             align-items: center;
-            padding: 20px;
-            margin-bottom: 15px;
-            background: #f8f9fa;
-            border-radius: 15px;
+            gap: 16px;
+            padding: 18px;
+            margin-bottom: 14px;
+            background: #f8fafc;
+            border-radius: 18px;
             text-decoration: none;
-            color: #333;
-            transition: all 0.3s;
+            color: var(--text-main);
+            transition: all 0.24s ease;
             border: 2px solid transparent;
         }
         .tool-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.16);
+            border-color: rgba(102, 126, 234, 0.45);
+            background: white;
         }
         .tool-icon {
-            font-size: 2rem;
-            margin-right: 20px;
-            width: 50px;
-            height: 50px;
+            font-size: 1.8rem;
+            width: 54px;
+            height: 54px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            border-radius: 14px;
             color: white;
+            flex-shrink: 0;
         }
-        .tool-info {
-            flex: 1;
-        }
+        .tool-info { flex: 1; min-width: 0; }
         .tool-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin-bottom: 6px;
         }
         .tool-desc {
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.94rem;
+            color: var(--text-muted);
+            line-height: 1.55;
         }
         .arrow {
-            color: #999;
-            font-size: 1.5rem;
+            color: #9ca3af;
+            font-size: 1.35rem;
+            flex-shrink: 0;
         }
         .footer {
             text-align: center;
-            margin-top: 30px;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
+            margin-top: 22px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+        .footer a { color: white; }
+        @media (max-width: 640px) {
+            body { padding: 18px; }
+            .card { padding: 20px; border-radius: 20px; }
+            .tool-item { padding: 16px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🧰 我的工具箱</h1>
-        <p class="subtitle">88220066.xyz</p>
-        
-        <div class="card">
+    <main class="container">
+        <section class="hero">
+            <h1>🧰 88220066.xyz</h1>
+            <p class="subtitle">
+                一个干净直接的工具导航页，集中放我常用的小工具、练习站和实验项目。
+                先把能用的东西摆出来，后面再慢慢扩成更完整的个人站。
+            </p>
+        </section>
+
+        <section class="card">
+            <div class="section-title">当前可用项目</div>
+
             <a href="/asterlab-tools/" class="tool-item">
                 <div class="tool-icon">🧪</div>
                 <div class="tool-info">
                     <div class="tool-name">AsterLab 工具箱</div>
-                    <div class="tool-desc">开发 / 文本 / 图片 / PDF / 时间等多功能工具集</div>
+                    <div class="tool-desc">开发 / 文本 / 图片 / PDF / 时间等多功能工具集合，适合日常快速处理小任务。</div>
                 </div>
                 <div class="arrow">→</div>
             </a>
@@ -115,14 +156,15 @@
                 <div class="tool-icon">🎯</div>
                 <div class="tool-info">
                     <div class="tool-name">单词听写</div>
-                    <div class="tool-desc">英语单词听写练习工具</div>
+                    <div class="tool-desc">英语单词听写练习工具，适合做基础记忆和反复训练。</div>
                 </div>
-                <div class="arrow">→</div>
+                <div class="arrow">↗</div>
             </a>
-            
-        </div>
-        
-        <p class="footer">Powered by Cloudflare Pages & GitHub Pages</p>
-    </div>
+        </section>
+
+        <p class="footer">
+            Hosted with GitHub Pages · 后续会继续补充博客、项目页和统一域名入口
+        </p>
+    </main>
 </body>
 </html>
