@@ -343,7 +343,7 @@
       state.category = "全部";
     }
 
-    dom.metricToolCount.textContent = String(tools.length);
+    if (dom.metricToolCount) dom.metricToolCount.textContent = String(tools.length);
     bindJumpButtons();
     bindGlobalEvents();
     renderCategoryChips();
