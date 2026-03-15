@@ -1,0 +1,33 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="220" y1="100" x2="980" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07C160" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0.16"/>
+    </linearGradient>
+    <filter id="blur" x="-100" y="-100" width="1400" height="900" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="675" rx="0" fill="url(#bg)"/>
+  <g filter="url(#blur)">
+    <circle cx="220" cy="120" r="150" fill="#07C160" fill-opacity="0.32"/>
+    <circle cx="980" cy="540" r="180" fill="#38BDF8" fill-opacity="0.18"/>
+  </g>
+  <rect x="56" y="52" width="1088" height="571" rx="28" fill="url(#glow)" stroke="rgba(255,255,255,0.12)"/>
+
+  <text x="86" y="126" fill="#9CA3AF" font-size="28" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">科技 / AI 观察</text>
+
+  <text x="86" y="240" fill="#F9FAFB" font-size="64" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">xAI 又开始“大换血”</text>
+  <text x="86" y="324" fill="#F9FAFB" font-size="64" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">马斯克的 AI 野心卡在哪？</text>
+
+  <text x="86" y="420" fill="#D1D5DB" font-size="30" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">联合创始人离开、团队重组、代码产品线承压，</text>
+  <text x="86" y="468" fill="#D1D5DB" font-size="30" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">这可能不是普通的人事变动，而是 AI 行业进入深水区的信号。</text>
+
+  <rect x="86" y="540" width="180" height="48" rx="24" fill="#07C160"/>
+  <text x="126" y="572" fill="#03130A" font-size="24" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">88220066.xyz</text>
+</svg>
