@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AsterLab Tools | 多功能在线工具站</title>
-    <meta
-      name="description"
-      content="高颜值前端多工具站，覆盖编程类、生活类、图片文本类场景。"
-    />
+    <title>AsterLab Tools</title>
+    <meta name="description" content="AsterLab Tools" />
     <meta
       name="keywords"
       content="前端工具站,编程工具,生活工具,图片工具,文本工具,JSON工具,Markdown工具"
@@ -30,60 +27,12 @@
       <header class="hero">
         <div class="hero-copy reveal">
           <p class="hero-kicker">AsterLab Tools</p>
-          <p class="hero-text">
-            工具已按「编程类 / 生活类 / 图片文本类」整理，打开即可用，默认浏览器本地处理，轻量又高效。
-          </p>
 
           <div class="hero-actions">
             <button class="primary-btn" data-jump="workspace">打开工作台</button>
-            <button class="secondary-btn" data-jump="tool-gallery">浏览全部工具</button>
-          </div>
-
-          <div class="hero-metrics">
-            <article>
-              <span>工具模块</span>
-              <strong id="metric-tool-count">18</strong>
-            </article>
-            <article>
-              <span>部署方式</span>
-              <strong>纯静态 / GitHub Pages</strong>
-            </article>
-            <article>
-              <span>运行逻辑</span>
-              <strong>浏览器本地优先</strong>
-            </article>
+            <button class="secondary-btn" data-jump="tool-gallery">浏览工具</button>
           </div>
         </div>
-
-        <aside class="hero-panel reveal">
-          <div class="hero-panel-card">
-            <p class="panel-label">工具分类</p>
-            <ul class="panel-list">
-              <li>编程类：JSON、YAML、CSV、正则、哈希、JWT、时间戳、表单构建</li>
-              <li>图片文本类：Markdown、文本清洗、图片处理、PDF、设计与流程图</li>
-              <li>生活类：计算中心、番茄任务、预算规划、简历、报价、排班</li>
-            </ul>
-          </div>
-
-          <div class="hero-panel-grid">
-            <article>
-              <span>本地存储</span>
-              <strong>收藏与工作状态</strong>
-            </article>
-            <article>
-              <span>导出方式</span>
-              <strong>HTML / TXT / JSON / PDF / PNG</strong>
-            </article>
-            <article>
-              <span>响应布局</span>
-              <strong>桌面与移动端适配</strong>
-            </article>
-            <article>
-              <span>可扩展性</span>
-              <strong>新增模块只需注册工具</strong>
-            </article>
-          </div>
-        </aside>
       </header>
 
       <section class="toolbar reveal" id="tool-gallery">
@@ -108,11 +57,7 @@
         <section class="gallery reveal">
           <div class="section-head">
             <div>
-              <p class="section-kicker">Tool Gallery</p>
-              <h2>全部工具</h2>
-            </div>
-            <div class="section-copy">
-              一个仓库即可托管。点击卡片在下方工作台打开，支持收藏和搜索过滤。
+              <h2>工具</h2>
             </div>
           </div>
 
@@ -122,7 +67,6 @@
         <section class="workspace reveal" id="workspace">
           <div class="section-head">
             <div>
-              <p class="section-kicker">Workbench</p>
               <h2 id="workspace-title">工具工作台</h2>
             </div>
             <div class="workspace-actions">
@@ -149,14 +93,6 @@
                 <p class="meta-label">最近收藏</p>
                 <div id="favorites-list" class="favorites-list"></div>
               </div>
-
-              <div class="workspace-meta-card">
-                <p class="meta-label">部署说明</p>
-                <p class="meta-small">
-                  这是纯静态站。把当前目录内容推到 GitHub 仓库根目录，或放到 `docs/` 再开启
-                  Pages 即可。
-                </p>
-              </div>
             </aside>
 
             <div class="workspace-main">
@@ -169,10 +105,9 @@
       <footer class="site-footer reveal">
         <div>
           <p class="footer-brand">AsterLab Tools</p>
-          <p class="footer-copy">静态前端工具站，适合独立项目、作品集和 GitHub Pages 托管。</p>
         </div>
         <div class="footer-links">
-          <a href="README.md">部署说明</a>
+          <a href="README.md">README</a>
           <a href="#tool-gallery">工具列表</a>
           <a href="#workspace">工作台</a>
         </div>
