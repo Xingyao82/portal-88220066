@@ -1,10 +1,10 @@
 :root {
   --bg: #ffffff;
-  --bg-soft: rgba(255, 255, 255, 0.92);
-  --panel: rgba(255, 255, 255, 0.96);
+  --bg-soft: #ffffff;
+  --panel: #ffffff;
   --panel-strong: rgba(255, 255, 255, 1);
-  --line: rgba(15, 23, 42, 0.08);
-  --line-strong: rgba(15, 23, 42, 0.14);
+  --line: rgba(15, 23, 42, 0.06);
+  --line-strong: rgba(15, 23, 42, 0.1);
   --text: #111827;
   --muted: #6b7280;
   --accent: #0071e3;
@@ -13,7 +13,7 @@
   --accent-4: #60a5fa;
   --danger: #ef4444;
   --good: #10b981;
-  --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   --radius-xl: 28px;
   --radius-lg: 20px;
   --radius-md: 14px;
@@ -35,7 +35,7 @@ body {
   min-height: 100vh;
   font-family: var(--font-body);
   color: var(--text);
-  background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+  background: #ffffff;
 }
 
 body::before {
@@ -74,7 +74,7 @@ svg {
   height: 340px;
   border-radius: 50%;
   filter: blur(40px);
-  opacity: 0.28;
+  opacity: 0.0;
   pointer-events: none;
   z-index: 0;
 }
@@ -120,8 +120,8 @@ svg {
 .workspace,
 .site-footer {
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(11, 22, 30, 0.84), rgba(8, 19, 24, 0.94));
-  backdrop-filter: blur(18px);
+  background: #ffffff;
+  backdrop-filter: none;
   box-shadow: var(--shadow);
 }
 
