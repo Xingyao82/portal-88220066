@@ -26,6 +26,10 @@
             --blue: #0071e3;
             --blue-hover: #0077ed;
             --card: #f5f5f7;
+            --dictation: #ff8a34;
+            --dictation-soft: rgba(255, 138, 52, 0.1);
+            --tools: #0f9d84;
+            --tools-soft: rgba(15, 157, 132, 0.1);
             --max: 1180px;
         }
 
@@ -123,10 +127,28 @@
         }
 
         .link-card {
+            position: relative;
             padding: 38px 34px 34px;
             border-radius: 32px;
             background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.06);
             text-align: center;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+        }
+
+        .link-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 5px;
+            border-radius: 32px 0 0 32px;
+            background: var(--card-accent, var(--blue));
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 48px rgba(15, 23, 42, 0.1);
         }
 
         .link-card h2 {
@@ -148,6 +170,18 @@
             margin-top: 18px;
             color: var(--blue);
             font-size: 0.96rem;
+        }
+
+        .link-card-dictation {
+            --card-accent: var(--dictation);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), var(--dictation-soft));
+            border-color: rgba(255, 138, 52, 0.26);
+        }
+
+        .link-card-tools {
+            --card-accent: var(--tools);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), var(--tools-soft));
+            border-color: rgba(15, 157, 132, 0.24);
         }
 
         .footer {
@@ -205,12 +239,14 @@
             </div>
 
             <section class="links" aria-label="Quick links">
-                <a class="link-card" href="/dictation/">
+                <a class="link-card link-card-dictation" href="/dictation/">
                     <h2>听写</h2>
+                    <p>进入单词听写页面，快速开始练习与记忆。</p>
                     <span>/dictation/</span>
                 </a>
-                <a class="link-card" href="/asterlab-tools/">
+                <a class="link-card link-card-tools" href="/asterlab-tools/">
                     <h2>工具</h2>
+                    <p>打开工具箱首页，浏览和进入各个常用项目。</p>
                     <span>/asterlab-tools/</span>
                 </a>
             </section>
@@ -220,3 +256,4 @@
     </div>
 </body>
 </html>
+
