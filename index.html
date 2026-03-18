@@ -4,18 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>88220066.xyz</title>
-    <meta name="description" content="极简的个人主页入口，直达单词听写与常用工具。">
+    <meta name="description" content="Portal home for dictation, tools, and AI navigation.">
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#ffffff">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="zh_CN">
     <meta property="og:title" content="88220066.xyz">
-    <meta property="og:description" content="极简的个人主页入口，直达单词听写与常用工具。">
     <meta property="og:url" content="https://88220066.xyz/">
     <meta property="og:site_name" content="88220066.xyz">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="88220066.xyz">
-    <meta name="twitter:description" content="极简的个人主页入口，直达单词听写与常用工具。">
     <style>
         :root {
             --bg: #ffffff;
@@ -25,7 +21,6 @@
             --line: rgba(15, 23, 42, 0.06);
             --blue: #0071e3;
             --blue-hover: #0077ed;
-            --card: #f5f5f7;
             --dictation: #ff8a34;
             --dictation-soft: rgba(255, 138, 52, 0.1);
             --tools: #0f9d84;
@@ -66,13 +61,46 @@
             letter-spacing: -0.02em;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
         .nav-links {
             display: flex;
             gap: 22px;
             color: var(--muted);
+            flex-wrap: wrap;
         }
 
         .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px;
+            border-radius: 999px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .lang-btn {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 7px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+
+        .lang-btn.active {
+            background: rgba(15, 23, 42, 0.08);
             color: var(--text);
         }
 
@@ -209,6 +237,11 @@
                 align-items: flex-start;
             }
 
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
             .hero {
                 padding-top: 52px;
             }
@@ -234,34 +267,40 @@
     <div class="shell">
         <header class="nav">
             <div class="brand">88220066.xyz</div>
-            <nav class="nav-links" aria-label="Primary">
-                <a href="/dictation/">单词听写</a>
-                <a href="/asterlab-tools/">工具箱</a>
-                <a href="/ai-nav/">AI 导航</a>
-            </nav>
+            <div class="nav-right">
+                <nav class="nav-links" aria-label="Primary">
+                    <a href="/dictation/" data-i18n="nav_dictation"></a>
+                    <a href="/asterlab-tools/" data-i18n="nav_tools"></a>
+                    <a href="/ai-nav/" data-i18n="nav_ai"></a>
+                </nav>
+                <div class="lang-switch" aria-label="Language switch">
+                    <button class="lang-btn" type="button" data-lang="zh">涓?/button>
+                    <button class="lang-btn" type="button" data-lang="en">EN</button>
+                </div>
+            </div>
         </header>
 
         <main class="hero">
             <div class="actions">
-                <a class="button button-primary" href="/dictation/">听写</a>
-                <a class="button button-secondary" href="/asterlab-tools/">工具</a>
-                <a class="button button-secondary" href="/ai-nav/">AI</a>
+                <a class="button button-primary" href="/dictation/" data-i18n="cta_dictation"></a>
+                <a class="button button-secondary" href="/asterlab-tools/" data-i18n="cta_tools"></a>
+                <a class="button button-secondary" href="/ai-nav/" data-i18n="cta_ai"></a>
             </div>
 
             <section class="links" aria-label="Quick links">
                 <a class="link-card link-card-dictation" href="/dictation/">
-                    <h2>听写</h2>
-                    <p>进入单词听写页面，快速开始练习与记忆。</p>
+                    <h2 data-i18n="card_dictation_title"></h2>
+                    <p data-i18n="card_dictation_desc"></p>
                     <span>/dictation/</span>
                 </a>
                 <a class="link-card link-card-tools" href="/asterlab-tools/">
-                    <h2>工具</h2>
-                    <p>打开工具箱首页，浏览和进入各个常用项目。</p>
+                    <h2 data-i18n="card_tools_title"></h2>
+                    <p data-i18n="card_tools_desc"></p>
                     <span>/asterlab-tools/</span>
                 </a>
                 <a class="link-card link-card-ai" href="/ai-nav/">
-                    <h2>AI 导航</h2>
-                    <p>集中浏览常用 AI 产品，按场景快速筛选和直达。</p>
+                    <h2 data-i18n="card_ai_title"></h2>
+                    <p data-i18n="card_ai_desc"></p>
                     <span>/ai-nav/</span>
                 </a>
             </section>
@@ -269,7 +308,77 @@
 
         <footer class="footer">88220066.xyz</footer>
     </div>
+
+    <script>
+        const HOME_I18N = {
+            zh: {
+                lang: "zh-CN",
+                description: "\u6781\u7b80\u7684\u4e2a\u4eba\u4e3b\u9875\u5165\u53e3\uff0c\u76f4\u8fbe\u5355\u8bcd\u542c\u5199\u3001\u5de5\u5177\u7bb1\u548c AI \u5bfc\u822a\u3002",
+                ogLocale: "zh_CN",
+                nav_dictation: "\u5355\u8bcd\u542c\u5199",
+                nav_tools: "\u5de5\u5177\u7bb1",
+                nav_ai: "AI \u5bfc\u822a",
+                cta_dictation: "\u542c\u5199",
+                cta_tools: "\u5de5\u5177",
+                cta_ai: "AI",
+                card_dictation_title: "\u542c\u5199",
+                card_dictation_desc: "\u8fdb\u5165\u5355\u8bcd\u542c\u5199\u9875\u9762\uff0c\u5feb\u901f\u5f00\u59cb\u7ec3\u4e60\u4e0e\u8bb0\u5fc6\u3002",
+                card_tools_title: "\u5de5\u5177",
+                card_tools_desc: "\u6253\u5f00\u5de5\u5177\u7bb1\u9996\u9875\uff0c\u6d4f\u89c8\u548c\u8fdb\u5165\u5404\u4e2a\u5e38\u7528\u9879\u76ee\u3002",
+                card_ai_title: "AI \u5bfc\u822a",
+                card_ai_desc: "\u96c6\u4e2d\u6d4f\u89c8\u5e38\u7528 AI \u4ea7\u54c1\uff0c\u6309\u573a\u666f\u5feb\u901f\u7b5b\u9009\u548c\u76f4\u8fbe\u3002"
+            },
+            en: {
+                lang: "en",
+                description: "A minimal portal home for dictation, tools, and AI navigation.",
+                ogLocale: "en_US",
+                nav_dictation: "Dictation",
+                nav_tools: "Tools",
+                nav_ai: "AI Nav",
+                cta_dictation: "Dictation",
+                cta_tools: "Tools",
+                cta_ai: "AI",
+                card_dictation_title: "Dictation",
+                card_dictation_desc: "Open the dictation page and start practicing words right away.",
+                card_tools_title: "Tools",
+                card_tools_desc: "Browse the toolbox homepage and jump into useful project pages.",
+                card_ai_title: "AI Navigation",
+                card_ai_desc: "Browse common AI products and filter them by scenario with one click."
+            }
+        };
+
+        const HOME_STORAGE_KEY = "portal-lang";
+        const metaDescription = document.querySelector('meta[name="description"]');
+        const ogDescription = document.querySelector('meta[property="og:description"]');
+        const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+        const ogLocale = document.querySelector('meta[property="og:locale"]');
+
+        function applyHomeLocale(locale) {
+            const copy = HOME_I18N[locale] || HOME_I18N.zh;
+            document.documentElement.lang = copy.lang;
+            metaDescription.setAttribute("content", copy.description);
+            ogDescription.setAttribute("content", copy.description);
+            twitterDescription.setAttribute("content", copy.description);
+            ogLocale.setAttribute("content", copy.ogLocale);
+
+            document.querySelectorAll("[data-i18n]").forEach((node) => {
+                const key = node.getAttribute("data-i18n");
+                node.textContent = copy[key] || "";
+            });
+
+            document.querySelectorAll("[data-lang]").forEach((button) => {
+                button.classList.toggle("active", button.getAttribute("data-lang") === locale);
+            });
+
+            localStorage.setItem(HOME_STORAGE_KEY, locale);
+        }
+
+        const initialLocale = localStorage.getItem(HOME_STORAGE_KEY) || "zh";
+        applyHomeLocale(initialLocale);
+
+        document.querySelectorAll("[data-lang]").forEach((button) => {
+            button.addEventListener("click", () => applyHomeLocale(button.getAttribute("data-lang")));
+        });
+    </script>
 </body>
 </html>
-
-
