@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Navigation | 88220066.xyz</title>
-  <meta name="description" content="A clean, static AI navigation page for chat, coding, design, search, video, and productivity tools.">
+  <meta name="description" content="Bilingual AI navigation page for chat, coding, design, search, audio, and productivity tools.">
   <meta name="theme-color" content="#0c1020">
   <style>
     :root {
@@ -23,14 +23,13 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", sans-serif;
       color: var(--text);
       background:
         radial-gradient(circle at 15% 15%, rgba(124, 104, 255, 0.24), transparent 0 26%),
         radial-gradient(circle at 85% 12%, rgba(37, 195, 165, 0.16), transparent 0 24%),
         radial-gradient(circle at 50% 86%, rgba(255, 157, 66, 0.14), transparent 0 22%),
         linear-gradient(180deg, #09101e 0%, #0d1326 48%, #0b1020 100%);
-      color: var(--text);
     }
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
@@ -42,12 +41,44 @@
       box-shadow: 0 22px 60px rgba(0, 0, 0, 0.26);
     }
     .nav {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding: 18px 22px; border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 22px;
     }
     .brand { font-weight: 700; letter-spacing: -0.03em; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
     .nav-links { display: flex; gap: 18px; color: var(--muted); flex-wrap: wrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 7px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .lang-btn.active {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
     .hero {
       display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
       gap: 22px; margin-top: 18px; padding: 34px; border-radius: var(--radius-xl);
@@ -104,40 +135,52 @@
     .visit { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 14px; border-radius: 999px; color: #08111f; background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%); }
     .empty { padding: 20px; border-radius: var(--radius-lg); border: 1px dashed rgba(255,255,255,0.16); color: var(--muted); text-align: center; }
     @media (max-width: 1040px) { .grid { grid-template-columns: 1fr 1fr; } .hero { grid-template-columns: 1fr; } }
-    @media (max-width: 720px) { .shell { width: min(calc(100% - 18px), var(--max)); } .nav { flex-direction: column; align-items: flex-start; } .grid { grid-template-columns: 1fr; } .section-head { flex-direction: column; align-items: flex-start; } }
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .nav-right { width: 100%; justify-content: space-between; }
+      .grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
   <div class="shell">
     <header class="nav">
-      <div class="brand">88220066.xyz / AI Navigation</div>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="/">Home</a>
-        <a href="/dictation/">Dictation</a>
-        <a href="/asterlab-tools/">Tools</a>
-        <a href="/ai-nav/" class="active">AI Nav</a>
-      </nav>
+      <div class="brand">88220066.xyz / <span data-i18n="brand_suffix"></span></div>
+      <div class="nav-right">
+        <nav class="nav-links" aria-label="Primary">
+          <a href="/" data-i18n="nav_home"></a>
+          <a href="/dictation/" data-i18n="nav_dictation"></a>
+          <a href="/asterlab-tools/" data-i18n="nav_tools"></a>
+          <a href="/ai-nav/" class="active" data-i18n="nav_ai"></a>
+        </nav>
+        <div class="lang-switch" aria-label="Language switch">
+          <button class="lang-btn" type="button" data-lang="zh">涓?/button>
+          <button class="lang-btn" type="button" data-lang="en">EN</button>
+        </div>
+      </div>
     </header>
 
     <section class="hero">
       <div>
         <p class="eyebrow">AI Portal</p>
-        <h1>One clean page for the AI tools you actually use.</h1>
-        <p>Browse common AI products by chat, coding, design, search, video, and productivity. This page is fully static and easy to extend later.</p>
+        <h1 data-i18n="hero_title"></h1>
+        <p data-i18n="hero_desc"></p>
         <div class="actions">
-          <a class="button button-primary" href="#tools">Browse Tools</a>
-          <a class="button button-secondary" href="/">Back Home</a>
+          <a class="button button-primary" href="#tools" data-i18n="cta_browse"></a>
+          <a class="button button-secondary" href="/" data-i18n="cta_home"></a>
         </div>
       </div>
       <aside class="hero-side">
-        <article class="stat"><span>Coverage</span><strong>Chat / Code / Design / Search</strong></article>
-        <article class="stat"><span>Format</span><strong>Static page with filters</strong></article>
-        <article class="stat"><span>Use case</span><strong>Collection, discovery, quick access</strong></article>
+        <article class="stat"><span data-i18n="stat1_label"></span><strong data-i18n="stat1_value"></strong></article>
+        <article class="stat"><span data-i18n="stat2_label"></span><strong data-i18n="stat2_value"></strong></article>
+        <article class="stat"><span data-i18n="stat3_label"></span><strong data-i18n="stat3_value"></strong></article>
       </aside>
     </section>
 
     <section class="toolbar">
-      <label class="search"><input id="search-input" type="search" placeholder="Search by tool, tag, or use case"></label>
+      <label class="search"><input id="search-input" type="search"></label>
       <div id="chips" class="chips" aria-label="Category filter"></div>
     </section>
 
@@ -145,7 +188,7 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Directory</p>
-          <h2>AI Tool List</h2>
+          <h2 data-i18n="section_title"></h2>
         </div>
         <div id="count" class="count"></div>
       </div>
@@ -154,51 +197,416 @@
   </div>
 
   <script>
+    const AI_STORAGE_KEY = "portal-lang";
+
+    const AI_I18N = {
+      zh: {
+        lang: "zh-CN",
+        title: "AI 宸ュ叿瀵艰埅 | 88220066.xyz",
+        description: "涓€涓函鍓嶇鐨?AI 宸ュ叿瀵艰埅椤碉紝鎸夎亰澶┿€佷唬鐮併€佽璁°€佹悳绱€侀煶瑙嗛鍜屾晥鐜囩瓑鍦烘櫙蹇€熺瓫閫夈€?,
+        brand_suffix: "AI 宸ュ叿瀵艰埅",
+        nav_home: "棣栭〉",
+        nav_dictation: "鍗曡瘝鍚啓",
+        nav_tools: "宸ュ叿绠?,
+        nav_ai: "AI 瀵艰埅",
+        hero_title: "鎶婂父鐢?AI 宸ュ叿鏀惰繘涓€涓湡姝ｅソ鎵剧殑瀵艰埅椤点€?,
+        hero_desc: "鎸夎亰澶┿€佷唬鐮併€佽璁°€佹悳绱€侀煶瑙嗛鍜屾晥鐜囧満鏅瓫閫夛紝蹇€熸壘鍒板悎閫傜殑 AI 浜у搧銆傝繖涓〉闈㈡槸绾墠绔潤鎬佸疄鐜帮紝鍚庨潰缁х画鍔犲唴瀹逛篃寰堟柟渚裤€?,
+        cta_browse: "寮€濮嬫祻瑙?,
+        cta_home: "杩斿洖棣栭〉",
+        stat1_label: "鏀跺綍鏂瑰悜",
+        stat1_value: "鑱婂ぉ / 浠ｇ爜 / 璁捐 / 鎼滅储",
+        stat2_label: "椤甸潰鑳藉姏",
+        stat2_value: "鍓嶇绛涢€?+ 鏍囩娴忚",
+        stat3_label: "閫傜敤鍦烘櫙",
+        stat3_value: "鏀惰棌銆佸鑸€佸揩閫熺洿杈?,
+        section_title: "AI 宸ュ叿鍒楄〃",
+        search_placeholder: "鎼滅储宸ュ叿鍚嶃€佹爣绛炬垨鐢ㄩ€旓紝渚嬪锛氫唬鐮併€佺粯鍥俱€佽棰戙€佹悳绱?,
+        all: "鍏ㄩ儴",
+        showing: "褰撳墠鏄剧ず",
+        tools: "涓伐鍏?,
+        noMatch: "娌℃湁鎵惧埌鍖归厤椤癸紝鎹釜鍏抽敭璇嶈瘯璇曘€?,
+        open: "鎵撳紑",
+        price_free_partial: "閮ㄥ垎鍏嶈垂",
+        price_paid: "浠樿垂",
+        price_paid_main: "浠樿垂涓轰富",
+        price_free_main: "鍏嶈垂涓轰富",
+        cat_general: "閫氱敤鑱婂ぉ",
+        cat_search: "鎼滅储鐭ヨ瘑",
+        cat_coding: "浠ｇ爜寮€鍙?,
+        cat_design: "璁捐鍓嶇",
+        cat_productivity: "鏁堢巼鍔炲叕",
+        cat_video: "闊宠棰?,
+        cat_audio: "闊抽",
+        cat_chinese: "涓枃宸ュ叿"
+      },
+      en: {
+        lang: "en",
+        title: "AI Navigation | 88220066.xyz",
+        description: "A bilingual AI navigation page for chat, coding, design, search, audio, and productivity tools.",
+        brand_suffix: "AI Navigation",
+        nav_home: "Home",
+        nav_dictation: "Dictation",
+        nav_tools: "Tools",
+        nav_ai: "AI Nav",
+        hero_title: "One clean page for the AI tools you actually use.",
+        hero_desc: "Browse common AI products by chat, coding, design, search, video, and productivity. This page is fully static and easy to extend later.",
+        cta_browse: "Browse Tools",
+        cta_home: "Back Home",
+        stat1_label: "Coverage",
+        stat1_value: "Chat / Code / Design / Search",
+        stat2_label: "Format",
+        stat2_value: "Static page with filters",
+        stat3_label: "Use case",
+        stat3_value: "Collection, discovery, quick access",
+        section_title: "AI Tool List",
+        search_placeholder: "Search by tool, tag, or use case",
+        all: "All",
+        showing: "Showing",
+        tools: "tools",
+        noMatch: "No matching tools found. Try a different keyword.",
+        open: "Open",
+        price_free_partial: "Free + Paid",
+        price_paid: "Paid",
+        price_paid_main: "Paid",
+        price_free_main: "Mostly Free",
+        cat_general: "General Chat",
+        cat_search: "Search",
+        cat_coding: "Coding",
+        cat_design: "Design",
+        cat_productivity: "Productivity",
+        cat_video: "Video",
+        cat_audio: "Audio",
+        cat_chinese: "Chinese Tools"
+      }
+    };
+
     const tools = [
-      { name: "ChatGPT", category: "General Chat", url: "https://chatgpt.com/", summary: "General-purpose chat, writing, coding, and daily task help.", tags: ["chat", "writing", "code"], price: "Free + Paid", accent: "#7c68ff" },
-      { name: "Claude", category: "General Chat", url: "https://claude.ai/", summary: "Strong for long documents, writing cleanup, and coding collaboration.", tags: ["long context", "writing", "code"], price: "Free + Paid", accent: "#25c3a5" },
-      { name: "Gemini", category: "General Chat", url: "https://gemini.google.com/", summary: "Google AI assistant with broad search and multimodal use cases.", tags: ["search", "multimodal", "assistant"], price: "Free + Paid", accent: "#4f8cff" },
-      { name: "Perplexity", category: "Search", url: "https://www.perplexity.ai/", summary: "AI-first search experience for research and quick fact finding.", tags: ["search", "research", "answers"], price: "Free + Paid", accent: "#00b3a4" },
-      { name: "GitHub Copilot", category: "Coding", url: "https://github.com/features/copilot", summary: "AI coding assistant for IDE workflows and programming tasks.", tags: ["code", "IDE", "dev"], price: "Paid", accent: "#ff9d42" },
-      { name: "Cursor", category: "Coding", url: "https://www.cursor.com/", summary: "AI-native code editor for refactoring and pair-programming style work.", tags: ["editor", "code", "dev"], price: "Free + Paid", accent: "#7c68ff" },
-      { name: "v0", category: "Design", url: "https://v0.dev/", summary: "Generate frontend UI ideas and code from prompts.", tags: ["frontend", "UI", "prototype"], price: "Free + Paid", accent: "#a669ff" },
-      { name: "Midjourney", category: "Design", url: "https://www.midjourney.com/", summary: "High-quality image generation for visual exploration.", tags: ["image", "visual", "design"], price: "Paid", accent: "#ff6e6e" },
-      { name: "Canva AI", category: "Design", url: "https://www.canva.com/", summary: "Template-driven design with AI help for fast visual output.", tags: ["design", "template", "poster"], price: "Free + Paid", accent: "#00c4cc" },
-      { name: "Notion AI", category: "Productivity", url: "https://www.notion.so/product/ai", summary: "Helpful for notes, summaries, and team knowledge workflows.", tags: ["notes", "summary", "work"], price: "Paid", accent: "#8b93a7" },
-      { name: "Tome", category: "Productivity", url: "https://tome.app/", summary: "Create presentations and proposal-style pages quickly.", tags: ["slides", "presentation", "pitch"], price: "Free + Paid", accent: "#ff8f5c" },
-      { name: "HeyGen", category: "Video", url: "https://www.heygen.com/", summary: "Avatar and talking-head style AI video creation.", tags: ["video", "avatar", "marketing"], price: "Paid", accent: "#3bb2ff" },
-      { name: "Runway", category: "Video", url: "https://runwayml.com/", summary: "AI video generation and editing for creative content.", tags: ["video", "generation", "editing"], price: "Free + Paid", accent: "#7effb2" },
-      { name: "ElevenLabs", category: "Audio", url: "https://elevenlabs.io/", summary: "Strong AI voice generation for narration and speech work.", tags: ["voice", "audio", "speech"], price: "Free + Paid", accent: "#ffd166" },
-      { name: "Kimi", category: "Chinese Tools", url: "https://kimi.moonshot.cn/", summary: "Useful for long-form reading and Chinese-language workflows.", tags: ["Chinese", "reading", "documents"], price: "Free + Paid", accent: "#2ec4b6" },
-      { name: "Doubao", category: "Chinese Tools", url: "https://www.doubao.com/", summary: "Chinese-first chat and writing tool for everyday tasks.", tags: ["Chinese", "chat", "writing"], price: "Mostly Free", accent: "#5d8dff" },
-      { name: "Tongyi", category: "Chinese Tools", url: "https://tongyi.aliyun.com/", summary: "Alibaba AI platform covering chat, image, and broader workflows.", tags: ["Chinese", "enterprise", "chat"], price: "Free + Paid", accent: "#ffb347" }
+      {
+        name: "ChatGPT",
+        categoryKey: "cat_general",
+        url: "https://chatgpt.com/",
+        summary: {
+          zh: "閫氱敤瀵硅瘽銆佸啓浣溿€佷唬鐮佸拰鏃ュ父浠诲姟澶勭悊銆?,
+          en: "General-purpose chat, writing, coding, and daily task help."
+        },
+        tags: {
+          zh: ["鑱婂ぉ", "鍐欎綔", "浠ｇ爜"],
+          en: ["chat", "writing", "code"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#7c68ff"
+      },
+      {
+        name: "Claude",
+        categoryKey: "cat_general",
+        url: "https://claude.ai/",
+        summary: {
+          zh: "鎿呴暱闀挎枃鏈悊瑙ｃ€佸啓浣滄暣鐞嗗拰浠ｇ爜鍗忎綔銆?,
+          en: "Strong for long documents, writing cleanup, and coding collaboration."
+        },
+        tags: {
+          zh: ["闀挎枃", "鍐欎綔", "浠ｇ爜"],
+          en: ["long context", "writing", "code"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#25c3a5"
+      },
+      {
+        name: "Gemini",
+        categoryKey: "cat_general",
+        url: "https://gemini.google.com/",
+        summary: {
+          zh: "Google 鐨勫妯℃€?AI 鍔╂墜锛岄€傚悎鎼滅储涓庨棶绛斻€?,
+          en: "Google AI assistant with broad search and multimodal use cases."
+        },
+        tags: {
+          zh: ["鎼滅储", "澶氭ā鎬?, "闂瓟"],
+          en: ["search", "multimodal", "assistant"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#4f8cff"
+      },
+      {
+        name: "Perplexity",
+        categoryKey: "cat_search",
+        url: "https://www.perplexity.ai/",
+        summary: {
+          zh: "鏇村儚 AI 鎼滅储寮曟搸锛岄€傚悎鎵捐祫鏂欏拰蹇€熸煡璇併€?,
+          en: "AI-first search experience for research and quick fact finding."
+        },
+        tags: {
+          zh: ["鎼滅储", "璧勬枡", "闂瓟"],
+          en: ["search", "research", "answers"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#00b3a4"
+      },
+      {
+        name: "GitHub Copilot",
+        categoryKey: "cat_coding",
+        url: "https://github.com/features/copilot",
+        summary: {
+          zh: "闈㈠悜寮€鍙戣€呯殑浠ｇ爜琛ュ叏銆佸璇濆拰缂栫▼杈呭姪銆?,
+          en: "AI coding assistant for IDE workflows and programming tasks."
+        },
+        tags: {
+          zh: ["浠ｇ爜", "IDE", "寮€鍙?],
+          en: ["code", "IDE", "dev"]
+        },
+        priceKey: "price_paid_main",
+        accent: "#ff9d42"
+      },
+      {
+        name: "Cursor",
+        categoryKey: "cat_coding",
+        url: "https://www.cursor.com/",
+        summary: {
+          zh: "AI 鍘熺敓浠ｇ爜缂栬緫鍣紝閫傚悎閲嶆瀯鍜屽崗浣滃紡缂栫▼銆?,
+          en: "AI-native code editor for refactoring and pair-programming style work."
+        },
+        tags: {
+          zh: ["缂栬緫鍣?, "浠ｇ爜", "寮€鍙?],
+          en: ["editor", "code", "dev"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#7c68ff"
+      },
+      {
+        name: "v0",
+        categoryKey: "cat_design",
+        url: "https://v0.dev/",
+        summary: {
+          zh: "杈撳叆鎻忚堪鍗冲彲鐢熸垚鍓嶇 UI 浠ｇ爜鍜岄〉闈㈣崏鍥俱€?,
+          en: "Generate frontend UI ideas and code from prompts."
+        },
+        tags: {
+          zh: ["鍓嶇", "UI", "鍘熷瀷"],
+          en: ["frontend", "UI", "prototype"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#a669ff"
+      },
+      {
+        name: "Midjourney",
+        categoryKey: "cat_design",
+        url: "https://www.midjourney.com/",
+        summary: {
+          zh: "楂樿川閲?AI 缁樺浘骞冲彴锛岄€傚悎姒傚康鍥惧拰瑙嗚鎺㈢储銆?,
+          en: "High-quality image generation for visual exploration."
+        },
+        tags: {
+          zh: ["缁樺浘", "瑙嗚", "璁捐"],
+          en: ["image", "visual", "design"]
+        },
+        priceKey: "price_paid",
+        accent: "#ff6e6e"
+      },
+      {
+        name: "Canva AI",
+        categoryKey: "cat_design",
+        url: "https://www.canva.com/",
+        summary: {
+          zh: "璁捐妯℃澘缁撳悎 AI 鏂囨鍜屽浘鍍忚兘鍔涳紝閫傚悎蹇€熷嚭鍥俱€?,
+          en: "Template-driven design with AI help for fast visual output."
+        },
+        tags: {
+          zh: ["璁捐", "妯℃澘", "娴锋姤"],
+          en: ["design", "template", "poster"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#00c4cc"
+      },
+      {
+        name: "Notion AI",
+        categoryKey: "cat_productivity",
+        url: "https://www.notion.so/product/ai",
+        summary: {
+          zh: "閫傚悎鏁寸悊绗旇銆佹枃妗ｆ€荤粨鍜屽洟闃熺煡璇嗙鐞嗐€?,
+          en: "Helpful for notes, summaries, and team knowledge workflows."
+        },
+        tags: {
+          zh: ["绗旇", "鎬荤粨", "鍔炲叕"],
+          en: ["notes", "summary", "work"]
+        },
+        priceKey: "price_paid_main",
+        accent: "#8b93a7"
+      },
+      {
+        name: "Tome",
+        categoryKey: "cat_productivity",
+        url: "https://tome.app/",
+        summary: {
+          zh: "AI 婕旂ず鏂囩宸ュ叿锛岄€傚悎蹇€熺敓鎴愭彁妗堝拰灞曠ず椤点€?,
+          en: "Create presentations and proposal-style pages quickly."
+        },
+        tags: {
+          zh: ["PPT", "婕旂ず", "鎻愭"],
+          en: ["slides", "presentation", "pitch"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#ff8f5c"
+      },
+      {
+        name: "HeyGen",
+        categoryKey: "cat_video",
+        url: "https://www.heygen.com/",
+        summary: {
+          zh: "AI 鏁板瓧浜哄拰鍙ｆ挱瑙嗛鐢熸垚锛岄€傚悎钀ラ攢灞曠ず銆?,
+          en: "Avatar and talking-head style AI video creation."
+        },
+        tags: {
+          zh: ["瑙嗛", "鏁板瓧浜?, "钀ラ攢"],
+          en: ["video", "avatar", "marketing"]
+        },
+        priceKey: "price_paid_main",
+        accent: "#3bb2ff"
+      },
+      {
+        name: "Runway",
+        categoryKey: "cat_video",
+        url: "https://runwayml.com/",
+        summary: {
+          zh: "瑙嗛鐢熸垚涓庣紪杈戣兘鍔涜緝寮猴紝閫傚悎鍒涙剰鍐呭鍒朵綔銆?,
+          en: "AI video generation and editing for creative content."
+        },
+        tags: {
+          zh: ["瑙嗛", "鐢熸垚", "缂栬緫"],
+          en: ["video", "generation", "editing"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#7effb2"
+      },
+      {
+        name: "ElevenLabs",
+        categoryKey: "cat_audio",
+        url: "https://elevenlabs.io/",
+        summary: {
+          zh: "楂樿川閲?AI 璇煶鐢熸垚锛岄€傚悎閰嶉煶鍜岄煶棰戝唴瀹广€?,
+          en: "Strong AI voice generation for narration and speech work."
+        },
+        tags: {
+          zh: ["璇煶", "閰嶉煶", "闊抽"],
+          en: ["voice", "audio", "speech"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#ffd166"
+      },
+      {
+        name: "Kimi",
+        categoryKey: "cat_chinese",
+        url: "https://kimi.moonshot.cn/",
+        summary: {
+          zh: "鍋忎腑鏂囧満鏅殑闀挎枃闃呰鍜岃祫鏂欐暣鐞嗕綋楠屼笉閿欍€?,
+          en: "Useful for long-form reading and Chinese-language workflows."
+        },
+        tags: {
+          zh: ["涓枃", "闀挎枃", "闃呰"],
+          en: ["Chinese", "reading", "documents"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#2ec4b6"
+      },
+      {
+        name: "Doubao",
+        categoryKey: "cat_chinese",
+        url: "https://www.doubao.com/",
+        summary: {
+          zh: "閫傚悎涓枃闂瓟銆佸啓浣滃拰澶氬満鏅唴瀹圭敓鎴愩€?,
+          en: "Chinese-first chat and writing tool for everyday tasks."
+        },
+        tags: {
+          zh: ["涓枃", "鑱婂ぉ", "鍐欎綔"],
+          en: ["Chinese", "chat", "writing"]
+        },
+        priceKey: "price_free_main",
+        accent: "#5d8dff"
+      },
+      {
+        name: "Tongyi",
+        categoryKey: "cat_chinese",
+        url: "https://tongyi.aliyun.com/",
+        summary: {
+          zh: "闃块噷绯?AI 骞冲彴锛岃鐩栧璇濄€佺粯鍥句笌浼佷笟鑳藉姏銆?,
+          en: "Alibaba AI platform covering chat, image, and broader workflows."
+        },
+        tags: {
+          zh: ["涓枃", "浼佷笟", "瀵硅瘽"],
+          en: ["Chinese", "enterprise", "chat"]
+        },
+        priceKey: "price_free_partial",
+        accent: "#ffb347"
+      }
     ];
 
-    const categories = ["All", ...new Set(tools.map((tool) => tool.category))];
-    const state = { category: "All", search: "" };
+    const metaDescription = document.querySelector('meta[name="description"]');
+    const searchEl = document.getElementById("search-input");
     const chipsEl = document.getElementById("chips");
     const gridEl = document.getElementById("grid");
     const countEl = document.getElementById("count");
-    const searchEl = document.getElementById("search-input");
+
+    const state = {
+      locale: localStorage.getItem(AI_STORAGE_KEY) || "zh",
+      category: "",
+      search: ""
+    };
+
+    function currentCopy() {
+      return AI_I18N[state.locale] || AI_I18N.zh;
+    }
+
+    function categoriesForLocale() {
+      const copy = currentCopy();
+      return [copy.all, ...new Set(tools.map((tool) => copy[tool.categoryKey]))];
+    }
+
+    function applyLocale(locale) {
+      state.locale = locale;
+      const copy = currentCopy();
+      document.documentElement.lang = copy.lang;
+      document.title = copy.title;
+      metaDescription.setAttribute("content", copy.description);
+      searchEl.placeholder = copy.search_placeholder;
+      if (!categoriesForLocale().includes(state.category)) {
+        state.category = copy.all;
+      }
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        node.textContent = copy[key] || "";
+      });
+
+      document.querySelectorAll("[data-lang]").forEach((button) => {
+        button.classList.toggle("active", button.getAttribute("data-lang") === locale);
+      });
+
+      localStorage.setItem(AI_STORAGE_KEY, locale);
+      renderChips();
+      renderGrid();
+    }
 
     function renderChips() {
+      const categories = categoriesForLocale();
       chipsEl.innerHTML = categories.map((category) => `
         <button class="chip-btn ${category === state.category ? "active" : ""}" data-category="${category}" type="button">${category}</button>
       `).join("");
     }
 
     function renderGrid() {
+      const copy = currentCopy();
       const items = tools.filter((tool) => {
-        const matchCategory = state.category === "All" || tool.category === state.category;
-        const haystack = [tool.name, tool.category, tool.summary, ...tool.tags].join(" ").toLowerCase();
+        const localizedCategory = copy[tool.categoryKey];
+        const localizedSummary = tool.summary[state.locale];
+        const localizedTags = tool.tags[state.locale];
+        const matchCategory = state.category === copy.all || localizedCategory === state.category;
+        const haystack = [tool.name, localizedCategory, localizedSummary, ...localizedTags].join(" ").toLowerCase();
         const matchSearch = !state.search || haystack.includes(state.search);
         return matchCategory && matchSearch;
       });
 
-      countEl.textContent = `Showing ${items.length} / ${tools.length} tools`;
+      countEl.textContent = `${copy.showing} ${items.length} / ${tools.length} ${copy.tools}`;
 
       if (!items.length) {
-        gridEl.innerHTML = '<div class="empty">No matching tools found. Try a different keyword.</div>';
+        gridEl.innerHTML = `<div class="empty">${copy.noMatch}</div>`;
         return;
       }
 
@@ -206,18 +614,18 @@
         <article class="tool-card" style="--tool-accent:${tool.accent}">
           <div class="tool-top">
             <div>
-              <div class="meta">${tool.category}</div>
+              <div class="meta">${copy[tool.categoryKey]}</div>
               <h3>${tool.name}</h3>
             </div>
-            <span class="badge">${tool.price}</span>
+            <span class="badge">${copy[tool.priceKey]}</span>
           </div>
-          <p>${tool.summary}</p>
+          <p>${tool.summary[state.locale]}</p>
           <div class="tag-row">
-            ${tool.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}
+            ${tool.tags[state.locale].map((tag) => `<span class="chip">${tag}</span>`).join("")}
           </div>
           <div class="card-bottom">
-            <span class="meta">${tool.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
-            <a class="visit" href="${tool.url}" target="_blank" rel="noreferrer">Open</a>
+            <span class="meta">${tool.url.replace(/^https?:\\/\\//, "").replace(/\\/$/, "")}</span>
+            <a class="visit" href="${tool.url}" target="_blank" rel="noreferrer">${copy.open}</a>
           </div>
         </article>
       `).join("");
@@ -236,8 +644,11 @@
       renderGrid();
     });
 
-    renderChips();
-    renderGrid();
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      button.addEventListener("click", () => applyLocale(button.getAttribute("data-lang")));
+    });
+
+    applyLocale(state.locale);
   </script>
 </body>
 </html>
