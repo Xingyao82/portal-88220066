@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&#x82F1;&#x8BED;&#x9879;&#x76EE; | 88220066.xyz</title>
+  <meta name="description" content="&#x628A;&#x82F1;&#x8BED;&#x76F8;&#x5173;&#x5DE5;&#x5177;&#x5355;&#x72EC;&#x6574;&#x7406;&#x6210;&#x9879;&#x76EE;&#x9875;&#xFF0C;&#x5148;&#x6536;&#x542C;&#x5199;&#xFF0C;&#x518D;&#x6162;&#x6162;&#x8865;&#x8BCD;&#x6C47;&#x5361;&#x7247;&#x3001;&#x9605;&#x8BFB;&#x62C6;&#x53E5;&#x3001;&#x8DDF;&#x8BFB;&#x7EC3;&#x4E60;&#x548C;&#x5199;&#x4F5C;&#x8F85;&#x52A9;&#x3002;">
+  <meta name="theme-color" content="#0b1222">
+  <style>
+    :root { --text:#edf3ff; --muted:#a9b7d6; --line:rgba(255,255,255,.1); --accent:#ff8a34; --accent-soft:rgba(255,138,52,.16); --max:1220px; --radius-xl:28px; --radius-lg:22px; --radius-md:16px; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; background:radial-gradient(circle at 14% 16%, rgba(255,138,52,.25), transparent 0 24%), radial-gradient(circle at 86% 16%, rgba(75,141,255,.14), transparent 0 22%), radial-gradient(circle at 62% 84%, rgba(52,211,153,.12), transparent 0 22%), linear-gradient(180deg, #10131b 0%, #141925 48%, #10131b 100%); }
+    a { color:inherit; text-decoration:none; } button, input { font:inherit; }
+    .shell { width:min(calc(100% - 28px),var(--max)); margin:0 auto; padding:24px 0 54px; }
+    .nav, .toolbar, .section { border:1px solid var(--line); background:linear-gradient(180deg, rgba(18,23,35,.92), rgba(12,16,26,.96)); backdrop-filter:blur(16px); box-shadow:0 22px 60px rgba(0,0,0,.26); }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-radius:22px; }
+    .brand { font-weight:700; letter-spacing:-.03em; }
+    .nav-links { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); }
+    .nav-links a:hover, .nav-links a.active { color:var(--text); }
+    .toolbar { margin-top:18px; padding:20px; border-radius:24px; }
+    .toolbar-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .toolbar-head h1 { margin:0; font-size:clamp(2rem,4vw,3rem); letter-spacing:-.05em; }
+    .toolbar-head p { margin:10px 0 0; max-width:48rem; color:var(--muted); line-height:1.75; }
+    .count { display:inline-flex; align-items:center; min-height:42px; padding:0 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:var(--accent-soft); color:#fff6ed; font-size:.95rem; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:18px; }
+    .stat { padding:16px; border-radius:var(--radius-md); border:1px solid var(--line); background:rgba(255,255,255,.04); }
+    .stat-label { color:var(--muted); font-size:.9rem; margin-bottom:8px; }
+    .stat strong { display:block; font-size:1rem; line-height:1.5; }
+    .search { margin-top:18px; }
+    .search input { width:100%; min-height:52px; padding:0 16px; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:var(--text); }
+    .filter-stack { display:grid; gap:12px; margin-top:16px; }
+    .filter-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+    .filter-label { min-width:84px; padding-top:8px; color:var(--muted); font-size:.94rem; }
+    .chips { display:flex; flex-wrap:wrap; gap:10px; flex:1; }
+    .chip-btn { padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:var(--muted); cursor:pointer; transition:160ms ease; }
+    .chip-btn.active, .chip-btn:hover { color:var(--text); border-color:rgba(255,138,52,.44); background:rgba(255,138,52,.14); }
+    .section { margin-top:18px; padding:22px; border-radius:var(--radius-xl); }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .section-head h2 { margin:0; font-size:1.42rem; letter-spacing:-.04em; }
+    .section-head p { margin:8px 0 0; color:var(--muted); line-height:1.7; }
+    .quick-grid, .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .tool-card { position:relative; display:grid; gap:14px; padding:18px; border-radius:var(--radius-lg); border:1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.18)) 58%, rgba(255,255,255,.08)); background:linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03)); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.15)) 18%, transparent); transition:transform 180ms ease, box-shadow 180ms ease; }
+    .tool-card::before { content:""; position:absolute; inset:0 auto 0 0; width:4px; border-radius:var(--radius-lg) 0 0 var(--radius-lg); background:var(--tool-accent,var(--accent)); }
+    .tool-card:hover { transform:translateY(-4px); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,.28); }
+    .tool-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .tool-top h3 { margin:4px 0 0; font-size:1.16rem; }
+    .meta, .tool-card p { margin:0; color:var(--muted); line-height:1.72; }
+    .badge, .status-badge { display:inline-flex; align-items:center; justify-content:center; min-height:30px; padding:0 10px; border-radius:999px; font-size:12px; color:#fff7ef; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%); }
+    .status-badge { background:rgba(255,255,255,.08); }
+    .tag-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { display:inline-flex; padding:7px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); color:var(--muted); font-size:12px; }
+    .mini-list { display:grid; gap:8px; }
+    .mini-list div { display:flex; justify-content:space-between; gap:14px; color:var(--muted); font-size:.95rem; }
+    .mini-list strong { color:var(--text); font-weight:600; text-align:right; }
+    .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; flex-wrap:wrap; }
+    .btn-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .visit, .ghost, .disabled { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 14px; border-radius:999px; }
+    .visit { color:#111; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%); }
+    .ghost { color:var(--text); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); }
+    .disabled { color:var(--muted); border:1px dashed rgba(255,255,255,.12); background:rgba(255,255,255,.03); cursor:default; }
+    .empty { padding:20px; border-radius:var(--radius-lg); border:1px dashed rgba(255,255,255,.16); color:var(--muted); text-align:center; }
+    @media (max-width:1180px) { .stats, .quick-grid, .grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:720px) { .shell { width:min(calc(100% - 18px),var(--max)); } .nav { flex-direction:column; align-items:flex-start; } .filter-row { flex-direction:column; gap:10px; } .filter-label { min-width:auto; padding-top:0; } .stats, .quick-grid, .grid { grid-template-columns:1fr; } .section-head { flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="nav">
+      <div class="brand">88220066.xyz / &#x82F1;&#x8BED;&#x9879;&#x76EE;</div>
+      <nav class="nav-links" aria-label="Primary"><a href="/">&#x9996;&#x9875;</a><a href="/tools-nav/">&#x5DE5;&#x5177;&#x5BFC;&#x822A;</a><a href="/english-tools/" class="active">&#x82F1;&#x8BED;&#x9879;&#x76EE;</a><a href="/dictation/">&#x542C;&#x5199;</a></nav>
+    </header>
+    <section class="toolbar">
+      <div class="toolbar-head">
+        <div><h1>&#x82F1;&#x8BED;&#x9879;&#x76EE;</h1><p>&#x628A;&#x82F1;&#x8BED;&#x76F8;&#x5173;&#x5DE5;&#x5177;&#x5355;&#x72EC;&#x6536;&#x6210;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x9875;&#x3002;&#x73B0;&#x5728;&#x5148;&#x628A;&#x5355;&#x8BCD;&#x542C;&#x5199;&#x653E;&#x8FDB;&#x6765;&#xFF0C;&#x518D;&#x628A;&#x8BCD;&#x6C47;&#x5361;&#x7247;&#x3001;&#x9605;&#x8BFB;&#x62C6;&#x53E5;&#x3001;&#x8DDF;&#x8BFB;&#x7EC3;&#x4E60;&#x548C;&#x5199;&#x4F5C;&#x8F85;&#x52A9;&#x8FD9;&#x4E9B;&#x65B9;&#x5411;&#x6446;&#x6E05;&#x695A;&#xFF0C;&#x540E;&#x9762;&#x4E00;&#x9879;&#x9879;&#x8865;&#x3002;</p></div>
+        <div class="count" id="count">&#x6B63;&#x5728;&#x8F7D;&#x5165;</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">&#x5DF2;&#x4E0A;&#x7EBF;</div><strong>1 &#x4E2A;&#x53EF;&#x76F4;&#x63A5;&#x6253;&#x5F00;</strong></div>
+        <div class="stat"><div class="stat-label">&#x7B79;&#x5907;&#x4E2D;</div><strong>4 &#x4E2A;&#x82F1;&#x8BED;&#x5DE5;&#x5177;&#x65B9;&#x5411;</strong></div>
+        <div class="stat"><div class="stat-label">&#x5F53;&#x524D;&#x91CD;&#x70B9;</div><strong>&#x5148;&#x628A;&#x542C;&#x5199;&#x7EC3;&#x4E60;&#x505A;&#x597D;&#xFF0C;&#x518D;&#x5F80;&#x9605;&#x8BFB;&#x548C;&#x8BCD;&#x6C47;&#x6269;</strong></div>
+        <div class="stat"><div class="stat-label">&#x9002;&#x5408;&#x573A;&#x666F;</div><strong>&#x542C;&#x5199;&#x3001;&#x8BB0;&#x8BCD;&#x3001;&#x9605;&#x8BFB;&#x3001;&#x8DDF;&#x8BFB;&#x3001;&#x5199;&#x4F5C;</strong></div>
+      </div>
+      <label class="search"><input id="search-input" type="search" placeholder="&#x641C;&#x7D22;&#x5DE5;&#x5177;&#x540D;&#x3001;&#x6807;&#x7B7E;&#x6216;&#x8BF4;&#x660E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;&#x542C;&#x5199;&#x3001;&#x8BCD;&#x6C47;&#x3001;&#x9605;&#x8BFB;&#x3001;&#x8DDF;&#x8BFB;"></label>
+      <div class="filter-stack">
+        <div class="filter-row"><div class="filter-label">&#x72B6;&#x6001;</div><div id="status-chips" class="chips" aria-label="&#x72B6;&#x6001;&#x7B5B;&#x9009;"></div></div>
+        <div class="filter-row"><div class="filter-label">&#x65B9;&#x5411;</div><div id="scene-chips" class="chips" aria-label="&#x65B9;&#x5411;&#x7B5B;&#x9009;"></div></div>
+      </div>
+    </section>
+    <section class="section"><div class="section-head"><div><h2>&#x5148;&#x7528;&#x8FD9;&#x4E2A;</h2><p>&#x5DF2;&#x7ECF;&#x80FD;&#x76F4;&#x63A5;&#x6253;&#x5F00;&#x7684;&#x82F1;&#x8BED;&#x5DE5;&#x5177;&#x5148;&#x653E;&#x5728;&#x524D;&#x9762;&#xFF0C;&#x4FDD;&#x8BC1;&#x8FD9;&#x4E00;&#x9875;&#x4E0D;&#x662F;&#x53EA;&#x6709;&#x60F3;&#x6CD5;&#x3002;</p></div></div><div id="quick-grid" class="quick-grid"></div></section>
+    <section class="section"><div class="section-head"><div><h2>&#x82F1;&#x8BED;&#x5DE5;&#x5177;&#x6E05;&#x5355;</h2><p>&#x8FD9;&#x9875;&#x4F1A;&#x7EE7;&#x7EED;&#x6269;&#xFF0C;&#x5148;&#x628A;&#x65B9;&#x5411;&#x5B9A;&#x51FA;&#x6765;&#xFF0C;&#x540E;&#x9762;&#x4F60;&#x60F3;&#x8865;&#x54EA;&#x4E00;&#x4E2A;&#x6211;&#x5C31;&#x63A5;&#x7740;&#x505A;&#x54EA;&#x4E00;&#x4E2A;&#x3002;</p></div></div><div id="grid" class="grid"></div></section>
+  </div>
+  <script>
+    const labels = { allStatus:"\u5168\u90e8\u72b6\u6001", allScene:"\u5168\u90e8\u65b9\u5411", showing:"\u5f53\u524d\u663e\u793a", items:"\u4e2a\u5de5\u5177", open:"\u6253\u5f00", pending:"\u7b79\u5907\u4e2d", noMatch:"\u6ca1\u6709\u627e\u5230\u5339\u914d\u7684\u82f1\u8bed\u5de5\u5177\uff0c\u6362\u4e2a\u5173\u952e\u8bcd\u6216\u7b5b\u9009\u8bd5\u8bd5\u3002" };
+    const tools = [
+      { name:"\u5355\u8bcd\u542c\u5199", status:"\u5df2\u4e0a\u7ebf", scene:"\u542c\u5199\u7ec3\u4e60", badge:"\u5f53\u524d\u4e3b\u5165\u53e3", accent:"#ff8a34", score:5, summary:"\u76f4\u63a5\u5f00\u59cb\u5355\u8bcd\u542c\u5199\u7ec3\u4e60\uff0c\u9002\u5408\u5feb\u901f\u590d\u4e60\u548c\u8bb0\u5fc6\u5de9\u56fa\u3002", note:"\u73b0\u5728\u82f1\u8bed\u9879\u76ee\u91cc\u6700\u6210\u719f\u7684\u5165\u53e3\u5c31\u662f\u5b83\u3002", tags:["\u82f1\u8bed","\u542c\u5199","\u8bb0\u5fc6","\u5df2\u4e0a\u7ebf"], url:"/dictation/", extraUrl:"/tools-nav/", extraLabel:"\u8fd4\u56de\u5de5\u5177\u5bfc\u822a" },
+      { name:"\u8bcd\u6c47\u5361\u7247", status:"\u7b79\u5907\u4e2d", scene:"\u8bcd\u6c47\u8bb0\u5fc6", badge:"\u4e0b\u4e00\u6b65\u53ef\u505a", accent:"#ffb14a", score:4, summary:"\u8ba1\u5212\u505a\u6210\u6309\u719f\u7ec3\u5ea6\u3001\u8bcd\u6027\u548c\u4f8b\u53e5\u6574\u7406\u7684\u8bcd\u6c47\u5361\u7247\u5de5\u5177\u3002", note:"\u5f88\u9002\u5408\u548c\u542c\u5199\u3001\u590d\u4e60\u8bb0\u5f55\u914d\u5957\u3002", tags:["\u82f1\u8bed","\u8bcd\u6c47","\u5361\u7247","\u8bb0\u5fc6"] },
+      { name:"\u9605\u8bfb\u62c6\u53e5", status:"\u7b79\u5907\u4e2d", scene:"\u9605\u8bfb\u7406\u89e3", badge:"\u4e0b\u4e00\u6b65\u53ef\u505a", accent:"#ffb14a", score:4, summary:"\u8ba1\u5212\u505a\u6210\u957f\u53e5\u62c6\u5206\u3001\u77ed\u8bed\u9ad8\u4eae\u548c\u53e5\u610f\u5206\u5757\u7684\u9605\u8bfb\u5de5\u5177\u3002", note:"\u9002\u5408\u6587\u7ae0\u7cbe\u8bfb\u548c\u957f\u96be\u53e5\u8bad\u7ec3\u3002", tags:["\u82f1\u8bed","\u9605\u8bfb","\u62c6\u53e5","\u7cbe\u8bfb"] },
+      { name:"\u8ddf\u8bfb\u7ec3\u4e60", status:"\u7b79\u5907\u4e2d", scene:"\u53e3\u8bed\u8ddf\u8bfb", badge:"\u4e0b\u4e00\u6b65\u53ef\u505a", accent:"#ffb14a", score:3, summary:"\u8ba1\u5212\u505a\u6210\u53e5\u5b50\u8ddf\u8bfb\u3001\u505c\u987f\u5206\u5757\u548c\u590d\u8ff0\u7ec3\u4e60\u5165\u53e3\u3002", note:"\u5982\u679c\u540e\u9762\u52a0\u97f3\u9891\u80fd\u529b\uff0c\u8fd9\u4e2a\u4f1a\u5f88\u987a\u3002", tags:["\u82f1\u8bed","\u53e3\u8bed","\u8ddf\u8bfb","\u53d1\u97f3"] },
+      { name:"\u5199\u4f5c\u6da6\u8272", status:"\u7b79\u5907\u4e2d", scene:"\u82f1\u6587\u5199\u4f5c", badge:"\u4e0b\u4e00\u6b65\u53ef\u505a", accent:"#ffb14a", score:3, summary:"\u8ba1\u5212\u505a\u6210\u82f1\u6587\u53e5\u5b50\u6539\u5199\u3001\u8868\u8fbe\u66ff\u6362\u548c\u8bed\u6c14\u4f18\u5316\u7684\u5c0f\u5de5\u5177\u3002", note:"\u9002\u5408\u548c AI \u8f85\u52a9\u7ed3\u5408\uff0c\u4f46\u524d\u7aef\u4e5f\u80fd\u5148\u505a\u8f93\u5165\u8f93\u51fa\u7ed3\u6784\u3002", tags:["\u82f1\u8bed","\u5199\u4f5c","\u6da6\u8272","\u8868\u8fbe"] }
+    ];
+    const statuses = [labels.allStatus,"\u5df2\u4e0a\u7ebf","\u7b79\u5907\u4e2d"];
+    const scenes = [labels.allScene,"\u542c\u5199\u7ec3\u4e60","\u8bcd\u6c47\u8bb0\u5fc6","\u9605\u8bfb\u7406\u89e3","\u53e3\u8bed\u8ddf\u8bfb","\u82f1\u6587\u5199\u4f5c"];
+    const state = { status:labels.allStatus, scene:labels.allScene, search:"" };
+    const statusChipsEl = document.getElementById("status-chips"), sceneChipsEl = document.getElementById("scene-chips"), quickGridEl = document.getElementById("quick-grid"), gridEl = document.getElementById("grid"), countEl = document.getElementById("count"), searchEl = document.getElementById("search-input");
+    const renderChipGroup = (container, values, key, current) => container.innerHTML = values.map((value) => `<button class="chip-btn ${value === current ? "active" : ""}" data-${key}="${value}" type="button">${value}</button>`).join("");
+    function renderChips() { renderChipGroup(statusChipsEl, statuses, "status", state.status); renderChipGroup(sceneChipsEl, scenes, "scene", state.scene); }
+    function filteredTools() { return tools.filter((tool) => { const haystack = [tool.name, tool.status, tool.scene, tool.summary, tool.note, ...(tool.tags || [])].join(" ").toLowerCase(); return (state.status === labels.allStatus || tool.status === state.status) && (state.scene === labels.allScene || tool.scene === state.scene) && (!state.search || haystack.includes(state.search)); }); }
+    function cardTemplate(tool) {
+      const actions = tool.url ? `<div class="btn-row">${tool.extraUrl ? `<a class="ghost" href="${tool.extraUrl}">${tool.extraLabel || labels.open}</a>` : ""}<a class="visit" href="${tool.url}">${labels.open}</a></div>` : `<span class="disabled">${labels.pending}</span>`;
+      return `<article class="tool-card" style="--tool-accent:${tool.accent}"><div class="tool-top"><div><div class="meta">${tool.scene}</div><h3>${tool.name}</h3></div><div class="btn-row"><span class="status-badge">${tool.status}</span><span class="badge">${tool.badge}</span></div></div><p>${tool.summary}</p><div class="tag-row">${(tool.tags || []).slice(0,5).map((tag) => `<span class="chip">${tag}</span>`).join("")}</div><div class="mini-list"><div><span>\u5f53\u524d\u72b6\u6001</span><strong>${tool.status}</strong></div><div><span>\u9002\u5408\u573a\u666f</span><strong>${tool.note}</strong></div></div><div class="card-bottom"><span class="meta">${tool.url || "\u5373\u5c06\u52a0\u5165"}</span>${actions}</div></article>`;
+    }
+    function renderQuickGrid() { quickGridEl.innerHTML = tools.filter((tool) => tool.status === "\u5df2\u4e0a\u7ebf").slice(0,3).map(cardTemplate).join(""); }
+    function renderGrid() { const items = filteredTools(); countEl.textContent = `${labels.showing} ${items.length} / ${tools.length} ${labels.items}`; renderQuickGrid(); gridEl.innerHTML = items.length ? items.map(cardTemplate).join("") : `<div class="empty">${labels.noMatch}</div>`; }
+    statusChipsEl.addEventListener("click", (event) => { const button = event.target.closest("[data-status]"); if (!button) return; state.status = button.dataset.status; renderChips(); renderGrid(); });
+    sceneChipsEl.addEventListener("click", (event) => { const button = event.target.closest("[data-scene]"); if (!button) return; state.scene = button.dataset.scene; renderChips(); renderGrid(); });
+    searchEl.addEventListener("input", () => { state.search = searchEl.value.trim().toLowerCase(); renderGrid(); });
+    renderChips(); renderGrid();
+  </script>
+</body>
+</html>
