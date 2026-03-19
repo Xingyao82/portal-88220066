@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI &#24037;&#20855;&#23548;&#33322; | 88220066.xyz</title>
-  <meta name="description" content="&#19968;&#20010;&#32431;&#21069;&#31471;&#30340; AI &#24037;&#20855;&#23548;&#33322;&#39029;&#65292;&#25353;&#32842;&#22825;&#12289;&#20195;&#30721;&#12289;&#35774;&#35745;&#12289;&#25628;&#32034;&#12289;&#38899;&#35270;&#39057;&#21644;&#25928;&#29575;&#31561;&#22330;&#26223;&#24555;&#36895;&#31579;&#36873;&#12290;">
+  <title>AI 工具导航 | 88220066.xyz</title>
+  <meta name="description" content="把常用 AI 工具整理成一个更好找的导航页，按聊天、代码、设计、搜索、音视频和效率场景快速筛选。">
   <meta name="theme-color" content="#0c1020">
   <style>
     :root {
@@ -15,6 +15,7 @@
       --max: 1220px;
       --radius-xl: 28px;
       --radius-lg: 22px;
+      --radius-md: 16px;
     }
     * { box-sizing: border-box; }
     body {
@@ -48,28 +49,63 @@
     .brand { font-weight: 700; letter-spacing: -0.03em; }
     .nav-links { display: flex; gap: 18px; color: var(--muted); flex-wrap: wrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .toolbar { margin-top: 18px; padding: 16px 18px; border-radius: 24px; }
+    .toolbar { margin-top: 18px; padding: 20px; border-radius: 24px; }
     .toolbar-head {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
     }
     .toolbar-head h1 {
       margin: 0;
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       letter-spacing: -0.05em;
     }
     .toolbar-head p {
       margin: 10px 0 0;
+      max-width: 48rem;
       color: var(--muted);
+      line-height: 1.75;
     }
-    .search { margin-top: 16px; }
+    .count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(124, 104, 255, 0.12);
+      color: #f4f6ff;
+      font-size: 0.94rem;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .stat {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .search { margin-top: 18px; }
     .search input {
       width: 100%;
-      min-height: 50px;
-      border-radius: 16px;
+      min-height: 52px;
+      border-radius: var(--radius-md);
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.05);
       color: var(--text);
@@ -84,7 +120,7 @@
     .filter-stack {
       display: grid;
       gap: 12px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
     .filter-row {
       display: flex;
@@ -93,7 +129,7 @@
       flex-wrap: wrap;
     }
     .filter-label {
-      min-width: 72px;
+      min-width: 84px;
       padding-top: 8px;
       color: var(--muted);
       font-size: 0.94rem;
@@ -129,17 +165,14 @@
       font-size: 1.4rem;
       letter-spacing: -0.04em;
     }
-    .count {
-      color: #f4f6ff;
-      font-size: 0.94rem;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(124, 104, 255, 0.12);
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
     }
     .quick-grid, .grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
     .quick-card, .tool-card {
@@ -153,8 +186,8 @@
       box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.15)) 18%, transparent);
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
-    .quick-card { min-height: 180px; }
-    .tool-card { min-height: 190px; }
+    .quick-card { min-height: 170px; }
+    .tool-card { min-height: 210px; }
     .quick-card::before, .tool-card::before {
       content: "";
       position: absolute;
@@ -173,21 +206,28 @@
       justify-content: space-between;
       gap: 12px;
     }
-    .badge {
-      padding: 8px 11px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: #f5f7ff;
-      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%);
+    .meta, .quick-card p, .tool-card p {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
     }
     .quick-card h3, .tool-card h3 {
       margin: 4px 0 0;
       font-size: 1.14rem;
     }
-    .quick-card p, .tool-card p, .meta {
-      margin: 0;
-      line-height: 1.7;
-      color: var(--muted);
+    .badge, .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #f5f7ff;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%);
+    }
+    .status-badge {
+      background: rgba(255,255,255,0.08);
     }
     .tag-row {
       display: flex;
@@ -203,12 +243,34 @@
       font-size: 12px;
       color: var(--muted);
     }
+    .mini-list {
+      display: grid;
+      gap: 8px;
+    }
+    .mini-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .mini-list strong {
+      color: var(--text);
+      font-weight: 600;
+      text-align: right;
+    }
     .card-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       margin-top: auto;
+      flex-wrap: wrap;
+    }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
     .visit {
       display: inline-flex;
@@ -227,18 +289,15 @@
       color: var(--muted);
       text-align: center;
     }
-    @media (max-width: 1200px) {
-      .quick-grid, .grid { grid-template-columns: 1fr 1fr 1fr; }
-    }
-    @media (max-width: 1040px) {
-      .quick-grid, .grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 1180px) {
+      .stats, .quick-grid, .grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 720px) {
       .shell { width: min(calc(100% - 18px), var(--max)); }
       .nav { flex-direction: column; align-items: flex-start; }
       .filter-row { flex-direction: column; gap: 10px; }
       .filter-label { min-width: auto; padding-top: 0; }
-      .quick-grid, .grid { grid-template-columns: 1fr; }
+      .stats, .quick-grid, .grid { grid-template-columns: 1fr; }
       .section-head { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -246,331 +305,102 @@
 <body>
   <div class="shell">
     <header class="nav">
-      <div class="brand">88220066.xyz / AI &#24037;&#20855;&#23548;&#33322;</div>
+      <div class="brand">88220066.xyz / AI 工具导航</div>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/">&#39318;&#39029;</a>
-        <a href="/dictation/">&#21333;&#35789;&#21548;&#20889;</a>
-        <a href="/asterlab-tools/">&#24037;&#20855;&#31665;</a>
-        <a href="/ai-nav/" class="active">AI &#23548;&#33322;</a>
+        <a href="/">首页</a>
+        <a href="/tools-nav/">免费工具</a>
+        <a href="/english-tools/">免费英语</a>
+        <a href="/ai-nav/" class="active">AI 导航</a>
       </nav>
     </header>
 
     <section class="toolbar">
       <div class="toolbar-head">
         <div>
-          <h1>AI &#23548;&#33322;</h1>
-          <p>&#25353;&#22330;&#26223;&#12289;&#22320;&#21306;&#21644;&#20215;&#26684;&#24555;&#36895;&#31579;&#21040;&#21512;&#36866;&#24037;&#20855;&#65292;&#24050;&#32463;&#25972;&#29702;&#21040; 50+ &#24120;&#29992;&#20135;&#21697;</p>
+          <h1>AI 导航</h1>
+          <p>把常用 AI 产品整理到一个页面里。先看上面的快捷入口，再按场景、地区、价格、上手方式和适合人群筛选，找工具会快很多。</p>
         </div>
-        <div class="count" id="count"></div>
+        <div class="count" id="count">正在加载</div>
       </div>
-      <label class="search"><input id="search-input" type="search" placeholder="&#25628;&#32034;&#24037;&#20855;&#21517;&#12289;&#26631;&#31614;&#25110;&#29992;&#36884;&#65292;&#20363;&#22914;&#65306;&#20195;&#30721;&#12289;&#32472;&#22270;&#12289;&#35270;&#39057;&#12289;&#25628;&#32034;"></label>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">已收录工具</div>
+          <strong id="stat-total">加载中</strong>
+        </div>
+        <div class="stat">
+          <div class="stat-label">免费可用</div>
+          <strong id="stat-free">加载中</strong>
+        </div>
+        <div class="stat">
+          <div class="stat-label">中文优先</div>
+          <strong id="stat-domestic">加载中</strong>
+        </div>
+        <div class="stat">
+          <div class="stat-label">新手优先</div>
+          <strong id="stat-beginner">加载中</strong>
+        </div>
+      </div>
+
+      <label class="search">
+        <input id="search-input" type="search" placeholder="搜索工具名、标签或用途，例如：代码、中文、研究、视频、设计">
+      </label>
+
       <div class="filter-stack">
         <div class="filter-row">
-          <div class="filter-label">&#22330;&#26223;</div>
-          <div id="chips" class="chips" aria-label="&#20998;&#31867;&#31579;&#36873;"></div>
+          <div class="filter-label">场景</div>
+          <div id="chips" class="chips" aria-label="场景筛选"></div>
         </div>
         <div class="filter-row">
-          <div class="filter-label">&#22320;&#21306;</div>
-          <div id="region-chips" class="chips" aria-label="&#22320;&#21306;&#31579;&#36873;"></div>
+          <div class="filter-label">地区</div>
+          <div id="region-chips" class="chips" aria-label="地区筛选"></div>
         </div>
         <div class="filter-row">
-          <div class="filter-label">&#20215;&#26684;</div>
-          <div id="price-chips" class="chips" aria-label="&#20215;&#26684;&#31579;&#36873;"></div>
+          <div class="filter-label">价格</div>
+          <div id="price-chips" class="chips" aria-label="价格筛选"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">上手方式</div>
+          <div id="access-chips" class="chips" aria-label="上手方式筛选"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">适合人群</div>
+          <div id="level-chips" class="chips" aria-label="适合人群筛选"></div>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="section-head">
-        <h2>&#28909;&#38376;&#25512;&#33616;</h2>
+        <div>
+          <h2>快捷入口</h2>
+          <p>先按你的目标场景跳进去，再看下面完整列表，会比从头翻更快。</p>
+        </div>
       </div>
-      <div class="quick-grid">
-        <a class="quick-card" style="--tool-accent:#7c68ff" href="https://chatgpt.com/" target="_blank" rel="noreferrer">
-          <div class="tool-top">
-            <div>
-              <div class="meta">&#36890;&#29992;&#32842;&#22825;</div>
-              <h3>ChatGPT</h3>
-            </div>
-            <span class="badge">&#28909;&#38376;</span>
-          </div>
-          <p>&#23545;&#35805;&#12289;&#20889;&#20316;&#12289;&#20195;&#30721;&#21644;&#26085;&#24120;&#20219;&#21153;&#37117;&#27604;&#36739;&#20840;&#33021;&#12290;</p>
-          <div class="card-bottom">
-            <span class="meta">chatgpt.com</span>
-            <span class="visit">&#25171;&#24320;</span>
-          </div>
-        </a>
-        <a class="quick-card" style="--tool-accent:#25c3a5" href="https://claude.ai/" target="_blank" rel="noreferrer">
-          <div class="tool-top">
-            <div>
-              <div class="meta">&#36890;&#29992;&#32842;&#22825;</div>
-              <h3>Claude</h3>
-            </div>
-            <span class="badge">&#38271;&#25991;</span>
-          </div>
-          <p>&#38271;&#25991;&#26412;&#38305;&#35835;&#12289;&#25972;&#29702;&#21644;&#20195;&#30721;&#21327;&#20316;&#20307;&#39564;&#24456;&#22909;&#12290;</p>
-          <div class="card-bottom">
-            <span class="meta">claude.ai</span>
-            <span class="visit">&#25171;&#24320;</span>
-          </div>
-        </a>
-        <a class="quick-card" style="--tool-accent:#ff9d42" href="https://github.com/features/copilot" target="_blank" rel="noreferrer">
-          <div class="tool-top">
-            <div>
-              <div class="meta">&#20195;&#30721;&#24320;&#21457;</div>
-              <h3>GitHub Copilot</h3>
-            </div>
-            <span class="badge">IDE</span>
-          </div>
-          <p>&#22312;&#32534;&#36753;&#22120;&#37324;&#30452;&#25509;&#36741;&#21161;&#20889;&#20195;&#30721;&#65292;&#38750;&#24120;&#36866;&#21512;&#24320;&#21457;&#32773;&#12290;</p>
-          <div class="card-bottom">
-            <span class="meta">github.com</span>
-            <span class="visit">&#25171;&#24320;</span>
-          </div>
-        </a>
-        <a class="quick-card" style="--tool-accent:#4466ff" href="https://chat.deepseek.com/" target="_blank" rel="noreferrer">
-          <div class="tool-top">
-            <div>
-              <div class="meta">&#20013;&#25991;&#24037;&#20855;</div>
-              <h3>DeepSeek</h3>
-            </div>
-            <span class="badge">&#25512;&#7406;</span>
-          </div>
-          <p>&#20013;&#25991;&#95ee;&#31572;&#21644;&#25512;&#7406;&#4f53;&#39564;&#27604;&#36739;&#7a81;&#20986;&#65292;&#20063;&#33021;&#36741;&#21161;&#20195;&#30721;&#12290;</p>
-          <div class="card-bottom">
-            <span class="meta">chat.deepseek.com</span>
-            <span class="visit">&#25171;&#24320;</span>
-          </div>
-        </a>
-        <a class="quick-card" style="--tool-accent:#00b3a4" href="https://www.perplexity.ai/" target="_blank" rel="noreferrer">
-          <div class="tool-top">
-            <div>
-              <div class="meta">&#25628;&#32034;&#30693;&#35782;</div>
-              <h3>Perplexity</h3>
-            </div>
-            <span class="badge">&#26816;&#32034;</span>
-          </div>
-          <p>&#20559;&#21521; AI &#26816;&#32034;&#21644;&#36164;&#26009;&#67e5;&#35777;&#65292;&#25214;&#31572;&#26696;&#27604;&#36739;&#24555;&#12290;</p>
-          <div class="card-bottom">
-            <span class="meta">perplexity.ai</span>
-            <span class="visit">&#25171;&#24320;</span>
-          </div>
-        </a>
-        <a class="quick-card" style="--tool-accent:#4f8cff" href="https://gemini.google.com/" target="_blank" rel="noreferrer">
-          <div class="tool-top">
-            <div>
-              <div class="meta">&#36890;&#29992;&#32842;&#22825;</div>
-              <h3>Gemini</h3>
-            </div>
-            <span class="badge">&#22810;&#27169;&#24577;</span>
-          </div>
-          <p>Google AI &#21161;&#25163;&#65292;&#20559;&#21521;&#641c;&#32034;&#12289;&#38382;&#31572;&#21644;&#22810;&#27169;&#24577;&#36755;&#20837;&#12290;</p>
-          <div class="card-bottom">
-            <span class="meta">gemini.google.com</span>
-            <span class="visit">&#25171;&#24320;</span>
-          </div>
-        </a>
-      </div>
+      <div id="quick-grid" class="quick-grid"></div>
     </section>
 
-    <section class="section" id="tools">
+    <section class="section">
       <div class="section-head">
-        <h2>AI &#24037;&#20855;&#21015;&#34920;</h2>
+        <div>
+          <h2>先看这几个</h2>
+          <p>把最常用、上手最快或者最有代表性的 AI 工具放在前面，第一次来不用从几十个卡片里慢慢找。</p>
+        </div>
+      </div>
+      <div id="featured-grid" class="quick-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>AI 工具列表</h2>
+          <p>按筛选条件动态收窄范围，搜索也会同时生效。</p>
+        </div>
       </div>
       <div id="grid" class="grid"></div>
     </section>
   </div>
 
-  <script>
-    const labels = {
-      all: "\u5168\u90e8",
-      showing: "\u5f53\u524d\u663e\u793a",
-      tools: "\u4e2a\u5de5\u5177",
-      noMatch: "\u6ca1\u6709\u627e\u5230\u5339\u914d\u9879\uff0c\u6362\u4e2a\u5173\u952e\u8bcd\u8bd5\u8bd5\u3002",
-      open: "\u6253\u5f00",
-      region: "\u5730\u533a",
-      price: "\u4ef7\u683c",
-      region_all: "\u5168\u90e8\u5730\u533a",
-      region_domestic: "\u56fd\u5185",
-      region_global: "\u56fd\u5916",
-      price_all: "\u5168\u90e8\u4ef7\u683c",
-      price_free_partial: "\u90e8\u5206\u514d\u8d39",
-      price_paid: "\u4ed8\u8d39",
-      price_paid_main: "\u4ed8\u8d39\u4e3a\u4e3b",
-      price_free_main: "\u514d\u8d39\u4e3a\u4e3b",
-      cat_general: "\u901a\u7528\u804a\u5929",
-      cat_search: "\u641c\u7d22\u77e5\u8bc6",
-      cat_coding: "\u4ee3\u7801\u5f00\u53d1",
-      cat_design: "\u8bbe\u8ba1\u524d\u7aef",
-      cat_productivity: "\u6548\u7387\u529e\u516c",
-      cat_video: "\u97f3\u89c6\u9891",
-      cat_audio: "\u97f3\u9891",
-      cat_chinese: "\u4e2d\u6587\u5de5\u5177"
-    };
-
-    const tools = [
-      { name: "ChatGPT", categoryKey: "cat_general", url: "https://chatgpt.com/", summary: "\u901a\u7528\u5bf9\u8bdd\u3001\u5199\u4f5c\u3001\u4ee3\u7801\u548c\u65e5\u5e38\u4efb\u52a1\u5904\u7406\u3002", tags: ["\u804a\u5929", "\u5199\u4f5c", "\u4ee3\u7801"], priceKey: "price_free_partial", accent: "#7c68ff" },
-      { name: "Claude", categoryKey: "cat_general", url: "https://claude.ai/", summary: "\u64c5\u957f\u957f\u6587\u672c\u7406\u89e3\u3001\u5199\u4f5c\u6574\u7406\u548c\u4ee3\u7801\u534f\u4f5c\u3002", tags: ["\u957f\u6587", "\u5199\u4f5c", "\u4ee3\u7801"], priceKey: "price_free_partial", accent: "#25c3a5" },
-      { name: "Gemini", categoryKey: "cat_general", url: "https://gemini.google.com/", summary: "Google \u7684\u591a\u6a21\u6001 AI \u52a9\u624b\uff0c\u9002\u5408\u641c\u7d22\u4e0e\u95ee\u7b54\u3002", tags: ["\u641c\u7d22", "\u591a\u6a21\u6001", "\u95ee\u7b54"], priceKey: "price_free_partial", accent: "#4f8cff" },
-      { name: "Perplexity", categoryKey: "cat_search", url: "https://www.perplexity.ai/", summary: "\u66f4\u50cf AI \u641c\u7d22\u5f15\u64ce\uff0c\u9002\u5408\u627e\u8d44\u6599\u548c\u5feb\u901f\u67e5\u8bc1\u3002", tags: ["\u641c\u7d22", "\u8d44\u6599", "\u95ee\u7b54"], priceKey: "price_free_partial", accent: "#00b3a4" },
-      { name: "Kimi", categoryKey: "cat_chinese", url: "https://kimi.moonshot.cn/", summary: "\u504f\u4e2d\u6587\u573a\u666f\u7684\u957f\u6587\u9605\u8bfb\u548c\u8d44\u6599\u6574\u7406\u4f53\u9a8c\u4e0d\u9519\u3002", tags: ["\u4e2d\u6587", "\u957f\u6587", "\u9605\u8bfb"], priceKey: "price_free_partial", accent: "#2ec4b6" },
-      { name: "Doubao", categoryKey: "cat_chinese", url: "https://www.doubao.com/", summary: "\u9002\u5408\u4e2d\u6587\u95ee\u7b54\u3001\u5199\u4f5c\u548c\u591a\u573a\u666f\u5185\u5bb9\u751f\u6210\u3002", tags: ["\u4e2d\u6587", "\u804a\u5929", "\u5199\u4f5c"], priceKey: "price_free_main", accent: "#5d8dff" },
-      { name: "Tongyi", categoryKey: "cat_chinese", url: "https://tongyi.aliyun.com/", summary: "\u963f\u91cc\u7cfb AI \u5e73\u53f0\uff0c\u8986\u76d6\u5bf9\u8bdd\u3001\u7ed8\u56fe\u4e0e\u4f01\u4e1a\u80fd\u529b\u3002", tags: ["\u4e2d\u6587", "\u4f01\u4e1a", "\u5bf9\u8bdd"], priceKey: "price_free_partial", accent: "#ffb347" },
-      { name: "\u5143\u5b9d", categoryKey: "cat_chinese", url: "https://yuanbao.tencent.com/", summary: "\u817e\u8baf AI \u52a9\u624b\uff0c\u9002\u5408\u4e2d\u6587\u95ee\u7b54\u3001\u6587\u6863\u6574\u7406\u548c\u591a\u8f6e\u5bf9\u8bdd\u3002", tags: ["\u4e2d\u6587", "\u95ee\u7b54", "\u817e\u8baf"], priceKey: "price_free_main", accent: "#4ea1ff" },
-      { name: "GitHub Copilot", categoryKey: "cat_coding", url: "https://github.com/features/copilot", summary: "\u9762\u5411\u5f00\u53d1\u8005\u7684\u4ee3\u7801\u8865\u5168\u3001\u5bf9\u8bdd\u548c\u7f16\u7a0b\u8f85\u52a9\u3002", tags: ["\u4ee3\u7801", "IDE", "\u5f00\u53d1"], priceKey: "price_paid_main", accent: "#ff9d42" },
-      { name: "Cursor", categoryKey: "cat_coding", url: "https://www.cursor.com/", summary: "AI \u539f\u751f\u4ee3\u7801\u7f16\u8f91\u5668\uff0c\u9002\u5408\u91cd\u6784\u548c\u534f\u4f5c\u5f0f\u7f16\u7a0b\u3002", tags: ["\u7f16\u8f91\u5668", "\u4ee3\u7801", "\u5f00\u53d1"], priceKey: "price_free_partial", accent: "#7c68ff" },
-      { name: "Windsurf", categoryKey: "cat_coding", url: "https://windsurf.com/", summary: "AI \u7f16\u7a0b IDE\uff0c\u504f\u5411\u5b8c\u6574\u5f00\u53d1\u6d41\u7a0b\u548c Agent \u5f0f\u534f\u4f5c\u3002", tags: ["IDE", "Agent", "\u7f16\u7a0b"], priceKey: "price_free_partial", accent: "#62d0ff" },
-      { name: "v0", categoryKey: "cat_design", url: "https://v0.dev/", summary: "\u8f93\u5165\u63cf\u8ff0\u5373\u53ef\u751f\u6210\u524d\u7aef UI \u4ee3\u7801\u548c\u9875\u9762\u8349\u56fe\u3002", tags: ["\u524d\u7aef", "UI", "\u539f\u578b"], priceKey: "price_free_partial", accent: "#a669ff" },
-      { name: "Midjourney", categoryKey: "cat_design", url: "https://www.midjourney.com/", summary: "\u9ad8\u8d28\u91cf AI \u7ed8\u56fe\u5e73\u53f0\uff0c\u9002\u5408\u6982\u5ff5\u56fe\u548c\u89c6\u89c9\u63a2\u7d22\u3002", tags: ["\u7ed8\u56fe", "\u89c6\u89c9", "\u8bbe\u8ba1"], priceKey: "price_paid", accent: "#ff6e6e" },
-      { name: "Canva AI", categoryKey: "cat_design", url: "https://www.canva.com/", summary: "\u8bbe\u8ba1\u6a21\u677f\u7ed3\u5408 AI \u6587\u6848\u548c\u56fe\u50cf\u80fd\u529b\uff0c\u9002\u5408\u5feb\u901f\u51fa\u56fe\u3002", tags: ["\u8bbe\u8ba1", "\u6a21\u677f", "\u6d77\u62a5"], priceKey: "price_free_partial", accent: "#00c4cc" },
-      { name: "Leonardo AI", categoryKey: "cat_design", url: "https://leonardo.ai/", summary: "\u504f\u56fe\u50cf\u751f\u6210\u548c\u8d44\u4ea7\u98ce\u683c\u5316\uff0c\u9002\u5408\u7d20\u6750\u521b\u4f5c\u3002", tags: ["\u56fe\u50cf", "\u7d20\u6750", "\u751f\u6210"], priceKey: "price_free_partial", accent: "#8a6cff" },
-      { name: "Runway", categoryKey: "cat_video", url: "https://runwayml.com/", summary: "\u89c6\u9891\u751f\u6210\u4e0e\u7f16\u8f91\u80fd\u529b\u8f83\u5f3a\uff0c\u9002\u5408\u521b\u610f\u5185\u5bb9\u5236\u4f5c\u3002", tags: ["\u89c6\u9891", "\u751f\u6210", "\u7f16\u8f91"], priceKey: "price_free_partial", accent: "#7effb2" },
-      { name: "HeyGen", categoryKey: "cat_video", url: "https://www.heygen.com/", summary: "AI \u6570\u5b57\u4eba\u548c\u53e3\u64ad\u89c6\u9891\u751f\u6210\uff0c\u9002\u5408\u8425\u9500\u5c55\u793a\u3002", tags: ["\u89c6\u9891", "\u6570\u5b57\u4eba", "\u8425\u9500"], priceKey: "price_paid_main", accent: "#3bb2ff" },
-      { name: "Pika", categoryKey: "cat_video", url: "https://pika.art/", summary: "\u66f4\u504f\u8f7b\u91cf\u7684 AI \u89c6\u9891\u751f\u6210\u5de5\u5177\uff0c\u9002\u5408\u5feb\u901f\u51fa\u6f14\u793a\u7d20\u6750\u3002", tags: ["\u89c6\u9891", "\u52a8\u753b", "\u751f\u6210"], priceKey: "price_free_partial", accent: "#ff7aa2" },
-      { name: "ElevenLabs", categoryKey: "cat_audio", url: "https://elevenlabs.io/", summary: "\u9ad8\u8d28\u91cf AI \u8bed\u97f3\u751f\u6210\uff0c\u9002\u5408\u914d\u97f3\u548c\u97f3\u9891\u5185\u5bb9\u3002", tags: ["\u8bed\u97f3", "\u914d\u97f3", "\u97f3\u9891"], priceKey: "price_free_partial", accent: "#ffd166" },
-      { name: "Suno", categoryKey: "cat_audio", url: "https://suno.com/", summary: "AI \u97f3\u4e50\u751f\u6210\u5de5\u5177\uff0c\u9002\u5408\u5feb\u901f\u751f\u6210 demo \u548c\u80cc\u666f\u97f3\u4e50\u3002", tags: ["\u97f3\u4e50", "\u751f\u6210", "\u6b4c\u66f2"], priceKey: "price_free_partial", accent: "#ffb84d" },
-      { name: "Notion AI", categoryKey: "cat_productivity", url: "https://www.notion.so/product/ai", summary: "\u9002\u5408\u6574\u7406\u7b14\u8bb0\u3001\u6587\u6863\u603b\u7ed3\u548c\u56e2\u961f\u77e5\u8bc6\u7ba1\u7406\u3002", tags: ["\u7b14\u8bb0", "\u603b\u7ed3", "\u529e\u516c"], priceKey: "price_paid_main", accent: "#8b93a7" },
-      { name: "Tome", categoryKey: "cat_productivity", url: "https://tome.app/", summary: "AI \u6f14\u793a\u6587\u7a3f\u5de5\u5177\uff0c\u9002\u5408\u5feb\u901f\u751f\u6210\u63d0\u6848\u548c\u5c55\u793a\u9875\u3002", tags: ["PPT", "\u6f14\u793a", "\u63d0\u6848"], priceKey: "price_free_partial", accent: "#ff8f5c" },
-      { name: "Gamma", categoryKey: "cat_productivity", url: "https://gamma.app/", summary: "\u9002\u5408 AI \u751f\u6210\u6f14\u793a\u6587\u7a3f\u3001\u9875\u9762\u7ed3\u6784\u548c\u8f7b\u91cf\u63d0\u6848\u3002", tags: ["\u6f14\u793a", "\u6587\u7a3f", "\u7ed3\u6784"], priceKey: "price_free_partial", accent: "#8e7dff" },
-      { name: "Perplexity Labs", categoryKey: "cat_search", url: "https://www.perplexity.ai/", summary: "\u7528 AI \u505a\u8d44\u6599\u68c0\u7d22\u3001\u95ee\u9898\u62c6\u89e3\u548c\u5feb\u901f\u94fe\u63a5\u53c2\u8003\u3002", tags: ["\u68c0\u7d22", "\u7814\u7a76", "\u94fe\u63a5"], priceKey: "price_free_partial", accent: "#22c1a1" },
-      { name: "NotebookLM", categoryKey: "cat_search", url: "https://notebooklm.google/", summary: "\u9002\u5408\u57fa\u4e8e\u6587\u6863\u548c\u8d44\u6599\u5305\u505a\u603b\u7ed3\u3001\u95ee\u7b54\u548c\u5b66\u4e60\u8f85\u52a9\u3002", tags: ["\u6587\u6863", "\u603b\u7ed3", "\u5b66\u4e60"], priceKey: "price_free_partial", accent: "#4da3ff" },
-      { name: "Grok", categoryKey: "cat_general", url: "https://grok.com/", summary: "xAI \u7684\u5bf9\u8bdd\u5de5\u5177\uff0c\u504f\u5feb\u901f\u95ee\u7b54\u548c\u70ed\u70b9\u8bdd\u9898\u68b3\u7406\u3002", tags: ["\u804a\u5929", "\u95ee\u7b54", "\u70ed\u70b9"], priceKey: "price_free_partial", accent: "#d5d7de" },
-      { name: "DeepSeek", categoryKey: "cat_chinese", url: "https://chat.deepseek.com/", summary: "\u4e2d\u6587\u4f53\u9a8c\u4e0d\u9519\u7684 AI \u5bf9\u8bdd\u548c\u63a8\u7406\u5de5\u5177\uff0c\u9002\u5408\u95ee\u7b54\u4e0e\u4ee3\u7801\u8f85\u52a9\u3002", tags: ["\u4e2d\u6587", "\u63a8\u7406", "\u5bf9\u8bdd"], priceKey: "price_free_main", accent: "#4466ff" },
-      { name: "Mistral Le Chat", categoryKey: "cat_general", url: "https://chat.mistral.ai/", summary: "\u6b27\u6d32 AI \u5bf9\u8bdd\u5de5\u5177\uff0c\u9002\u5408\u65e5\u5e38\u95ee\u7b54\u548c\u8f7b\u91cf\u6587\u6863\u5904\u7406\u3002", tags: ["\u804a\u5929", "\u6587\u6863", "\u6b27\u6d32"], priceKey: "price_free_partial", accent: "#ff6b3d" },
-      { name: "Poe", categoryKey: "cat_general", url: "https://poe.com/", summary: "\u4e00\u9875\u91cc\u5207\u6362\u591a\u4e2a AI \u6a21\u578b\uff0c\u9002\u5408\u5bf9\u6bd4\u4f7f\u7528\u3002", tags: ["\u805a\u5408", "\u591a\u6a21\u578b", "\u5bf9\u6bd4"], priceKey: "price_free_partial", accent: "#8d5cf6" },
-      { name: "Phind", categoryKey: "cat_search", url: "https://www.phind.com/", summary: "\u504f\u5f00\u53d1\u8005\u5411\u7684 AI \u641c\u7d22\uff0c\u9002\u5408\u67e5 API \u3001\u67e5\u9519\u548c\u6280\u672f\u8d44\u6599\u3002", tags: ["\u5f00\u53d1", "API", "\u641c\u7d22"], priceKey: "price_free_partial", accent: "#52d2ff" },
-      { name: "Liner", categoryKey: "cat_search", url: "https://getliner.com/", summary: "\u9002\u5408 AI \u68c0\u7d22\u548c\u8d44\u6599\u5212\u91cd\u70b9\uff0c\u504f\u8f7b\u7814\u7a76\u6d41\u7a0b\u3002", tags: ["\u68c0\u7d22", "\u9605\u8bfb", "\u7814\u7a76"], priceKey: "price_free_partial", accent: "#00c8a7" },
-      { name: "Bolt.new", categoryKey: "cat_coding", url: "https://bolt.new/", summary: "\u7528\u63d0\u793a\u8bcd\u5feb\u901f\u751f\u6210\u524d\u7aef\u9879\u76ee\u539f\u578b\uff0c\u9002\u5408 demo \u548c MVP\u3002", tags: ["\u524d\u7aef", "MVP", "\u539f\u578b"], priceKey: "price_free_partial", accent: "#ff6f61" },
-      { name: "Replit AI", categoryKey: "cat_coding", url: "https://replit.com/", summary: "\u5728\u6d4f\u89c8\u5668\u91cc\u76f4\u63a5\u5199\u4ee3\u7801\u548c\u8fd0\u884c\uff0c\u9002\u5408\u8f7b\u5feb\u8bd5\u4f5c\u3002", tags: ["\u7f16\u7801", "\u5728\u7ebf IDE", "\u8bd5\u4f5c"], priceKey: "price_free_partial", accent: "#f26207" },
-      { name: "Lovable", categoryKey: "cat_design", url: "https://lovable.dev/", summary: "\u9002\u5408\u7528\u63cf\u8ff0\u751f\u6210\u9875\u9762\u4e0e\u4ea4\u4e92\u539f\u578b\uff0c\u504f\u4ea7\u54c1 demo \u573a\u666f\u3002", tags: ["\u9875\u9762", "\u4ea4\u4e92", "\u539f\u578b"], priceKey: "price_free_partial", accent: "#ff4fa3" },
-      { name: "Figma AI", categoryKey: "cat_design", url: "https://www.figma.com/ai/", summary: "\u5728 Figma \u91cc\u8f85\u52a9\u8bbe\u8ba1\u3001\u6587\u6848\u4e0e\u754c\u9762\u5feb\u901f\u642d\u5efa\u3002", tags: ["Figma", "\u8bbe\u8ba1", "\u754c\u9762"], priceKey: "price_free_partial", accent: "#7b61ff" },
-      { name: "Luma AI", categoryKey: "cat_video", url: "https://lumalabs.ai/", summary: "\u504f AI \u89c6\u9891\u4e0e 3D \u751f\u6210\uff0c\u9002\u5408\u89c6\u89c9 demo \u548c\u573a\u666f\u6f14\u793a\u3002", tags: ["3D", "\u89c6\u9891", "\u89c6\u89c9"], priceKey: "price_free_partial", accent: "#9a7bff" },
-      { name: "Descript", categoryKey: "cat_audio", url: "https://www.descript.com/", summary: "\u9002\u5408\u97f3\u89c6\u9891\u8f6c\u5f55\u3001\u526a\u8f91\u548c\u57fa\u7840 AI \u97f3\u9891\u5904\u7406\u3002", tags: ["\u8f6c\u5f55", "\u526a\u8f91", "\u97f3\u9891"], priceKey: "price_free_partial", accent: "#6ec1ff" },
-      { name: "Otter", categoryKey: "cat_audio", url: "https://otter.ai/", summary: "\u4f1a\u8bae\u8bb0\u5f55\u3001\u8bed\u97f3\u8f6c\u5199\u548c\u603b\u7ed3\u573a\u666f\u975e\u5e38\u5e38\u7528\u3002", tags: ["\u4f1a\u8bae", "\u8f6c\u5199", "\u603b\u7ed3"], priceKey: "price_free_partial", accent: "#2bb3ff" },
-      { name: "Fireflies", categoryKey: "cat_productivity", url: "https://fireflies.ai/", summary: "\u504f\u4f1a\u8bae\u8f6c\u5199\u3001\u5f52\u6863\u548c\u591a\u4eba\u534f\u4f5c\u6574\u7406\u3002", tags: ["\u4f1a\u8bae", "\u7eaa\u8981", "\u534f\u4f5c"], priceKey: "price_free_partial", accent: "#7e8cff" },
-      { name: "Beautiful.ai", categoryKey: "cat_productivity", url: "https://www.beautiful.ai/", summary: "\u66f4\u504f AI \u6f14\u793a\u7a3f\u751f\u6210\u548c PPT \u5feb\u901f\u6392\u7248\u3002", tags: ["PPT", "\u6392\u7248", "\u6f14\u793a"], priceKey: "price_free_partial", accent: "#00bcd4" },
-      { name: "You.com", categoryKey: "cat_search", url: "https://you.com/", summary: "\u6df7\u5408 AI \u95ee\u7b54\u4e0e\u641c\u7d22\u7ed3\u679c\uff0c\u9002\u5408\u5feb\u901f\u6d4f\u89c8\u4e0d\u540c\u6765\u6e90\u3002", tags: ["\u641c\u7d22", "\u805a\u5408", "\u95ee\u7b54"], priceKey: "price_free_partial", accent: "#7a8cff" },
-      { name: "Qwen Chat", categoryKey: "cat_chinese", url: "https://chat.qwen.ai/", summary: "\u901a\u4e49\u7cfb\u7684\u5bf9\u8bdd\u5165\u53e3\uff0c\u9002\u5408\u4e2d\u6587\u95ee\u7b54\u3001\u5199\u4f5c\u548c\u65e5\u5e38\u4f7f\u7528\u3002", tags: ["\u4e2d\u6587", "\u5bf9\u8bdd", "\u5199\u4f5c"], priceKey: "price_free_partial", accent: "#ffb347" },
-      { name: "Hailuo AI", categoryKey: "cat_video", url: "https://hailuoai.video/", summary: "\u504f\u5411\u4e2d\u6587\u573a\u666f\u7684 AI \u89c6\u9891\u751f\u6210\uff0c\u9002\u5408\u5feb\u901f\u51fa\u77ed\u89c6\u89c9\u7d20\u6750\u3002", tags: ["\u4e2d\u6587", "\u89c6\u9891", "\u751f\u6210"], priceKey: "price_free_partial", accent: "#7f7cff" },
-      { name: "Cici", categoryKey: "cat_chinese", url: "https://www.ciciai.com/", summary: "\u504f\u793e\u4ea4\u548c\u8f7b\u5bf9\u8bdd\u7684 AI \u52a9\u624b\uff0c\u9002\u5408\u65e5\u5e38\u95ee\u7b54\u548c\u5185\u5bb9\u966a\u4f34\u3002", tags: ["\u4e2d\u6587", "\u793e\u4ea4", "\u5bf9\u8bdd"], priceKey: "price_free_main", accent: "#ff7e9c" },
-      { name: "MiniMax", categoryKey: "cat_chinese", url: "https://www.minimaxi.com/", summary: "\u63d0\u4f9b\u6587\u672c\u3001\u8bed\u97f3\u548c\u591a\u6a21\u6001\u80fd\u529b\uff0c\u9002\u5408\u4ea7\u54c1\u8bd5\u7528\u548c\u63a5\u5165\u3002", tags: ["\u4e2d\u6587", "\u8bed\u97f3", "\u591a\u6a21\u6001"], priceKey: "price_free_partial", accent: "#50b5ff" },
-      { name: "Moonvalley", categoryKey: "cat_video", url: "https://moonvalley.com/", summary: "\u66f4\u504f\u7535\u5f71\u611f\u7684 AI \u89c6\u9891\u751f\u6210\uff0c\u9002\u5408\u6982\u5ff5\u7247\u548c\u955c\u5934\u9884\u6f14\u3002", tags: ["\u89c6\u9891", "\u955c\u5934", "\u7535\u5f71"], priceKey: "price_paid_main", accent: "#6d85ff" },
-      { name: "Synthesia", categoryKey: "cat_video", url: "https://www.synthesia.io/", summary: "\u6570\u5b57\u4eba\u914d\u97f3\u548c\u57f9\u8bad\u89c6\u9891\u5f88\u6210\u719f\uff0c\u9002\u5408\u4f01\u4e1a\u5185\u5bb9\u5236\u4f5c\u3002", tags: ["\u6570\u5b57\u4eba", "\u57f9\u8bad", "\u89c6\u9891"], priceKey: "price_paid_main", accent: "#3273ff" },
-      { name: "Udio", categoryKey: "cat_audio", url: "https://www.udio.com/", summary: "\u7528\u63d0\u793a\u8bcd\u751f\u6210\u6b4c\u66f2\u548c\u97f3\u4e50\u7247\u6bb5\uff0c\u9002\u5408\u5feb\u901f\u51fa demo\u3002", tags: ["\u97f3\u4e50", "\u6b4c\u66f2", "demo"], priceKey: "price_free_partial", accent: "#ff9352" },
-      { name: "Stable Audio", categoryKey: "cat_audio", url: "https://www.stableaudio.com/", summary: "\u504f\u80cc\u666f\u97f3\u4e50\u548c\u97f3\u6548\u751f\u6210\uff0c\u9002\u5408\u89c6\u9891\u914d\u4e50\u7d20\u6750\u3002", tags: ["\u97f3\u4e50", "\u97f3\u6548", "\u7d20\u6750"], priceKey: "price_free_partial", accent: "#ffb14e" },
-      { name: "Mem", categoryKey: "cat_productivity", url: "https://mem.ai/", summary: "\u4e3b\u6253 AI \u7b14\u8bb0\u548c\u8054\u60f3\u68c0\u7d22\uff0c\u9002\u5408\u79c1\u4eba\u77e5\u8bc6\u7ba1\u7406\u3002", tags: ["\u7b14\u8bb0", "\u77e5\u8bc6\u5e93", "\u68c0\u7d22"], priceKey: "price_free_partial", accent: "#8d9eff" },
-      { name: "Taskade AI", categoryKey: "cat_productivity", url: "https://www.taskade.com/", summary: "\u9002\u5408\u7528 AI \u62c6\u89e3\u4efb\u52a1\u3001\u751f\u6210\u6e05\u5355\u548c\u8f7b\u534f\u4f5c\u6d41\u7a0b\u3002", tags: ["\u4efb\u52a1", "\u534f\u4f5c", "\u6e05\u5355"], priceKey: "price_free_partial", accent: "#57d3c7" },
-      { name: "Elicit", categoryKey: "cat_search", url: "https://elicit.com/", summary: "\u9762\u5411\u7814\u7a76\u68c0\u7d22\u548c\u8bba\u6587\u68b3\u7406\uff0c\u9002\u5408\u505a\u8d44\u6599\u7efc\u8ff0\u3002", tags: ["\u8bba\u6587", "\u7814\u7a76", "\u68b3\u7406"], priceKey: "price_free_partial", accent: "#5cc8ff" },
-      { name: "Consensus", categoryKey: "cat_search", url: "https://consensus.app/", summary: "\u504f\u5b66\u672f\u95ee\u7b54\u548c\u7814\u7a76\u7ed3\u8bba\u68c0\u7d22\uff0c\u9002\u5408\u5feb\u901f\u627e\u8bba\u636e\u3002", tags: ["\u5b66\u672f", "\u95ee\u7b54", "\u8bba\u636e"], priceKey: "price_free_partial", accent: "#22c7d6" },
-      { name: "Codeium", categoryKey: "cat_coding", url: "https://codeium.com/", summary: "\u514d\u8d39\u611f\u66f4\u5f3a\u7684 AI \u7f16\u7801\u8f85\u52a9\uff0c\u9002\u5408 IDE \u8865\u5168\u548c\u804a\u5929\u3002", tags: ["IDE", "\u8865\u5168", "\u4ee3\u7801"], priceKey: "price_free_main", accent: "#6f86ff" },
-      { name: "Tabnine", categoryKey: "cat_coding", url: "https://www.tabnine.com/", summary: "\u8001\u724c AI \u4ee3\u7801\u8865\u5168\u5de5\u5177\uff0c\u9002\u5408\u5df2\u5728 IDE \u4e2d\u5de5\u4f5c\u7684\u5f00\u53d1\u8005\u3002", tags: ["IDE", "\u8865\u5168", "\u5f00\u53d1"], priceKey: "price_free_partial", accent: "#8a72ff" },
-      { name: "Pixlr AI", categoryKey: "cat_design", url: "https://pixlr.com/", summary: "\u5728\u7ebf\u56fe\u50cf\u7f16\u8f91\u53e0\u52a0 AI \u4fee\u56fe\u80fd\u529b\uff0c\u9002\u5408\u5feb\u901f\u6539\u56fe\u3002", tags: ["\u4fee\u56fe", "\u56fe\u50cf", "\u8bbe\u8ba1"], priceKey: "price_free_partial", accent: "#11c5a4" },
-      { name: "Ideogram", categoryKey: "cat_design", url: "https://ideogram.ai/", summary: "\u504f\u5e26\u6587\u5b57\u7684\u56fe\u50cf\u751f\u6210\uff0c\u9002\u5408\u6d77\u62a5\u3001\u6807\u9898\u56fe\u548c\u54c1\u724c\u89c6\u89c9\u3002", tags: ["\u6d77\u62a5", "\u5b57\u4f53", "\u56fe\u50cf"], priceKey: "price_free_partial", accent: "#ff5d8f" },
-      { name: "CapCut AI", categoryKey: "cat_video", url: "https://www.capcut.com/ai-tools/", summary: "\u526a\u6620\u7cfb AI \u5de5\u5177\uff0c\u9002\u5408\u77ed\u89c6\u9891\u526a\u8f91\u3001\u5b57\u5e55\u548c\u8f7b\u751f\u6210\u3002", tags: ["\u526a\u8f91", "\u77ed\u89c6\u9891", "\u5b57\u5e55"], priceKey: "price_free_partial", accent: "#00c0ff" },
-      { name: "Tripo AI", categoryKey: "cat_design", url: "https://www.tripo3d.ai/", summary: "\u5feb\u901f\u751f\u6210 3D \u6a21\u578b\uff0c\u9002\u5408\u6e38\u620f\u3001\u5c55\u793a\u548c\u7acb\u4f53\u7d20\u6750\u9884\u89c8\u3002", tags: ["3D", "\u6a21\u578b", "\u7d20\u6750"], priceKey: "price_free_partial", accent: "#9b7cff" },
-      { name: "Mapify", categoryKey: "cat_productivity", url: "https://mapify.so/", summary: "\u628a\u957f\u6587\u3001\u89c6\u9891\u6216\u7f51\u9875\u5feb\u901f\u6574\u7406\u6210\u601d\u7ef4\u5bfc\u56fe\u548c\u7ed3\u6784\u5316\u7b14\u8bb0\u3002", tags: ["\u5bfc\u56fe", "\u603b\u7ed3", "\u7ed3\u6784"], priceKey: "price_free_partial", accent: "#49d3ff" }
-    ];
-
-    const domesticNames = new Set(["Kimi", "Doubao", "Tongyi", "\u5143\u5b9d", "DeepSeek", "Qwen Chat", "Hailuo AI", "Cici", "MiniMax", "CapCut AI"]);
-    const categories = [labels.all, ...new Set(tools.map((tool) => labels[tool.categoryKey]))];
-    const regions = [labels.region_all, labels.region_domestic, labels.region_global];
-    const prices = [labels.price_all, labels.price_free_main, labels.price_free_partial, labels.price_paid_main, labels.price_paid];
-    const state = { category: labels.all, region: labels.region_all, price: labels.price_all, search: "" };
-    const chipsEl = document.getElementById("chips");
-    const regionChipsEl = document.getElementById("region-chips");
-    const priceChipsEl = document.getElementById("price-chips");
-    const gridEl = document.getElementById("grid");
-    const countEl = document.getElementById("count");
-    const searchEl = document.getElementById("search-input");
-
-    function getRegionLabel(tool) {
-      return domesticNames.has(tool.name) ? labels.region_domestic : labels.region_global;
-    }
-
-    function renderChips() {
-      chipsEl.innerHTML = categories.map((category) => `
-        <button class="chip-btn ${category === state.category ? "active" : ""}" data-category="${category}" type="button">${category}</button>
-      `).join("");
-      regionChipsEl.innerHTML = regions.map((region) => `
-        <button class="chip-btn ${region === state.region ? "active" : ""}" data-region="${region}" type="button">${region}</button>
-      `).join("");
-      priceChipsEl.innerHTML = prices.map((price) => `
-        <button class="chip-btn ${price === state.price ? "active" : ""}" data-price="${price}" type="button">${price}</button>
-      `).join("");
-    }
-
-    function renderGrid() {
-      const items = tools.filter((tool) => {
-        const localizedCategory = labels[tool.categoryKey];
-        const regionLabel = getRegionLabel(tool);
-        const priceLabel = labels[tool.priceKey];
-        const haystack = [tool.name, localizedCategory, regionLabel, priceLabel, tool.summary, ...tool.tags].join(" ").toLowerCase();
-        const matchCategory = state.category === labels.all || localizedCategory === state.category;
-        const matchRegion = state.region === labels.region_all || regionLabel === state.region;
-        const matchPrice = state.price === labels.price_all || priceLabel === state.price;
-        const matchSearch = !state.search || haystack.includes(state.search);
-        return matchCategory && matchRegion && matchPrice && matchSearch;
-      });
-
-      countEl.textContent = `${labels.showing} ${items.length} / ${tools.length} ${labels.tools}`;
-
-      if (!items.length) {
-        gridEl.innerHTML = `<div class="empty">${labels.noMatch}</div>`;
-        return;
-      }
-
-      gridEl.innerHTML = items.map((tool) => `
-        <article class="tool-card" style="--tool-accent:${tool.accent}">
-          <div class="tool-top">
-            <div>
-              <div class="meta">${labels[tool.categoryKey]} / ${getRegionLabel(tool)}</div>
-              <h3>${tool.name}</h3>
-            </div>
-            <span class="badge">${labels[tool.priceKey]}</span>
-          </div>
-          <p>${tool.summary}</p>
-          <div class="tag-row">
-            ${tool.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}
-          </div>
-          <div class="card-bottom">
-            <span class="meta">${tool.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
-            <a class="visit" href="${tool.url}" target="_blank" rel="noreferrer">${labels.open}</a>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    chipsEl.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-category]");
-      if (!button) return;
-      state.category = button.dataset.category;
-      renderChips();
-      renderGrid();
-    });
-
-    regionChipsEl.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-region]");
-      if (!button) return;
-      state.region = button.dataset.region;
-      renderChips();
-      renderGrid();
-    });
-
-    priceChipsEl.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-price]");
-      if (!button) return;
-      state.price = button.dataset.price;
-      renderChips();
-      renderGrid();
-    });
-
-    searchEl.addEventListener("input", () => {
-      state.search = searchEl.value.trim().toLowerCase();
-      renderGrid();
-    });
-
-    renderChips();
-    renderGrid();
-  </script>
+  <script src="./app.js"></script>
 </body>
 </html>
-
