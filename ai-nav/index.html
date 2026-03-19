@@ -8,9 +8,6 @@
   <meta name="theme-color" content="#0c1020">
   <style>
     :root {
-      --bg: #0a1020;
-      --panel: rgba(14, 20, 39, 0.86);
-      --panel-soft: rgba(255, 255, 255, 0.04);
       --text: #edf2ff;
       --muted: #a9b3cf;
       --line: rgba(255,255,255,0.1);
@@ -34,7 +31,7 @@
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
     .shell { width: min(calc(100% - 28px), var(--max)); margin: 0 auto; padding: 24px 0 54px; }
-    .nav, .hero, .toolbar, .section {
+    .nav, .toolbar, .section {
       border: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(15, 22, 42, 0.88), rgba(11, 16, 31, 0.92));
       backdrop-filter: blur(16px);
@@ -51,63 +48,165 @@
     .brand { font-weight: 700; letter-spacing: -0.03em; }
     .nav-links { display: flex; gap: 18px; color: var(--muted); flex-wrap: wrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .hero {
-      display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-      gap: 22px; margin-top: 18px; padding: 34px; border-radius: var(--radius-xl);
-    }
-    .eyebrow { margin: 0; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: #d2caff; }
-    h1 { margin: 12px 0 16px; font-size: clamp(2.5rem, 5vw, 4.8rem); line-height: 0.98; letter-spacing: -0.06em; }
-    .hero p, .stat span, .tool-card p, .chip, .meta { color: var(--muted); }
-    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
-    .button {
-      display: inline-flex; align-items: center; justify-content: center; min-height: 46px;
-      padding: 0 18px; border-radius: 999px; border: 1px solid transparent; transition: 180ms ease;
-    }
-    .button-primary { color: #08111f; background: linear-gradient(135deg, var(--accent), #b4a9ff); }
-    .button-secondary { border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); }
-    .hero-side { display: grid; gap: 14px; }
-    .stat { padding: 18px 18px 16px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
-    .stat strong { display: block; margin-top: 8px; font-size: 1.2rem; }
     .toolbar { margin-top: 18px; padding: 18px; border-radius: 24px; }
+    .toolbar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .toolbar-head h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.05em;
+    }
+    .toolbar-head p {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+    .search { margin-top: 16px; }
     .search input {
-      width: 100%; min-height: 50px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05); color: var(--text); padding: 0 16px;
+      width: 100%;
+      min-height: 50px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 0 16px;
     }
-    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
     .chip-btn {
-      padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04); color: var(--muted); cursor: pointer; transition: 160ms ease;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 160ms ease;
     }
-    .chip-btn.active, .chip-btn:hover { color: var(--text); border-color: rgba(124, 104, 255, 0.4); background: rgba(124, 104, 255, 0.14); }
+    .chip-btn.active, .chip-btn:hover {
+      color: var(--text);
+      border-color: rgba(124, 104, 255, 0.4);
+      background: rgba(124, 104, 255, 0.14);
+    }
     .section { margin-top: 18px; padding: 22px; border-radius: var(--radius-xl); }
-    .section-head { display: flex; justify-content: space-between; gap: 16px; align-items: end; margin-bottom: 18px; }
-    .section-head h2 { margin: 0; font-size: 1.6rem; letter-spacing: -0.04em; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      letter-spacing: -0.04em;
+    }
     .count { color: var(--muted); font-size: 0.94rem; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .tool-card {
-      position: relative; display: grid; gap: 14px; min-height: 238px; padding: 20px; border-radius: var(--radius-lg);
+    .quick-grid, .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .quick-card, .tool-card {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      min-height: 208px;
+      padding: 20px;
+      border-radius: var(--radius-lg);
       border: 1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.16)) 58%, rgba(255,255,255,0.08));
-      background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.04)) 9%, rgba(255,255,255,0.04)), rgba(255,255,255,0.03));
+      background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.04)) 10%, rgba(255,255,255,0.04)), rgba(255,255,255,0.03));
       box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.15)) 18%, transparent);
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
-    .tool-card::before {
-      content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    .quick-card::before, .tool-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
       background: var(--tool-accent, var(--accent));
     }
-    .tool-card:hover { transform: translateY(-4px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,0.28); }
-    .tool-top { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
-    .badge { padding: 8px 11px; border-radius: 999px; font-size: 12px; color: #f5f7ff; background: color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%); }
-    .tool-card h3 { margin: 4px 0 0; font-size: 1.14rem; }
-    .tool-card p { margin: 0; line-height: 1.7; }
-    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { display: inline-flex; padding: 7px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); font-size: 12px; }
-    .card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; }
-    .meta { font-size: 0.92rem; }
-    .visit { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 14px; border-radius: 999px; color: #08111f; background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%); }
-    .empty { padding: 20px; border-radius: var(--radius-lg); border: 1px dashed rgba(255,255,255,0.16); color: var(--muted); text-align: center; }
-    @media (max-width: 1040px) { .grid { grid-template-columns: 1fr 1fr; } .hero { grid-template-columns: 1fr; } }
-    @media (max-width: 720px) { .shell { width: min(calc(100% - 18px), var(--max)); } .nav { flex-direction: column; align-items: flex-start; } .grid { grid-template-columns: 1fr; } .section-head { flex-direction: column; align-items: flex-start; } }
+    .quick-card:hover, .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,0.28);
+    }
+    .tool-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .badge {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #f5f7ff;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%);
+    }
+    .quick-card h3, .tool-card h3 {
+      margin: 4px 0 0;
+      font-size: 1.14rem;
+    }
+    .quick-card p, .tool-card p, .meta {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .visit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #08111f;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%);
+    }
+    .empty {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(255,255,255,0.16);
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (max-width: 1040px) {
+      .quick-grid, .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .quick-grid, .grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -122,35 +221,71 @@
       </nav>
     </header>
 
-    <section class="hero">
-      <div>
-        <p class="eyebrow">AI Portal</p>
-        <h1>&#25226;&#24120;&#29992; AI &#24037;&#20855;&#25910;&#36827;&#19968;&#20010;&#30495;&#27491;&#22909;&#25214;&#30340;&#23548;&#33322;&#39029;&#12290;</h1>
-        <p>&#25353;&#32842;&#22825;&#12289;&#20195;&#30721;&#12289;&#35774;&#35745;&#12289;&#25628;&#32034;&#12289;&#38899;&#35270;&#39057;&#21644;&#25928;&#29575;&#22330;&#26223;&#31579;&#36873;&#65292;&#24555;&#36895;&#25214;&#21040;&#21512;&#36866;&#30340; AI &#20135;&#21697;&#12290;&#36825;&#20010;&#39029;&#38754;&#26159;&#32431;&#21069;&#31471;&#38745;&#24577;&#23454;&#29616;&#65292;&#21518;&#38754;&#32487;&#32493;&#21152;&#20869;&#23481;&#20063;&#24456;&#26041;&#20415;&#12290;</p>
-        <div class="actions">
-          <a class="button button-primary" href="#tools">&#24320;&#22987;&#27983;&#35272;</a>
-          <a class="button button-secondary" href="/">&#36820;&#22238;&#39318;&#39029;</a>
-        </div>
-      </div>
-      <aside class="hero-side">
-        <article class="stat"><span>&#25910;&#24405;&#26041;&#21521;</span><strong>&#32842;&#22825; / &#20195;&#30721; / &#35774;&#35745; / &#25628;&#32034;</strong></article>
-        <article class="stat"><span>&#39029;&#38754;&#33021;&#21147;</span><strong>&#21069;&#31471;&#31579;&#36873; + &#26631;&#31614;&#27983;&#35272;</strong></article>
-        <article class="stat"><span>&#36866;&#29992;&#22330;&#26223;</span><strong>&#25910;&#34255;&#12289;&#23548;&#33322;&#12289;&#24555;&#36895;&#30452;&#36798;</strong></article>
-      </aside>
-    </section>
-
     <section class="toolbar">
+      <div class="toolbar-head">
+        <div>
+          <h1>AI &#23548;&#33322;</h1>
+          <p>&#30452;&#25509;&#28857;&#24320;&#23601;&#33021;&#25214;&#21040;&#24120;&#29992;&#24037;&#20855;</p>
+        </div>
+        <div class="count" id="count"></div>
+      </div>
       <label class="search"><input id="search-input" type="search" placeholder="&#25628;&#32034;&#24037;&#20855;&#21517;&#12289;&#26631;&#31614;&#25110;&#29992;&#36884;&#65292;&#20363;&#22914;&#65306;&#20195;&#30721;&#12289;&#32472;&#22270;&#12289;&#35270;&#39057;&#12289;&#25628;&#32034;"></label>
       <div id="chips" class="chips" aria-label="&#20998;&#31867;&#31579;&#36873;"></div>
     </section>
 
+    <section class="section">
+      <div class="section-head">
+        <h2>&#28909;&#38376;&#25512;&#33616;</h2>
+      </div>
+      <div class="quick-grid">
+        <a class="quick-card" style="--tool-accent:#7c68ff" href="https://chatgpt.com/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">&#36890;&#29992;&#32842;&#22825;</div>
+              <h3>ChatGPT</h3>
+            </div>
+            <span class="badge">&#28909;&#38376;</span>
+          </div>
+          <p>&#23545;&#35805;&#12289;&#20889;&#20316;&#12289;&#20195;&#30721;&#21644;&#26085;&#24120;&#20219;&#21153;&#37117;&#27604;&#36739;&#20840;&#33021;&#12290;</p>
+          <div class="card-bottom">
+            <span class="meta">chatgpt.com</span>
+            <span class="visit">&#25171;&#24320;</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#25c3a5" href="https://claude.ai/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">&#36890;&#29992;&#32842;&#22825;</div>
+              <h3>Claude</h3>
+            </div>
+            <span class="badge">&#38271;&#25991;</span>
+          </div>
+          <p>&#38271;&#25991;&#26412;&#38305;&#35835;&#12289;&#25972;&#29702;&#21644;&#20195;&#30721;&#21327;&#20316;&#20307;&#39564;&#24456;&#22909;&#12290;</p>
+          <div class="card-bottom">
+            <span class="meta">claude.ai</span>
+            <span class="visit">&#25171;&#24320;</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#ff9d42" href="https://github.com/features/copilot" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">&#20195;&#30721;&#24320;&#21457;</div>
+              <h3>GitHub Copilot</h3>
+            </div>
+            <span class="badge">IDE</span>
+          </div>
+          <p>&#22312;&#32534;&#36753;&#22120;&#37324;&#30452;&#25509;&#36741;&#21161;&#20889;&#20195;&#30721;&#65292;&#38750;&#24120;&#36866;&#21512;&#24320;&#21457;&#32773;&#12290;</p>
+          <div class="card-bottom">
+            <span class="meta">github.com</span>
+            <span class="visit">&#25171;&#24320;</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
     <section class="section" id="tools">
       <div class="section-head">
-        <div>
-          <p class="eyebrow">Directory</p>
-          <h2>AI &#24037;&#20855;&#21015;&#34920;</h2>
-        </div>
-        <div id="count" class="count"></div>
+        <h2>AI &#24037;&#20855;&#21015;&#34920;</h2>
       </div>
       <div id="grid" class="grid"></div>
     </section>
