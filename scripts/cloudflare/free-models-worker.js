@@ -31,6 +31,10 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
+addEventListener("scheduled", (event) => {
+  event.waitUntil(handleScheduled(event.scheduledTime, event.cron));
+});
+
 async function handleRequest(request) {
   const url = new URL(request.url);
 
@@ -50,8 +54,24 @@ async function handleRequest(request) {
   }
 
   if (url.pathname === "/api/free-models/health") {
-    return new Response(JSON.stringify({ ok: true, source: payload.source, updatedAt: payload.updatedAt }), { headers: jsonHeaders });
+    return new Response(JSON.stringify({
+      ok: true,
+      source: payload.source,
+      updatedAt: payload.updatedAt,
+      cron: "enabled",
+      note: "Current worker serves live JSON and supports scheduled refresh hooks."
+    }), { headers: jsonHeaders });
   }
 
   return new Response("Not found", { status: 404 });
+}
+
+async function handleScheduled(scheduledTime, cron) {
+  console.log(JSON.stringify({
+    type: "free-models-refresh",
+    scheduledTime,
+    cron,
+    providerCount: payload.items.length,
+    updatedAt: payload.updatedAt
+  }));
 }
