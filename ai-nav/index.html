@@ -522,7 +522,7 @@
         <article class="tool-card" style="--tool-accent:${tool.accent}">
           <div class="tool-top">
             <div>
-              <div class="meta">${labels[tool.categoryKey]} · ${getRegionLabel(tool)}</div>
+              <div class="meta">${labels[tool.categoryKey]} / ${getRegionLabel(tool)}</div>
               <h3>${tool.name}</h3>
             </div>
             <span class="badge">${labels[tool.priceKey]}</span>
@@ -532,7 +532,7 @@
             ${tool.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}
           </div>
           <div class="card-bottom">
-            <span class="meta">${tool.url.replace(/^https?:\\/\\//, "").replace(/\\/$/, "")}</span>
+            <span class="meta">${tool.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
             <a class="visit" href="${tool.url}" target="_blank" rel="noreferrer">${labels.open}</a>
           </div>
         </article>
