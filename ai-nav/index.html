@@ -81,6 +81,27 @@
       gap: 10px;
       margin-top: 14px;
     }
+    .filter-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .filter-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      min-width: 72px;
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .filter-row .chips {
+      margin-top: 0;
+      flex: 1;
+    }
     .chip-btn {
       padding: 10px 14px;
       border-radius: 999px;
@@ -215,6 +236,8 @@
     @media (max-width: 720px) {
       .shell { width: min(calc(100% - 18px), var(--max)); }
       .nav { flex-direction: column; align-items: flex-start; }
+      .filter-row { flex-direction: column; gap: 10px; }
+      .filter-label { min-width: auto; padding-top: 0; }
       .quick-grid, .grid { grid-template-columns: 1fr; }
       .section-head { flex-direction: column; align-items: flex-start; }
     }
@@ -236,12 +259,25 @@
       <div class="toolbar-head">
         <div>
           <h1>AI &#23548;&#33322;</h1>
-          <p>&#24050;&#25910;&#24405;&#26356;&#22810;&#24120;&#29992; AI &#24037;&#20855;&#65292;&#25171;&#24320;&#23601;&#33021;&#29992;</p>
+          <p>&#25353;&#22330;&#26223;&#12289;&#22320;&#21306;&#21644;&#20215;&#26684;&#24555;&#36895;&#31579;&#21040;&#21512;&#36866;&#24037;&#20855;&#65292;&#24050;&#32463;&#25972;&#29702;&#21040; 50+ &#24120;&#29992;&#20135;&#21697;</p>
         </div>
         <div class="count" id="count"></div>
       </div>
       <label class="search"><input id="search-input" type="search" placeholder="&#25628;&#32034;&#24037;&#20855;&#21517;&#12289;&#26631;&#31614;&#25110;&#29992;&#36884;&#65292;&#20363;&#22914;&#65306;&#20195;&#30721;&#12289;&#32472;&#22270;&#12289;&#35270;&#39057;&#12289;&#25628;&#32034;"></label>
-      <div id="chips" class="chips" aria-label="&#20998;&#31867;&#31579;&#36873;"></div>
+      <div class="filter-stack">
+        <div class="filter-row">
+          <div class="filter-label">&#22330;&#26223;</div>
+          <div id="chips" class="chips" aria-label="&#20998;&#31867;&#31579;&#36873;"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">&#22320;&#21306;</div>
+          <div id="region-chips" class="chips" aria-label="&#22320;&#21306;&#31579;&#36873;"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">&#20215;&#26684;</div>
+          <div id="price-chips" class="chips" aria-label="&#20215;&#26684;&#31579;&#36873;"></div>
+        </div>
+      </div>
     </section>
 
     <section class="section">
@@ -351,6 +387,12 @@
       tools: "\u4e2a\u5de5\u5177",
       noMatch: "\u6ca1\u6709\u627e\u5230\u5339\u914d\u9879\uff0c\u6362\u4e2a\u5173\u952e\u8bcd\u8bd5\u8bd5\u3002",
       open: "\u6253\u5f00",
+      region: "\u5730\u533a",
+      price: "\u4ef7\u683c",
+      region_all: "\u5168\u90e8\u5730\u533a",
+      region_domestic: "\u56fd\u5185",
+      region_global: "\u56fd\u5916",
+      price_all: "\u5168\u90e8\u4ef7\u683c",
       price_free_partial: "\u90e8\u5206\u514d\u8d39",
       price_paid: "\u4ed8\u8d39",
       price_paid_main: "\u4ed8\u8d39\u4e3a\u4e3b",
@@ -406,29 +448,67 @@
       { name: "Otter", categoryKey: "cat_audio", url: "https://otter.ai/", summary: "\u4f1a\u8bae\u8bb0\u5f55\u3001\u8bed\u97f3\u8f6c\u5199\u548c\u603b\u7ed3\u573a\u666f\u975e\u5e38\u5e38\u7528\u3002", tags: ["\u4f1a\u8bae", "\u8f6c\u5199", "\u603b\u7ed3"], priceKey: "price_free_partial", accent: "#2bb3ff" },
       { name: "Fireflies", categoryKey: "cat_productivity", url: "https://fireflies.ai/", summary: "\u504f\u4f1a\u8bae\u8f6c\u5199\u3001\u5f52\u6863\u548c\u591a\u4eba\u534f\u4f5c\u6574\u7406\u3002", tags: ["\u4f1a\u8bae", "\u7eaa\u8981", "\u534f\u4f5c"], priceKey: "price_free_partial", accent: "#7e8cff" },
       { name: "Beautiful.ai", categoryKey: "cat_productivity", url: "https://www.beautiful.ai/", summary: "\u66f4\u504f AI \u6f14\u793a\u7a3f\u751f\u6210\u548c PPT \u5feb\u901f\u6392\u7248\u3002", tags: ["PPT", "\u6392\u7248", "\u6f14\u793a"], priceKey: "price_free_partial", accent: "#00bcd4" },
-      { name: "You.com", categoryKey: "cat_search", url: "https://you.com/", summary: "\u6df7\u5408 AI \u95ee\u7b54\u4e0e\u641c\u7d22\u7ed3\u679c\uff0c\u9002\u5408\u5feb\u901f\u6d4f\u89c8\u4e0d\u540c\u6765\u6e90\u3002", tags: ["\u641c\u7d22", "\u805a\u5408", "\u95ee\u7b54"], priceKey: "price_free_partial", accent: "#7a8cff" }
+      { name: "You.com", categoryKey: "cat_search", url: "https://you.com/", summary: "\u6df7\u5408 AI \u95ee\u7b54\u4e0e\u641c\u7d22\u7ed3\u679c\uff0c\u9002\u5408\u5feb\u901f\u6d4f\u89c8\u4e0d\u540c\u6765\u6e90\u3002", tags: ["\u641c\u7d22", "\u805a\u5408", "\u95ee\u7b54"], priceKey: "price_free_partial", accent: "#7a8cff" },
+      { name: "Qwen Chat", categoryKey: "cat_chinese", url: "https://chat.qwen.ai/", summary: "\u901a\u4e49\u7cfb\u7684\u5bf9\u8bdd\u5165\u53e3\uff0c\u9002\u5408\u4e2d\u6587\u95ee\u7b54\u3001\u5199\u4f5c\u548c\u65e5\u5e38\u4f7f\u7528\u3002", tags: ["\u4e2d\u6587", "\u5bf9\u8bdd", "\u5199\u4f5c"], priceKey: "price_free_partial", accent: "#ffb347" },
+      { name: "Hailuo AI", categoryKey: "cat_video", url: "https://hailuoai.video/", summary: "\u504f\u5411\u4e2d\u6587\u573a\u666f\u7684 AI \u89c6\u9891\u751f\u6210\uff0c\u9002\u5408\u5feb\u901f\u51fa\u77ed\u89c6\u89c9\u7d20\u6750\u3002", tags: ["\u4e2d\u6587", "\u89c6\u9891", "\u751f\u6210"], priceKey: "price_free_partial", accent: "#7f7cff" },
+      { name: "Cici", categoryKey: "cat_chinese", url: "https://www.ciciai.com/", summary: "\u504f\u793e\u4ea4\u548c\u8f7b\u5bf9\u8bdd\u7684 AI \u52a9\u624b\uff0c\u9002\u5408\u65e5\u5e38\u95ee\u7b54\u548c\u5185\u5bb9\u966a\u4f34\u3002", tags: ["\u4e2d\u6587", "\u793e\u4ea4", "\u5bf9\u8bdd"], priceKey: "price_free_main", accent: "#ff7e9c" },
+      { name: "MiniMax", categoryKey: "cat_chinese", url: "https://www.minimaxi.com/", summary: "\u63d0\u4f9b\u6587\u672c\u3001\u8bed\u97f3\u548c\u591a\u6a21\u6001\u80fd\u529b\uff0c\u9002\u5408\u4ea7\u54c1\u8bd5\u7528\u548c\u63a5\u5165\u3002", tags: ["\u4e2d\u6587", "\u8bed\u97f3", "\u591a\u6a21\u6001"], priceKey: "price_free_partial", accent: "#50b5ff" },
+      { name: "Moonvalley", categoryKey: "cat_video", url: "https://moonvalley.com/", summary: "\u66f4\u504f\u7535\u5f71\u611f\u7684 AI \u89c6\u9891\u751f\u6210\uff0c\u9002\u5408\u6982\u5ff5\u7247\u548c\u955c\u5934\u9884\u6f14\u3002", tags: ["\u89c6\u9891", "\u955c\u5934", "\u7535\u5f71"], priceKey: "price_paid_main", accent: "#6d85ff" },
+      { name: "Synthesia", categoryKey: "cat_video", url: "https://www.synthesia.io/", summary: "\u6570\u5b57\u4eba\u914d\u97f3\u548c\u57f9\u8bad\u89c6\u9891\u5f88\u6210\u719f\uff0c\u9002\u5408\u4f01\u4e1a\u5185\u5bb9\u5236\u4f5c\u3002", tags: ["\u6570\u5b57\u4eba", "\u57f9\u8bad", "\u89c6\u9891"], priceKey: "price_paid_main", accent: "#3273ff" },
+      { name: "Udio", categoryKey: "cat_audio", url: "https://www.udio.com/", summary: "\u7528\u63d0\u793a\u8bcd\u751f\u6210\u6b4c\u66f2\u548c\u97f3\u4e50\u7247\u6bb5\uff0c\u9002\u5408\u5feb\u901f\u51fa demo\u3002", tags: ["\u97f3\u4e50", "\u6b4c\u66f2", "demo"], priceKey: "price_free_partial", accent: "#ff9352" },
+      { name: "Stable Audio", categoryKey: "cat_audio", url: "https://www.stableaudio.com/", summary: "\u504f\u80cc\u666f\u97f3\u4e50\u548c\u97f3\u6548\u751f\u6210\uff0c\u9002\u5408\u89c6\u9891\u914d\u4e50\u7d20\u6750\u3002", tags: ["\u97f3\u4e50", "\u97f3\u6548", "\u7d20\u6750"], priceKey: "price_free_partial", accent: "#ffb14e" },
+      { name: "Mem", categoryKey: "cat_productivity", url: "https://mem.ai/", summary: "\u4e3b\u6253 AI \u7b14\u8bb0\u548c\u8054\u60f3\u68c0\u7d22\uff0c\u9002\u5408\u79c1\u4eba\u77e5\u8bc6\u7ba1\u7406\u3002", tags: ["\u7b14\u8bb0", "\u77e5\u8bc6\u5e93", "\u68c0\u7d22"], priceKey: "price_free_partial", accent: "#8d9eff" },
+      { name: "Taskade AI", categoryKey: "cat_productivity", url: "https://www.taskade.com/", summary: "\u9002\u5408\u7528 AI \u62c6\u89e3\u4efb\u52a1\u3001\u751f\u6210\u6e05\u5355\u548c\u8f7b\u534f\u4f5c\u6d41\u7a0b\u3002", tags: ["\u4efb\u52a1", "\u534f\u4f5c", "\u6e05\u5355"], priceKey: "price_free_partial", accent: "#57d3c7" },
+      { name: "Elicit", categoryKey: "cat_search", url: "https://elicit.com/", summary: "\u9762\u5411\u7814\u7a76\u68c0\u7d22\u548c\u8bba\u6587\u68b3\u7406\uff0c\u9002\u5408\u505a\u8d44\u6599\u7efc\u8ff0\u3002", tags: ["\u8bba\u6587", "\u7814\u7a76", "\u68b3\u7406"], priceKey: "price_free_partial", accent: "#5cc8ff" },
+      { name: "Consensus", categoryKey: "cat_search", url: "https://consensus.app/", summary: "\u504f\u5b66\u672f\u95ee\u7b54\u548c\u7814\u7a76\u7ed3\u8bba\u68c0\u7d22\uff0c\u9002\u5408\u5feb\u901f\u627e\u8bba\u636e\u3002", tags: ["\u5b66\u672f", "\u95ee\u7b54", "\u8bba\u636e"], priceKey: "price_free_partial", accent: "#22c7d6" },
+      { name: "Codeium", categoryKey: "cat_coding", url: "https://codeium.com/", summary: "\u514d\u8d39\u611f\u66f4\u5f3a\u7684 AI \u7f16\u7801\u8f85\u52a9\uff0c\u9002\u5408 IDE \u8865\u5168\u548c\u804a\u5929\u3002", tags: ["IDE", "\u8865\u5168", "\u4ee3\u7801"], priceKey: "price_free_main", accent: "#6f86ff" },
+      { name: "Tabnine", categoryKey: "cat_coding", url: "https://www.tabnine.com/", summary: "\u8001\u724c AI \u4ee3\u7801\u8865\u5168\u5de5\u5177\uff0c\u9002\u5408\u5df2\u5728 IDE \u4e2d\u5de5\u4f5c\u7684\u5f00\u53d1\u8005\u3002", tags: ["IDE", "\u8865\u5168", "\u5f00\u53d1"], priceKey: "price_free_partial", accent: "#8a72ff" },
+      { name: "Pixlr AI", categoryKey: "cat_design", url: "https://pixlr.com/", summary: "\u5728\u7ebf\u56fe\u50cf\u7f16\u8f91\u53e0\u52a0 AI \u4fee\u56fe\u80fd\u529b\uff0c\u9002\u5408\u5feb\u901f\u6539\u56fe\u3002", tags: ["\u4fee\u56fe", "\u56fe\u50cf", "\u8bbe\u8ba1"], priceKey: "price_free_partial", accent: "#11c5a4" },
+      { name: "Ideogram", categoryKey: "cat_design", url: "https://ideogram.ai/", summary: "\u504f\u5e26\u6587\u5b57\u7684\u56fe\u50cf\u751f\u6210\uff0c\u9002\u5408\u6d77\u62a5\u3001\u6807\u9898\u56fe\u548c\u54c1\u724c\u89c6\u89c9\u3002", tags: ["\u6d77\u62a5", "\u5b57\u4f53", "\u56fe\u50cf"], priceKey: "price_free_partial", accent: "#ff5d8f" },
+      { name: "CapCut AI", categoryKey: "cat_video", url: "https://www.capcut.com/ai-tools/", summary: "\u526a\u6620\u7cfb AI \u5de5\u5177\uff0c\u9002\u5408\u77ed\u89c6\u9891\u526a\u8f91\u3001\u5b57\u5e55\u548c\u8f7b\u751f\u6210\u3002", tags: ["\u526a\u8f91", "\u77ed\u89c6\u9891", "\u5b57\u5e55"], priceKey: "price_free_partial", accent: "#00c0ff" },
+      { name: "Tripo AI", categoryKey: "cat_design", url: "https://www.tripo3d.ai/", summary: "\u5feb\u901f\u751f\u6210 3D \u6a21\u578b\uff0c\u9002\u5408\u6e38\u620f\u3001\u5c55\u793a\u548c\u7acb\u4f53\u7d20\u6750\u9884\u89c8\u3002", tags: ["3D", "\u6a21\u578b", "\u7d20\u6750"], priceKey: "price_free_partial", accent: "#9b7cff" },
+      { name: "Mapify", categoryKey: "cat_productivity", url: "https://mapify.so/", summary: "\u628a\u957f\u6587\u3001\u89c6\u9891\u6216\u7f51\u9875\u5feb\u901f\u6574\u7406\u6210\u601d\u7ef4\u5bfc\u56fe\u548c\u7ed3\u6784\u5316\u7b14\u8bb0\u3002", tags: ["\u5bfc\u56fe", "\u603b\u7ed3", "\u7ed3\u6784"], priceKey: "price_free_partial", accent: "#49d3ff" }
     ];
 
+    const domesticNames = new Set(["Kimi", "Doubao", "Tongyi", "\u5143\u5b9d", "DeepSeek", "Qwen Chat", "Hailuo AI", "Cici", "MiniMax", "CapCut AI"]);
     const categories = [labels.all, ...new Set(tools.map((tool) => labels[tool.categoryKey]))];
-    const state = { category: labels.all, search: "" };
+    const regions = [labels.region_all, labels.region_domestic, labels.region_global];
+    const prices = [labels.price_all, labels.price_free_main, labels.price_free_partial, labels.price_paid_main, labels.price_paid];
+    const state = { category: labels.all, region: labels.region_all, price: labels.price_all, search: "" };
     const chipsEl = document.getElementById("chips");
+    const regionChipsEl = document.getElementById("region-chips");
+    const priceChipsEl = document.getElementById("price-chips");
     const gridEl = document.getElementById("grid");
     const countEl = document.getElementById("count");
     const searchEl = document.getElementById("search-input");
 
+    function getRegionLabel(tool) {
+      return domesticNames.has(tool.name) ? labels.region_domestic : labels.region_global;
+    }
+
     function renderChips() {
       chipsEl.innerHTML = categories.map((category) => `
         <button class="chip-btn ${category === state.category ? "active" : ""}" data-category="${category}" type="button">${category}</button>
+      `).join("");
+      regionChipsEl.innerHTML = regions.map((region) => `
+        <button class="chip-btn ${region === state.region ? "active" : ""}" data-region="${region}" type="button">${region}</button>
+      `).join("");
+      priceChipsEl.innerHTML = prices.map((price) => `
+        <button class="chip-btn ${price === state.price ? "active" : ""}" data-price="${price}" type="button">${price}</button>
       `).join("");
     }
 
     function renderGrid() {
       const items = tools.filter((tool) => {
         const localizedCategory = labels[tool.categoryKey];
-        const haystack = [tool.name, localizedCategory, tool.summary, ...tool.tags].join(" ").toLowerCase();
+        const regionLabel = getRegionLabel(tool);
+        const priceLabel = labels[tool.priceKey];
+        const haystack = [tool.name, localizedCategory, regionLabel, priceLabel, tool.summary, ...tool.tags].join(" ").toLowerCase();
         const matchCategory = state.category === labels.all || localizedCategory === state.category;
+        const matchRegion = state.region === labels.region_all || regionLabel === state.region;
+        const matchPrice = state.price === labels.price_all || priceLabel === state.price;
         const matchSearch = !state.search || haystack.includes(state.search);
-        return matchCategory && matchSearch;
+        return matchCategory && matchRegion && matchPrice && matchSearch;
       });
 
       countEl.textContent = `${labels.showing} ${items.length} / ${tools.length} ${labels.tools}`;
@@ -442,7 +522,7 @@
         <article class="tool-card" style="--tool-accent:${tool.accent}">
           <div class="tool-top">
             <div>
-              <div class="meta">${labels[tool.categoryKey]}</div>
+              <div class="meta">${labels[tool.categoryKey]} · ${getRegionLabel(tool)}</div>
               <h3>${tool.name}</h3>
             </div>
             <span class="badge">${labels[tool.priceKey]}</span>
@@ -463,6 +543,22 @@
       const button = event.target.closest("[data-category]");
       if (!button) return;
       state.category = button.dataset.category;
+      renderChips();
+      renderGrid();
+    });
+
+    regionChipsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-region]");
+      if (!button) return;
+      state.region = button.dataset.region;
+      renderChips();
+      renderGrid();
+    });
+
+    priceChipsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-price]");
+      if (!button) return;
+      state.price = button.dataset.price;
       renderChips();
       renderGrid();
     });
