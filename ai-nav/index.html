@@ -48,7 +48,7 @@
     .brand { font-weight: 700; letter-spacing: -0.03em; }
     .nav-links { display: flex; gap: 18px; color: var(--muted); flex-wrap: wrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .toolbar { margin-top: 18px; padding: 18px; border-radius: 24px; }
+    .toolbar { margin-top: 18px; padding: 16px 18px; border-radius: 24px; }
     .toolbar-head {
       display: flex;
       align-items: center;
@@ -58,7 +58,7 @@
     }
     .toolbar-head h1 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
       letter-spacing: -0.05em;
     }
     .toolbar-head p {
@@ -108,24 +108,32 @@
       font-size: 1.4rem;
       letter-spacing: -0.04em;
     }
-    .count { color: var(--muted); font-size: 0.94rem; }
+    .count {
+      color: #f4f6ff;
+      font-size: 0.94rem;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(124, 104, 255, 0.12);
+    }
     .quick-grid, .grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
     }
     .quick-card, .tool-card {
       position: relative;
       display: grid;
       gap: 14px;
-      min-height: 208px;
-      padding: 20px;
+      padding: 18px;
       border-radius: var(--radius-lg);
       border: 1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.16)) 58%, rgba(255,255,255,0.08));
       background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.04)) 10%, rgba(255,255,255,0.04)), rgba(255,255,255,0.03));
       box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.15)) 18%, transparent);
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
+    .quick-card { min-height: 180px; }
+    .tool-card { min-height: 190px; }
     .quick-card::before, .tool-card::before {
       content: "";
       position: absolute;
@@ -198,6 +206,9 @@
       color: var(--muted);
       text-align: center;
     }
+    @media (max-width: 1200px) {
+      .quick-grid, .grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
     @media (max-width: 1040px) {
       .quick-grid, .grid { grid-template-columns: 1fr 1fr; }
     }
@@ -225,7 +236,7 @@
       <div class="toolbar-head">
         <div>
           <h1>AI &#23548;&#33322;</h1>
-          <p>&#30452;&#25509;&#28857;&#24320;&#23601;&#33021;&#25214;&#21040;&#24120;&#29992;&#24037;&#20855;</p>
+          <p>&#24050;&#25910;&#24405;&#26356;&#22810;&#24120;&#29992; AI &#24037;&#20855;&#65292;&#25171;&#24320;&#23601;&#33021;&#29992;</p>
         </div>
         <div class="count" id="count"></div>
       </div>
@@ -277,6 +288,48 @@
           <p>&#22312;&#32534;&#36753;&#22120;&#37324;&#30452;&#25509;&#36741;&#21161;&#20889;&#20195;&#30721;&#65292;&#38750;&#24120;&#36866;&#21512;&#24320;&#21457;&#32773;&#12290;</p>
           <div class="card-bottom">
             <span class="meta">github.com</span>
+            <span class="visit">&#25171;&#24320;</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#4466ff" href="https://chat.deepseek.com/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">&#20013;&#25991;&#24037;&#20855;</div>
+              <h3>DeepSeek</h3>
+            </div>
+            <span class="badge">&#25512;&#7406;</span>
+          </div>
+          <p>&#20013;&#25991;&#95ee;&#31572;&#21644;&#25512;&#7406;&#4f53;&#39564;&#27604;&#36739;&#7a81;&#20986;&#65292;&#20063;&#33021;&#36741;&#21161;&#20195;&#30721;&#12290;</p>
+          <div class="card-bottom">
+            <span class="meta">chat.deepseek.com</span>
+            <span class="visit">&#25171;&#24320;</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#00b3a4" href="https://www.perplexity.ai/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">&#25628;&#32034;&#30693;&#35782;</div>
+              <h3>Perplexity</h3>
+            </div>
+            <span class="badge">&#26816;&#32034;</span>
+          </div>
+          <p>&#20559;&#21521; AI &#26816;&#32034;&#21644;&#36164;&#26009;&#67e5;&#35777;&#65292;&#25214;&#31572;&#26696;&#27604;&#36739;&#24555;&#12290;</p>
+          <div class="card-bottom">
+            <span class="meta">perplexity.ai</span>
+            <span class="visit">&#25171;&#24320;</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#4f8cff" href="https://gemini.google.com/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">&#36890;&#29992;&#32842;&#22825;</div>
+              <h3>Gemini</h3>
+            </div>
+            <span class="badge">&#22810;&#27169;&#24577;</span>
+          </div>
+          <p>Google AI &#21161;&#25163;&#65292;&#20559;&#21521;&#641c;&#32034;&#12289;&#38382;&#31572;&#21644;&#22810;&#27169;&#24577;&#36755;&#20837;&#12290;</p>
+          <div class="card-bottom">
+            <span class="meta">gemini.google.com</span>
             <span class="visit">&#25171;&#24320;</span>
           </div>
         </a>
