@@ -441,6 +441,9 @@
       "Gemini API": { score: 5, card: "card_no", docs: "https://ai.google.dev/gemini-api/docs", recommended: true },
       "Cloudflare Workers AI": { score: 4, card: "card_no", docs: "https://developers.cloudflare.com/workers-ai/", recommended: true },
       "NVIDIA NIM": { score: 4, card: "card_no", docs: "https://build.nvidia.com/", recommended: true },
+      "Cohere": { score: 4, card: "card_unknown", docs: "https://docs.cohere.com/docs/rate-limits", recommended: true },
+      "Mistral API": { score: 4, card: "card_maybe", docs: "https://docs.mistral.ai/deployment/ai-studio/tier", recommended: true },
+      "SambaNova Cloud": { score: 4, card: "card_no", docs: "https://docs.sambanova.ai/cloud/docs/models/rate-limits", recommended: true },
       "GitHub Models": { score: 4, card: "card_no", docs: "https://docs.github.com/en/github-models", recommended: false },
       "Hugging Face Inference": { score: 4, card: "card_no", docs: "https://huggingface.co/docs/inference-providers/index", recommended: false },
       "Together AI": { score: 4, card: "card_maybe", docs: "https://docs.together.ai/docs/quickstart", recommended: false },
@@ -481,6 +484,42 @@
         tags: ["NVIDIA", "NIM", "OpenAI \u517c\u5bb9", "GPU"],
         url: "https://build.nvidia.com/",
         accent: "#76b900"
+      },
+      {
+        name: "Cohere",
+        region: "region_global",
+        compat: "compat_openai",
+        freeType: "free_credits",
+        badge: "Trial",
+        note: "\u5b98\u65b9\u6587\u6863\u5199\u660e trial key \u514d\u8d39\u4f46\u989d\u5ea6\u53d7\u9650\uff0c\u9002\u5408\u5148\u505a\u539f\u578b\u548c\u5c0f\u6d4b\u8bd5\u3002",
+        summary: "\u9002\u5408\u6587\u672c\u3001RAG\u3001rerank \u548c\u68c0\u7d22\u573a\u666f\uff0c\u73b0\u5728\u4e5f\u63d0\u4f9b OpenAI \u517c\u5bb9 API \u8def\u7ebf\u3002",
+        tags: ["Cohere", "Trial", "Rerank", "OpenAI \u517c\u5bb9"],
+        url: "https://dashboard.cohere.com/api-keys",
+        accent: "#f59e0b"
+      },
+      {
+        name: "Mistral API",
+        region: "region_global",
+        compat: "compat_native",
+        freeType: "free_credits",
+        badge: "Experiment",
+        note: "\u5b98\u65b9\u8bf4\u660e\u6709 free API tier\uff0c\u4f46\u514d\u8d39\u5c42\u7ea7\u9650\u5236\u66f4\u4e25\uff0c\u8d26\u6237\u5f00\u901a\u6d41\u7a0b\u76f8\u5bf9\u66f4\u91cd\u3002",
+        summary: "\u9002\u5408\u4f53\u9a8c Mistral \u7684\u5bf9\u8bdd\u3001OCR \u548c\u8f6c\u5199 API\uff0c\u514d\u8d39\u5c42\u7ea7\u66f4\u504f\u8bd5\u7528\u3002",
+        tags: ["Mistral", "Experiment", "OCR", "\u8f6c\u5199"],
+        url: "https://console.mistral.ai/",
+        accent: "#ff6b3d"
+      },
+      {
+        name: "SambaNova Cloud",
+        region: "region_global",
+        compat: "compat_openai",
+        freeType: "free_daily",
+        badge: "Free Tier",
+        note: "\u5b98\u65b9\u6587\u6863\u6709 free tier\uff0c\u672a\u7ed1\u4ed8\u6b3e\u65b9\u5f0f\u4e5f\u80fd\u8fdb\u5165\u514d\u8d39\u6863\uff0c\u4f46\u6709\u6bcf\u65e5\u8bf7\u6c42/\u4ee4\u724c\u9650\u5236\u3002",
+        summary: "\u9002\u5408\u4f53\u9a8c\u5927\u6a21\u578b\u9ad8\u901f\u63a8\u7406\uff0c\u652f\u6301 OpenAI \u5ba2\u6237\u7aef\u65b9\u5f0f\u63a5\u5165\u3002",
+        tags: ["SambaNova", "Free Tier", "OpenAI \u517c\u5bb9", "\u9ad8\u901f\u63a8\u7406"],
+        url: "https://cloud.sambanova.ai/",
+        accent: "#ec4899"
       }
     ];
 
