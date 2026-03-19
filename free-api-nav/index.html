@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>免费模型 API 导航 | 88220066.xyz</title>
+  <meta name="description" content="收录常见免费模型 API 平台，按地区、兼容协议和免费方式快速筛选，便于开发时找可直接接入的模型接口。">
+  <meta name="theme-color" content="#0b1222">
+  <style>
+    :root {
+      --text: #edf3ff;
+      --muted: #a8b4cf;
+      --line: rgba(255,255,255,0.1);
+      --accent: #3f8cff;
+      --accent-soft: rgba(63,140,255,0.14);
+      --max: 1220px;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(63, 140, 255, 0.28), transparent 0 26%),
+        radial-gradient(circle at 85% 14%, rgba(0, 212, 176, 0.16), transparent 0 22%),
+        radial-gradient(circle at 55% 84%, rgba(255, 171, 64, 0.14), transparent 0 24%),
+        linear-gradient(180deg, #09101d 0%, #0d1528 48%, #0b1020 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .shell { width: min(calc(100% - 28px), var(--max)); margin: 0 auto; padding: 24px 0 54px; }
+    .nav, .toolbar, .section {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15, 22, 42, 0.88), rgba(10, 15, 28, 0.94));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.26);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 22px;
+    }
+    .brand { font-weight: 700; letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 18px; color: var(--muted); flex-wrap: wrap; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .toolbar { margin-top: 18px; padding: 20px; border-radius: 24px; }
+    .toolbar-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .toolbar-head h1 {
+      margin: 0;
+      font-size: clamp(1.9rem, 3.8vw, 2.8rem);
+      letter-spacing: -0.05em;
+    }
+    .toolbar-head p {
+      margin: 10px 0 0;
+      max-width: 44rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .count {
+      color: #f4f7ff;
+      font-size: 0.94rem;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: var(--accent-soft);
+    }
+    .search { margin-top: 18px; }
+    .search input {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 0 16px;
+    }
+    .filter-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .filter-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      min-width: 84px;
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      flex: 1;
+    }
+    .chip-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+    .chip-btn.active, .chip-btn:hover {
+      color: var(--text);
+      border-color: rgba(63, 140, 255, 0.4);
+      background: rgba(63, 140, 255, 0.14);
+    }
+    .section { margin-top: 18px; padding: 22px; border-radius: var(--radius-xl); }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      letter-spacing: -0.04em;
+    }
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .quick-grid, .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .quick-card, .tool-card {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.16)) 58%, rgba(255,255,255,0.08));
+      background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.04)) 10%, rgba(255,255,255,0.04)), rgba(255,255,255,0.03));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.15)) 18%, transparent);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .quick-card::before, .tool-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      background: var(--tool-accent, var(--accent));
+    }
+    .quick-card:hover, .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,0.28);
+    }
+    .tool-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .tool-top h3 {
+      margin: 4px 0 0;
+      font-size: 1.16rem;
+    }
+    .meta, .tool-card p, .quick-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .badge {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #f5f7ff;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%);
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .mini-list {
+      display: grid;
+      gap: 8px;
+    }
+    .mini-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .mini-list strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .visit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #08111f;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%);
+    }
+    .empty {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(255,255,255,0.16);
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (max-width: 1180px) {
+      .quick-grid, .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .filter-row { flex-direction: column; gap: 10px; }
+      .filter-label { min-width: auto; padding-top: 0; }
+      .quick-grid, .grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="nav">
+      <div class="brand">88220066.xyz / 免费模型 API 导航</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/">首页</a>
+        <a href="/ai-nav/">AI 导航</a>
+        <a href="/free-api-nav/" class="active">API 导航</a>
+      </nav>
+    </header>
+
+    <section class="toolbar">
+      <div class="toolbar-head">
+        <div>
+          <h1>免费模型 API 导航</h1>
+          <p>先把常见可试用、可直接接入的模型 API 入口整理在一起。当前是前端首版，后续可以接 Cloudflare Worker 按官方页面定时刷新数据。</p>
+        </div>
+        <div class="count" id="count"></div>
+      </div>
+      <label class="search"><input id="search-input" type="search" placeholder="搜索平台名、标签或说明，例如：OpenAI 兼容、国内、免费模型、文档"></label>
+      <div class="filter-stack">
+        <div class="filter-row">
+          <div class="filter-label">地区</div>
+          <div id="region-chips" class="chips" aria-label="地区筛选"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">协议</div>
+          <div id="compat-chips" class="chips" aria-label="协议筛选"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">免费方式</div>
+          <div id="free-chips" class="chips" aria-label="免费方式筛选"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>先看这几个</h2>
+          <p>适合先上手、先调通，再根据场景切换到更合适的平台。</p>
+        </div>
+      </div>
+      <div class="quick-grid">
+        <a class="quick-card" style="--tool-accent:#3f8cff" href="https://openrouter.ai/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">国外 / OpenAI 兼容</div>
+              <h3>OpenRouter</h3>
+            </div>
+            <span class="badge">免费模型</span>
+          </div>
+          <p>模型多，切换快，适合先用一个兼容接口把应用跑起来。</p>
+          <div class="card-bottom">
+            <span class="meta">openrouter.ai</span>
+            <span class="visit">打开</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#ff8a34" href="https://console.groq.com/" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">国外 / 原生 SDK</div>
+              <h3>GroqCloud</h3>
+            </div>
+            <span class="badge">高速试用</span>
+          </div>
+          <p>响应快，适合做聊天、RAG 验证和轻量推理接口。</p>
+          <div class="card-bottom">
+            <span class="meta">console.groq.com</span>
+            <span class="visit">打开</span>
+          </div>
+        </a>
+        <a class="quick-card" style="--tool-accent:#00b894" href="https://cloud.google.com/vertex-ai/generative-ai/docs/start/quickstarts/quickstart-multimodal" target="_blank" rel="noreferrer">
+          <div class="tool-top">
+            <div>
+              <div class="meta">国外 / 原生 SDK</div>
+              <h3>Gemini API</h3>
+            </div>
+            <span class="badge">免费层</span>
+          </div>
+          <p>多模态能力强，做图片理解、文本生成和实验项目都很常见。</p>
+          <div class="card-bottom">
+            <span class="meta">ai.google.dev</span>
+            <span class="visit">打开</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>平台列表</h2>
+          <p>免费策略变化比较快，真正接入前还是建议点官方文档再确认一次。</p>
+        </div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+  </div>
+
+  <script>
+    const labels = {
+      all: "全部",
+      allRegions: "全部地区",
+      allCompat: "全部协议",
+      allFree: "全部方式",
+      showing: "当前显示",
+      items: "个平台",
+      open: "官网",
+      noMatch: "没有找到匹配的平台，换个关键词试试。",
+      region_cn: "国内",
+      region_global: "国外",
+      compat_openai: "OpenAI 兼容",
+      compat_anthropic: "Anthropic 兼容",
+      compat_native: "原生 SDK",
+      compat_multi: "多协议",
+      free_models: "免费模型",
+      free_credits: "试用额度",
+      free_sandbox: "开发沙盒",
+      free_daily: "日常免费层"
+    };
+
+    const providers = [
+      {
+        name: "OpenRouter",
+        region: "region_global",
+        compat: "compat_openai",
+        freeType: "free_models",
+        badge: "免费模型",
+        note: "聚合很多模型，适合先统一接口。",
+        summary: "能直接切不同模型，很多应用先从它做 OpenAI 兼容接入。",
+        tags: ["聚合", "路由", "文档全"],
+        url: "https://openrouter.ai/",
+        accent: "#3f8cff"
+      },
+      {
+        name: "GroqCloud",
+        region: "region_global",
+        compat: "compat_native",
+        freeType: "free_daily",
+        badge: "高速",
+        note: "更适合追求低延迟。",
+        summary: "推理快，聊天和轻量工具接起来很顺手。",
+        tags: ["低延迟", "推理", "聊天"],
+        url: "https://console.groq.com/",
+        accent: "#ff8a34"
+      },
+      {
+        name: "Gemini API",
+        region: "region_global",
+        compat: "compat_native",
+        freeType: "free_daily",
+        badge: "多模态",
+        note: "文本和图像场景都常用。",
+        summary: "适合多模态输入和 Google 生态里的实验项目。",
+        tags: ["Google", "多模态", "官方 SDK"],
+        url: "https://ai.google.dev/",
+        accent: "#00b894"
+      },
+      {
+        name: "Cloudflare Workers AI",
+        region: "region_global",
+        compat: "compat_native",
+        freeType: "free_daily",
+        badge: "边缘",
+        note: "适合和 Worker 一起直接上线。",
+        summary: "如果项目本来就在 Cloudflare 上，接入和部署链路很顺。",
+        tags: ["Worker", "边缘", "部署方便"],
+        url: "https://developers.cloudflare.com/workers-ai/",
+        accent: "#f6b93b"
+      },
+      {
+        name: "GitHub Models",
+        region: "region_global",
+        compat: "compat_multi",
+        freeType: "free_sandbox",
+        badge: "开发沙盒",
+        note: "对 GitHub 用户很友好。",
+        summary: "适合原型验证、对比不同模型和在开发阶段快速试用。",
+        tags: ["GitHub", "对比", "原型"],
+        url: "https://github.com/marketplace/models",
+        accent: "#8e7dff"
+      },
+      {
+        name: "Hugging Face Inference",
+        region: "region_global",
+        compat: "compat_multi",
+        freeType: "free_credits",
+        badge: "模型多",
+        note: "适合试开源模型。",
+        summary: "更适合找开源模型、试不同 provider，开发者生态丰富。",
+        tags: ["开源", "模型广", "生态"],
+        url: "https://huggingface.co/inference-api",
+        accent: "#ffd166"
+      },
+      {
+        name: "Together AI",
+        region: "region_global",
+        compat: "compat_openai",
+        freeType: "free_credits",
+        badge: "开源模型",
+        note: "偏开源和推理实验。",
+        summary: "常用来跑开源文本和图像模型，文档清楚。",
+        tags: ["开源", "OpenAI 兼容", "实验"],
+        url: "https://www.together.ai/",
+        accent: "#5cc8ff"
+      },
+      {
+        name: "Fireworks AI",
+        region: "region_global",
+        compat: "compat_openai",
+        freeType: "free_credits",
+        badge: "工程向",
+        note: "偏生产接入体验。",
+        summary: "做服务端接入比较顺，接口体验偏工程化。",
+        tags: ["服务端", "OpenAI 兼容", "工程"],
+        url: "https://fireworks.ai/",
+        accent: "#ff6b81"
+      },
+      {
+        name: "SiliconFlow",
+        region: "region_cn",
+        compat: "compat_openai",
+        freeType: "free_models",
+        badge: "国内友好",
+        note: "中文开发者常用。",
+        summary: "对国内接入很友好，开源模型选择多，常用来先跑通项目。",
+        tags: ["国内", "开源", "中文"],
+        url: "https://siliconflow.cn/",
+        accent: "#00c2a8"
+      },
+      {
+        name: "阿里云百炼",
+        region: "region_cn",
+        compat: "compat_native",
+        freeType: "free_credits",
+        badge: "企业向",
+        note: "国内文档和生态完整。",
+        summary: "国内常见大模型平台，适合做企业项目和工具接入。",
+        tags: ["阿里云", "企业", "中文文档"],
+        url: "https://bailian.console.aliyun.com/",
+        accent: "#ffb347"
+      },
+      {
+        name: "火山方舟",
+        region: "region_cn",
+        compat: "compat_openai",
+        freeType: "free_credits",
+        badge: "国内平台",
+        note: "接入门槛不高。",
+        summary: "偏平台化，适合试模型 API 和多模型接入方案。",
+        tags: ["火山引擎", "中文", "接入快"],
+        url: "https://www.volcengine.com/product/ark",
+        accent: "#5f7cff"
+      },
+      {
+        name: "智谱开放平台",
+        region: "region_cn",
+        compat: "compat_native",
+        freeType: "free_credits",
+        badge: "中文模型",
+        note: "适合中文问答和 Agent 试验。",
+        summary: "中文能力常被拿来做聊天、写作和轻量 Agent 场景。",
+        tags: ["中文", "GLM", "Agent"],
+        url: "https://open.bigmodel.cn/",
+        accent: "#36a2ff"
+      },
+      {
+        name: "MiniMax 开放平台",
+        region: "region_cn",
+        compat: "compat_native",
+        freeType: "free_credits",
+        badge: "多模态",
+        note: "文本和语音场景都能碰到。",
+        summary: "更适合语音、多模态和对话型产品的接口验证。",
+        tags: ["语音", "中文", "多模态"],
+        url: "https://www.minimaxi.com/platform",
+        accent: "#4fd1c5"
+      },
+      {
+        name: "Moonshot Open Platform",
+        region: "region_cn",
+        compat: "compat_native",
+        freeType: "free_credits",
+        badge: "长上下文",
+        note: "适合文档和阅读型应用。",
+        summary: "做长文理解、资料问答和中文文档类应用比较常见。",
+        tags: ["长上下文", "文档", "中文"],
+        url: "https://platform.moonshot.cn/",
+        accent: "#8f7dff"
+      },
+      {
+        name: "ModelScope API",
+        region: "region_cn",
+        compat: "compat_multi",
+        freeType: "free_sandbox",
+        badge: "开源生态",
+        note: "更偏模型试验。",
+        summary: "适合找国内开源模型做快速体验和验证。",
+        tags: ["开源", "国内", "试验"],
+        url: "https://www.modelscope.cn/",
+        accent: "#00a8ff"
+      },
+      {
+        name: "Cerebras Inference",
+        region: "region_global",
+        compat: "compat_openai",
+        freeType: "free_sandbox",
+        badge: "超快推理",
+        note: "适合压测响应速度。",
+        summary: "如果你想试特别快的文本推理体验，可以先从这里摸一遍。",
+        tags: ["速度", "OpenAI 兼容", "开发者"],
+        url: "https://www.cerebras.ai/inference",
+        accent: "#ff7675"
+      }
+    ];
+
+    const regions = [labels.allRegions, labels.region_cn, labels.region_global];
+    const compats = [labels.allCompat, labels.compat_openai, labels.compat_anthropic, labels.compat_native, labels.compat_multi];
+    const freeTypes = [labels.allFree, labels.free_models, labels.free_credits, labels.free_sandbox, labels.free_daily];
+    const state = { region: labels.allRegions, compat: labels.allCompat, freeType: labels.allFree, search: "" };
+
+    const regionChipsEl = document.getElementById("region-chips");
+    const compatChipsEl = document.getElementById("compat-chips");
+    const freeChipsEl = document.getElementById("free-chips");
+    const gridEl = document.getElementById("grid");
+    const countEl = document.getElementById("count");
+    const searchEl = document.getElementById("search-input");
+
+    function renderChips() {
+      regionChipsEl.innerHTML = regions.map((value) => `
+        <button class="chip-btn ${value === state.region ? "active" : ""}" data-region="${value}" type="button">${value}</button>
+      `).join("");
+      compatChipsEl.innerHTML = compats.map((value) => `
+        <button class="chip-btn ${value === state.compat ? "active" : ""}" data-compat="${value}" type="button">${value}</button>
+      `).join("");
+      freeChipsEl.innerHTML = freeTypes.map((value) => `
+        <button class="chip-btn ${value === state.freeType ? "active" : ""}" data-free-type="${value}" type="button">${value}</button>
+      `).join("");
+    }
+
+    function renderGrid() {
+      const items = providers.filter((provider) => {
+        const regionLabel = labels[provider.region];
+        const compatLabel = labels[provider.compat];
+        const freeLabel = labels[provider.freeType];
+        const haystack = [provider.name, provider.summary, provider.note, regionLabel, compatLabel, freeLabel, ...provider.tags].join(" ").toLowerCase();
+        const matchRegion = state.region === labels.allRegions || regionLabel === state.region;
+        const matchCompat = state.compat === labels.allCompat || compatLabel === state.compat;
+        const matchFreeType = state.freeType === labels.allFree || freeLabel === state.freeType;
+        const matchSearch = !state.search || haystack.includes(state.search);
+        return matchRegion && matchCompat && matchFreeType && matchSearch;
+      });
+
+      countEl.textContent = `${labels.showing} ${items.length} / ${providers.length} ${labels.items}`;
+
+      if (!items.length) {
+        gridEl.innerHTML = `<div class="empty">${labels.noMatch}</div>`;
+        return;
+      }
+
+      gridEl.innerHTML = items.map((provider) => `
+        <article class="tool-card" style="--tool-accent:${provider.accent}">
+          <div class="tool-top">
+            <div>
+              <div class="meta">${labels[provider.region]} / ${labels[provider.compat]}</div>
+              <h3>${provider.name}</h3>
+            </div>
+            <span class="badge">${provider.badge}</span>
+          </div>
+          <p>${provider.summary}</p>
+          <div class="tag-row">
+            ${provider.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}
+          </div>
+          <div class="mini-list">
+            <div><span>免费方式</span><strong>${labels[provider.freeType]}</strong></div>
+            <div><span>接入提示</span><strong>${provider.note}</strong></div>
+          </div>
+          <div class="card-bottom">
+            <span class="meta">${provider.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+            <a class="visit" href="${provider.url}" target="_blank" rel="noreferrer">${labels.open}</a>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    regionChipsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-region]");
+      if (!button) return;
+      state.region = button.dataset.region;
+      renderChips();
+      renderGrid();
+    });
+
+    compatChipsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-compat]");
+      if (!button) return;
+      state.compat = button.dataset.compat;
+      renderChips();
+      renderGrid();
+    });
+
+    freeChipsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-free-type]");
+      if (!button) return;
+      state.freeType = button.dataset.freeType;
+      renderChips();
+      renderGrid();
+    });
+
+    searchEl.addEventListener("input", () => {
+      state.search = searchEl.value.trim().toLowerCase();
+      renderGrid();
+    });
+
+    renderChips();
+    renderGrid();
+  </script>
+</body>
+</html>
