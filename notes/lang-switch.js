@@ -1,3 +1,4 @@
+/* site language switch */
 (function () {
   const STORAGE_KEY = "site-lang";
   const DEFAULT_LANG = "zh-CN";
