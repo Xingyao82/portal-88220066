@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>模型排名 | 88220066.xyz</title>
-  <meta name="description" content="每日更新公开模型排名，标清开源和闭源，方便快速对比。">
+  <title>Model Rankings | 88220066.xyz</title>
+  <meta name="description" content="Daily model rankings from public leaderboards, split into open and closed models.">
   <meta name="theme-color" content="#0b1222">
+  <script src="/notes/site-i18n.js"></script>
   <style>
     :root {
       --bg: #08111f;
@@ -17,14 +18,14 @@
       --muted: #9ca9c8;
       --accent: #7c9cff;
       --accent-2: #34d399;
-      --danger: #f87171;
       --warm: #f59e0b;
+      --danger: #f87171;
       --max: 1180px;
       --radius-xl: 28px;
       --radius-lg: 22px;
       --radius-md: 16px;
-      --radius-sm: 12px;
     }
+
     * { box-sizing: border-box; }
     html, body { min-height: 100%; }
     body {
@@ -38,173 +39,285 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       overflow-x: hidden;
     }
+
     a { color: inherit; text-decoration: none; }
     .shell { width: min(calc(100% - 28px), var(--max)); margin: 0 auto; padding: 18px 0 44px; }
     .nav {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding: 16px 18px; border: 1px solid var(--line); border-radius: 24px;
-      background: linear-gradient(180deg, rgba(15,23,42,.9), rgba(10,15,30,.84));
-      backdrop-filter: blur(18px); box-shadow: 0 22px 60px rgba(0,0,0,.26);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(10, 15, 30, 0.84));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.26);
     }
-    .brand { font-weight: 700; letter-spacing: -.02em; }
-    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); font-size: .95rem; }
+
+    .brand { font-weight: 700; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
     .nav-links a:hover { color: var(--text); }
-    .lang-switch {
-      position: fixed; top: 18px; right: 18px; z-index: 50;
-      display: inline-flex; gap: 6px; padding: 6px;
-      border: 1px solid var(--line); border-radius: 999px;
-      background: rgba(8, 13, 24, .72); backdrop-filter: blur(16px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.28);
-    }
-    .lang-switch button {
-      min-width: 46px; height: 34px; padding: 0 12px;
-      border: 0; border-radius: 999px; background: transparent; color: rgba(236,243,255,.75);
-      cursor: pointer; transition: .16s ease;
-    }
-    .lang-switch button.active { background: rgba(124,156,255,.18); color: #fff; }
+
     .hero {
-      margin-top: 18px; padding: 28px 24px 24px;
-      border: 1px solid var(--line); border-radius: var(--radius-xl);
-      background: linear-gradient(180deg, rgba(14,20,38,.92), rgba(10,14,26,.9));
-      box-shadow: 0 22px 60px rgba(0,0,0,.26);
+      margin-top: 18px;
+      padding: 30px 24px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(14, 20, 38, 0.92), rgba(10, 14, 26, 0.9));
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.26);
     }
-    .eyebrow { color: var(--accent); font-size: .92rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
-    h1 { margin: 12px 0 10px; font-size: clamp(2.2rem, 6vw, 4.5rem); line-height: 1.02; letter-spacing: -.06em; }
-    .hero-copy { margin: 0; max-width: 56rem; color: var(--muted); line-height: 1.8; font-size: 1.05rem; }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 56rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
     .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
     .pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      min-height: 40px; padding: 0 16px; border-radius: 999px;
-      border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
     }
-    .pill.primary { background: linear-gradient(135deg, rgba(124,156,255,.25), rgba(52,211,153,.18)); border-color: rgba(124,156,255,.28); }
-    .stats {
-      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px;
-      margin-top: 16px;
+
+    .pill.primary {
+      background: linear-gradient(135deg, rgba(124, 156, 255, 0.25), rgba(52, 211, 153, 0.18));
+      border-color: rgba(124, 156, 255, 0.28);
     }
+
+    .stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
     .stat {
-      padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-lg);
-      background: rgba(255,255,255,.04);
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.04);
     }
-    .stat span { display: block; color: var(--muted); font-size: .86rem; margin-bottom: 8px; }
-    .stat strong { display: block; font-size: 1.18rem; letter-spacing: -.03em; }
+
+    .stat span { display: block; color: var(--muted); font-size: 0.86rem; margin-bottom: 8px; }
+    .stat strong { display: block; font-size: 1.18rem; letter-spacing: -0.03em; }
+
     .controls {
-      margin-top: 16px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-xl);
-      background: var(--bg-soft); backdrop-filter: blur(18px);
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--bg-soft);
+      backdrop-filter: blur(18px);
     }
+
     .control-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
     .search {
-      flex: 1 1 320px; min-width: 260px;
-      min-height: 52px; padding: 0 16px; border-radius: 16px;
-      border: 1px solid var(--line); outline: none;
-      background: rgba(255,255,255,.05); color: var(--text); font-size: 1rem;
+      flex: 1 1 320px;
+      min-width: 260px;
+      min-height: 52px;
+      padding: 0 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      outline: none;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 1rem;
     }
+
     .search::placeholder { color: #7e8bac; }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip {
-      min-height: 36px; padding: 0 14px; border-radius: 999px;
-      border: 1px solid var(--line); background: rgba(255,255,255,.04);
-      color: var(--muted); cursor: pointer; transition: .15s ease;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 0.15s ease;
     }
-    .chip.active, .chip:hover { color: #fff; border-color: rgba(124,156,255,.35); background: rgba(124,156,255,.16); }
+
+    .chip.active,
+    .chip:hover {
+      color: #fff;
+      border-color: rgba(124, 156, 255, 0.35);
+      background: rgba(124, 156, 255, 0.16);
+    }
+
     .sections { display: grid; gap: 18px; margin-top: 18px; }
     .section {
-      padding: 20px; border: 1px solid var(--line); border-radius: var(--radius-xl);
-      background: rgba(10, 16, 30, .9); backdrop-filter: blur(16px);
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(10, 16, 30, 0.9);
+      backdrop-filter: blur(16px);
     }
-    .section-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px; }
-    .section-head h2 { margin: 0; font-size: 1.45rem; letter-spacing: -.03em; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 { margin: 0; font-size: 1.45rem; letter-spacing: -0.03em; }
     .section-head p { margin: 4px 0 0; color: var(--muted); line-height: 1.7; }
     .section-count { color: var(--accent); font-weight: 700; }
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
     .card {
       position: relative;
-      padding: 18px; border-radius: 22px;
+      padding: 18px;
+      border-radius: 22px;
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
-      display: flex; flex-direction: column; gap: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
       min-height: 220px;
     }
+
     .card::before {
-      content: ""; position: absolute; inset: 0 auto 0 0; width: 4px;
-      border-radius: 22px 0 0 22px; background: var(--accent);
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      border-radius: 22px 0 0 22px;
+      background: var(--accent);
     }
+
     .card.open::before { background: linear-gradient(180deg, #34d399, #0ea5e9); }
     .card.closed::before { background: linear-gradient(180deg, #f59e0b, #f87171); }
     .card-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
     .meta { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-    .rank { color: var(--accent); font-size: .86rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .rank { color: var(--accent); font-size: 0.86rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
     .model { margin: 0; font-size: 1.08rem; line-height: 1.35; word-break: break-word; }
-    .org { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.6; }
+    .org { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
     .badge {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-height: 30px; padding: 0 12px; border-radius: 999px;
-      font-size: .82rem; color: #fff; white-space: nowrap;
-      background: rgba(124,156,255,.2); border: 1px solid rgba(124,156,255,.24);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: #fff;
+      white-space: nowrap;
+      background: rgba(124, 156, 255, 0.2);
+      border: 1px solid rgba(124, 156, 255, 0.24);
     }
-    .badge.open { background: rgba(52,211,153,.18); border-color: rgba(52,211,153,.28); }
-    .badge.closed { background: rgba(245,158,11,.18); border-color: rgba(245,158,11,.28); }
+
+    .badge.open { background: rgba(52, 211, 153, 0.18); border-color: rgba(52, 211, 153, 0.28); }
+    .badge.closed { background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.28); }
     .score { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
-    .score strong { font-size: 2rem; letter-spacing: -.06em; }
-    .score span { color: var(--muted); font-size: .9rem; }
+    .score strong { font-size: 2rem; letter-spacing: -0.06em; }
+    .score span { color: var(--muted); font-size: 0.9rem; }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag {
-      display: inline-flex; align-items: center; min-height: 28px; padding: 0 10px;
-      border-radius: 999px; border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.03); color: var(--muted); font-size: .8rem;
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 0.8rem;
     }
+
     .card-foot { margin-top: auto; display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .source { color: var(--muted); font-size: .86rem; }
+    .source { color: var(--muted); font-size: 0.86rem; }
     .open-btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-height: 36px; padding: 0 14px; border-radius: 999px;
-      border: 1px solid rgba(124,156,255,.28);
-      background: rgba(124,156,255,.16); color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(124, 156, 255, 0.28);
+      background: rgba(124, 156, 255, 0.16);
+      color: #fff;
     }
+
     .empty {
-      padding: 20px; border: 1px dashed var(--line); border-radius: 18px; color: var(--muted); text-align: center;
+      padding: 20px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      color: var(--muted);
+      text-align: center;
     }
+
     .footnote {
-      margin-top: 18px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 22px;
-      background: rgba(255,255,255,.04); color: var(--muted); line-height: 1.8;
+      margin-top: 18px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      line-height: 1.8;
     }
-    @media (max-width: 1080px) { .stats, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+    @media (max-width: 1080px) {
+      .stats,
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
     @media (max-width: 760px) {
       .shell { width: min(calc(100% - 18px), var(--max)); padding-top: 12px; }
-      .lang-switch { top: 10px; right: 10px; }
-      .stats, .grid { grid-template-columns: 1fr; }
+      .stats,
+      .grid { grid-template-columns: 1fr; }
       .nav { flex-direction: column; align-items: flex-start; }
-      .hero, .controls, .section, .footnote { padding-left: 16px; padding-right: 16px; }
+      .hero,
+      .controls,
+      .section,
+      .footnote { padding-left: 16px; padding-right: 16px; }
       h1 { font-size: clamp(2rem, 12vw, 3.6rem); }
     }
   </style>
 </head>
-<body>
-  <div class="lang-switch" aria-label="Language switch">
-    <button type="button" data-lang="zh">中</button>
-    <button type="button" data-lang="en">EN</button>
-  </div>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand" id="brand">88220066.xyz / 模型排名</div>
+      <div class="brand" data-i18n="brand">88220066.xyz / Model Rankings</div>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/" id="navHome">首页</a>
-        <a href="/tools-nav/" id="navTools">免费工具</a>
-        <a href="/english-tools/" id="navEnglish">免费英语</a>
-        <a href="/ai-nav/" id="navAi">AI 导航</a>
-        <a href="/free-api-nav/" id="navApi">免费 API</a>
+        <a href="/" data-i18n="navHome">Home</a>
+        <a href="/tools-nav/" data-i18n="navTools">Free Tools</a>
+        <a href="/english-tools/" data-i18n="navEnglish">Free English</a>
+        <a href="/ai-nav/" data-i18n="navAi">AI Nav</a>
+        <a href="/free-api-nav/" data-i18n="navApi">Free APIs</a>
       </nav>
     </header>
 
     <main>
       <section class="hero">
-        <div class="eyebrow" id="eyebrow">MODEL RANKINGS</div>
-        <h1 id="heroTitle">模型排名</h1>
-        <p class="hero-copy" id="heroCopy">每天抓取公开榜单，分别展示综合榜和开源榜，并标清开源 / 闭源，方便快速对比。</p>
+        <div class="eyebrow" data-i18n="eyebrow">MODEL RANKINGS</div>
+        <h1 data-i18n="heroTitle">Model Rankings</h1>
+        <p class="hero-copy" data-i18n="heroCopy">Daily public rankings from open sources, split into open and closed models so you can scan the landscape quickly.</p>
         <div class="hero-actions">
-          <a class="pill primary" href="#ranking" id="heroPrimary">查看榜单</a>
-          <span class="pill" id="heroSecondary">数据每日更新</span>
+          <a class="pill primary" href="#ranking" data-i18n="heroPrimary">View Rankings</a>
+          <span class="pill" id="heroUpdated">Daily refresh</span>
         </div>
       </section>
 
@@ -212,322 +325,308 @@
 
       <section class="controls" id="ranking">
         <div class="control-row">
-          <input class="search" id="search" type="search" placeholder="搜索模型名、机构或标签">
+          <input class="search" id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search models, orgs, or tags">
           <div class="chips" id="sourceChips"></div>
           <div class="chips" id="availabilityChips"></div>
         </div>
       </section>
 
-      <div class="sections" id="sections"></div>
+      <section class="sections" id="sections"></section>
 
-      <section class="footnote" id="footnote">
-        两个榜单的分数口径不同，LMArena 看的是 Arena Score，Hugging Face 看的是 Open LLM 平均分，不建议直接横向比较。
-      </section>
+      <section class="footnote" data-i18n-html="footnote"></section>
     </main>
   </div>
 
+  <template id="stat-template">
+    <article class="stat">
+      <span></span>
+      <strong></strong>
+    </article>
+  </template>
+
+  <template id="section-template">
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2></h2>
+          <p></p>
+        </div>
+        <div class="section-count"></div>
+      </div>
+      <div class="grid"></div>
+      <div class="empty" hidden></div>
+    </section>
+  </template>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="card-top">
+        <div class="meta">
+          <div class="rank"></div>
+          <h3 class="model"></h3>
+          <p class="org"></p>
+        </div>
+        <div class="badge"></div>
+      </div>
+      <div class="score">
+        <strong></strong>
+        <span></span>
+      </div>
+      <div class="tags"></div>
+      <div class="card-foot">
+        <span class="source"></span>
+        <a class="open-btn" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </article>
+  </template>
+
   <script>
-    const STORAGE_KEY = 'site-lang';
     const copy = {
-      zh: {
-        title: '模型排名 | 88220066.xyz',
-        brand: '88220066.xyz / 模型排名',
-        navHome: '首页',
-        navTools: '免费工具',
-        navEnglish: '免费英语',
-        navAi: 'AI 导航',
-        navApi: '免费 API',
-        eyebrow: '模型排名',
-        heroTitle: '模型排名',
-        heroCopy: '每天抓取公开榜单，分别展示综合榜和开源榜，并标清开源 / 闭源，方便快速对比。',
-        heroPrimary: '查看榜单',
-        heroSecondary: '数据每日更新',
-        search: '搜索模型名、机构或标签',
-        sourceAll: '全部来源',
-        sourceArena: '综合榜',
-        sourceOpen: '开源榜',
-        availAll: '全部状态',
-        availOpen: '开源',
-        availClosed: '闭源',
-        stats: [
-          ['总条目', '总共有'],
-          ['开源模型', '开源'],
-          ['闭源模型', '闭源'],
-          ['数据源', '公开榜单'],
-          ['更新时间', '最近同步']
-        ],
-        sectionArenaTitle: '综合榜',
-        sectionArenaCopy: '来自 LMArena 的文本榜单，能快速看到闭源商业模型和开源模型的相对位置。',
-        sectionOpenTitle: '开源榜',
-        sectionOpenCopy: '来自 Hugging Face Open LLM Leaderboard，只收录开源模型，便于横向看开源阵营。',
-        open: '打开',
-        sourceArenaLabel: 'LMArena',
-        sourceOpenLabel: 'Open LLM',
-        arenaScore: 'Arena Score',
-        openScore: '平均分',
-        empty: '没有找到匹配的模型，换个关键词试试。',
-        note: '两个榜单的分数口径不同，LMArena 看的是 Arena Score，Hugging Face 看的是 Open LLM 平均分，不建议直接横向比较。',
-        updatedPrefix: '最近同步'
+      pageTitle: { zh: "\u6A21\u578B\u6392\u540D | 88220066.xyz", en: "Model Rankings | 88220066.xyz" },
+      pageDescription: {
+        zh: "\u6BCF\u65E5\u66F4\u65B0\u516C\u5F00\u6A21\u578B\u699C\u5355\uFF0C\u533A\u5206\u5F00\u6E90\u4E0E\u95ED\u6E90\u6A21\u578B\u3002",
+        en: "Daily model rankings from public leaderboards, split into open and closed models."
       },
-      en: {
-        title: 'Model Rankings | 88220066.xyz',
-        brand: '88220066.xyz / Model Rankings',
-        navHome: 'Home',
-        navTools: 'Free Tools',
-        navEnglish: 'Free English',
-        navAi: 'AI Nav',
-        navApi: 'Free APIs',
-        eyebrow: 'MODEL RANKINGS',
-        heroTitle: 'Model Rankings',
-        heroCopy: 'We refresh public leaderboards daily, split into a general ranking and an open-source ranking, and clearly mark open vs. closed models.',
-        heroPrimary: 'View Rankings',
-        heroSecondary: 'Daily updates',
-        search: 'Search by model, org, or tag',
-        sourceAll: 'All sources',
-        sourceArena: 'General board',
-        sourceOpen: 'Open-source board',
-        availAll: 'All statuses',
-        availOpen: 'Open',
-        availClosed: 'Closed',
-        stats: [
-          ['Total items', 'Total'],
-          ['Open models', 'Open'],
-          ['Closed models', 'Closed'],
-          ['Sources', 'Public leaderboards'],
-          ['Updated', 'Last sync']
-        ],
-        sectionArenaTitle: 'General leaderboard',
-        sectionArenaCopy: 'Pulled from the LMArena text leaderboard, showing both closed commercial models and open models.',
-        sectionOpenTitle: 'Open-source leaderboard',
-        sectionOpenCopy: 'Pulled from the Hugging Face Open LLM Leaderboard; this board only contains open models.',
-        open: 'Open',
-        sourceArenaLabel: 'LMArena',
-        sourceOpenLabel: 'Open LLM',
-        arenaScore: 'Arena Score',
-        openScore: 'Average score',
-        empty: 'No matching models found. Try a different keyword.',
-        note: 'The two leaderboards use different scoring scales. LMArena shows Arena Score, while Hugging Face shows Open LLM average score.',
-        updatedPrefix: 'Last sync'
-      }
+      brand: { zh: "88220066.xyz / \u6A21\u578B\u6392\u540D", en: "88220066.xyz / Model Rankings" },
+      navHome: { zh: "\u9996\u9875", en: "Home" },
+      navTools: { zh: "\u514D\u8D39\u5DE5\u5177", en: "Free Tools" },
+      navEnglish: { zh: "\u514D\u8D39\u82F1\u8BED", en: "Free English" },
+      navAi: { zh: "AI \u5BFC\u822A", en: "AI Nav" },
+      navApi: { zh: "\u514D\u8D39 API", en: "Free APIs" },
+      eyebrow: { zh: "MODEL RANKINGS", en: "MODEL RANKINGS" },
+      heroTitle: { zh: "\u6A21\u578B\u6392\u540D", en: "Model Rankings" },
+      heroCopy: {
+        zh: "\u6BCF\u5929\u4ECE\u516C\u5F00\u699C\u5355\u6293\u53D6\u6700\u65B0\u6570\u636E\uFF0C\u5206\u5F00\u5C55\u793A\u7EFC\u5408\u699C\u4E0E\u5F00\u6E90\u699C\uFF0C\u65B9\u4FBF\u5FEB\u901F\u5BF9\u6BD4\u6A21\u578B\u8D8B\u52BF\u3002",
+        en: "Updated daily from public leaderboards, with overall and open-source views so trends are easy to compare."
+      },
+      heroPrimary: { zh: "\u67E5\u770B\u699C\u5355", en: "View Rankings" },
+      searchPlaceholder: { zh: "\u641C\u7D22\u6A21\u578B\u540D\u3001\u673A\u6784\u6216\u6807\u7B7E", en: "Search models, orgs, or tags" },
+      footnote: {
+        zh: "\u8BF4\u660E\uFF1A\u8FD9\u4E2A\u9875\u9762\u76F4\u63A5\u8BFB\u53D6\u516C\u5F00\u699C\u5355\u6570\u636E\u3002\u5982\u679C\u67D0\u4E2A\u6A21\u578B\u6CA1\u6709\u51FA\u73B0\uFF0C\u901A\u5E38\u8868\u793A\u6E90\u7AD9\u8FD8\u6CA1\u6709\u53D1\u5E03\u8BE5\u6A21\u578B\u7684\u516C\u5F00\u8BC4\u6D4B\u7ED3\u679C\uFF0C\u800C\u4E0D\u662F\u8FD9\u4E2A\u9875\u9762\u6F0F\u6389\u4E86\u5B83\u3002",
+        en: "Note: this page mirrors public leaderboard data. If a model is missing, that usually means the source leaderboard has not published a public evaluation for it yet rather than this page filtering it out."
+      },
+      statsUpdated: { zh: "\u6700\u65B0\u66F4\u65B0", en: "Last Refresh" },
+      statsModels: { zh: "\u603B\u6A21\u578B\u6570", en: "Models Shown" },
+      statsOpen: { zh: "\u5F00\u6E90\u6A21\u578B", en: "Open Models" },
+      statsClosed: { zh: "\u95ED\u6E90\u6A21\u578B", en: "Closed Models" },
+      statsSources: { zh: "\u699C\u5355\u6765\u6E90", en: "Sources" },
+      chipAllSources: { zh: "\u5168\u90E8\u6765\u6E90", en: "All Sources" },
+      chipArena: { zh: "LMArena \u7EFC\u5408\u699C", en: "LMArena Overall" },
+      chipOpenLlm: { zh: "HF \u5F00\u6E90\u699C", en: "HF Open LLM" },
+      chipAllAvailability: { zh: "\u5168\u90E8\u7C7B\u578B", en: "All Types" },
+      chipOpen: { zh: "\u53EA\u770B\u5F00\u6E90", en: "Open Only" },
+      chipClosed: { zh: "\u53EA\u770B\u95ED\u6E90", en: "Closed Only" },
+      sectionArenaTitle: { zh: "LMArena \u7EFC\u5408\u699C", en: "LMArena Overall" },
+      sectionArenaCopy: {
+        zh: "\u6D3B\u8DC3\u5BF9\u6218\u7ED3\u679C\u66F4\u5F3A\u8C03\u7EFC\u5408\u4F53\u9A8C\u3002\u8FD9\u91CC\u540C\u65F6\u6807\u51FA\u5F00\u6E90\u4E0E\u95ED\u6E90\u6A21\u578B\u3002",
+        en: "Conversation arena results that reflect overall preference, with open and closed models labeled side by side."
+      },
+      sectionOpenTitle: { zh: "Hugging Face \u5F00\u6E90\u699C", en: "Hugging Face Open LLM Leaderboard" },
+      sectionOpenCopy: {
+        zh: "\u8FD9\u90E8\u5206\u53EA\u6536\u5F55\u6E90\u699C\u5355\u5DF2\u7ECF\u516C\u5F00\u8BC4\u6D4B\u7684\u5F00\u6E90\u6A21\u578B\u3002",
+        en: "This section includes only open-source models with published public evaluations on the source leaderboard."
+      },
+      sectionCount: { zh: "\u5171 {count} \u4E2A", en: "{count} shown" },
+      empty: { zh: "\u6CA1\u6709\u5339\u914D\u7ED3\u679C\uFF0C\u53EF\u4EE5\u8BD5\u8BD5\u653E\u5BBD\u641C\u7D22\u6216\u7B5B\u9009\u6761\u4EF6\u3002", en: "No matches yet. Try a broader search or fewer filters." },
+      openBadge: { zh: "\u5F00\u6E90", en: "Open" },
+      closedBadge: { zh: "\u95ED\u6E90", en: "Closed" },
+      openLink: { zh: "\u6253\u5F00", en: "Open" },
+      noLicense: { zh: "\u672A\u6807\u6CE8\u8BB8\u53EF", en: "License not listed" },
+      noOrg: { zh: "\u672A\u77E5\u673A\u6784", en: "Unknown org" }
     };
 
     const state = {
-      lang: localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh',
-      source: 'all',
-      availability: 'all',
-      search: ''
+      lang: "zh",
+      source: "all",
+      availability: "all",
+      search: "",
+      payload: null
     };
 
-    const sourceDefs = [
-      { key: 'all', labelKey: 'sourceAll' },
-      { key: 'lmarena', labelKey: 'sourceArena' },
-      { key: 'open-llm', labelKey: 'sourceOpen' }
-    ];
-    const availabilityDefs = [
-      { key: 'all', labelKey: 'availAll' },
-      { key: 'open', labelKey: 'availOpen' },
-      { key: 'closed', labelKey: 'availClosed' }
-    ];
+    const sourceOptions = ["all", "lmarena", "open-llm"];
+    const availabilityOptions = ["all", "open", "closed"];
 
-    let data = { generatedAt: '', updatedText: '', items: [], sources: {} };
-
-    const els = {
-      stats: document.getElementById('stats'),
-      sections: document.getElementById('sections'),
-      search: document.getElementById('search'),
-      sourceChips: document.getElementById('sourceChips'),
-      availabilityChips: document.getElementById('availabilityChips')
+    const elements = {
+      stats: document.getElementById("stats"),
+      sections: document.getElementById("sections"),
+      sourceChips: document.getElementById("sourceChips"),
+      availabilityChips: document.getElementById("availabilityChips"),
+      search: document.getElementById("search"),
+      heroUpdated: document.getElementById("heroUpdated"),
+      statTemplate: document.getElementById("stat-template"),
+      sectionTemplate: document.getElementById("section-template"),
+      cardTemplate: document.getElementById("card-template")
     };
 
-    function getLang() { return state.lang; }
-
-    function setLang(nextLang) {
-      state.lang = nextLang === 'en' ? 'en' : 'zh';
-      localStorage.setItem(STORAGE_KEY, state.lang);
-      document.documentElement.lang = state.lang === 'en' ? 'en' : 'zh-CN';
-      updateLangButtons();
-      applyStaticText();
-      render();
+    function t(key, fallback) {
+      return copy[key]?.[state.lang] ?? fallback ?? key;
     }
 
-    function updateLangButtons() {
-      document.querySelectorAll('.lang-switch button').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.lang === state.lang);
-      });
+    function formatCount(count) {
+      return t("sectionCount").replace("{count}", String(count));
     }
 
-    function t(key) {
-      return copy[state.lang][key];
-    }
-
-    function applyStaticText() {
-      document.title = t('title');
-      document.getElementById('brand').textContent = t('brand');
-      document.getElementById('navHome').textContent = t('navHome');
-      document.getElementById('navTools').textContent = t('navTools');
-      document.getElementById('navEnglish').textContent = t('navEnglish');
-      document.getElementById('navAi').textContent = t('navAi');
-      document.getElementById('navApi').textContent = t('navApi');
-      document.getElementById('eyebrow').textContent = t('eyebrow');
-      document.getElementById('heroTitle').textContent = t('heroTitle');
-      document.getElementById('heroCopy').textContent = t('heroCopy');
-      document.getElementById('heroPrimary').textContent = t('heroPrimary');
-      document.getElementById('heroSecondary').textContent = t('heroSecondary');
-      document.getElementById('search').placeholder = t('search');
-      document.getElementById('footnote').textContent = t('note');
-      renderChips();
-    }
-
-    function renderChips() {
-      els.sourceChips.innerHTML = sourceDefs.map((item) => (
-        `<button class="chip ${state.source === item.key ? 'active' : ''}" data-group="source" data-value="${item.key}" type="button">${t(item.labelKey)}</button>`
-      )).join('');
-      els.availabilityChips.innerHTML = availabilityDefs.map((item) => (
-        `<button class="chip ${state.availability === item.key ? 'active' : ''}" data-group="availability" data-value="${item.key}" type="button">${t(item.labelKey)}</button>`
-      )).join('');
-    }
-
-    function normalize(str) {
-      return String(str || '').toLowerCase();
-    }
-
-    function matches(item) {
-      if (state.source !== 'all' && item.source !== state.source) return false;
-      if (state.availability !== 'all' && item.availability !== state.availability) return false;
+    function matchesSearch(item) {
       if (!state.search) return true;
       const haystack = [
         item.model,
         item.organization,
         item.license,
-        item.sourceName,
         item.note,
-        item.scoreLabel,
-        item.availabilityLabel
-      ].map(normalize).join(' ');
+        item.sourceName,
+        item.sourceNameEn
+      ].join(" ").toLowerCase();
       return haystack.includes(state.search);
     }
 
-    function labelForScore(item) {
-      if (item.source === 'lmarena') return t('arenaScore');
-      return t('openScore');
+    function filterItems(items) {
+      return items.filter((item) => {
+        if (state.source !== "all" && item.source !== state.source) return false;
+        if (state.availability !== "all" && item.availability !== state.availability) return false;
+        return matchesSearch(item);
+      });
     }
 
-    function renderStats() {
-      const openCount = data.items.filter((item) => item.availability === 'open').length;
-      const closedCount = data.items.filter((item) => item.availability === 'closed').length;
-      const stats = [
-        [t('stats')[0][0], data.items.length.toString()],
-        [t('stats')[1][0], openCount.toString()],
-        [t('stats')[2][0], closedCount.toString()],
-        [t('stats')[3][0], '2'],
-        [t('stats')[4][0], data.updatedText || '-']
+    function buildChip(label, active, onClick) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chip" + (active ? " active" : "");
+      button.textContent = label;
+      button.addEventListener("click", onClick);
+      return button;
+    }
+
+    function renderChips() {
+      elements.sourceChips.innerHTML = "";
+      elements.availabilityChips.innerHTML = "";
+
+      sourceOptions.forEach((value) => {
+        const key = value === "all" ? "chipAllSources" : value === "lmarena" ? "chipArena" : "chipOpenLlm";
+        elements.sourceChips.appendChild(buildChip(t(key), state.source === value, () => {
+          state.source = value;
+          render();
+        }));
+      });
+
+      availabilityOptions.forEach((value) => {
+        const key = value === "all" ? "chipAllAvailability" : value === "open" ? "chipOpen" : "chipClosed";
+        elements.availabilityChips.appendChild(buildChip(t(key), state.availability === value, () => {
+          state.availability = value;
+          render();
+        }));
+      });
+    }
+
+    function renderStats(items) {
+      const openCount = items.filter((item) => item.availability === "open").length;
+      const closedCount = items.filter((item) => item.availability === "closed").length;
+      const sources = new Set(items.map((item) => item.source)).size;
+      const rows = [
+        [t("statsUpdated"), state.payload.updatedText || "-"],
+        [t("statsModels"), String(items.length)],
+        [t("statsOpen"), String(openCount)],
+        [t("statsClosed"), String(closedCount)],
+        [t("statsSources"), String(sources)]
       ];
-      els.stats.innerHTML = stats.map(([label, value]) => (
-        `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`
-      )).join('');
+
+      elements.stats.innerHTML = "";
+      rows.forEach(([label, value]) => {
+        const node = elements.statTemplate.content.firstElementChild.cloneNode(true);
+        node.querySelector("span").textContent = label;
+        node.querySelector("strong").textContent = value;
+        elements.stats.appendChild(node);
+      });
+      elements.heroUpdated.textContent = state.payload.updatedText ? `${t("statsUpdated")}: ${state.payload.updatedText}` : t("statsUpdated");
     }
 
-    function sectionTemplate(title, copyText, items, sourceKey) {
-      const list = items.filter(matches);
-      const cards = list.length ? list.map((item) => {
-        const badgeClass = item.availability === 'open' ? 'open' : 'closed';
-        const scoreLabel = labelForScore(item);
-        const sourceLabel = item.source === 'lmarena' ? t('sourceArenaLabel') : t('sourceOpenLabel');
-        const sourceName = state.lang === 'en' ? item.sourceNameEn : item.sourceName;
-        const license = item.license ? item.license : (item.availability === 'open' ? t('open') : t('availClosed'));
-        return `
-          <article class="card ${badgeClass}">
-            <div class="card-top">
-              <div class="meta">
-                <div class="rank">#${item.rank} · ${sourceLabel}</div>
-                <h3 class="model">${item.model}</h3>
-                <p class="org">${item.organization || ''}</p>
-              </div>
-              <span class="badge ${badgeClass}">${item.availabilityLabel}</span>
-            </div>
-            <div class="score">
-              <strong>${item.score}</strong>
-              <span>${scoreLabel}</span>
-            </div>
-            <div class="tags">
-              <span class="tag">${license}</span>
-              <span class="tag">${sourceName}</span>
-              <span class="tag">${item.source === 'lmarena' ? 'Arena' : 'Open LLM'}</span>
-            </div>
-            <div class="card-foot">
-              <span class="source">${state.lang === 'en' ? 'Updated daily' : '每日更新'}</span>
-              <a class="open-btn" href="${item.modelUrl}" target="_blank" rel="noopener noreferrer">${t('open')}</a>
-            </div>
-          </article>
-        `;
-      }).join('') : `<div class="empty">${t('empty')}</div>`;
+    function makeTag(text) {
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = text;
+      return tag;
+    }
 
-      return `
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>${title}</h2>
-              <p>${copyText}</p>
-            </div>
-            <div class="section-count">${list.length} / ${items.length}</div>
-          </div>
-          <div class="grid">${cards}</div>
-        </section>
-      `;
+    function renderCard(item) {
+      const card = elements.cardTemplate.content.firstElementChild.cloneNode(true);
+      card.classList.add(item.availability === "open" ? "open" : "closed");
+      card.querySelector(".rank").textContent = `#${item.rank}`;
+      card.querySelector(".model").textContent = item.model;
+      card.querySelector(".org").textContent = item.organization || t("noOrg");
+      const badge = card.querySelector(".badge");
+      badge.classList.add(item.availability === "open" ? "open" : "closed");
+      badge.textContent = item.availability === "open" ? t("openBadge") : t("closedBadge");
+      card.querySelector(".score strong").textContent = String(item.score);
+      card.querySelector(".score span").textContent = state.lang === "zh" ? item.scoreLabel : item.scoreLabelEn;
+
+      const tags = card.querySelector(".tags");
+      tags.appendChild(makeTag(state.lang === "zh" ? item.sourceName : item.sourceNameEn));
+      tags.appendChild(makeTag(item.license || t("noLicense")));
+      if (item.note) tags.appendChild(makeTag(item.note));
+
+      card.querySelector(".source").textContent = item.modelUrl ? new URL(item.modelUrl).hostname : "";
+      const link = card.querySelector(".open-btn");
+      link.textContent = t("openLink");
+      link.href = item.modelUrl || item.sourceUrl || "#";
+      return card;
+    }
+
+    function renderSection(sectionKey, titleKey, copyKey, items) {
+      const node = elements.sectionTemplate.content.firstElementChild.cloneNode(true);
+      node.querySelector("h2").textContent = t(titleKey);
+      node.querySelector("p").textContent = t(copyKey);
+      node.querySelector(".section-count").textContent = formatCount(items.length);
+
+      const grid = node.querySelector(".grid");
+      const empty = node.querySelector(".empty");
+      if (!items.length) {
+        grid.hidden = true;
+        empty.hidden = false;
+        empty.textContent = t("empty");
+      } else {
+        items.forEach((item) => grid.appendChild(renderCard(item)));
+      }
+      return node;
+    }
+
+    function renderSections(items) {
+      const arenaItems = items.filter((item) => item.source === "lmarena");
+      const openItems = items.filter((item) => item.source === "open-llm");
+      elements.sections.innerHTML = "";
+      elements.sections.appendChild(renderSection("lmarena", "sectionArenaTitle", "sectionArenaCopy", arenaItems));
+      elements.sections.appendChild(renderSection("open-llm", "sectionOpenTitle", "sectionOpenCopy", openItems));
     }
 
     function render() {
-      renderStats();
+      window.SiteI18n.applyMessages(copy, state.lang);
       renderChips();
-      const arenaItems = data.items.filter((item) => item.source === 'lmarena');
-      const openItems = data.items.filter((item) => item.source === 'open-llm');
-      const sections = [];
-      if (state.source === 'all' || state.source === 'lmarena') {
-        sections.push(sectionTemplate(t('sectionArenaTitle'), t('sectionArenaCopy'), arenaItems, 'lmarena'));
-      }
-      if (state.source === 'all' || state.source === 'open-llm') {
-        sections.push(sectionTemplate(t('sectionOpenTitle'), t('sectionOpenCopy'), openItems, 'open-llm'));
-      }
-      els.sections.innerHTML = sections.join('');
+      if (!state.payload) return;
+      const filtered = filterItems(state.payload.items);
+      renderStats(filtered);
+      renderSections(filtered);
     }
 
     async function loadData() {
-      try {
-        const response = await fetch('/notes/model-ranking-data.json?ts=' + Date.now(), { cache: 'no-store' });
-        if (!response.ok) throw new Error('bad response');
-        data = await response.json();
-      } catch (error) {
-        data = { generatedAt: '', updatedText: '', items: [], sources: {} };
-      }
+      const response = await fetch("/notes/model-ranking-data.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Failed to load ranking data: ${response.status}`);
+      state.payload = await response.json();
+      render();
     }
 
-    document.body.addEventListener('click', (event) => {
-      const langBtn = event.target.closest('[data-lang]');
-      if (langBtn) {
-        setLang(langBtn.dataset.lang);
-        return;
-      }
-      const chip = event.target.closest('[data-group]');
-      if (!chip) return;
-      const group = chip.dataset.group;
-      const value = chip.dataset.value;
-      if (group === 'source') state.source = value;
-      if (group === 'availability') state.availability = value;
+    elements.search.addEventListener("input", (event) => {
+      state.search = event.target.value.trim().toLowerCase();
       render();
     });
 
-    document.getElementById('search').addEventListener('input', (event) => {
-      state.search = normalize(event.target.value.trim());
+    state.lang = window.SiteI18n.getLang();
+    window.SiteI18n.bindPage(copy, (lang) => {
+      state.lang = lang;
       render();
     });
 
-    (async () => {
-      await loadData();
-      document.documentElement.lang = state.lang === 'en' ? 'en' : 'zh-CN';
-      applyStaticText();
-      updateLangButtons();
-      render();
-    })();
+    loadData().catch((error) => {
+      elements.sections.innerHTML = `<div class="empty">${error.message}</div>`;
+      elements.heroUpdated.textContent = error.message;
+    });
   </script>
 </body>
 </html>
