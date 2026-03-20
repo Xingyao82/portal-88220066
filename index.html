@@ -36,6 +36,8 @@
       --api-soft: rgba(15, 137, 255, 0.1);
       --rank: #f59e0b;
       --rank-soft: rgba(245, 158, 11, 0.1);
+      --finance: #14b8a6;
+      --finance-soft: rgba(20, 184, 166, 0.1);
       --max: 1180px;
     }
     * { box-sizing: border-box; }
@@ -63,7 +65,7 @@
     .button-primary:hover { background: var(--blue-hover); }
     .button-secondary { color: var(--blue); }
     .button-secondary:hover { opacity: 0.78; }
-    .links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; margin-top: 96px; width: 100%; }
+    .links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 96px; width: 100%; }
     .link-card { position: relative; padding: 38px 34px 34px; border-radius: 32px; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(15, 23, 42, 0.08); box-shadow: 0 18px 38px rgba(15, 23, 42, 0.06); text-align: center; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease; }
     .link-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; border-radius: 32px 0 0 32px; background: var(--card-accent, var(--blue)); }
     .link-card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(15, 23, 42, 0.1); }
@@ -75,6 +77,7 @@
     .link-card-ai { --card-accent: var(--ai); background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), var(--ai-soft)); border-color: rgba(111, 92, 255, 0.24); }
     .link-card-api { --card-accent: var(--api); background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), var(--api-soft)); border-color: rgba(15, 137, 255, 0.24); }
     .link-card-rank { --card-accent: var(--rank); background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), var(--rank-soft)); border-color: rgba(245, 158, 11, 0.24); }
+    .link-card-finance { --card-accent: var(--finance); background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), var(--finance-soft)); border-color: rgba(20, 184, 166, 0.24); }
     .footer { padding: 42px 0 24px; text-align: center; color: var(--muted); font-size: 0.92rem; }
     @media (max-width: 1040px) { .links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 720px) {
@@ -97,6 +100,7 @@
         <a href="/ai-nav/" data-i18n="navAi">AI &#x5BFC;&#x822A;</a>
         <a href="/free-api-nav/" data-i18n="navApi">&#x514D;&#x8D39; API</a>
         <a href="/model-ranking/" data-i18n="navRanking">&#x6A21;&#x578B;&#x6392;&#x540D;</a>
+        <a href="/finance-nav/" data-i18n="navFinance">&#x91D1;&#x878D;&#x5BFC;&#x822A;</a>
       </nav>
     </header>
     <main class="hero">
@@ -109,6 +113,7 @@
         <a class="button button-secondary" href="/ai-nav/" data-i18n="ctaAi">AI</a>
         <a class="button button-secondary" href="/free-api-nav/" data-i18n="ctaApi">&#x514D;&#x8D39; API</a>
         <a class="button button-secondary" href="/model-ranking/" data-i18n="ctaRanking">&#x6A21;&#x578B;&#x6392;&#x540D;</a>
+        <a class="button button-secondary" href="/finance-nav/" data-i18n="ctaFinance">&#x91D1;&#x878D;&#x5BFC;&#x822A;</a>
       </div>
       <section class="links" aria-label="Quick links">
         <a class="link-card link-card-tools" href="/tools-nav/">
@@ -136,6 +141,11 @@
           <p data-i18n="cardRankingCopy">&#x6BCF;&#x5929;&#x66F4;&#x65B0;&#x516C;&#x5F00;&#x6A21;&#x578B;&#x6392;&#x540D;&#xFF0C;&#x5206;&#x5F00;&#x5F00;&#x6E90;&#x548C;&#x95ED;&#x6E90;&#xFF0C;&#x65B9;&#x4FBF;&#x5FEB;&#x901F;&#x770B;&#x89C1;&#x6700;&#x65B0;&#x8D8B;&#x52BF;&#x3002;</p>
           <span>/model-ranking/</span>
         </a>
+        <a class="link-card link-card-finance" href="/finance-nav/">
+          <h2 data-i18n="cardFinanceTitle">&#x91D1;&#x878D;&#x5BFC;&#x822A;</h2>
+          <p data-i18n="cardFinanceCopy">&#x6536;&#x5F55;&#x514D;&#x8D39;&#x91D1;&#x878D;&#x3001;&#x91CF;&#x5316;&#x3001;&#x5B8F;&#x89C2;&#x6570;&#x636E;&#x548C;&#x7814;&#x7A76;&#x8D44;&#x6E90;&#x5165;&#x53E3;&#x3002;</p>
+          <span>/finance-nav/</span>
+        </a>
       </section>
     </main>
     <footer class="footer">88220066.xyz</footer>
@@ -144,8 +154,8 @@
     const copy = {
       pageTitle: { zh: "88220066.xyz", en: "88220066.xyz" },
       pageDescription: {
-        zh: "\u6781\u7B80\u7684\u4E2A\u4EBA\u4E3B\u9875\u5165\u53E3\uFF0C\u76F4\u8FBE\u514D\u8D39\u5DE5\u5177\u3001\u514D\u8D39\u82F1\u8BED\u3001AI \u5BFC\u822A\u3001\u514D\u8D39 API \u548C\u6A21\u578B\u6392\u540D\u3002",
-        en: "A lightweight personal portal for free tools, free English resources, AI navigation, free APIs, and model rankings."
+        zh: "\u6781\u7B80\u7684\u4E2A\u4EBA\u4E3B\u9875\u5165\u53E3\uFF0C\u76F4\u8FBE\u514D\u8D39\u5DE5\u5177\u3001\u514D\u8D39\u82F1\u8BED\u3001AI \u5BFC\u822A\u3001\u514D\u8D39 API\u3001\u6A21\u578B\u6392\u540D\u548C\u91D1\u878D\u5BFC\u822A\u3002",
+        en: "A lightweight personal portal for free tools, free English resources, AI navigation, free APIs, model rankings, and finance links."
       },
       eyebrow: { zh: "Portal", en: "Portal" },
       navTools: { zh: "\u514D\u8D39\u5DE5\u5177", en: "Free Tools" },
@@ -153,16 +163,18 @@
       navAi: { zh: "AI \u5BFC\u822A", en: "AI Nav" },
       navApi: { zh: "\u514D\u8D39 API", en: "Free APIs" },
       navRanking: { zh: "\u6A21\u578B\u6392\u540D", en: "Model Rankings" },
+      navFinance: { zh: "\u91D1\u878D\u5BFC\u822A", en: "Finance Nav" },
       heroTitle: { zh: "\u5E38\u7528\u5165\u53E3\u5BFC\u822A", en: "Useful Links, All in One Place" },
       heroCopy: {
-        zh: "\u514D\u8D39\u5DE5\u5177\u3001\u514D\u8D39\u82F1\u8BED\u3001AI \u5BFC\u822A\u3001\u514D\u8D39 API \u548C\u6A21\u578B\u6392\u540D\u4E00\u9875\u76F4\u8FBE\uFF0C\u5E38\u7528\u5165\u53E3\u96C6\u4E2D\u653E\u5728\u8FD9\u91CC\uFF0C\u6253\u5F00\u5C31\u80FD\u627E\u5230\u9700\u8981\u7684\u9875\u9762\u3002",
-        en: "Jump straight to free tools, free English resources, AI navigation, free APIs, and model rankings from one clean homepage."
+        zh: "\u514D\u8D39\u5DE5\u5177\u3001\u514D\u8D39\u82F1\u8BED\u3001AI \u5BFC\u822A\u3001\u514D\u8D39 API\u3001\u6A21\u578B\u6392\u540D\u548C\u91D1\u878D\u5BFC\u822A\u4E00\u9875\u76F4\u8FBE\uFF0C\u5E38\u7528\u5165\u53E3\u96C6\u4E2D\u653E\u5728\u8FD9\u91CC\uFF0C\u6253\u5F00\u5C31\u80FD\u627E\u5230\u9700\u8981\u7684\u9875\u9762\u3002",
+        en: "Jump straight to free tools, free English resources, AI navigation, free APIs, model rankings, and finance links from one clean homepage."
       },
       ctaPrimary: { zh: "\u6253\u5F00\u514D\u8D39\u5DE5\u5177", en: "Open Free Tools" },
       ctaEnglish: { zh: "\u514D\u8D39\u82F1\u8BED", en: "Free English" },
       ctaAi: { zh: "AI", en: "AI Nav" },
       ctaApi: { zh: "\u514D\u8D39 API", en: "Free APIs" },
       ctaRanking: { zh: "\u6A21\u578B\u6392\u540D", en: "Model Rankings" },
+      ctaFinance: { zh: "\u91D1\u878D\u5BFC\u822A", en: "Finance Nav" },
       cardToolsTitle: { zh: "\u514D\u8D39\u5DE5\u5177", en: "Free Tools" },
       cardToolsCopy: {
         zh: "\u96C6\u4E2D\u6536\u5F55\u514D\u8D39\u80FD\u76F4\u63A5\u7528\u7684\u7F51\u9875\u5DE5\u5177\uFF0C\u8986\u76D6 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u5F00\u53D1\u3001\u97F3\u89C6\u9891\u7B49\u5E38\u89C1\u573A\u666F\u3002",
@@ -187,6 +199,11 @@
       cardRankingCopy: {
         zh: "\u6BCF\u5929\u66F4\u65B0\u516C\u5F00\u6A21\u578B\u6392\u540D\uFF0C\u5206\u5F00\u5F00\u6E90\u548C\u95ED\u6E90\uFF0C\u65B9\u4FBF\u5FEB\u901F\u770B\u89C1\u6700\u65B0\u8D8B\u52BF\u3002",
         en: "Daily public model rankings split into open and closed models, so trends are easy to scan."
+      },
+      cardFinanceTitle: { zh: "\u91D1\u878D\u5BFC\u822A", en: "Finance Nav" },
+      cardFinanceCopy: {
+        zh: "\u6536\u5F55\u514D\u8D39\u91D1\u878D\u3001\u91CF\u5316\u3001\u5B8F\u89C2\u6570\u636E\u548C\u7814\u7A76\u8D44\u6E90\u5165\u53E3\u3002",
+        en: "Free links for finance, quant research, macro data, filings, and market tools."
       }
     };
     window.SiteI18n.bindPage(copy);
