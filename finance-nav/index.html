@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Finance | 88220066.xyz</title>
+  <meta name="description" content="Free finance and investing links for quant research, market data, macro data, filings, and APIs.">
+  <meta name="theme-color" content="#08161b">
+  <script src="/notes/site-i18n.js"></script>
+  <style>
+    :root {
+      --bg: #08161b;
+      --bg-soft: rgba(10, 24, 29, 0.94);
+      --panel: rgba(11, 24, 31, 0.92);
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #ecfbf8;
+      --muted: #9cc7c0;
+      --accent: #14b8a6;
+      --accent-2: #22c55e;
+      --warm: #f59e0b;
+      --max: 1220px;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(20, 184, 166, 0.22), transparent 20%),
+        radial-gradient(circle at 86% 14%, rgba(34, 197, 94, 0.12), transparent 18%),
+        radial-gradient(circle at 50% 84%, rgba(245, 158, 11, 0.1), transparent 22%),
+        linear-gradient(180deg, #08161b 0%, #071218 52%, #060f15 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: 22px 0 54px; }
+    .nav, .hero, .filters, .section {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(11, 24, 31, 0.92), rgba(8, 18, 24, 0.96));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 24px;
+    }
+
+    .brand { font-weight: 700; letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .hero {
+      margin-top: 18px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 56rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.03rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .summary-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .summary-card span { display: block; color: var(--muted); font-size: 0.88rem; margin-bottom: 8px; }
+    .summary-card strong { display: block; font-size: 1.02rem; line-height: 1.55; }
+
+    .filters {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius-xl);
+    }
+
+    .search {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .search::placeholder { color: #87a9a2; }
+    .filter-stack { display: grid; gap: 12px; margin-top: 16px; }
+    .filter-row { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+    .filter-label { min-width: 84px; padding-top: 8px; color: var(--muted); font-size: 0.94rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; }
+    .chip-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .chip-btn.active,
+    .chip-btn:hover {
+      color: var(--text);
+      border-color: rgba(20, 184, 166, 0.42);
+      background: rgba(20, 184, 166, 0.16);
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: var(--radius-xl);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 { margin: 0; font-size: 1.42rem; letter-spacing: -0.04em; }
+    .section-head p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+    .count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(20, 184, 166, 0.14);
+    }
+
+    .quick-grid,
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+    .tool-card {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.18)) 58%, rgba(255,255,255,.08));
+      background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.15)) 18%, transparent);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      background: var(--tool-accent, var(--accent));
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0, 0, 0, 0.28);
+    }
+
+    .tool-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .tool-top h3 { margin: 4px 0 0; font-size: 1.14rem; }
+    .meta,
+    .tool-card p { margin: 0; color: var(--muted); line-height: 1.72; }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #f5fffd;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mini-list { display: grid; gap: 8px; }
+    .mini-list div { display: flex; justify-content: space-between; gap: 14px; color: var(--muted); font-size: 0.95rem; }
+    .mini-list strong { color: var(--text); font-weight: 600; text-align: right; }
+    .card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; flex-wrap: wrap; }
+    .visit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #08161b;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%);
+    }
+
+    .empty {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 1180px) {
+      .summary-grid,
+      .quick-grid,
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .filter-row { flex-direction: column; gap: 10px; }
+      .filter-label { min-width: auto; padding-top: 0; }
+      .summary-grid,
+      .quick-grid,
+      .grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
+  <div class="shell">
+    <header class="nav">
+      <div class="brand" id="brand">88220066.xyz / Free Finance</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/" data-i18n="navHome">Home</a>
+        <a href="/tools-nav/" data-i18n="navTools">Free Tools</a>
+        <a href="/english-tools/" data-i18n="navEnglish">Free English</a>
+        <a href="/ai-nav/" data-i18n="navAi">AI Nav</a>
+        <a href="/finance-nav/" class="active" data-i18n="navFinance">Finance Nav</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">FREE FINANCE</div>
+      <h1 data-i18n="heroTitle">Free Finance</h1>
+      <p class="hero-copy" data-i18n="heroCopy">Free links for quant research, macro data, filings, screeners, charting, and public APIs. This page only keeps resources you can actually open and use without paying first.</p>
+      <div class="summary-grid" id="stats"></div>
+    </section>
+
+    <section class="filters">
+      <input class="search" id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search by name, category, or tag">
+      <div class="filter-stack">
+        <div class="filter-row"><div class="filter-label" data-i18n="filterCategory">Category</div><div id="category-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterStatus">Free Model</div><div id="status-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterScene">Focus</div><div id="scene-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterAccess">Access</div><div id="access-chips" class="chips"></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="featuredTitle">Start With These</h2>
+          <p data-i18n="featuredCopy">A small starter set for charts, macro data, filings, and quant workflow.</p>
+        </div>
+      </div>
+      <div id="quick-grid" class="quick-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="listTitle">Directory</h2>
+          <p data-i18n="listCopy">Only resources with real free access stay here. Freemium tools are clearly marked.</p>
+        </div>
+        <div class="count" id="count">Loading</div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+  </div>
+
+  <script>
+    const pageCopy = {
+      pageTitle: { zh: "\u514D\u8D39\u91D1\u878D | 88220066.xyz", en: "Free Finance | 88220066.xyz" },
+      pageDescription: {
+        zh: "\u6536\u5F55\u514D\u8D39\u91D1\u878D\u3001\u91CF\u5316\u3001\u5B8F\u89C2\u6570\u636E\u3001\u7814\u7A76\u4E0E\u516C\u5F00 API \u5165\u53E3\u3002",
+        en: "Free finance and investing links for quant research, market data, macro data, filings, and APIs."
+      },
+      navHome: { zh: "\u9996\u9875", en: "Home" },
+      navTools: { zh: "\u514D\u8D39\u5DE5\u5177", en: "Free Tools" },
+      navEnglish: { zh: "\u514D\u8D39\u82F1\u8BED", en: "Free English" },
+      navAi: { zh: "AI \u5BFC\u822A", en: "AI Nav" },
+      navFinance: { zh: "\u91D1\u878D\u5BFC\u822A", en: "Finance Nav" },
+      eyebrow: { zh: "FREE FINANCE", en: "FREE FINANCE" },
+      heroTitle: { zh: "\u514D\u8D39\u91D1\u878D", en: "Free Finance" },
+      heroCopy: {
+        zh: "\u6536\u5F55\u514D\u8D39\u7684\u91CF\u5316\u3001\u5E02\u573A\u6570\u636E\u3001\u5B8F\u89C2\u6570\u636E\u3001\u516C\u53F8\u62AB\u9732\u3001\u7814\u7A76\u5DE5\u5177\u548C\u516C\u5F00 API \u5165\u53E3\u3002\u8FD9\u4E2A\u9875\u9762\u53EA\u4FDD\u7559\u6253\u5F00\u540E\u771F\u7684\u80FD\u7528\u3001\u4E0D\u9700\u5148\u4ED8\u8D39\u7684\u8D44\u6E90\u3002",
+        en: "Free links for quant research, macro data, filings, screeners, charting, and public APIs. This page only keeps resources you can actually open and use without paying first."
+      },
+      searchPlaceholder: { zh: "\u641C\u7D22\u7AD9\u70B9\u540D\u3001\u6807\u7B7E\u6216\u573A\u666F\uFF0C\u6BD4\u5982\uFF1AFRED\u3001SEC\u3001quant\u3001API", en: "Search by name, category, or tag" },
+      filterCategory: { zh: "\u5206\u7C7B", en: "Category" },
+      filterStatus: { zh: "\u514D\u8D39\u65B9\u5F0F", en: "Free Model" },
+      filterScene: { zh: "\u805A\u7126\u65B9\u5411", en: "Focus" },
+      filterAccess: { zh: "\u8BBF\u95EE\u65B9\u5F0F", en: "Access" },
+      featuredTitle: { zh: "\u5148\u770B\u8FD9\u51E0\u4E2A", en: "Start With These" },
+      featuredCopy: { zh: "\u5148\u7528\u8FD9\u4E00\u7EC4\u5FEB\u901F\u8986\u76D6\u56FE\u8868\u3001\u5B8F\u89C2\u6570\u636E\u3001\u516C\u53F8\u62AB\u9732\u548C\u91CF\u5316\u5DE5\u4F5C\u6D41\u3002", en: "A small starter set for charts, macro data, filings, and quant workflow." },
+      listTitle: { zh: "\u8D44\u6E90\u5217\u8868", en: "Directory" },
+      listCopy: { zh: "\u53EA\u4FDD\u7559\u771F\u6B63\u6709\u514D\u8D39\u5165\u53E3\u7684\u8D44\u6E90\uFF0C\u5982\u679C\u662F freemium \u4E5F\u4F1A\u6807\u6CE8\u6E05\u695A\u3002", en: "Only resources with real free access stay here. Freemium tools are clearly marked." }
+    };
+
+    const labels = {
+      zh: {
+        brand: "88220066.xyz / \u514D\u8D39\u91D1\u878D",
+        showing: "\u5F53\u524D\u663E\u793A",
+        items: "\u4E2A\u8D44\u6E90",
+        open: "\u6253\u5F00",
+        noMatch: "\u6CA1\u6709\u627E\u5230\u5339\u914D\u7684\u91D1\u878D\u8D44\u6E90\uFF0C\u53EF\u4EE5\u6362\u4E2A\u5173\u952E\u8BCD\u6216\u7B5B\u9009\u518D\u8BD5\u8BD5\u3002",
+        allCategory: "\u5168\u90E8\u5206\u7C7B",
+        allStatus: "\u5168\u90E8\u514D\u8D39\u65B9\u5F0F",
+        allScene: "\u5168\u90E8\u65B9\u5411",
+        allAccess: "\u5168\u90E8\u8BBF\u95EE\u65B9\u5F0F",
+        stats: [
+          ["\u5F53\u524D\u6536\u5F55", "12 \u4E2A\u514D\u8D39\u91D1\u878D\u8D44\u6E90"],
+          ["\u8986\u76D6\u573A\u666F", "\u91CF\u5316\u3001\u5B8F\u89C2\u6570\u636E\u3001\u56FE\u8868\u3001\u62AB\u9732\u3001API"],
+          ["\u6807\u6CE8\u65B9\u5F0F", "\u5B8C\u5168\u514D\u8D39 / \u514D\u8D39\u5C42 / \u516C\u5F00\u6570\u636E"],
+          ["\u7B5B\u9009\u903B\u8F91", "\u4F18\u5148\u5B98\u7F51\u3001\u516C\u5F00\u6570\u636E\u548C\u80FD\u76F4\u63A5\u6253\u5F00\u7684\u5165\u53E3"]
+        ]
+      },
+      en: {
+        brand: "88220066.xyz / Free Finance",
+        showing: "Showing",
+        items: "resources",
+        open: "Open",
+        noMatch: "No matching finance resources found. Try another keyword or a wider filter.",
+        allCategory: "All Categories",
+        allStatus: "All Free Models",
+        allScene: "All Focus Areas",
+        allAccess: "All Access Modes",
+        stats: [
+          ["Current List", "12 free finance resources"],
+          ["Coverage", "Quant, macro data, charts, filings, research, APIs"],
+          ["Labels", "Fully free / free tier / public data"],
+          ["Selection Rule", "Official, usable, and directly accessible"]
+        ]
+      }
+    };
+
+    const options = {
+      category: {
+        chart: { zh: "\u56FE\u8868\u4E0E\u76D8\u9762", en: "Charts & Screens" },
+        quant: { zh: "\u91CF\u5316\u4E0E\u56DE\u6D4B", en: "Quant & Backtests" },
+        macro: { zh: "\u5B8F\u89C2\u4E0E\u7ECF\u6D4E", en: "Macro & Economics" },
+        filings: { zh: "\u516C\u53F8\u62AB\u9732", en: "Filings" },
+        api: { zh: "\u6570\u636E API", en: "Data APIs" },
+        research: { zh: "\u7814\u7A76\u4E0E\u6570\u636E\u5E93", en: "Research & Datasets" }
+      },
+      status: {
+        full: { zh: "\u5B8C\u5168\u514D\u8D39", en: "Fully Free" },
+        tier: { zh: "\u6709\u514D\u8D39\u5C42", en: "Free Tier" },
+        public: { zh: "\u516C\u5F00\u6570\u636E", en: "Public Data" }
+      },
+      scene: {
+        chart: { zh: "\u76D8\u9762\u770B\u76D8", en: "Market Charts" },
+        quant: { zh: "\u91CF\u5316\u7814\u7A76", en: "Quant Research" },
+        macro: { zh: "\u5B8F\u89C2\u6570\u636E", en: "Macro Data" },
+        filings: { zh: "\u516C\u53F8\u7814\u7A76", en: "Company Research" },
+        api: { zh: "\u7A0B\u5E8F\u5316\u6570\u636E", en: "Programmatic Data" },
+        rates: { zh: "\u5229\u7387\u4E0E\u56FA\u6536", en: "Rates & Fixed Income" }
+      },
+      access: {
+        instant: { zh: "\u6253\u5F00\u5373\u7528", en: "Instant Use" },
+        signup: { zh: "\u6CE8\u518C\u540E\u66F4\u65B9\u4FBF", en: "Better With Signup" },
+        key: { zh: "\u9700\u7533\u8BF7 API Key", en: "Needs API Key" }
+      }
+    };
+
+    const resources = [
+      {
+        name: "TradingView",
+        category: "chart",
+        status: "tier",
+        scene: "chart",
+        access: "instant",
+        accent: "#22c55e",
+        url: "https://www.tradingview.com/",
+        summary: {
+          zh: "\u514D\u8D39\u56FE\u8868\u548C\u76D8\u9762\u5165\u53E3\uFF0C\u9002\u5408\u770B K \u7EBF\u3001\u6807\u7684\u884C\u60C5\u548C\u521D\u6B65\u6280\u672F\u5206\u6790\u3002",
+          en: "A strong free starting point for charts, watchlists, and basic technical analysis."
+        },
+        tags: {
+          zh: ["\u56FE\u8868", "K\u7EBF", "\u76D8\u9762"],
+          en: ["charts", "candles", "screen"]
+        }
+      },
+      {
+        name: "QuantConnect",
+        category: "quant",
+        status: "tier",
+        scene: "quant",
+        access: "signup",
+        accent: "#3b82f6",
+        url: "https://www.quantconnect.com/",
+        summary: {
+          zh: "\u91CF\u5316\u7B56\u7565\u7814\u7A76\u3001\u56DE\u6D4B\u548C\u7B97\u6CD5\u4EA4\u6613\u5165\u53E3\uFF0C\u9002\u5408\u505A\u56E0\u5B50\u3001\u7B56\u7565\u9A8C\u8BC1\u548C\u6570\u636E\u7BA1\u7EBF\u3002",
+          en: "A practical place for quantitative research, backtests, and algorithmic workflow."
+        },
+        tags: {
+          zh: ["\u91CF\u5316", "\u56DE\u6D4B", "\u7B56\u7565"],
+          en: ["quant", "backtest", "strategy"]
+        }
+      },
+      {
+        name: "FRED",
+        category: "macro",
+        status: "public",
+        scene: "macro",
+        access: "instant",
+        accent: "#14b8a6",
+        url: "https://fred.stlouisfed.org/",
+        summary: {
+          zh: "\u7F8E\u8054\u50A8\u8056\u8DEF\u6613\u5206\u884C\u63D0\u4F9B\u7684\u7ECF\u6D4E\u548C\u5B8F\u89C2\u6570\u636E\u5165\u53E3\uFF0C\u9002\u5408 CPI\u3001GDP\u3001\u5C31\u4E1A\u3001\u5229\u7387\u548C\u7ECF\u6D4E\u5468\u671F\u7814\u7A76\u3002",
+          en: "One of the best free sources for CPI, GDP, labor, rates, and macro research."
+        },
+        tags: {
+          zh: ["\u5B8F\u89C2", "CPI", "GDP"],
+          en: ["macro", "CPI", "GDP"]
+        }
+      },
+      {
+        name: "SEC EDGAR",
+        category: "filings",
+        status: "public",
+        scene: "filings",
+        access: "instant",
+        accent: "#f59e0b",
+        url: "https://www.sec.gov/edgar/search/",
+        summary: {
+          zh: "\u516C\u53F8 10-K\u300110-Q\u30018-K \u548C\u5176\u4ED6\u62AB\u9732\u7684\u5B98\u65B9\u5165\u53E3\uFF0C\u9002\u5408\u505A\u516C\u53F8\u57FA\u672C\u9762\u7814\u7A76\u3002",
+          en: "The official place to read 10-K, 10-Q, 8-K, and other company filings."
+        },
+        tags: {
+          zh: ["\u62AB\u9732", "10-K", "10-Q"],
+          en: ["filings", "10-K", "10-Q"]
+        }
+      },
+      {
+        name: "Alpha Vantage",
+        category: "api",
+        status: "tier",
+        scene: "api",
+        access: "key",
+        accent: "#8b5cf6",
+        url: "https://www.alphavantage.co/",
+        summary: {
+          zh: "\u9002\u5408\u4E2A\u4EBA\u9879\u76EE\u548C\u5C0F\u5DE5\u5177\u7684\u514D\u8D39\u5E02\u573A\u6570\u636E API\uFF0C\u53EF\u4EE5\u5FEB\u901F\u62C9\u884C\u60C5\u3001\u5916\u6C47\u548C\u6280\u672F\u6307\u6807\u3002",
+          en: "A widely used free-tier API for market data, FX, and technical indicators."
+        },
+        tags: {
+          zh: ["API", "\u884C\u60C5", "\u6307\u6807"],
+          en: ["API", "market data", "indicators"]
+        }
+      },
+      {
+        name: "Nasdaq Data Link",
+        category: "research",
+        status: "tier",
+        scene: "api",
+        access: "key",
+        accent: "#06b6d4",
+        url: "https://data.nasdaq.com/",
+        summary: {
+          zh: "\u7EC4\u5408\u591A\u79CD\u91D1\u878D\u548C\u5B8F\u89C2\u6570\u636E\u96C6\u7684\u5E73\u53F0\uFF0C\u5F88\u9002\u5408\u627E\u514D\u8D39\u793A\u4F8B\u6570\u636E\u548C API \u5165\u53E3\u3002",
+          en: "A dataset hub that includes free finance and macro datasets with API access."
+        },
+        tags: {
+          zh: ["\u6570\u636E\u96C6", "API", "\u7814\u7A76"],
+          en: ["datasets", "API", "research"]
+        }
+      },
+      {
+        name: "BLS Public Data API",
+        category: "macro",
+        status: "public",
+        scene: "macro",
+        access: "key",
+        accent: "#eab308",
+        url: "https://www.bls.gov/developers/",
+        summary: {
+          zh: "\u7F8E\u56FD\u52B3\u5DE5\u7EDF\u8BA1\u5C40\u7684\u516C\u5F00 API\uFF0C\u9002\u5408\u62C9 CPI\u3001PPI\u3001\u5C31\u4E1A\u548C\u5DE5\u8D44\u7B49\u5B98\u65B9\u6570\u636E\u3002",
+          en: "The official BLS API for CPI, PPI, labor, employment, and wage data."
+        },
+        tags: {
+          zh: ["BLS", "CPI", "\u5C31\u4E1A"],
+          en: ["BLS", "CPI", "employment"]
+        }
+      },
+      {
+        name: "BEA API",
+        category: "macro",
+        status: "public",
+        scene: "macro",
+        access: "key",
+        accent: "#fb7185",
+        url: "https://www.bea.gov/data/api/signup",
+        summary: {
+          zh: "\u7F8E\u56FD\u7ECF\u6D4E\u5206\u6790\u5C40\u7684 GDP\u3001\u4E2A\u4EBA\u6536\u5165\u548C\u56FD\u5BB6\u8D26\u6237\u6570\u636E API\u3002",
+          en: "Official GDP, personal income, and national accounts data from the BEA."
+        },
+        tags: {
+          zh: ["GDP", "BEA", "\u7ECF\u6D4E\u8D26\u6237"],
+          en: ["GDP", "BEA", "national accounts"]
+        }
+      },
+      {
+        name: "Treasury Yield Curve",
+        category: "macro",
+        status: "public",
+        scene: "rates",
+        access: "instant",
+        accent: "#f97316",
+        url: "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
+        summary: {
+          zh: "\u7F8E\u56FD\u56FD\u503A\u6536\u76CA\u7387\u66F2\u7EBF\u5B98\u65B9\u5165\u53E3\uFF0C\u9002\u5408\u770B\u5229\u7387\u3001\u5012\u6302\u548C\u56FA\u6536\u80CC\u666F\u3002",
+          en: "The official Treasury yield curve page for rates, inversions, and fixed-income context."
+        },
+        tags: {
+          zh: ["\u5229\u7387", "\u6536\u76CA\u7387\u66F2\u7EBF", "\u56FD\u503A"],
+          en: ["rates", "yield curve", "Treasuries"]
+        }
+      },
+      {
+        name: "World Bank Data",
+        category: "research",
+        status: "public",
+        scene: "macro",
+        access: "instant",
+        accent: "#0ea5e9",
+        url: "https://data.worldbank.org/",
+        summary: {
+          zh: "\u505A\u5168\u7403\u5B8F\u89C2\u3001\u56FD\u522B\u5BF9\u6BD4\u548C\u957F\u671F\u53D1\u5C55\u6570\u636E\u65F6\u5F88\u597D\u7528\u3002",
+          en: "Useful for cross-country macro comparisons and long-run development data."
+        },
+        tags: {
+          zh: ["\u5168\u7403", "\u56FD\u522B\u5BF9\u6BD4", "\u5B8F\u89C2"],
+          en: ["global", "cross-country", "macro"]
+        }
+      },
+      {
+        name: "SEC data.sec.gov APIs",
+        category: "api",
+        status: "public",
+        scene: "filings",
+        access: "instant",
+        accent: "#22c55e",
+        url: "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+        summary: {
+          zh: "\u9002\u5408\u628A SEC \u516C\u53F8\u62AB\u9732\u505A\u6210\u7A0B\u5E8F\u5316\u6570\u636E\u7BA1\u7EBF\u3002",
+          en: "The official SEC API docs for building filing pipelines and structured company data pulls."
+        },
+        tags: {
+          zh: ["SEC", "API", "\u62AB\u9732"],
+          en: ["SEC", "API", "filings"]
+        }
+      },
+      {
+        name: "FINVIZ",
+        category: "chart",
+        status: "tier",
+        scene: "chart",
+        access: "instant",
+        accent: "#84cc16",
+        url: "https://finviz.com/",
+        summary: {
+          zh: "\u80A1\u7968 screener \u548C\u76D8\u9762\u89C2\u5BDF\u5165\u53E3\uFF0C\u9002\u5408\u65E5\u5E38\u7B5B\u9009\u548C\u5FEB\u901F\u8FC7\u76D8\u9762\u3002",
+          en: "A quick stock screener and market overview page for everyday filtering."
+        },
+        tags: {
+          zh: ["screener", "\u80A1\u7968", "\u76D8\u9762"],
+          en: ["screener", "stocks", "overview"]
+        }
+      },
+      {
+        name: "FRED API",
+        category: "api",
+        status: "public",
+        scene: "api",
+        access: "key",
+        accent: "#14b8a6",
+        url: "https://fred.stlouisfed.org/docs/api/fred/",
+        summary: {
+          zh: "\u9700\u8981\u7A0B\u5E8F\u5316\u62C9 FRED \u6570\u636E\u65F6\u6700\u76F4\u63A5\u7684\u516C\u5F00 API \u5165\u53E3\u3002",
+          en: "The direct API path when you want to pull FRED data into code or dashboards."
+        },
+        tags: {
+          zh: ["FRED", "API", "\u5B8F\u89C2"],
+          en: ["FRED", "API", "macro"]
+        }
+      }
+    ];
+
+    const state = { category: "all", status: "all", scene: "all", access: "all", search: "" };
+    const quickNames = new Set(["TradingView", "QuantConnect", "FRED", "SEC EDGAR", "Alpha Vantage", "Treasury Yield Curve"]);
+    const categoryEl = document.getElementById("category-chips");
+    const statusEl = document.getElementById("status-chips");
+    const sceneEl = document.getElementById("scene-chips");
+    const accessEl = document.getElementById("access-chips");
+    const quickGridEl = document.getElementById("quick-grid");
+    const gridEl = document.getElementById("grid");
+    const countEl = document.getElementById("count");
+    const statsEl = document.getElementById("stats");
+    const brandEl = document.getElementById("brand");
+    const searchEl = document.getElementById("search-input");
+
+    function getLabel(group, key, lang) {
+      if (key === "all") return labels[lang][`all${group}`];
+      return options[group.toLowerCase()][key][lang];
+    }
+
+    function textFor(item, lang) {
+      return {
+        summary: item.summary[lang],
+        tags: item.tags[lang],
+        category: getLabel("Category", item.category, lang),
+        status: getLabel("Status", item.status, lang),
+        scene: getLabel("Scene", item.scene, lang),
+        access: getLabel("Access", item.access, lang)
+      };
+    }
+
+    function renderStats(lang) {
+      brandEl.textContent = labels[lang].brand;
+      statsEl.innerHTML = labels[lang].stats.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+    }
+
+    function renderChipGroup(container, values, group, current, lang) {
+      container.innerHTML = values.map((value) => `<button class="chip-btn ${value === current ? "active" : ""}" data-group="${group}" data-value="${value}" type="button">${getLabel(group, value, lang)}</button>`).join("");
+    }
+
+    function filteredResources(lang) {
+      return resources.filter((item) => {
+        const text = textFor(item, lang);
+        const haystack = [item.name, text.summary, text.category, text.status, text.scene, text.access, ...text.tags].join(" ").toLowerCase();
+        return (state.category === "all" || item.category === state.category) &&
+          (state.status === "all" || item.status === state.status) &&
+          (state.scene === "all" || item.scene === state.scene) &&
+          (state.access === "all" || item.access === state.access) &&
+          (!state.search || haystack.includes(state.search));
+      });
+    }
+
+    function hostLabel(url) {
+      try {
+        const parsed = new URL(url);
+        return `${parsed.host}${parsed.pathname === "/" ? "" : parsed.pathname}`;
+      } catch {
+        return url;
+      }
+    }
+
+    function cardTemplate(item, lang) {
+      const text = textFor(item, lang);
+      return `<article class="tool-card" style="--tool-accent:${item.accent}"><div class="tool-top"><div><div class="meta">${text.category} / ${text.scene}</div><h3>${item.name}</h3></div><div><span class="status-badge">${text.status}</span></div></div><p>${text.summary}</p><div class="tag-row">${text.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}<span class="chip">${text.access}</span></div><div class="mini-list"><div><span>${lang === "zh" ? "\u514D\u8D39\u65B9\u5F0F" : "Free Model"}</span><strong>${text.status}</strong></div><div><span>${lang === "zh" ? "\u8BBF\u95EE\u65B9\u5F0F" : "Access"}</span><strong>${text.access}</strong></div></div><div class="card-bottom"><span class="meta">${hostLabel(item.url)}</span><a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a></div></article>`;
+    }
+
+    function renderPage(lang) {
+      renderStats(lang);
+      renderChipGroup(categoryEl, ["all", ...Object.keys(options.category)], "Category", state.category, lang);
+      renderChipGroup(statusEl, ["all", ...Object.keys(options.status)], "Status", state.status, lang);
+      renderChipGroup(sceneEl, ["all", ...Object.keys(options.scene)], "Scene", state.scene, lang);
+      renderChipGroup(accessEl, ["all", ...Object.keys(options.access)], "Access", state.access, lang);
+      const items = filteredResources(lang);
+      countEl.textContent = `${labels[lang].showing} ${items.length} / ${resources.length} ${labels[lang].items}`;
+      quickGridEl.innerHTML = resources.filter((item) => quickNames.has(item.name)).map((item) => cardTemplate(item, lang)).join("");
+      gridEl.innerHTML = items.length ? items.map((item) => cardTemplate(item, lang)).join("") : `<div class="empty">${labels[lang].noMatch}</div>`;
+    }
+
+    document.body.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-group]");
+      if (!button) return;
+      state[button.dataset.group.toLowerCase()] = button.dataset.value;
+      renderPage(window.SiteI18n.getLang());
+    });
+
+    searchEl.addEventListener("input", () => {
+      state.search = searchEl.value.trim().toLowerCase();
+      renderPage(window.SiteI18n.getLang());
+    });
+
+    window.SiteI18n.bindPage(pageCopy, renderPage);
+  </script>
+</body>
+</html>
