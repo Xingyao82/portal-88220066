@@ -3,802 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>&#x514D;&#x8D39;&#x6A21;&#x578B; API &#x5BFC;&#x822A; | 88220066.xyz</title>
-  <meta name="description" content="&#x6536;&#x5F55;&#x5E38;&#x89C1;&#x514D;&#x8D39;&#x6A21;&#x578B; API &#x5E73;&#x53F0;&#xFF0C;&#x652F;&#x6301;&#x6309;&#x5730;&#x533A;&#x3001;&#x517C;&#x5BB9;&#x534F;&#x8BAE;&#x3001;&#x514D;&#x8D39;&#x65B9;&#x5F0F;&#x548C;&#x7ED1;&#x5361;&#x8981;&#x6C42;&#x7B5B;&#x9009;&#xFF0C;&#x5E2E;&#x52A9;&#x4F60;&#x66F4;&#x5FEB;&#x627E;&#x5230;&#x80FD;&#x76F4;&#x63A5;&#x63A5;&#x5165;&#x7684;&#x6A21;&#x578B;&#x63A5;&#x53E3;&#x3002;">
+  <title>免费模型 API 导航 | 88220066.xyz</title>
+  <meta name="description" content="收录常见免费模型 API 平台，支持按地区、兼容协议、免费方式和绑卡要求筛选。">
   <meta name="theme-color" content="#0b1222">
-  <script defer src="/notes/lang-switch.js"></script>
+  <script defer src="/notes/site-i18n.js"></script>
   <style>
-    :root {
-      --bg: #0a1020;
-      --panel: rgba(14, 21, 38, 0.9);
-      --panel-2: rgba(10, 16, 30, 0.95);
-      --text: #edf3ff;
-      --muted: #a9b7d6;
-      --line: rgba(255,255,255,0.1);
-      --soft: rgba(255,255,255,0.05);
-      --accent: #4b8dff;
-      --accent-soft: rgba(75, 141, 255, 0.14);
-      --good: #34d399;
-      --warn: #fbbf24;
-      --max: 1220px;
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
-      background:
-        radial-gradient(circle at 12% 14%, rgba(75,141,255,0.24), transparent 0 24%),
-        radial-gradient(circle at 88% 16%, rgba(52,211,153,0.12), transparent 0 20%),
-        radial-gradient(circle at 58% 84%, rgba(251,191,36,0.12), transparent 0 22%),
-        linear-gradient(180deg, #09101d 0%, #0b1222 48%, #0b1020 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
-    .shell { width: min(calc(100% - 28px), var(--max)); margin: 0 auto; padding: 24px 0 54px; }
-    .nav, .toolbar, .section {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      backdrop-filter: blur(16px);
-      box-shadow: 0 22px 60px rgba(0,0,0,0.26);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 18px 22px;
-      border-radius: 22px;
-    }
-    .brand { font-weight: 700; letter-spacing: -0.03em; }
-    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .toolbar { margin-top: 18px; padding: 20px; border-radius: 24px; }
-    .toolbar-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .toolbar-head h1 {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: -0.05em;
-    }
-    .toolbar-head p {
-      margin: 10px 0 0;
-      max-width: 48rem;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-    .count {
-      display: inline-flex;
-      align-items: center;
-      min-height: 42px;
-      padding: 0 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: var(--accent-soft);
-      color: #f4f7ff;
-      font-size: 0.95rem;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .stat {
-      padding: 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-    }
-    .stat-label {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
-    .stat strong {
-      display: block;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    .search { margin-top: 18px; }
-    .search input {
-      width: 100%;
-      min-height: 52px;
-      padding: 0 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-    }
-    .filter-stack {
-      display: grid;
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .filter-row {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .filter-label {
-      min-width: 84px;
-      padding-top: 8px;
-      color: var(--muted);
-      font-size: 0.94rem;
-    }
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      flex: 1;
-    }
-    .chip-btn {
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
-      cursor: pointer;
-      transition: 160ms ease;
-    }
-    .chip-btn.active, .chip-btn:hover {
-      color: var(--text);
-      border-color: rgba(75, 141, 255, 0.42);
-      background: rgba(75, 141, 255, 0.14);
-    }
-    .section {
-      margin-top: 18px;
-      padding: 22px;
-      border-radius: var(--radius-xl);
-    }
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-    .section-head h2 {
-      margin: 0;
-      font-size: 1.42rem;
-      letter-spacing: -0.04em;
-    }
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .quick-grid, .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .tool-card {
-      position: relative;
-      display: grid;
-      gap: 14px;
-      padding: 18px;
-      border-radius: var(--radius-lg);
-      border: 1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.18)) 58%, rgba(255,255,255,0.08));
-      background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.04)) 10%, rgba(255,255,255,0.04)), rgba(255,255,255,0.03));
-      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,0.15)) 18%, transparent);
-      transition: transform 180ms ease, box-shadow 180ms ease;
-    }
-    .tool-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 4px;
-      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-      background: var(--tool-accent, var(--accent));
-    }
-    .tool-card:hover {
-      transform: translateY(-4px);
-      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,0.28);
-    }
-    .tool-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .tool-top h3 {
-      margin: 4px 0 0;
-      font-size: 1.16rem;
-    }
-    .meta, .tool-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.72;
-    }
-    .badge, .score-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 30px;
-      padding: 0 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: #f5f7ff;
-      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%);
-    }
-    .score-badge {
-      background: rgba(255,255,255,0.08);
-      color: #fff6cf;
-      border: 1px solid rgba(251,191,36,0.24);
-    }
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .chip {
-      display: inline-flex;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .mini-list {
-      display: grid;
-      gap: 8px;
-    }
-    .mini-list div {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .mini-list strong {
-      color: var(--text);
-      font-weight: 600;
-      text-align: right;
-    }
-    .card-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: auto;
-      flex-wrap: wrap;
-    }
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .visit, .ghost {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 0 14px;
-      border-radius: 999px;
-    }
-    .visit {
-      color: #08111f;
-      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%);
-    }
-    .ghost {
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-    }
-    .empty {
-      padding: 20px;
-      border-radius: var(--radius-lg);
-      border: 1px dashed rgba(255,255,255,0.16);
-      color: var(--muted);
-      text-align: center;
-    }
-    @media (max-width: 1180px) {
-      .stats, .quick-grid, .grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 720px) {
-      .shell { width: min(calc(100% - 18px), var(--max)); }
-      .nav { flex-direction: column; align-items: flex-start; }
-      .filter-row { flex-direction: column; gap: 10px; }
-      .filter-label { min-width: auto; padding-top: 0; }
-      .stats, .quick-grid, .grid { grid-template-columns: 1fr; }
-      .section-head { flex-direction: column; align-items: flex-start; }
-    }
+    :root { --text:#edf3ff; --muted:#a9b7d6; --line:rgba(255,255,255,.1); --accent:#4b8dff; --accent-soft:rgba(75,141,255,.14); --max:1220px; --radius-xl:28px; --radius-lg:22px; --radius-md:16px; }
+    * { box-sizing:border-box; } body { margin:0; min-height:100vh; color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; background:radial-gradient(circle at 12% 14%, rgba(75,141,255,.24), transparent 0 24%), radial-gradient(circle at 88% 16%, rgba(52,211,153,.12), transparent 0 20%), radial-gradient(circle at 58% 84%, rgba(251,191,36,.12), transparent 0 22%), linear-gradient(180deg, #09101d 0%, #0b1222 48%, #0b1020 100%); }
+    a { color:inherit; text-decoration:none; } button, input { font:inherit; }
+    .shell { width:min(calc(100% - 28px),var(--max)); margin:0 auto; padding:24px 0 54px; }
+    .nav,.toolbar,.section { border:1px solid var(--line); background:linear-gradient(180deg, rgba(14,21,38,.9), rgba(10,16,30,.95)); backdrop-filter:blur(16px); box-shadow:0 22px 60px rgba(0,0,0,.26); }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-radius:22px; }
+    .brand { font-weight:700; letter-spacing:-.03em; }
+    .nav-links { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); }
+    .nav-links a:hover,.nav-links a.active { color:var(--text); }
+    .toolbar { margin-top:18px; padding:20px; border-radius:24px; }
+    .toolbar-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .toolbar-head h1 { margin:0; font-size:clamp(2rem,4vw,3rem); letter-spacing:-.05em; }
+    .toolbar-head p { margin:10px 0 0; max-width:48rem; color:var(--muted); line-height:1.75; }
+    .count { display:inline-flex; align-items:center; min-height:42px; padding:0 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:var(--accent-soft); color:#f4f7ff; font-size:.95rem; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:18px; }
+    .stat { padding:16px; border-radius:var(--radius-md); border:1px solid var(--line); background:rgba(255,255,255,.04); }
+    .stat-label { color:var(--muted); font-size:.9rem; margin-bottom:8px; }
+    .stat strong { display:block; font-size:1rem; line-height:1.5; }
+    .search { margin-top:18px; }
+    .search input { width:100%; min-height:52px; padding:0 16px; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:var(--text); }
+    .filter-stack { display:grid; gap:12px; margin-top:16px; }
+    .filter-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+    .filter-label { min-width:84px; padding-top:8px; color:var(--muted); font-size:.94rem; }
+    .chips { display:flex; flex-wrap:wrap; gap:10px; flex:1; }
+    .chip-btn { padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:var(--muted); cursor:pointer; transition:160ms ease; }
+    .chip-btn.active,.chip-btn:hover { color:var(--text); border-color:rgba(75,141,255,.42); background:rgba(75,141,255,.14); }
+    .section { margin-top:18px; padding:22px; border-radius:var(--radius-xl); }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .section-head h2 { margin:0; font-size:1.42rem; letter-spacing:-.04em; }
+    .section-head p { margin:8px 0 0; color:var(--muted); line-height:1.7; }
+    .quick-grid,.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .tool-card { position:relative; display:grid; gap:14px; padding:18px; border-radius:var(--radius-lg); border:1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.18)) 58%, rgba(255,255,255,.08)); background:linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03)); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.15)) 18%, transparent); transition:transform 180ms ease, box-shadow 180ms ease; }
+    .tool-card::before { content:""; position:absolute; inset:0 auto 0 0; width:4px; border-radius:var(--radius-lg) 0 0 var(--radius-lg); background:var(--tool-accent,var(--accent)); }
+    .tool-card:hover { transform:translateY(-4px); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,.28); }
+    .tool-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .tool-top h3 { margin:4px 0 0; font-size:1.16rem; }
+    .meta,.tool-card p { margin:0; color:var(--muted); line-height:1.72; }
+    .badge,.status-badge { display:inline-flex; align-items:center; justify-content:center; min-height:30px; padding:0 10px; border-radius:999px; font-size:12px; color:#f5f7ff; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%); }
+    .status-badge { background:rgba(255,255,255,.08); }
+    .tag-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { display:inline-flex; padding:7px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); color:var(--muted); font-size:12px; }
+    .mini-list { display:grid; gap:8px; }
+    .mini-list div { display:flex; justify-content:space-between; gap:14px; color:var(--muted); font-size:.95rem; }
+    .mini-list strong { color:var(--text); font-weight:600; text-align:right; }
+    .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; flex-wrap:wrap; }
+    .btn-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .visit,.ghost { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 14px; border-radius:999px; }
+    .visit { color:#08111f; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%); }
+    .ghost { color:var(--text); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); }
+    .empty { padding:20px; border-radius:var(--radius-lg); border:1px dashed rgba(255,255,255,.16); color:var(--muted); text-align:center; }
+    @media (max-width:1180px) { .stats,.quick-grid,.grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:720px) { .shell { width:min(calc(100% - 18px),var(--max)); } .nav { flex-direction:column; align-items:flex-start; } .filter-row { flex-direction:column; gap:10px; } .filter-label { min-width:auto; padding-top:0; } .stats,.quick-grid,.grid { grid-template-columns:1fr; } .section-head { flex-direction:column; align-items:flex-start; } }
   </style>
 </head>
-<body>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand">88220066.xyz / &#x514D;&#x8D39;&#x6A21;&#x578B; API &#x5BFC;&#x822A;</div>
+      <div class="brand" id="brand">88220066.xyz / 免费 API</div>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/">&#x9996;&#x9875;</a>
-        <a href="/ai-nav/">AI &#x5BFC;&#x822A;</a>
-        <a href="/free-api-nav/" class="active">&#x514D;&#x8D39; API</a>
+        <a href="/" data-i18n="navHome">首页</a>
+        <a href="/ai-nav/" data-i18n="navAi">AI 导航</a>
+        <a href="/free-api-nav/" class="active" data-i18n="navApi">免费 API</a>
       </nav>
     </header>
-
     <section class="toolbar">
-      <div class="toolbar-head">
-        <div>
-          <h1>&#x514D;&#x8D39;&#x6A21;&#x578B; API &#x5BFC;&#x822A;</h1>
-          <p>&#x628A;&#x5E38;&#x7528;&#x7684;&#x514D;&#x8D39;&#x6A21;&#x578B;&#x5E73;&#x53F0;&#x6536;&#x5728;&#x4E00;&#x9875;&#x91CC;&#xFF0C;&#x5148;&#x6309;&#x5730;&#x533A;&#x3001;&#x517C;&#x5BB9;&#x534F;&#x8BAE;&#x3001;&#x514D;&#x8D39;&#x65B9;&#x5F0F;&#x548C;&#x7ED1;&#x5361;&#x8981;&#x6C42;&#x7B5B;&#x6389;&#x4E0D;&#x5408;&#x9002;&#x7684;&#xFF0C;&#x518D;&#x6311;&#x6587;&#x6863;&#x66F4;&#x987A;&#x624B;&#x7684;&#x5E73;&#x53F0;&#x5F00;&#x63A5;&#x3002;</p>
-        </div>
-        <div class="count" id="count">&#x6B63;&#x5728;&#x8F7D;&#x5165;</div>
-      </div>
-
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-label">&#x6570;&#x636E;&#x6765;&#x6E90;</div>
-          <strong id="stat-source">Cloudflare Worker</strong>
-        </div>
-        <div class="stat">
-          <div class="stat-label">&#x6700;&#x8FD1;&#x540C;&#x6B65;</div>
-          <strong id="stat-updated">&#x8F7D;&#x5165;&#x4E2D;</strong>
-        </div>
-        <div class="stat">
-          <div class="stat-label">&#x5B58;&#x50A8;&#x72B6;&#x6001;</div>
-          <strong id="stat-storage">&#x68C0;&#x6D4B;&#x4E2D;</strong>
-        </div>
-        <div class="stat">
-          <div class="stat-label">&#x9875;&#x9762;&#x8BF4;&#x660E;</div>
-          <strong id="stat-note">&#x4F18;&#x5148;&#x8BFB;&#x53D6;&#x5B9E;&#x65F6;&#x63A5;&#x53E3;&#xFF0C;&#x5F02;&#x5E38;&#x65F6;&#x56DE;&#x9000;&#x5185;&#x7F6E;&#x6570;&#x636E;</strong>
-        </div>
-      </div>
-
-      <label class="search">
-        <input id="search-input" type="search" placeholder="&#x641C;&#x7D22;&#x5E73;&#x53F0;&#x540D;&#x3001;&#x6807;&#x7B7E;&#x6216;&#x8BF4;&#x660E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;OpenAI &#x517C;&#x5BB9;&#x3001;&#x56FD;&#x5185;&#x3001;&#x514D;&#x7ED1;&#x5361;&#x3001;&#x6587;&#x6863;">
-      </label>
-
+      <div class="toolbar-head"><div><h1 data-i18n="heroTitle">免费模型 API 导航</h1><p data-i18n="heroCopy">把常见免费模型 API 平台收在一页里，按地区、兼容协议、免费方式和绑卡要求筛选。</p></div><div class="count" id="count">加载中</div></div>
+      <div class="stats" id="stats"></div>
+      <label class="search"><input id="search-input" type="search"></label>
       <div class="filter-stack">
-        <div class="filter-row">
-          <div class="filter-label">&#x5730;&#x533A;</div>
-          <div id="region-chips" class="chips" aria-label="&#x5730;&#x533A;&#x7B5B;&#x9009;"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label">&#x534F;&#x8BAE;</div>
-          <div id="compat-chips" class="chips" aria-label="&#x534F;&#x8BAE;&#x7B5B;&#x9009;"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label">&#x514D;&#x8D39;&#x65B9;&#x5F0F;</div>
-          <div id="free-chips" class="chips" aria-label="&#x514D;&#x8D39;&#x65B9;&#x5F0F;&#x7B5B;&#x9009;"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label">&#x7ED1;&#x5361;&#x8981;&#x6C42;</div>
-          <div id="card-chips" class="chips" aria-label="&#x7ED1;&#x5361;&#x8981;&#x6C42;&#x7B5B;&#x9009;"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label">&#x63A8;&#x8350;&#x7B49;&#x7EA7;</div>
-          <div id="score-chips" class="chips" aria-label="&#x63A8;&#x8350;&#x7B49;&#x7EA7;&#x7B5B;&#x9009;"></div>
-        </div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterRegion">地区</div><div id="region-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterCompat">协议</div><div id="compat-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterFree">免费方式</div><div id="free-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterCard">绑卡要求</div><div id="card-chips" class="chips"></div></div>
       </div>
     </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2>&#x4F18;&#x5148;&#x770B;&#x8FD9;&#x51E0;&#x4E2A;</h2>
-          <p>&#x5148;&#x653E;&#x66F4;&#x597D;&#x63A5;&#x3001;&#x66F4;&#x5E38;&#x7528;&#x6216;&#x66F4;&#x9002;&#x5408;&#x62FF;&#x6765;&#x8BD5;&#x9879;&#x76EE;&#x7684;&#x5165;&#x53E3;&#xFF0C;&#x61D2;&#x5F97;&#x5168;&#x7FFB;&#x65F6;&#x53EF;&#x4EE5;&#x5148;&#x770B;&#x8FD9;&#x6392;&#x3002;</p>
-        </div>
-      </div>
-      <div id="quick-grid" class="quick-grid"></div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2>&#x5E73;&#x53F0;&#x5217;&#x8868;</h2>
-          <p id="source-note">&#x6B63;&#x5728;&#x4ECE; Worker &#x63A5;&#x53E3;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x3002;</p>
-        </div>
-      </div>
-      <div id="grid" class="grid"></div>
-    </section>
+    <section class="section"><div class="section-head"><div><h2 data-i18n="featuredTitle">先看这几个</h2><p data-i18n="featuredCopy">优先放更容易接入、文档更顺手的一组。</p></div></div><div id="quick-grid" class="quick-grid"></div></section>
+    <section class="section"><div class="section-head"><div><h2 data-i18n="listTitle">平台列表</h2><p data-i18n="listCopy">Worker 数据和页面补充信息会一起展示。</p></div></div><div id="grid" class="grid"></div></section>
   </div>
-
   <script>
-    const labels = {
-      all: "\u5168\u90e8",
-      allRegions: "\u5168\u90e8\u5730\u533a",
-      allCompat: "\u5168\u90e8\u534f\u8bae",
-      allFree: "\u5168\u90e8\u514d\u8d39\u65b9\u5f0f",
-      allCard: "\u5168\u90e8\u7ed1\u5361\u60c5\u51b5",
-      allScore: "\u5168\u90e8\u63a8\u8350\u7b49\u7ea7",
-      showing: "\u5f53\u524d\u663e\u793a",
-      items: "\u4e2a\u5e73\u53f0",
-      open: "\u5b98\u7f51",
-      docs: "\u6587\u6863",
-      noMatch: "\u6ca1\u6709\u627e\u5230\u5339\u914d\u7684\u5e73\u53f0\uff0c\u6362\u4e2a\u5173\u952e\u8bcd\u6216\u7b5b\u9009\u8bd5\u8bd5\u3002",
-      region_cn: "\u56fd\u5185",
-      region_global: "\u56fd\u5916",
-      compat_openai: "OpenAI \u517c\u5bb9",
-      compat_anthropic: "Anthropic \u517c\u5bb9",
-      compat_native: "\u539f\u751f SDK",
-      compat_multi: "\u591a\u534f\u8bae",
-      free_models: "\u514d\u8d39\u6a21\u578b",
-      free_credits: "\u8bd5\u7528\u989d\u5ea6",
-      free_sandbox: "\u5f00\u53d1\u6c99\u76d2",
-      free_daily: "\u65e5\u5e38\u514d\u8d39\u5c42",
-      card_unknown: "\u672a\u660e\u786e",
-      card_no: "\u514d\u7ed1\u5361\u4f18\u5148",
-      card_maybe: "\u53ef\u80fd\u8981\u7ed1\u5361",
-      score_high: "\u9ad8\u63a8\u8350",
-      score_mid: "\u5b9e\u7528",
-      score_low: "\u53ef\u5907\u9009"
-    };
-
-    const enrichments = {
-      "OpenRouter": { score: 5, card: "card_maybe", docs: "https://openrouter.ai/docs/quickstart", recommended: true },
-      "GroqCloud": { score: 5, card: "card_no", docs: "https://console.groq.com/docs/quickstart", recommended: true },
-      "Gemini API": { score: 5, card: "card_no", docs: "https://ai.google.dev/gemini-api/docs", recommended: true },
-      "Cloudflare Workers AI": { score: 4, card: "card_no", docs: "https://developers.cloudflare.com/workers-ai/", recommended: true },
-      "NVIDIA NIM": { score: 4, card: "card_no", docs: "https://build.nvidia.com/", recommended: true },
-      "Cohere": { score: 4, card: "card_unknown", docs: "https://docs.cohere.com/docs/rate-limits", recommended: true },
-      "Mistral API": { score: 4, card: "card_maybe", docs: "https://docs.mistral.ai/deployment/ai-studio/tier", recommended: true },
-      "SambaNova Cloud": { score: 4, card: "card_no", docs: "https://docs.sambanova.ai/cloud/docs/models/rate-limits", recommended: true },
-      "GitHub Models": { score: 4, card: "card_no", docs: "https://docs.github.com/en/github-models", recommended: false },
-      "Hugging Face Inference": { score: 4, card: "card_no", docs: "https://huggingface.co/docs/inference-providers/index", recommended: false },
-      "Together AI": { score: 4, card: "card_maybe", docs: "https://docs.together.ai/docs/quickstart", recommended: false },
-      "Fireworks AI": { score: 4, card: "card_maybe", docs: "https://docs.fireworks.ai/getting-started/introduction", recommended: false },
-      "SiliconFlow": { score: 5, card: "card_no", docs: "https://docs.siliconflow.cn/", recommended: true },
-      "Aliyun Bailian": { score: 4, card: "card_maybe", docs: "https://help.aliyun.com/zh/model-studio/", recommended: false },
-      "Volcengine Ark": { score: 4, card: "card_maybe", docs: "https://www.volcengine.com/docs/82379", recommended: false },
-      "Zhipu Open Platform": { score: 4, card: "card_maybe", docs: "https://open.bigmodel.cn/dev/howuse/introduction", recommended: false },
-      "MiniMax Open Platform": { score: 4, card: "card_maybe", docs: "https://platform.minimaxi.com/document/introduction", recommended: false },
-      "Moonshot Open Platform": { score: 4, card: "card_maybe", docs: "https://platform.moonshot.cn/docs", recommended: false },
-      "ModelScope API": { score: 3, card: "card_no", docs: "https://modelscope.cn/docs", recommended: false },
-      "Cerebras Inference": { score: 3, card: "card_no", docs: "https://inference-docs.cerebras.ai/", recommended: false }
-    };
-
-    const fallbackProviders = Object.entries(enrichments).map(([name, extra]) => ({
-      name,
-      region: "region_global",
-      compat: "compat_openai",
-      freeType: "free_credits",
-      badge: "\u5907\u7528\u6570\u636e",
-      note: "\u5f53\u524d\u6b63\u5728\u4f7f\u7528\u9875\u9762\u5185\u7f6e\u6570\u636e\u3002",
-      summary: "Worker \u5f02\u5e38\u65f6\u4ecd\u80fd\u5148\u770b\u5230\u5e38\u7528\u5165\u53e3\u3002",
-      tags: ["\u5907\u7528", "\u5185\u7f6e"],
-      url: "#",
-      accent: "#4b8dff",
-      ...extra
-    }));
-
-    const builtinProviders = [
-      {
-        name: "NVIDIA NIM",
-        region: "region_global",
-        compat: "compat_openai",
-        freeType: "free_credits",
-        badge: "GPU",
-        note: "build.nvidia.com \u53ef\u76f4\u63a5\u8bd5\u7528\u591a\u4e2a NIM API \u548c\u6a21\u578b\u5165\u53e3\u3002",
-        summary: "NVIDIA \u7684\u6a21\u578b API \u76ee\u5f55\uff0c\u9002\u5408\u8bd5\u7528\u63a8\u7406\u3001\u751f\u6210\u548c\u591a\u6a21\u6001\u80fd\u529b\u3002",
-        tags: ["NVIDIA", "NIM", "OpenAI \u517c\u5bb9", "GPU"],
-        url: "https://build.nvidia.com/",
-        accent: "#76b900"
-      },
-      {
-        name: "Cohere",
-        region: "region_global",
-        compat: "compat_openai",
-        freeType: "free_credits",
-        badge: "Trial",
-        note: "\u5b98\u65b9\u6587\u6863\u5199\u660e trial key \u514d\u8d39\u4f46\u989d\u5ea6\u53d7\u9650\uff0c\u9002\u5408\u5148\u505a\u539f\u578b\u548c\u5c0f\u6d4b\u8bd5\u3002",
-        summary: "\u9002\u5408\u6587\u672c\u3001RAG\u3001rerank \u548c\u68c0\u7d22\u573a\u666f\uff0c\u73b0\u5728\u4e5f\u63d0\u4f9b OpenAI \u517c\u5bb9 API \u8def\u7ebf\u3002",
-        tags: ["Cohere", "Trial", "Rerank", "OpenAI \u517c\u5bb9"],
-        url: "https://dashboard.cohere.com/api-keys",
-        accent: "#f59e0b"
-      },
-      {
-        name: "Mistral API",
-        region: "region_global",
-        compat: "compat_native",
-        freeType: "free_credits",
-        badge: "Experiment",
-        note: "\u5b98\u65b9\u8bf4\u660e\u6709 free API tier\uff0c\u4f46\u514d\u8d39\u5c42\u7ea7\u9650\u5236\u66f4\u4e25\uff0c\u8d26\u6237\u5f00\u901a\u6d41\u7a0b\u76f8\u5bf9\u66f4\u91cd\u3002",
-        summary: "\u9002\u5408\u4f53\u9a8c Mistral \u7684\u5bf9\u8bdd\u3001OCR \u548c\u8f6c\u5199 API\uff0c\u514d\u8d39\u5c42\u7ea7\u66f4\u504f\u8bd5\u7528\u3002",
-        tags: ["Mistral", "Experiment", "OCR", "\u8f6c\u5199"],
-        url: "https://console.mistral.ai/",
-        accent: "#ff6b3d"
-      },
-      {
-        name: "SambaNova Cloud",
-        region: "region_global",
-        compat: "compat_openai",
-        freeType: "free_daily",
-        badge: "Free Tier",
-        note: "\u5b98\u65b9\u6587\u6863\u6709 free tier\uff0c\u672a\u7ed1\u4ed8\u6b3e\u65b9\u5f0f\u4e5f\u80fd\u8fdb\u5165\u514d\u8d39\u6863\uff0c\u4f46\u6709\u6bcf\u65e5\u8bf7\u6c42/\u4ee4\u724c\u9650\u5236\u3002",
-        summary: "\u9002\u5408\u4f53\u9a8c\u5927\u6a21\u578b\u9ad8\u901f\u63a8\u7406\uff0c\u652f\u6301 OpenAI \u5ba2\u6237\u7aef\u65b9\u5f0f\u63a5\u5165\u3002",
-        tags: ["SambaNova", "Free Tier", "OpenAI \u517c\u5bb9", "\u9ad8\u901f\u63a8\u7406"],
-        url: "https://cloud.sambanova.ai/",
-        accent: "#ec4899"
-      }
-    ];
-
-    const regions = [labels.allRegions, labels.region_cn, labels.region_global];
-    const compats = [labels.allCompat, labels.compat_openai, labels.compat_anthropic, labels.compat_native, labels.compat_multi];
-    const freeTypes = [labels.allFree, labels.free_models, labels.free_credits, labels.free_sandbox, labels.free_daily];
-    const cards = [labels.allCard, labels.card_no, labels.card_maybe, labels.card_unknown];
-    const scores = [labels.allScore, labels.score_high, labels.score_mid, labels.score_low];
-
-    const state = {
-      region: labels.allRegions,
-      compat: labels.allCompat,
-      freeType: labels.allFree,
-      card: labels.allCard,
-      score: labels.allScore,
-      search: ""
-    };
-
-    let providers = [];
-    let latestMeta = null;
-
-    const regionChipsEl = document.getElementById("region-chips");
-    const compatChipsEl = document.getElementById("compat-chips");
-    const freeChipsEl = document.getElementById("free-chips");
-    const cardChipsEl = document.getElementById("card-chips");
-    const scoreChipsEl = document.getElementById("score-chips");
-    const quickGridEl = document.getElementById("quick-grid");
-    const gridEl = document.getElementById("grid");
-    const countEl = document.getElementById("count");
-    const searchEl = document.getElementById("search-input");
-    const sourceNoteEl = document.getElementById("source-note");
-    const statSourceEl = document.getElementById("stat-source");
-    const statUpdatedEl = document.getElementById("stat-updated");
-    const statStorageEl = document.getElementById("stat-storage");
-    const statNoteEl = document.getElementById("stat-note");
-
-    function scoreLabel(score) {
-      if (score >= 5) return labels.score_high;
-      if (score >= 4) return labels.score_mid;
-      return labels.score_low;
-    }
-
-    function formatTime(value) {
-      if (!value) return "\u672a\u540c\u6b65";
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return value;
-      return date.toLocaleString("zh-CN", { hour12: false });
-    }
-
-    function hostFromUrl(url) {
-      try {
-        return new URL(url).host.replace(/^www\./, "");
-      } catch {
-        return url || "-";
-      }
-    }
-
-    function normalizeProvider(provider) {
-      const extra = enrichments[provider.name] || {};
-      const tags = Array.isArray(provider.tags) ? provider.tags.slice() : [];
-      const merged = {
-        ...provider,
-        ...extra,
-        card: extra.card || provider.card || "card_unknown",
-        score: extra.score || provider.score || 3,
-        docs: extra.docs || provider.docs || provider.url,
-        recommended: Boolean(extra.recommended || provider.recommended),
-        tags,
-      };
-      if (labels[merged.region] === "\u56fd\u5185" && !merged.tags.includes("\u56fd\u5185")) merged.tags.unshift("\u56fd\u5185");
-      if (merged.card === "card_no" && !merged.tags.includes("\u514d\u7ed1\u5361")) merged.tags.push("\u514d\u7ed1\u5361");
-      if (merged.card === "card_maybe" && !merged.tags.includes("\u53ef\u80fd\u7ed1\u5361")) merged.tags.push("\u53ef\u80fd\u7ed1\u5361");
-      if (labels[merged.compat] && !merged.tags.includes(labels[merged.compat])) merged.tags.push(labels[merged.compat]);
-      return merged;
-    }
-
-    function mergeBuiltinProviders(items) {
-      const existing = new Set(items.map((item) => item.name));
-      const merged = items.slice();
-      builtinProviders.forEach((provider) => {
-        if (!existing.has(provider.name)) merged.push(provider);
-      });
-      return merged;
-    }
-
-    function renderChipGroup(container, values, key, current) {
-      container.innerHTML = values.map((value) => `
-        <button class="chip-btn ${value === current ? "active" : ""}" data-${key}="${value}" type="button">${value}</button>
-      `).join("");
-    }
-
-    function renderChips() {
-      renderChipGroup(regionChipsEl, regions, "region", state.region);
-      renderChipGroup(compatChipsEl, compats, "compat", state.compat);
-      renderChipGroup(freeChipsEl, freeTypes, "free-type", state.freeType);
-      renderChipGroup(cardChipsEl, cards, "card", state.card);
-      renderChipGroup(scoreChipsEl, scores, "score", state.score);
-    }
-
-    function matchesScore(score) {
-      if (state.score === labels.allScore) return true;
-      if (state.score === labels.score_high) return score >= 5;
-      if (state.score === labels.score_mid) return score >= 4 && score < 5;
-      return score < 4;
-    }
-
-    function filteredProviders() {
-      return providers.filter((provider) => {
-        const regionLabel = labels[provider.region];
-        const compatLabel = labels[provider.compat];
-        const freeLabel = labels[provider.freeType];
-        const cardLabel = labels[provider.card];
-        const haystack = [
-          provider.name,
-          provider.summary,
-          provider.note,
-          regionLabel,
-          compatLabel,
-          freeLabel,
-          cardLabel,
-          scoreLabel(provider.score),
-          ...(provider.tags || [])
-        ].join(" ").toLowerCase();
-
-        const matchRegion = state.region === labels.allRegions || regionLabel === state.region;
-        const matchCompat = state.compat === labels.allCompat || compatLabel === state.compat;
-        const matchFree = state.freeType === labels.allFree || freeLabel === state.freeType;
-        const matchCard = state.card === labels.allCard || cardLabel === state.card;
-        const matchSearch = !state.search || haystack.includes(state.search);
-
-        return matchRegion && matchCompat && matchFree && matchCard && matchesScore(provider.score) && matchSearch;
-      });
-    }
-
-    function cardTemplate(provider) {
-      return `
-        <article class="tool-card" style="--tool-accent:${provider.accent || "#4b8dff"}">
-          <div class="tool-top">
-            <div>
-              <div class="meta">${labels[provider.region] || provider.region} / ${labels[provider.compat] || provider.compat}</div>
-              <h3>${provider.name}</h3>
-            </div>
-            <div class="btn-row">
-              <span class="score-badge">\u63a8\u8350 ${provider.score}/5</span>
-              <span class="badge">${provider.badge || "\u5e38\u7528"}</span>
-            </div>
-          </div>
-          <p>${provider.summary || provider.note || "\u6682\u65e0\u8bf4\u660e"}</p>
-          <div class="tag-row">
-            ${(provider.tags || []).slice(0, 5).map((tag) => `<span class="chip">${tag}</span>`).join("")}
-          </div>
-          <div class="mini-list">
-            <div><span>\u514d\u8d39\u65b9\u5f0f</span><strong>${labels[provider.freeType] || provider.freeType}</strong></div>
-            <div><span>\u7ed1\u5361\u8981\u6c42</span><strong>${labels[provider.card] || labels.card_unknown}</strong></div>
-            <div><span>\u63a5\u5165\u63d0\u793a</span><strong>${provider.note || "\u67e5\u770b\u5b98\u65b9\u6587\u6863"}</strong></div>
-          </div>
-          <div class="card-bottom">
-            <span class="meta">${hostFromUrl(provider.url)}</span>
-            <div class="btn-row">
-              <a class="ghost" href="${provider.docs || provider.url}" target="_blank" rel="noreferrer">${labels.docs}</a>
-              <a class="visit" href="${provider.url}" target="_blank" rel="noreferrer">${labels.open}</a>
-            </div>
-          </div>
-        </article>
-      `;
-    }
-
-    function renderQuickGrid(items) {
-      const quick = items
-        .filter((item) => item.recommended || item.score >= 5)
-        .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
-        .slice(0, 6);
-
-      quickGridEl.innerHTML = quick.map(cardTemplate).join("");
-    }
-
-    function renderGrid() {
-      const items = filteredProviders();
-      countEl.textContent = `${labels.showing} ${items.length} / ${providers.length} ${labels.items}`;
-      renderQuickGrid(providers);
-
-      if (!items.length) {
-        gridEl.innerHTML = `<div class="empty">${labels.noMatch}</div>`;
-        return;
-      }
-
-      gridEl.innerHTML = items
-        .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
-        .map(cardTemplate)
-        .join("");
-    }
-
-    function bindChipEvents() {
-      regionChipsEl.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-region]");
-        if (!button) return;
-        state.region = button.dataset.region;
-        renderChips();
-        renderGrid();
-      });
-
-      compatChipsEl.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-compat]");
-        if (!button) return;
-        state.compat = button.dataset.compat;
-        renderChips();
-        renderGrid();
-      });
-
-      freeChipsEl.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-free-type]");
-        if (!button) return;
-        state.freeType = button.dataset.freeType;
-        renderChips();
-        renderGrid();
-      });
-
-      cardChipsEl.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-card]");
-        if (!button) return;
-        state.card = button.dataset.card;
-        renderChips();
-        renderGrid();
-      });
-
-      scoreChipsEl.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-score]");
-        if (!button) return;
-        state.score = button.dataset.score;
-        renderChips();
-        renderGrid();
-      });
-
-      searchEl.addEventListener("input", () => {
-        state.search = searchEl.value.trim().toLowerCase();
-        renderGrid();
-      });
-    }
-
-    async function loadHealth() {
-      try {
-        const response = await fetch("/api/free-models/health", { headers: { Accept: "application/json" } });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const health = await response.json();
-        statSourceEl.textContent = "Cloudflare Worker + KV";
-        statUpdatedEl.textContent = formatTime(health.lastSyncedAt || health.updatedAt);
-        statStorageEl.textContent = health.storage === "kv" ? "KV \u5df2\u751f\u6548" : "\u5df2\u56de\u9000\u5230\u5185\u7f6e";
-        statNoteEl.textContent = health.kvConfigured ? "\u5b9a\u65f6\u4efb\u52a1\u4f1a\u628a\u6574\u7406\u540e\u7684\u6570\u636e\u5199\u5165 KV" : "\u5f53\u524d\u4ecd\u5728\u4f7f\u7528\u5185\u7f6e\u6570\u636e";
-      } catch (error) {
-        statSourceEl.textContent = "\u9875\u9762\u5185\u7f6e\u6570\u636e";
-        statUpdatedEl.textContent = "\u672a\u83b7\u53d6\u5230";
-        statStorageEl.textContent = "\u63a5\u53e3\u5f02\u5e38";
-        statNoteEl.textContent = "Worker \u6682\u65f6\u4e0d\u53ef\u7528\u65f6\uff0c\u9875\u9762\u4ecd\u80fd\u6b63\u5e38\u6253\u5f00";
-      }
-    }
-
-    async function loadProviders() {
-      try {
-        const response = await fetch("/api/free-models", { headers: { Accept: "application/json" } });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        if (!Array.isArray(data.items) || !data.items.length) throw new Error("Empty items");
-        latestMeta = data;
-        providers = mergeBuiltinProviders(data.items).map(normalizeProvider);
-        sourceNoteEl.textContent = `\u5f53\u524d\u6570\u636e\u6765\u6e90\uff1aCloudflare Worker \u63a5\u53e3\uff0c\u6700\u8fd1\u540c\u6b65\u65f6\u95f4 ${formatTime(data.lastSyncedAt || data.updatedAt)}\u3002\u9875\u9762\u91cc\u8fd8\u8865\u4e86\u6587\u6863\u3001\u7ed1\u5361\u8981\u6c42\u548c\u63a8\u8350\u7b49\u7ea7\uff0c\u65b9\u4fbf\u76f4\u63a5\u7b5b\u3002`;
-      } catch (error) {
-        latestMeta = null;
-        providers = mergeBuiltinProviders(fallbackProviders).map(normalizeProvider);
-        sourceNoteEl.textContent = "\u5f53\u524d\u672a\u80fd\u8bfb\u5230 Worker \u6570\u636e\uff0c\u9875\u9762\u5df2\u81ea\u52a8\u5207\u5230\u5185\u7f6e\u5907\u7528\u5217\u8868\u3002\u7ad9\u70b9\u80fd\u7ee7\u7eed\u7528\uff0c\u4f46\u540c\u6b65\u65f6\u95f4\u548c\u5b58\u50a8\u72b6\u6001\u4f1a\u5931\u771f\u3002";
-      }
-
-      renderChips();
-      renderGrid();
-    }
-
-    bindChipEvents();
-    loadHealth();
-    loadProviders();
+    const pageCopy={pageTitle:{zh:"免费模型 API 导航 | 88220066.xyz",en:"Free Model APIs | 88220066.xyz"},pageDescription:{zh:"收录常见免费模型 API 平台，支持按地区、兼容协议、免费方式和绑卡要求筛选。",en:"A directory of free model API platforms with filters for region, compatibility, trial style, and card requirements."},navHome:{zh:"首页",en:"Home"},navAi:{zh:"AI 导航",en:"AI Nav"},navApi:{zh:"免费 API",en:"Free APIs"},heroTitle:{zh:"免费模型 API 导航",en:"Free Model API Directory"},heroCopy:{zh:"把常见免费模型 API 平台收在一页里，按地区、兼容协议、免费方式和绑卡要求筛选。",en:"A practical list of free model API platforms with filters for region, compatibility, free access style, and card requirements."},filterRegion:{zh:"地区",en:"Region"},filterCompat:{zh:"协议",en:"Compatibility"},filterFree:{zh:"免费方式",en:"Free Model"},filterCard:{zh:"绑卡要求",en:"Card Requirement"},featuredTitle:{zh:"先看这几个",en:"Start Here"},featuredCopy:{zh:"优先放更容易接入、文档更顺手的一组。",en:"A short list of easier-to-start platforms with friendlier docs."},listTitle:{zh:"平台列表",en:"Platform List"},listCopy:{zh:"Worker 数据和页面补充信息会一起展示。",en:"Worker-fed data and page-side notes are shown together."}};
+    const labels={zh:{brand:"88220066.xyz / 免费 API",searchPlaceholder:"搜索平台、标签或说明，例如：OpenAI 兼容、国内、免绑卡、文档",allRegion:"全部地区",allCompat:"全部协议",allFree:"全部免费方式",allCard:"全部绑卡情况",showing:"当前显示",items:"个平台",open:"官网",docs:"文档",noMatch:"没有找到匹配的平台，换个关键词或筛选试试。",stats:[["当前列表","12 个常见平台"],["优先筛选","地区、协议、免费方式、绑卡要求"],["更好上手","优先展示文档更清楚的入口"],["更新来源","Cloudflare Worker + 页面补充说明"]]},en:{brand:"88220066.xyz / Free APIs",searchPlaceholder:"Search by platform, tags, or use case: OpenAI-compatible, China, no card, docs",allRegion:"All Regions",allCompat:"All Compatibility",allFree:"All Free Models",allCard:"All Card Requirements",showing:"Showing",items:"platforms",open:"Site",docs:"Docs",noMatch:"No matching platforms found. Try another keyword or filter.",stats:[["Current List","12 common platforms"],["Main Filters","Region, compatibility, free style, card need"],["Easy Start","Prioritizing platforms with clearer docs"],["Update Source","Cloudflare Worker + page-side notes"]]}}
+    const options={region:{domestic:{zh:"国内",en:"China"},global:{zh:"国外",en:"Global"}},compat:{openai:{zh:"OpenAI 兼容",en:"OpenAI-Compatible"},native:{zh:"原生 SDK",en:"Native SDK"},multi:{zh:"多协议",en:"Multi-Protocol"}},free:{credits:{zh:"试用额度",en:"Trial Credits"},daily:{zh:"日常免费层",en:"Free Daily Tier"},models:{zh:"免费模型",en:"Free Models"}},card:{no:{zh:"免绑卡优先",en:"No Card Preferred"},maybe:{zh:"可能要绑卡",en:"Card May Be Needed"},unknown:{zh:"未明确",en:"Unclear"}}};
+    const providers=[{name:"OpenRouter",region:"global",compat:"openai",free:"credits",card:"maybe",accent:"#4b8dff",url:"https://openrouter.ai/",docs:"https://openrouter.ai/docs/quickstart",summary:{zh:"模型多、兼容性强，适合快速试不同模型。",en:"A flexible gateway for trying many models with a familiar API style."},tags:{zh:["OpenAI 兼容","多模型","路由"],en:["OpenAI","multi-model","routing"]}},{name:"GroqCloud",region:"global",compat:"openai",free:"daily",card:"no",accent:"#ff8a34",url:"https://console.groq.com/",docs:"https://console.groq.com/docs/quickstart",summary:{zh:"速度很快，适合做低延迟原型和对话。",en:"Very fast for low-latency prototypes and chat experiences."},tags:{zh:["高速","OpenAI 兼容","对话"],en:["fast","OpenAI","chat"]}},{name:"Gemini API",region:"global",compat:"native",free:"daily",card:"no",accent:"#4f8cff",url:"https://ai.google.dev/",docs:"https://ai.google.dev/gemini-api/docs",summary:{zh:"Google 官方入口，适合多模态和通用调用。",en:"Google's official API entry point for multimodal and general use."},tags:{zh:["Google","多模态","官方"],en:["Google","multimodal","official"]}},{name:"Cloudflare Workers AI",region:"global",compat:"native",free:"daily",card:"no",accent:"#f97316",url:"https://developers.cloudflare.com/workers-ai/",docs:"https://developers.cloudflare.com/workers-ai/",summary:{zh:"和 Worker 搭配紧，适合边缘侧原型和轻服务。",en:"A strong fit for edge-side prototypes and lightweight services on Workers."},tags:{zh:["Cloudflare","边缘","Worker"],en:["Cloudflare","edge","Workers"]}},{name:"GitHub Models",region:"global",compat:"multi",free:"credits",card:"no",accent:"#8b5cf6",url:"https://github.com/marketplace/models",docs:"https://docs.github.com/en/github-models",summary:{zh:"适合开发者在 GitHub 生态里试模型和评估。",en:"Convenient for developers already working inside the GitHub ecosystem."},tags:{zh:["GitHub","开发者","评估"],en:["GitHub","developer","evaluation"]}},{name:"Hugging Face Inference",region:"global",compat:"native",free:"credits",card:"no",accent:"#f59e0b",url:"https://huggingface.co/inference-api",docs:"https://huggingface.co/docs/inference-providers/index",summary:{zh:"适合找开源模型入口和做轻量试用。",en:"Useful for exploring open models and trying them quickly."},tags:{zh:["开源模型","推理","Hugging Face"],en:["open models","inference","Hugging Face"]}},{name:"NVIDIA NIM",region:"global",compat:"openai",free:"credits",card:"no",accent:"#76b900",url:"https://build.nvidia.com/",docs:"https://build.nvidia.com/",summary:{zh:"NVIDIA 的模型 API 目录，适合试多种 NIM 能力。",en:"NVIDIA's directory for trying multiple NIM-backed model endpoints."},tags:{zh:["NVIDIA","NIM","GPU"],en:["NVIDIA","NIM","GPU"]}},{name:"Cohere",region:"global",compat:"openai",free:"credits",card:"unknown",accent:"#f59e0b",url:"https://dashboard.cohere.com/api-keys",docs:"https://docs.cohere.com/docs/rate-limits",summary:{zh:"适合文本、RAG 和 rerank 场景。",en:"A good fit for text generation, RAG, and reranking use cases."},tags:{zh:["RAG","Rerank","文本"],en:["RAG","rerank","text"]}},{name:"SambaNova Cloud",region:"global",compat:"openai",free:"daily",card:"no",accent:"#ec4899",url:"https://cloud.sambanova.ai/",docs:"https://docs.sambanova.ai/cloud/docs/models/rate-limits",summary:{zh:"适合高速推理体验和 OpenAI 兼容接入。",en:"A fast inference experience with OpenAI-style integration."},tags:{zh:["高速","OpenAI 兼容","推理"],en:["fast","OpenAI","inference"]}},{name:"SiliconFlow",region:"domestic",compat:"openai",free:"credits",card:"no",accent:"#06b6d4",url:"https://siliconflow.cn/",docs:"https://docs.siliconflow.cn/",summary:{zh:"国内兼容 OpenAI 的热门入口，试用门槛较低。",en:"A popular China-based OpenAI-compatible entry with a lower barrier to try."},tags:{zh:["国内","OpenAI 兼容","试用"],en:["China","OpenAI","trial"]}},{name:"阿里云百炼",region:"domestic",compat:"native",free:"credits",card:"maybe",accent:"#ffb347",url:"https://www.aliyun.com/product/modelstudio",docs:"https://help.aliyun.com/zh/model-studio/",summary:{zh:"适合接阿里系模型和企业生态。",en:"Useful if you want Alibaba ecosystem models and enterprise alignment."},tags:{zh:["阿里云","国内","官方"],en:["Alibaba Cloud","China","official"]}},{name:"智谱开放平台",region:"domestic",compat:"openai",free:"credits",card:"maybe",accent:"#4ea1ff",url:"https://open.bigmodel.cn/",docs:"https://open.bigmodel.cn/dev/howuse/introduction",summary:{zh:"适合国内模型体验和 OpenAI 风格调用。",en:"A China-based option for model testing with an OpenAI-style API feel."},tags:{zh:["智谱","国内","OpenAI 兼容"],en:["Zhipu","China","OpenAI"]}}];
+    const quickNames=new Set(["OpenRouter","GroqCloud","Gemini API","Cloudflare Workers AI","NVIDIA NIM","SiliconFlow"]); const state={region:"all",compat:"all",free:"all",card:"all",search:""};
+    const regionEl=document.getElementById("region-chips"),compatEl=document.getElementById("compat-chips"),freeEl=document.getElementById("free-chips"),cardEl=document.getElementById("card-chips"),quickGridEl=document.getElementById("quick-grid"),gridEl=document.getElementById("grid"),countEl=document.getElementById("count"),statsEl=document.getElementById("stats"),brandEl=document.getElementById("brand"),searchEl=document.getElementById("search-input");
+    const optionText=(lang,group,key)=>key==="all"?labels[lang][`all${group}`]:options[group.toLowerCase()][key][lang];
+    const renderChipGroup=(container,values,group,current,lang)=>container.innerHTML=values.map((value)=>`<button class="chip-btn ${value===current?"active":""}" data-group="${group}" data-value="${value}" type="button">${optionText(lang,group,value)}</button>`).join("");
+    function filteredProviders(lang){return providers.filter((item)=>{const haystack=[item.name,item.summary[lang],options.region[item.region][lang],options.compat[item.compat][lang],options.free[item.free][lang],options.card[item.card][lang],...item.tags[lang]].join(" ").toLowerCase(); return (state.region==="all"||item.region===state.region)&&(state.compat==="all"||item.compat===state.compat)&&(state.free==="all"||item.free===state.free)&&(state.card==="all"||item.card===state.card)&&(!state.search||haystack.includes(state.search));});}
+    function hostLabel(url){ try { const parsed=new URL(url); return `${parsed.host}${parsed.pathname === "/" ? "" : parsed.pathname}`; } catch { return url; } }
+    function cardTemplate(item,lang){return `<article class="tool-card" style="--tool-accent:${item.accent}"><div class="tool-top"><div><div class="meta">${options.region[item.region][lang]} / ${options.compat[item.compat][lang]}</div><h3>${item.name}</h3></div><div><span class="status-badge">${options.free[item.free][lang]}</span></div></div><p>${item.summary[lang]}</p><div class="tag-row">${item.tags[lang].map((tag)=>`<span class="chip">${tag}</span>`).join("")}<span class="chip">${options.card[item.card][lang]}</span></div><div class="mini-list"><div><span>${lang==="zh"?"免费方式":"Free Model"}</span><strong>${options.free[item.free][lang]}</strong></div><div><span>${lang==="zh"?"绑卡要求":"Card"}</span><strong>${options.card[item.card][lang]}</strong></div></div><div class="card-bottom"><span class="meta">${hostLabel(item.url)}</span><div class="btn-row"><a class="ghost" href="${item.docs}" target="_blank" rel="noreferrer">${labels[lang].docs}</a><a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a></div></div></article>`;}
+    function renderStats(lang){brandEl.textContent=labels[lang].brand; searchEl.placeholder=labels[lang].searchPlaceholder; statsEl.innerHTML=labels[lang].stats.map(([label,value])=>`<div class="stat"><div class="stat-label">${label}</div><strong>${value}</strong></div>`).join("");}
+    function renderPage(lang){renderStats(lang); renderChipGroup(regionEl,["all",...Object.keys(options.region)],"Region",state.region,lang); renderChipGroup(compatEl,["all",...Object.keys(options.compat)],"Compat",state.compat,lang); renderChipGroup(freeEl,["all",...Object.keys(options.free)],"Free",state.free,lang); renderChipGroup(cardEl,["all",...Object.keys(options.card)],"Card",state.card,lang); quickGridEl.innerHTML=providers.filter((item)=>quickNames.has(item.name)).map((item)=>cardTemplate(item,lang)).join(""); const items=filteredProviders(lang); countEl.textContent=`${labels[lang].showing} ${items.length} / ${providers.length} ${labels[lang].items}`; gridEl.innerHTML=items.length?items.map((item)=>cardTemplate(item,lang)).join(""):`<div class="empty">${labels[lang].noMatch}</div>`;}
+    document.body.addEventListener("click",(event)=>{const button=event.target.closest("[data-group]"); if(!button)return; state[button.dataset.group.toLowerCase()]=button.dataset.value; renderPage(window.SiteI18n.getLang());});
+    searchEl.addEventListener("input",()=>{state.search=searchEl.value.trim().toLowerCase(); renderPage(window.SiteI18n.getLang());});
+    window.SiteI18n.bindPage(pageCopy,renderPage);
   </script>
 </body>
 </html>
