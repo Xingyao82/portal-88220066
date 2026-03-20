@@ -1,15 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>88220066.xyz</title>
-  <meta name="description" content="极简的个人主页入口，直达免费工具、免费英语、AI 导航和免费 API。">
+  <meta name="description" content="鏋佺畝鐨勪釜浜轰富椤靛叆鍙ｏ紝鐩磋揪鍏嶈垂宸ュ叿銆佸厤璐硅嫳璇€丄I 瀵艰埅鍜屽厤璐?API銆?>
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#ffffff">
   <script src="/notes/site-i18n.js"></script>
   <style>
-    :root { --bg:#fff; --bg-soft:#fbfbfd; --text:#1d1d1f; --muted:#6e6e73; --blue:#0071e3; --tools:#0f9d84; --tools-soft:rgba(15,157,132,.1); --english:#ff8a34; --english-soft:rgba(255,138,52,.1); --ai:#6f5cff; --ai-soft:rgba(111,92,255,.1); --api:#0f89ff; --api-soft:rgba(15,137,255,.1); --max:1180px; }
+    :root { --bg:#fff; --bg-soft:#fbfbfd; --text:#1d1d1f; --muted:#6e6e73; --blue:#0071e3; --tools:#0f9d84; --tools-soft:rgba(15,157,132,.1); --english:#ff8a34; --english-soft:rgba(255,138,52,.1); --ai:#6f5cff; --ai-soft:rgba(111,92,255,.1); --api:#0f89ff; --api-soft:rgba(15,137,255,.1); --rank:#f59e0b; --rank-soft:rgba(245,158,11,.1); --max:1180px; }
     * { box-sizing:border-box; }
     body { margin:0; min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC",sans-serif; color:var(--text); background:linear-gradient(180deg,#fff 0%,var(--bg-soft) 100%); }
     a { color:inherit; text-decoration:none; }
@@ -37,6 +37,7 @@
     .link-card-english { --card-accent:var(--english); background:linear-gradient(180deg,rgba(255,255,255,.96),var(--english-soft)); border-color:rgba(255,138,52,.26); }
     .link-card-ai { --card-accent:var(--ai); background:linear-gradient(180deg,rgba(255,255,255,.96),var(--ai-soft)); border-color:rgba(111,92,255,.24); }
     .link-card-api { --card-accent:var(--api); background:linear-gradient(180deg,rgba(255,255,255,.96),var(--api-soft)); border-color:rgba(15,137,255,.24); }
+    .link-card-rank { --card-accent:var(--rank); background:linear-gradient(180deg,rgba(255,255,255,.96),var(--rank-soft)); border-color:rgba(245,158,11,.24); }
     .footer { padding:42px 0 24px; text-align:center; color:var(--muted); font-size:.92rem; }
     @media (max-width:1040px) { .links { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width:720px) { .shell { width:min(calc(100% - 24px),var(--max)); } .nav { flex-direction:column; align-items:flex-start; } .hero { padding-top:52px; } .links { grid-template-columns:1fr; margin-top:56px; } .link-card { text-align:left; } .link-card p { max-width:none; margin-left:0; margin-right:0; } }
@@ -47,42 +48,49 @@
     <header class="nav">
       <div class="brand">88220066.xyz</div>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/tools-nav/" data-i18n="navTools">免费工具</a>
-        <a href="/english-tools/" data-i18n="navEnglish">免费英语</a>
-        <a href="/ai-nav/" data-i18n="navAi">AI 导航</a>
-        <a href="/free-api-nav/" data-i18n="navApi">免费 API</a>
+        <a href="/tools-nav/" data-i18n="navTools">鍏嶈垂宸ュ叿</a>
+        <a href="/english-tools/" data-i18n="navEnglish">鍏嶈垂鑻辫</a>
+        <a href="/ai-nav/" data-i18n="navAi">AI 瀵艰埅</a>
+        <a href="/free-api-nav/" data-i18n="navApi">鍏嶈垂 API</a>
+        <a href="/model-ranking/" data-i18n="navRanking">模型排名</a>
       </nav>
     </header>
     <main class="hero">
       <p class="eyebrow" data-i18n="eyebrow">Portal</p>
-      <h1 data-i18n="heroTitle">常用入口导航</h1>
-      <p class="hero-copy" data-i18n="heroCopy">免费工具、免费英语、AI 导航和免费 API 一页直达，常用入口集中放在这里，打开就能找到需要的页面。</p>
+      <h1 data-i18n="heroTitle">甯哥敤鍏ュ彛瀵艰埅</h1>
+      <p class="hero-copy" data-i18n="heroCopy">鍏嶈垂宸ュ叿銆佸厤璐硅嫳璇€丄I 瀵艰埅鍜屽厤璐?API 涓€椤电洿杈撅紝甯哥敤鍏ュ彛闆嗕腑鏀惧湪杩欓噷锛屾墦寮€灏辫兘鎵惧埌闇€瑕佺殑椤甸潰銆?/p>
       <div class="actions">
-        <a class="button button-primary" href="/tools-nav/" data-i18n="ctaPrimary">打开免费工具</a>
-        <a class="button button-secondary" href="/english-tools/" data-i18n="ctaEnglish">免费英语</a>
+        <a class="button button-primary" href="/tools-nav/" data-i18n="ctaPrimary">鎵撳紑鍏嶈垂宸ュ叿</a>
+        <a class="button button-secondary" href="/english-tools/" data-i18n="ctaEnglish">鍏嶈垂鑻辫</a>
         <a class="button button-secondary" href="/ai-nav/" data-i18n="ctaAi">AI</a>
-        <a class="button button-secondary" href="/free-api-nav/" data-i18n="ctaApi">免费 API</a>
+        <a class="button button-secondary" href="/free-api-nav/" data-i18n="ctaApi">鍏嶈垂 API</a>
+        <a class="button button-secondary" href="/model-ranking/" data-i18n="ctaRanking">模型排名</a>
       </div>
       <section class="links" aria-label="Quick links">
         <a class="link-card link-card-tools" href="/tools-nav/">
-          <h2 data-i18n="cardToolsTitle">免费工具</h2>
-          <p data-i18n="cardToolsCopy">集中收录免费能直接用的网页工具，覆盖 PDF、图片、文本、开发、音视频等常见场景。</p>
+          <h2 data-i18n="cardToolsTitle">鍏嶈垂宸ュ叿</h2>
+          <p data-i18n="cardToolsCopy">闆嗕腑鏀跺綍鍏嶈垂鑳界洿鎺ョ敤鐨勭綉椤靛伐鍏凤紝瑕嗙洊 PDF銆佸浘鐗囥€佹枃鏈€佸紑鍙戙€侀煶瑙嗛绛夊父瑙佸満鏅€?/p>
           <span>/tools-nav/</span>
         </a>
         <a class="link-card link-card-english" href="/english-tools/">
-          <h2 data-i18n="cardEnglishTitle">免费英语</h2>
-          <p data-i18n="cardEnglishCopy">收录免费可用的英语学习网站和官方资源，适合查词、听力、阅读和发音练习。</p>
+          <h2 data-i18n="cardEnglishTitle">鍏嶈垂鑻辫</h2>
+          <p data-i18n="cardEnglishCopy">鏀跺綍鍏嶈垂鍙敤鐨勮嫳璇涔犵綉绔欏拰瀹樻柟璧勬簮锛岄€傚悎鏌ヨ瘝銆佸惉鍔涖€侀槄璇诲拰鍙戦煶缁冧範銆?/p>
           <span>/english-tools/</span>
         </a>
         <a class="link-card link-card-ai" href="/ai-nav/">
-          <h2 data-i18n="cardAiTitle">AI 导航</h2>
-          <p data-i18n="cardAiCopy">集中浏览常用 AI 产品，按场景快速筛选和直达。</p>
+          <h2 data-i18n="cardAiTitle">AI 瀵艰埅</h2>
+          <p data-i18n="cardAiCopy">闆嗕腑娴忚甯哥敤 AI 浜у搧锛屾寜鍦烘櫙蹇€熺瓫閫夊拰鐩磋揪銆?/p>
           <span>/ai-nav/</span>
         </a>
         <a class="link-card link-card-api" href="/free-api-nav/">
-          <h2 data-i18n="cardApiTitle">免费 API</h2>
-          <p data-i18n="cardApiCopy">收录常见免费模型 API 平台，按地区、兼容性和试用方式快速搜索。</p>
+          <h2 data-i18n="cardApiTitle">鍏嶈垂 API</h2>
+          <p data-i18n="cardApiCopy">鏀跺綍甯歌鍏嶈垂妯″瀷 API 骞冲彴锛屾寜鍦板尯銆佸吋瀹规€у拰璇曠敤鏂瑰紡蹇€熸悳绱€?/p>
           <span>/free-api-nav/</span>
+        </a>
+        <a class="link-card link-card-rank" href="/model-ranking/">
+          <h2 data-i18n="cardRankingTitle">模型排名</h2>
+          <p data-i18n="cardRankingCopy">每天更新公开模型排名，分开开源和闭源，方便快速看见最新趋势。</p>
+          <span>/model-ranking/</span>
         </a>
       </section>
     </main>
@@ -92,41 +100,43 @@
     const copy = {
       pageTitle: { zh: "88220066.xyz", en: "88220066.xyz" },
       pageDescription: {
-        zh: "极简的个人主页入口，直达免费工具、免费英语、AI 导航和免费 API。",
+        zh: "鏋佺畝鐨勪釜浜轰富椤靛叆鍙ｏ紝鐩磋揪鍏嶈垂宸ュ叿銆佸厤璐硅嫳璇€丄I 瀵艰埅鍜屽厤璐?API銆?,
         en: "A lightweight personal portal for free tools, free English resources, AI navigation, and free APIs."
       },
       eyebrow: { zh: "Portal", en: "Portal" },
-      navTools: { zh: "免费工具", en: "Free Tools" },
-      navEnglish: { zh: "免费英语", en: "Free English" },
-      navAi: { zh: "AI 导航", en: "AI Nav" },
-      navApi: { zh: "免费 API", en: "Free APIs" },
-      heroTitle: { zh: "常用入口导航", en: "Useful Links, All in One Place" },
+      navTools: { zh: "鍏嶈垂宸ュ叿", en: "Free Tools" },
+      navEnglish: { zh: "鍏嶈垂鑻辫", en: "Free English" },
+      navAi: { zh: "AI 瀵艰埅", en: "AI Nav" },
+      navApi: { zh: "鍏嶈垂 API", en: "Free APIs" },
+      navRanking: { zh: "模型排名", en: "Model Rankings" },
+      heroTitle: { zh: "甯哥敤鍏ュ彛瀵艰埅", en: "Useful Links, All in One Place" },
       heroCopy: {
-        zh: "免费工具、免费英语、AI 导航和免费 API 一页直达，常用入口集中放在这里，打开就能找到需要的页面。",
+        zh: "鍏嶈垂宸ュ叿銆佸厤璐硅嫳璇€丄I 瀵艰埅鍜屽厤璐?API 涓€椤电洿杈撅紝甯哥敤鍏ュ彛闆嗕腑鏀惧湪杩欓噷锛屾墦寮€灏辫兘鎵惧埌闇€瑕佺殑椤甸潰銆?,
         en: "Jump straight to free tools, free English resources, AI navigation, and free model APIs from one clean homepage."
       },
-      ctaPrimary: { zh: "打开免费工具", en: "Open Free Tools" },
-      ctaEnglish: { zh: "免费英语", en: "Free English" },
+      ctaPrimary: { zh: "鎵撳紑鍏嶈垂宸ュ叿", en: "Open Free Tools" },
+      ctaEnglish: { zh: "鍏嶈垂鑻辫", en: "Free English" },
       ctaAi: { zh: "AI", en: "AI Nav" },
-      ctaApi: { zh: "免费 API", en: "Free APIs" },
-      cardToolsTitle: { zh: "免费工具", en: "Free Tools" },
+      ctaApi: { zh: "鍏嶈垂 API", en: "Free APIs" },
+      ctaRanking: { zh: "模型排名", en: "Model Rankings" },
+      cardToolsTitle: { zh: "鍏嶈垂宸ュ叿", en: "Free Tools" },
       cardToolsCopy: {
-        zh: "集中收录免费能直接用的网页工具，覆盖 PDF、图片、文本、开发、音视频等常见场景。",
+        zh: "闆嗕腑鏀跺綍鍏嶈垂鑳界洿鎺ョ敤鐨勭綉椤靛伐鍏凤紝瑕嗙洊 PDF銆佸浘鐗囥€佹枃鏈€佸紑鍙戙€侀煶瑙嗛绛夊父瑙佸満鏅€?,
         en: "A curated collection of free web tools for PDFs, images, text, coding, video, audio, and more."
       },
-      cardEnglishTitle: { zh: "免费英语", en: "Free English" },
+      cardEnglishTitle: { zh: "鍏嶈垂鑻辫", en: "Free English" },
       cardEnglishCopy: {
-        zh: "收录免费可用的英语学习网站和官方资源，适合查词、听力、阅读和发音练习。",
+        zh: "鏀跺綍鍏嶈垂鍙敤鐨勮嫳璇涔犵綉绔欏拰瀹樻柟璧勬簮锛岄€傚悎鏌ヨ瘝銆佸惉鍔涖€侀槄璇诲拰鍙戦煶缁冧範銆?,
         en: "Free English-learning websites and official resources for vocabulary, listening, reading, and pronunciation."
       },
-      cardAiTitle: { zh: "AI 导航", en: "AI Nav" },
+      cardAiTitle: { zh: "AI 瀵艰埅", en: "AI Nav" },
       cardAiCopy: {
-        zh: "集中浏览常用 AI 产品，按场景快速筛选和直达。",
+        zh: "闆嗕腑娴忚甯哥敤 AI 浜у搧锛屾寜鍦烘櫙蹇€熺瓫閫夊拰鐩磋揪銆?,
         en: "Browse popular AI products and filter them by real-world use cases."
       },
-      cardApiTitle: { zh: "免费 API", en: "Free APIs" },
+      cardApiTitle: { zh: "鍏嶈垂 API", en: "Free APIs" },
       cardApiCopy: {
-        zh: "收录常见免费模型 API 平台，按地区、兼容性和试用方式快速搜索。",
+        zh: "鏀跺綍甯歌鍏嶈垂妯″瀷 API 骞冲彴锛屾寜鍦板尯銆佸吋瀹规€у拰璇曠敤鏂瑰紡蹇€熸悳绱€?,
         en: "Discover free model API platforms by region, compatibility, and trial style."
       }
     };
@@ -134,3 +144,5 @@
   </script>
 </body>
 </html>
+
+
