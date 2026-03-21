@@ -194,197 +194,85 @@
     }
 
     .detail {
-      padding: 22px;
+      padding: 16px;
       display: grid;
-      gap: 18px;
+      grid-template-rows: auto 1fr;
+      gap: 14px;
+      min-height: 0;
     }
 
-    .detail-hero {
-      position: relative;
-      overflow: hidden;
-      padding: 24px;
-      border-radius: 26px;
-      border: 1px solid var(--line);
-      background: linear-gradient(135deg, color-mix(in srgb, var(--hero-accent) 18%, #ffffff) 0%, #ffffff 58%, color-mix(in srgb, var(--hero-accent) 10%, #ffffff) 100%);
-    }
-
-    .detail-hero::after {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      right: -50px;
-      top: -70px;
-      border-radius: 50%;
-      background: radial-gradient(circle, color-mix(in srgb, var(--hero-accent) 25%, transparent), transparent 68%);
-      pointer-events: none;
-    }
-
-    .detail-type {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.7);
-      color: color-mix(in srgb, var(--hero-accent) 72%, #0f172a);
-      font-size: 0.82rem;
-    }
-
-    .detail-title {
-      margin: 12px 0 0;
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: -0.06em;
-      max-width: 14ch;
-    }
-
-    .detail-copy {
-      margin: 14px 0 0;
-      max-width: 52rem;
-      color: #4b5563;
-      line-height: 1.85;
-      font-size: 1rem;
-    }
-
-    .detail-actions {
+    .viewer-topbar {
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      margin-top: 22px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.96), color-mix(in srgb, var(--viewer-accent, var(--blue)) 8%, #ffffff));
     }
 
-    .button {
+    .viewer-meta {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .viewer-type {
+      color: color-mix(in srgb, var(--viewer-accent, var(--blue)) 78%, #0f172a);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .viewer-title {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+    }
+
+    .viewer-path {
+      color: var(--muted);
+      font-size: 0.88rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .viewer-open {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
-      padding: 0 18px;
+      min-height: 40px;
+      padding: 0 14px;
       border-radius: 999px;
-      transition: 180ms ease;
-    }
-
-    .button-primary {
       color: #fff;
-      background: var(--hero-accent);
-      box-shadow: 0 12px 30px color-mix(in srgb, var(--hero-accent) 28%, transparent);
+      background: var(--viewer-accent, var(--blue));
+      box-shadow: 0 12px 30px color-mix(in srgb, var(--viewer-accent, var(--blue)) 24%, transparent);
+      white-space: nowrap;
     }
 
-    .button-secondary {
-      color: color-mix(in srgb, var(--hero-accent) 82%, #0f172a);
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(255,255,255,.78);
-    }
-
-    .detail-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 0.95fr;
-      gap: 18px;
-    }
-
-    .panel {
-      padding: 20px;
+    .viewer-frame-wrap {
+      min-height: 0;
       border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--panel-strong);
+      border-radius: 24px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.45);
     }
 
-    .panel h2 {
-      margin: 0;
-      font-size: 1.14rem;
-      letter-spacing: -0.03em;
-    }
-
-    .panel p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .feature-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .feature {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: #f8fafc;
-    }
-
-    .feature-dot {
-      width: 10px;
-      height: 10px;
-      margin-top: 8px;
-      border-radius: 50%;
-      background: var(--hero-accent);
-      flex: none;
-    }
-
-    .feature span {
-      color: #334155;
-      line-height: 1.7;
-    }
-
-    .meta-grid {
-      display: grid;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .meta-card {
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: #f8fafc;
-      border: 1px solid rgba(15, 23, 42, 0.06);
-    }
-
-    .meta-label {
-      color: var(--muted);
-      font-size: 0.84rem;
-    }
-
-    .meta-value {
-      margin-top: 6px;
-      color: var(--text);
-      font-weight: 600;
-      line-height: 1.6;
-    }
-
-    .quick-links {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .quick-link {
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.98), color-mix(in srgb, var(--hero-accent) 8%, #ffffff));
-    }
-
-    .quick-link strong {
+    .viewer-frame {
+      width: 100%;
+      height: calc(100vh - 210px);
+      min-height: 720px;
+      border: 0;
       display: block;
-      font-size: 0.98rem;
-      letter-spacing: -0.03em;
-    }
-
-    .quick-link span {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.88rem;
+      background: #fff;
     }
 
     @media (max-width: 1100px) {
-      .workspace,
-      .detail-grid,
-      .quick-links {
+      .workspace {
         grid-template-columns: 1fr;
       }
 
@@ -397,10 +285,9 @@
       .shell { width: min(calc(100% - 18px), var(--max)); padding-top: 16px; }
       .topbar { flex-direction: column; align-items: flex-start; }
       .detail,
-      .sidebar,
-      .detail-hero,
-      .panel { padding-left: 16px; padding-right: 16px; }
-      .detail-title { max-width: none; }
+      .sidebar { padding-left: 16px; padding-right: 16px; }
+      .viewer-topbar { flex-direction: column; align-items: flex-start; }
+      .viewer-frame { min-height: 580px; height: calc(100vh - 280px); }
     }
   </style>
 </head>
@@ -427,31 +314,18 @@
       </aside>
 
       <main class="detail">
-        <section class="detail-hero" id="detail-hero">
-          <span class="detail-type" id="detail-type"></span>
-          <h2 class="detail-title" id="detail-title"></h2>
-          <p class="detail-copy" id="detail-copy"></p>
-          <div class="detail-actions">
-            <a class="button button-primary" id="detail-open" href="/" target="_self"></a>
-            <a class="button button-secondary" id="detail-secondary" href="/" target="_self"></a>
+        <section class="viewer-topbar" id="viewer-topbar">
+          <div class="viewer-meta">
+            <span class="viewer-type" id="detail-type"></span>
+            <h2 class="viewer-title" id="detail-title"></h2>
+            <span class="viewer-path" id="detail-path"></span>
           </div>
+          <a class="viewer-open" id="detail-open" href="/" target="_self"></a>
         </section>
 
-        <section class="detail-grid">
-          <article class="panel">
-            <h2 data-i18n="featureTitle">&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#x80FD;&#x505A;&#x4EC0;&#x4E48;</h2>
-            <p data-i18n="featureCopy">&#x5148;&#x5FEB;&#x901F;&#x770B;&#x770B;&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#x7684;&#x4F7F;&#x7528;&#x91CD;&#x70B9;&#x3002;</p>
-            <div class="feature-list" id="feature-list"></div>
-          </article>
-
-          <article class="panel">
-            <h2 data-i18n="metaTitle">&#x9879;&#x76EE;&#x4FE1;&#x606F;</h2>
-            <p data-i18n="metaCopy">&#x4E00;&#x773C;&#x770B;&#x6E05;&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#x7684;&#x5B9A;&#x4F4D;&#x548C;&#x5165;&#x53E3;&#x3002;</p>
-            <div class="meta-grid" id="meta-grid"></div>
-          </article>
+        <section class="viewer-frame-wrap">
+          <iframe class="viewer-frame" id="detail-frame" loading="lazy" referrerpolicy="no-referrer"></iframe>
         </section>
-
-        <section class="quick-links" id="quick-links"></section>
       </main>
     </section>
   </div>
@@ -478,19 +352,7 @@
         zh: "\u8FD9\u4E2A\u9996\u9875\u73B0\u5728\u66F4\u50CF\u4E00\u4E2A\u8F7B\u91CF\u5DE5\u4F5C\u53F0\uFF0C\u6253\u5F00\u5C31\u80FD\u770B\u5B8C\u6240\u6709\u4E3B\u9879\u76EE\u3002",
         en: "This homepage now behaves more like a compact workspace dashboard."
       },
-      featureTitle: { zh: "\u8FD9\u4E2A\u9879\u76EE\u80FD\u505A\u4EC0\u4E48", en: "What This Project Covers" },
-      featureCopy: { zh: "\u5148\u5FEB\u901F\u770B\u770B\u8FD9\u4E2A\u9879\u76EE\u7684\u4F7F\u7528\u91CD\u70B9\u3002", en: "A quick scan of the main things this project is for." },
-      metaTitle: { zh: "\u9879\u76EE\u4FE1\u606F", en: "Project Info" },
-      metaCopy: { zh: "\u4E00\u773C\u770B\u6E05\u8FD9\u4E2A\u9879\u76EE\u7684\u5B9A\u4F4D\u548C\u5165\u53E3\u3002", en: "One glance for positioning, access, and update style." },
-      openNow: { zh: "\u7ACB\u5373\u6253\u5F00", en: "Open Now" },
-      openInPlace: { zh: "\u8FDB\u5165\u9879\u76EE", en: "Go to Project" },
-      metaType: { zh: "\u7C7B\u578B", en: "Type" },
-      metaPath: { zh: "\u5730\u5740", en: "Path" },
-      metaStyle: { zh: "\u5185\u5BB9\u98CE\u683C", en: "Content Style" },
-      metaUpdate: { zh: "\u66F4\u65B0\u65B9\u5F0F", en: "Update Style" },
-      quickTitle1: { zh: "\u4E3A\u4EC0\u4E48\u653E\u8FD9\u4E2A", en: "Why It Is Here" },
-      quickTitle2: { zh: "\u9002\u5408\u600E\u4E48\u7528", en: "Best Way to Use It" },
-      quickTitle3: { zh: "\u4E0B\u4E00\u6B65", en: "Next Step" }
+      openNow: { zh: "\u5728\u65B0\u9875\u9762\u6253\u5F00", en: "Open In New Page" }
     };
 
     const projects = [
@@ -504,24 +366,11 @@
           zh: "\u6309\u804A\u5929\u3001\u4EE3\u7801\u3001\u8BBE\u8BA1\u3001\u641C\u7D22\u7B49\u573A\u666F\u627E AI \u4EA7\u54C1\u3002",
           en: "Browse AI products by chat, code, design, search, and productivity scenarios."
         },
-        long: {
-          zh: "\u9002\u5408\u5FEB\u901F\u627E\u5DE5\u5177\u3001\u770B\u533A\u5206\u548C\u6BD4\u8F83\u4EA7\u54C1\u5B9A\u4F4D\u3002\u8FD9\u4E2A\u9875\u9762\u672C\u8EAB\u5C31\u662F\u4F60\u7AD9\u91CC\u6700\u50CF\u201C\u5BFC\u822A\u7AD9\u201D\u7684\u4E00\u90E8\u5206\u3002",
-          en: "This is the most navigation-heavy section of the site, built for quick comparison and discovery."
-        },
         path: "/ai-nav/",
-        style: { zh: "\u5BFC\u822A\u9875 + \u591A\u6761\u4EF6\u7B5B\u9009", en: "Directory + multi-filter view" },
-        update: { zh: "\u6BCF\u5468\u5DE1\u68C0\u66F4\u65B0", en: "Weekly refresh" },
-        features: {
-          zh: ["\u6309\u573A\u666F\u770B AI \u5DE5\u5177", "\u628A\u65B0\u624B\u548C\u5F00\u53D1\u8005\u5E38\u7528\u5DE5\u5177\u96C6\u4E2D", "\u9002\u5408\u505A\u5BF9\u6BD4\u548C\u5FEB\u901F\u9009\u578B"],
-          en: ["See AI tools by actual scenario", "Keeps discovery easy for both beginners and builders", "Works well for quick comparison"]
-        },
-        quick: {
-          zh: ["\u5982\u679C\u7AD9\u5185\u6700\u5BB9\u6613\u62FF SEO \u6D41\u91CF\uFF0C\u8FD9\u4E2A\u9875\u9762\u6F5C\u529B\u5F88\u5927", "\u5148\u641C\u573A\u666F\uFF0C\u518D\u70B9\u5DE5\u5177", "\u540E\u9762\u53EF\u4EE5\u518D\u505A\u66F4\u7EC6\u7684\u699C\u5355\u533A"],
-          en: ["This page has strong long-term SEO potential", "Search by scenario first, then open a tool", "Next: add more curated rankings"]
-        }
+        frameTitle: { zh: "AI \u5BFC\u822A\u5185\u5D4C\u89C6\u56FE", en: "AI Nav embedded view" }
       },
       {
-        id: "finance",
+        id: "api",
         color: "#0f89ff",
         soft: "rgba(15,137,255,.12)",
         type: { zh: "API", en: "APIs" },
@@ -530,21 +379,8 @@
           zh: "\u6536\u96C6\u6709\u514D\u8D39\u989D\u5EA6\u6216\u516C\u5F00\u5165\u53E3\u7684\u6A21\u578B API \u5E73\u53F0\u3002",
           en: "A directory of model API platforms with real free access or trial layers."
         },
-        long: {
-          zh: "\u9002\u5408\u5F00\u53D1\u8005\u6216\u505A AI \u5DE5\u5177\u7684\u4EBA\u5FEB\u901F\u627E API \u5165\u53E3\u3002\u73B0\u5728\u5DF2\u7ECF\u6709 Worker + \u6570\u636E\u7ED3\u6784\uFF0C\u540E\u9762\u8FD8\u80FD\u7EE7\u7EED\u6269\u3002",
-          en: "Designed for builders who want model APIs quickly, with structured data and room to keep expanding."
-        },
         path: "/free-api-nav/",
-        style: { zh: "\u7ED3\u6784\u5316\u5217\u8868", en: "Structured directory" },
-        update: { zh: "\u81EA\u52A8\u6570\u636E\u66F4\u65B0", en: "Automated data refresh" },
-        features: {
-          zh: ["\u533A\u5206\u514D\u8D39\u65B9\u5F0F\u548C API \u53EF\u7528\u6027", "\u66F4\u9002\u5408\u628A\u6280\u672F\u8D44\u6E90\u96C6\u4E2D", "\u6BD4\u666E\u901A AI \u5BFC\u822A\u66F4\u504F\u5F00\u53D1\u8005"],
-          en: ["Separates free access styles clearly", "Built more for developers than casual users", "A good place to compare API options quickly"]
-        },
-        quick: {
-          zh: ["\u8FD9\u4E2A\u7248\u5757\u5BF9\u5F00\u53D1\u8005\u8F83\u6709\u4EF7\u503C", "\u5148\u770B\u514D\u8D39\u65B9\u5F0F\uFF0C\u518D\u770B\u534F\u8BAE\u517C\u5BB9", "\u540E\u9762\u53EF\u4EE5\u7EE7\u7EED\u6269 API \u72B6\u6001\u6807\u8BB0"],
-          en: ["This section is especially useful for builders", "Check free access style before model compatibility", "Next: expand API status labels"]
-        }
+        frameTitle: { zh: "API \u5185\u5D4C\u89C6\u56FE", en: "API embedded view" }
       },
       {
         id: "ranking",
@@ -556,24 +392,11 @@
           zh: "\u6BCF\u65E5\u770B\u516C\u5F00\u6A21\u578B\u699C\u5355\uFF0C\u5206\u5F00\u5F00\u6E90\u548C\u95ED\u6E90\u3002",
           en: "A daily-updated view of public model rankings, split into open and closed models."
         },
-        long: {
-          zh: "\u8FD9\u4E2A\u9879\u76EE\u66F4\u50CF\u7AD9\u5185\u7684\u4E13\u9898\u9875\uFF0C\u9002\u5408\u5FEB\u901F\u770B\u6700\u65B0\u6A21\u578B\u8D8B\u52BF\u548C\u699C\u5355\u7ED3\u679C\u3002",
-          en: "This section works like a focused benchmark page inside the site, built for scanning trends and leaderboard movement."
-        },
         path: "/model-ranking/",
-        style: { zh: "\u6392\u540D\u699C + \u67E5\u770B\u9875", en: "Ranking page" },
-        update: { zh: "\u6BCF\u65E5\u81EA\u52A8\u66F4\u65B0", en: "Daily automated refresh" },
-        features: {
-          zh: ["\u540C\u65F6\u770B\u7EFC\u5408\u699C\u548C\u5F00\u6E90\u699C", "\u89E3\u51B3\u201C\u6A21\u578B\u592A\u591A\u4E0D\u597D\u6BD4\u201D\u7684\u95EE\u9898", "\u9002\u5408\u4F5C\u4E3A\u7AD9\u5185\u7684\u6A21\u578B\u6D41\u91CF\u5165\u53E3"],
-          en: ["Shows both overall and open-source rankings", "Makes comparison easier when model names get crowded", "A strong topic page for benchmark-oriented traffic"]
-        },
-        quick: {
-          zh: ["\u4E0D\u7528\u7FFB\u591A\u4E2A\u699C\u5355\u5C31\u80FD\u5148\u770B\u4E2A\u5927\u6982", "\u5148\u5BF9\u6BD4\u6E90\u699C\u5355\uFF0C\u518D\u770B\u5177\u4F53\u6A21\u578B", "\u540E\u9762\u53EF\u4EE5\u63A5\u66F4\u591A\u4E13\u9898\u699C"],
-          en: ["You can get a broad ranking view without jumping across many sites", "Compare the source lists first, then drill into models", "Next: connect more benchmark-specific lists"]
-        }
+        frameTitle: { zh: "\u6A21\u578B\u6392\u540D\u5185\u5D4C\u89C6\u56FE", en: "Model ranking embedded view" }
       },
       {
-        id: "api",
+        id: "finance",
         color: "#14b8a6",
         soft: "rgba(20,184,166,.12)",
         type: { zh: "\u91D1\u878D\u5BFC\u822A", en: "Finance Nav" },
@@ -582,21 +405,8 @@
           zh: "\u7406\u8D22\u3001\u91CF\u5316\u3001\u5B8F\u89C2\u6570\u636E\u3001\u516C\u53F8\u62AB\u9732\u548C\u516C\u5F00 API \u5165\u53E3\u3002",
           en: "Free links for investing, quant research, macro data, filings, and finance APIs."
         },
-        long: {
-          zh: "\u9002\u5408\u627E\u7ECF\u6D4E\u6570\u636E\u3001\u5229\u7387\u6570\u636E\u3001\u516C\u53F8\u62AB\u9732\u3001\u56DE\u6D4B\u5165\u53E3\u548C\u514D\u8D39\u91D1\u878D API\u3002",
-          en: "Useful for macro data, rates, filings, quant research, and finance APIs without paying first."
-        },
         path: "/finance-nav/",
-        style: { zh: "\u4E3B\u9898\u5BFC\u822A\u9875", en: "Topic directory" },
-        update: { zh: "\u6309\u9700\u8865\u5145", en: "Manual expansion" },
-        features: {
-          zh: ["\u628A\u91D1\u878D\u7C7B\u516C\u5F00\u8D44\u6E90\u96C6\u4E2D\u5230\u4E00\u9875", "\u533A\u5206\u56FE\u8868\u3001\u91CF\u5316\u3001\u5B8F\u89C2\u3001\u62AB\u9732\u548C API", "\u5BF9\u60F3\u505A\u91CF\u5316\u6216\u6570\u636E\u7814\u7A76\u7684\u7528\u6237\u7279\u522B\u6709\u7528"],
-          en: ["Keeps public finance resources in one place", "Separates charts, quant, macro, filings, and APIs", "Especially useful for research-oriented visitors"]
-        },
-        quick: {
-          zh: ["\u8FD9\u4E2A\u9879\u76EE\u4F1A\u8D8A\u79EF\u8D8A\u6709\u4EF7\u503C", "\u5148\u627E\u6570\u636E\u7C7B\u578B\uFF0C\u518D\u770B\u5177\u4F53\u7AD9\u70B9", "\u540E\u9762\u53EF\u4EE5\u7EE7\u7EED\u52A0 ETF\u3001fundamental \u548C backtest \u8D44\u6E90"],
-          en: ["This section becomes more valuable as it grows", "Start by the data type you need", "Next: expand ETF, fundamental, and backtest resources"]
-        }
+        frameTitle: { zh: "\u91D1\u878D\u5BFC\u822A\u5185\u5D4C\u89C6\u56FE", en: "Finance embedded view" }
       },
       {
         id: "tools",
@@ -608,21 +418,8 @@
           zh: "\u805A\u5408 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u5F00\u53D1\u7B49\u7F51\u9875\u5DE5\u5177\u3002",
           en: "A directory of web tools for PDF, image, text, and development tasks."
         },
-        long: {
-          zh: "\u9002\u5408\u65E5\u5E38\u5904\u7406 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u7ED8\u56FE\u548C\u5F00\u53D1\u5DE5\u5177\u9700\u6C42\u3002\u9875\u9762\u5DF2\u7ECF\u6309\u573A\u666F\u3001\u514D\u8D39\u65B9\u5F0F\u548C\u8BBF\u95EE\u65B9\u5F0F\u505A\u4E86\u7B5B\u9009\u3002",
-          en: "Best for everyday PDF, image, text, diagram, and developer-tool needs, with filters for use case and access style."
-        },
         path: "/tools-nav/",
-        style: { zh: "\u5BFC\u822A\u9875 + \u7B5B\u9009", en: "Directory + filters" },
-        update: { zh: "\u624B\u52A8\u8865\u5145", en: "Manual curation" },
-        features: {
-          zh: ["\u627E PDF \u548C\u56FE\u7247\u5DE5\u5177", "\u7528\u7B5B\u9009\u5FEB\u901F\u7F29\u5C0F\u8303\u56F4", "\u4F18\u5148\u53EA\u653E\u6253\u5F00\u5C31\u80FD\u7528\u7684\u7AD9\u70B9"],
-          en: ["Find PDF and image tools", "Filter by use case quickly", "Only keeps tools you can actually open and use"]
-        },
-        quick: {
-          zh: ["\u6700\u5E38\u7528\u7684\u7F51\u9875\u5DE5\u5177\u96C6\u4E2D\u5165\u53E3", "\u5148\u6309\u5177\u4F53\u4EFB\u52A1\u7B5B\u9009\uFF0C\u518D\u6253\u5F00", "\u7EE7\u7EED\u5F80\u91CC\u8865 OCR\u3001\u5B57\u5E55\u3001\u5C4F\u5E55\u5F55\u5236"],
-          en: ["Most general-purpose web tools live here", "Filter by the exact task before opening", "Next: add OCR, subtitles, and recording tools"]
-        }
+        frameTitle: { zh: "\u5DE5\u5177\u5185\u5D4C\u89C6\u56FE", en: "Tools embedded view" }
       },
       {
         id: "english",
@@ -634,35 +431,19 @@
           zh: "\u67E5\u8BCD\u3001\u542C\u529B\u3001\u9605\u8BFB\u3001\u53D1\u97F3\u548C\u82F1\u8BED\u8D44\u6E90\u5BFC\u822A\u3002",
           en: "A clean list of English-learning sites and official resources."
         },
-        long: {
-          zh: "\u8FD9\u4E2A\u9879\u76EE\u73B0\u5728\u66F4\u50CF\u82F1\u8BED\u5B66\u4E60\u5BFC\u822A\u7AD9\uFF0C\u6309\u67E5\u8BCD\u3001\u542C\u529B\u3001\u53D1\u97F3\u3001\u9605\u8BFB\u548C\u5199\u4F5C\u53BB\u627E\u8D44\u6E90\u4F1A\u66F4\u987A\u3002",
-          en: "This page works as an English-learning resource hub, with quick access to dictionary, listening, pronunciation, reading, and writing resources."
-        },
         path: "/english-tools/",
-        style: { zh: "\u5BFC\u822A\u9875 + \u5FEB\u6377\u5206\u7C7B", en: "Directory + quick categories" },
-        update: { zh: "\u624B\u52A8\u7EF4\u62A4", en: "Manual curation" },
-        features: {
-          zh: ["\u628A\u82F1\u8BED\u5B66\u4E60\u8D44\u6E90\u5206\u6210\u51E0\u4E2A\u5E38\u7528\u65B9\u5411", "\u4F18\u5148\u4FDD\u7559\u514D\u8D39\u548C\u5B98\u65B9\u8D44\u6E90", "\u9002\u5408\u628A\u5B66\u4E60\u8D44\u6E90\u96C6\u4E2D\u8D77\u6765\u7528"],
-          en: ["Groups English resources by real learning tasks", "Keeps official resources first", "Useful as a compact learning launchpad"]
-        },
-        quick: {
-          zh: ["\u7528\u6237\u8FDB\u6765\u540E\u76EE\u6807\u66F4\u660E\u786E", "\u5148\u8D70\u5FEB\u6377\u5206\u7C7B\uFF0C\u518D\u6253\u5F00\u4E00\u4E2A\u8D44\u6E90", "\u540E\u7EED\u53EF\u4EE5\u7EE7\u7EED\u6269\u82F1\u6587\u5199\u4F5C\u548C\u53E3\u8BED\u7248\u5757"],
-          en: ["It gives visitors a clearer learning path", "Start with the quick categories first", "Next: expand writing and speaking resources"]
-        }
+        frameTitle: { zh: "\u82F1\u8BED\u5185\u5D4C\u89C6\u56FE", en: "English embedded view" }
       }
     ];
 
     const el = {
       list: document.getElementById("project-list"),
-      hero: document.getElementById("detail-hero"),
       type: document.getElementById("detail-type"),
       title: document.getElementById("detail-title"),
-      copy: document.getElementById("detail-copy"),
+      path: document.getElementById("detail-path"),
       open: document.getElementById("detail-open"),
-      secondary: document.getElementById("detail-secondary"),
-      features: document.getElementById("feature-list"),
-      meta: document.getElementById("meta-grid"),
-      quick: document.getElementById("quick-links")
+      frame: document.getElementById("detail-frame"),
+      topbar: document.getElementById("viewer-topbar")
     };
 
     const state = { activeId: "ai", lang: "zh" };
@@ -696,42 +477,16 @@
       });
     }
 
-    function metaCard(label, value) {
-      return `<div class="meta-card"><div class="meta-label">${label}</div><div class="meta-value">${value}</div></div>`;
-    }
-
     function renderDetail() {
       const project = getProject(state.activeId);
-      el.hero.style.setProperty("--hero-accent", project.color);
+      el.topbar.style.setProperty("--viewer-accent", project.color);
       el.type.textContent = project.type[state.lang];
       el.title.textContent = project.name[state.lang];
-      el.copy.textContent = project.long[state.lang];
+      el.path.textContent = project.path;
       el.open.href = project.path;
       el.open.textContent = t("openNow");
-      el.secondary.href = project.path;
-      el.secondary.textContent = t("openInPlace");
-
-      el.features.innerHTML = project.features[state.lang].map((item) => `
-        <div class="feature">
-          <span class="feature-dot"></span>
-          <span>${item}</span>
-        </div>
-      `).join("");
-
-      el.meta.innerHTML = [
-        metaCard(t("metaType"), project.type[state.lang]),
-        metaCard(t("metaPath"), project.path),
-        metaCard(t("metaStyle"), project.style[state.lang]),
-        metaCard(t("metaUpdate"), project.update[state.lang])
-      ].join("");
-
-      const quickTitles = [t("quickTitle1"), t("quickTitle2"), t("quickTitle3")];
-      el.quick.innerHTML = project.quick[state.lang].map((item, index) => `
-        <div class="quick-link" style="--hero-accent:${project.color}">
-          <strong>${quickTitles[index]}</strong>
-          <span>${item}</span>
-        </div>
-      `).join("");
+      el.frame.src = project.path;
+      el.frame.title = project.frameTitle[state.lang];
     }
 
     function render() {
