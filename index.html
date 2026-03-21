@@ -495,58 +495,6 @@
 
     const projects = [
       {
-        id: "tools",
-        color: "#0f9d84",
-        soft: "rgba(15,157,132,.12)",
-        type: { zh: "\u514D\u8D39\u5DE5\u5177", en: "Free Tools" },
-        name: { zh: "\u514D\u8D39\u5DE5\u5177", en: "Free Tools" },
-        short: {
-          zh: "\u805A\u5408 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u5F00\u53D1\u7B49\u514D\u8D39\u7F51\u9875\u5DE5\u5177\u3002",
-          en: "A directory of free web tools for PDF, image, text, and development tasks."
-        },
-        long: {
-          zh: "\u9002\u5408\u65E5\u5E38\u5904\u7406 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u7ED8\u56FE\u548C\u5F00\u53D1\u5DE5\u5177\u9700\u6C42\u3002\u9875\u9762\u5DF2\u7ECF\u6309\u573A\u666F\u3001\u514D\u8D39\u65B9\u5F0F\u548C\u8BBF\u95EE\u65B9\u5F0F\u505A\u4E86\u7B5B\u9009\u3002",
-          en: "Best for everyday PDF, image, text, diagram, and developer-tool needs, with filters for use case and free model."
-        },
-        path: "/tools-nav/",
-        style: { zh: "\u5BFC\u822A\u9875 + \u7B5B\u9009", en: "Directory + filters" },
-        update: { zh: "\u624B\u52A8\u8865\u5145", en: "Manual curation" },
-        features: {
-          zh: ["\u627E\u514D\u8D39 PDF \u548C\u56FE\u7247\u5DE5\u5177", "\u7528\u7B5B\u9009\u5FEB\u901F\u7F29\u5C0F\u8303\u56F4", "\u4F18\u5148\u53EA\u653E\u6253\u5F00\u5C31\u80FD\u7528\u7684\u7AD9\u70B9"],
-          en: ["Find free PDF and image tools", "Filter by use case quickly", "Only keeps tools you can actually open and use"]
-        },
-        quick: {
-          zh: ["\u6700\u5E38\u7528\u7684\u7F51\u9875\u5DE5\u5177\u96C6\u4E2D\u5165\u53E3", "\u5148\u6309\u5177\u4F53\u4EFB\u52A1\u7B5B\u9009\uFF0C\u518D\u6253\u5F00", "\u7EE7\u7EED\u5F80\u91CC\u8865 OCR\u3001\u5B57\u5E55\u3001\u5C4F\u5E55\u5F55\u5236"],
-          en: ["Most general-purpose web tools live here", "Filter by the exact task before opening", "Next: add OCR, subtitles, and recording tools"]
-        }
-      },
-      {
-        id: "english",
-        color: "#ff8a34",
-        soft: "rgba(255,138,52,.12)",
-        type: { zh: "\u514D\u8D39\u82F1\u8BED", en: "Free English" },
-        name: { zh: "\u514D\u8D39\u82F1\u8BED", en: "Free English" },
-        short: {
-          zh: "\u67E5\u8BCD\u3001\u542C\u529B\u3001\u9605\u8BFB\u3001\u53D1\u97F3\u548C\u82F1\u8BED\u8D44\u6E90\u5BFC\u822A\u3002",
-          en: "A clean list of free English-learning sites and official resources."
-        },
-        long: {
-          zh: "\u8FD9\u4E2A\u9879\u76EE\u73B0\u5728\u66F4\u50CF\u82F1\u8BED\u5B66\u4E60\u5BFC\u822A\u7AD9\uFF0C\u6309\u67E5\u8BCD\u3001\u542C\u529B\u3001\u53D1\u97F3\u3001\u9605\u8BFB\u548C\u5199\u4F5C\u53BB\u627E\u8D44\u6E90\u4F1A\u66F4\u987A\u3002",
-          en: "This page works as an English-learning resource hub, with quick access to dictionary, listening, pronunciation, reading, and writing resources."
-        },
-        path: "/english-tools/",
-        style: { zh: "\u5BFC\u822A\u9875 + \u5FEB\u6377\u5206\u7C7B", en: "Directory + quick categories" },
-        update: { zh: "\u624B\u52A8\u7EF4\u62A4", en: "Manual curation" },
-        features: {
-          zh: ["\u628A\u82F1\u8BED\u5B66\u4E60\u8D44\u6E90\u5206\u6210\u51E0\u4E2A\u5E38\u7528\u65B9\u5411", "\u4F18\u5148\u4FDD\u7559\u514D\u8D39\u548C\u5B98\u65B9\u8D44\u6E90", "\u9002\u5408\u628A\u5B66\u4E60\u8D44\u6E90\u96C6\u4E2D\u8D77\u6765\u7528"],
-          en: ["Groups English resources by real learning tasks", "Keeps official and free resources first", "Useful as a compact learning launchpad"]
-        },
-        quick: {
-          zh: ["\u7528\u6237\u8FDB\u6765\u540E\u76EE\u6807\u66F4\u660E\u786E", "\u5148\u8D70\u5FEB\u6377\u5206\u7C7B\uFF0C\u518D\u6253\u5F00\u4E00\u4E2A\u8D44\u6E90", "\u540E\u7EED\u53EF\u4EE5\u7EE7\u7EED\u6269\u82F1\u6587\u5199\u4F5C\u548C\u53E3\u8BED\u7248\u5757"],
-          en: ["It gives visitors a clearer learning path", "Start with the quick categories first", "Next: expand writing and speaking resources"]
-        }
-      },
-      {
         id: "ai",
         color: "#6f5cff",
         soft: "rgba(111,92,255,.12)",
@@ -573,11 +521,11 @@
         }
       },
       {
-        id: "api",
+        id: "finance",
         color: "#0f89ff",
         soft: "rgba(15,137,255,.12)",
-        type: { zh: "\u514D\u8D39 API", en: "Free APIs" },
-        name: { zh: "\u514D\u8D39 API", en: "Free APIs" },
+        type: { zh: "API", en: "APIs" },
+        name: { zh: "API", en: "APIs" },
         short: {
           zh: "\u6536\u96C6\u6709\u514D\u8D39\u989D\u5EA6\u6216\u516C\u5F00\u5165\u53E3\u7684\u6A21\u578B API \u5E73\u53F0\u3002",
           en: "A directory of model API platforms with real free access or trial layers."
@@ -625,7 +573,7 @@
         }
       },
       {
-        id: "finance",
+        id: "api",
         color: "#14b8a6",
         soft: "rgba(20,184,166,.12)",
         type: { zh: "\u91D1\u878D\u5BFC\u822A", en: "Finance Nav" },
@@ -649,6 +597,58 @@
           zh: ["\u8FD9\u4E2A\u9879\u76EE\u4F1A\u8D8A\u79EF\u8D8A\u6709\u4EF7\u503C", "\u5148\u627E\u6570\u636E\u7C7B\u578B\uFF0C\u518D\u770B\u5177\u4F53\u7AD9\u70B9", "\u540E\u9762\u53EF\u4EE5\u7EE7\u7EED\u52A0 ETF\u3001fundamental \u548C backtest \u8D44\u6E90"],
           en: ["This section becomes more valuable as it grows", "Start by the data type you need", "Next: expand ETF, fundamental, and backtest resources"]
         }
+      },
+      {
+        id: "tools",
+        color: "#0f9d84",
+        soft: "rgba(15,157,132,.12)",
+        type: { zh: "\u5DE5\u5177", en: "Tools" },
+        name: { zh: "\u5DE5\u5177", en: "Tools" },
+        short: {
+          zh: "\u805A\u5408 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u5F00\u53D1\u7B49\u7F51\u9875\u5DE5\u5177\u3002",
+          en: "A directory of web tools for PDF, image, text, and development tasks."
+        },
+        long: {
+          zh: "\u9002\u5408\u65E5\u5E38\u5904\u7406 PDF\u3001\u56FE\u7247\u3001\u6587\u672C\u3001\u7ED8\u56FE\u548C\u5F00\u53D1\u5DE5\u5177\u9700\u6C42\u3002\u9875\u9762\u5DF2\u7ECF\u6309\u573A\u666F\u3001\u514D\u8D39\u65B9\u5F0F\u548C\u8BBF\u95EE\u65B9\u5F0F\u505A\u4E86\u7B5B\u9009\u3002",
+          en: "Best for everyday PDF, image, text, diagram, and developer-tool needs, with filters for use case and access style."
+        },
+        path: "/tools-nav/",
+        style: { zh: "\u5BFC\u822A\u9875 + \u7B5B\u9009", en: "Directory + filters" },
+        update: { zh: "\u624B\u52A8\u8865\u5145", en: "Manual curation" },
+        features: {
+          zh: ["\u627E PDF \u548C\u56FE\u7247\u5DE5\u5177", "\u7528\u7B5B\u9009\u5FEB\u901F\u7F29\u5C0F\u8303\u56F4", "\u4F18\u5148\u53EA\u653E\u6253\u5F00\u5C31\u80FD\u7528\u7684\u7AD9\u70B9"],
+          en: ["Find PDF and image tools", "Filter by use case quickly", "Only keeps tools you can actually open and use"]
+        },
+        quick: {
+          zh: ["\u6700\u5E38\u7528\u7684\u7F51\u9875\u5DE5\u5177\u96C6\u4E2D\u5165\u53E3", "\u5148\u6309\u5177\u4F53\u4EFB\u52A1\u7B5B\u9009\uFF0C\u518D\u6253\u5F00", "\u7EE7\u7EED\u5F80\u91CC\u8865 OCR\u3001\u5B57\u5E55\u3001\u5C4F\u5E55\u5F55\u5236"],
+          en: ["Most general-purpose web tools live here", "Filter by the exact task before opening", "Next: add OCR, subtitles, and recording tools"]
+        }
+      },
+      {
+        id: "english",
+        color: "#ff8a34",
+        soft: "rgba(255,138,52,.12)",
+        type: { zh: "\u82F1\u8BED", en: "English" },
+        name: { zh: "\u82F1\u8BED", en: "English" },
+        short: {
+          zh: "\u67E5\u8BCD\u3001\u542C\u529B\u3001\u9605\u8BFB\u3001\u53D1\u97F3\u548C\u82F1\u8BED\u8D44\u6E90\u5BFC\u822A\u3002",
+          en: "A clean list of English-learning sites and official resources."
+        },
+        long: {
+          zh: "\u8FD9\u4E2A\u9879\u76EE\u73B0\u5728\u66F4\u50CF\u82F1\u8BED\u5B66\u4E60\u5BFC\u822A\u7AD9\uFF0C\u6309\u67E5\u8BCD\u3001\u542C\u529B\u3001\u53D1\u97F3\u3001\u9605\u8BFB\u548C\u5199\u4F5C\u53BB\u627E\u8D44\u6E90\u4F1A\u66F4\u987A\u3002",
+          en: "This page works as an English-learning resource hub, with quick access to dictionary, listening, pronunciation, reading, and writing resources."
+        },
+        path: "/english-tools/",
+        style: { zh: "\u5BFC\u822A\u9875 + \u5FEB\u6377\u5206\u7C7B", en: "Directory + quick categories" },
+        update: { zh: "\u624B\u52A8\u7EF4\u62A4", en: "Manual curation" },
+        features: {
+          zh: ["\u628A\u82F1\u8BED\u5B66\u4E60\u8D44\u6E90\u5206\u6210\u51E0\u4E2A\u5E38\u7528\u65B9\u5411", "\u4F18\u5148\u4FDD\u7559\u514D\u8D39\u548C\u5B98\u65B9\u8D44\u6E90", "\u9002\u5408\u628A\u5B66\u4E60\u8D44\u6E90\u96C6\u4E2D\u8D77\u6765\u7528"],
+          en: ["Groups English resources by real learning tasks", "Keeps official resources first", "Useful as a compact learning launchpad"]
+        },
+        quick: {
+          zh: ["\u7528\u6237\u8FDB\u6765\u540E\u76EE\u6807\u66F4\u660E\u786E", "\u5148\u8D70\u5FEB\u6377\u5206\u7C7B\uFF0C\u518D\u6253\u5F00\u4E00\u4E2A\u8D44\u6E90", "\u540E\u7EED\u53EF\u4EE5\u7EE7\u7EED\u6269\u82F1\u6587\u5199\u4F5C\u548C\u53E3\u8BED\u7248\u5757"],
+          en: ["It gives visitors a clearer learning path", "Start with the quick categories first", "Next: expand writing and speaking resources"]
+        }
       }
     ];
 
@@ -665,7 +665,7 @@
       quick: document.getElementById("quick-links")
     };
 
-    const state = { activeId: "tools", lang: "zh" };
+    const state = { activeId: "ai", lang: "zh" };
 
     function t(key) {
       return copy[key]?.[state.lang] ?? "";
