@@ -10,10 +10,10 @@
     :root{--bg:#eef4ff;--panel:rgba(255,255,255,.84);--panel-soft:rgba(250,252,255,.96);--line:rgba(255,255,255,.94);--text:#0f172a;--muted:#64748b;--shadow:0 20px 50px rgba(15,23,42,.08)}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;background:radial-gradient(circle at 12% 14%, rgba(111,92,255,.14), transparent 0 24%),radial-gradient(circle at 88% 16%, rgba(20,184,166,.10), transparent 0 20%),linear-gradient(180deg,#f7faff 0%,#eef4ff 100%)}
     a{text-decoration:none;color:inherit}button{font:inherit}
-    .shell{width:min(calc(100% - 24px),1360px);margin:0 auto;padding:18px 0}.workspace{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}
+    .shell{width:min(calc(100% - 24px),1360px);margin:0 auto;padding:18px 0}.workspace{display:grid;grid-template-columns:248px minmax(0,1fr);gap:18px}
     .sidebar,.stage{border:1px solid var(--line);border-radius:28px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:var(--shadow)}
     .sidebar{padding:18px;display:grid;gap:14px;align-content:start;position:sticky;top:18px;min-height:calc(100vh - 36px)}
-    .sidebar h1{margin:0;font-size:1.7rem;letter-spacing:-.05em}.sidebar p{margin:0;color:var(--muted);line-height:1.7}
+    .sidebar h1{margin:0;font-size:1.55rem;letter-spacing:-.05em}.sidebar p{margin:0;color:var(--muted);line-height:1.7}
     .rail-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.switches{display:grid;gap:8px;justify-items:end}.lang{display:inline-flex;gap:6px;padding:4px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid var(--line);box-shadow:0 10px 24px rgba(15,23,42,.06)}
     .lang button{border:0;background:transparent;color:var(--muted);min-height:28px;border-radius:999px;cursor:pointer;padding:0 10px}
     .lang button{min-width:38px;font-size:.82rem}
@@ -32,7 +32,6 @@
         <div class="rail-top">
           <div>
             <h1 data-i18n="sidebarTitle">&#x9879;&#x76EE;</h1>
-            <p data-i18n="sidebarCopy">&#x5DE6;&#x8FB9;&#x5207;&#x6362;&#x9879;&#x76EE;&#xFF0C;&#x53F3;&#x8FB9;&#x76F4;&#x63A5;&#x770B;&#x5185;&#x5BB9;&#x672C;&#x4F53;&#x3002;</p>
           </div>
           <div class="switches">
             <div class="lang">
