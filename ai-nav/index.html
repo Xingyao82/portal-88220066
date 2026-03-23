@@ -58,7 +58,7 @@
     @media (max-width:1180px) { .stats,.quick-grid,.grid { grid-template-columns:1fr 1fr; } }
     @media (max-width:720px) { .shell { width:min(calc(100% - 18px), var(--max)); } .nav { flex-direction:column; align-items:flex-start; } .filter-row { flex-direction:column; gap:10px; } .filter-label { min-width:auto; padding-top:0; } .stats,.quick-grid,.grid { grid-template-columns:1fr; } .section-head { flex-direction:column; align-items:flex-start; } }
   </style>
-</head>
+<style id="minimal-directory-override">:root{--text:#0f172a!important;--muted:#64748b!important;--line:rgba(15,23,42,.08)!important;--accent:#c48f5a!important;--accent-soft:rgba(196,143,90,.12)!important}html,body{background:#f8fafc!important;color:#0f172a!important}.nav,.toolbar,.section,.hero,.controls,.filters,.footnote{background:#fff!important;background-image:none!important;border:1px solid rgba(15,23,42,.08)!important;box-shadow:none!important}.shell{padding-top:20px!important;padding-bottom:40px!important}.toolbar,.section,.hero,.controls,.filters,.footnote{border-radius:20px!important}.nav{border-radius:18px!important}.toolbar-head h1,.hero h1,.hero h2,.section-head h2,.section-count,.stat strong,.summary-card strong,.tool-card h3,.quick-card h3,.tool-top h3{color:#0f172a!important}.toolbar-head p,.hero-copy,.section-head p,.meta,.tool-card p,.quick-card p,.stat-label,.filter-label,.chip,.badge,.status-badge,.summary-card span,.nav-links,.footnote,.empty,.pill{color:#64748b!important}.search input,input[type="search"]{background:#fff!important;border:1px solid rgba(15,23,42,.08)!important;color:#0f172a!important;box-shadow:none!important}.chip-btn,.chip,.badge,.status-badge,.pill,.ghost{background:#fff!important;border:1px solid rgba(15,23,42,.08)!important;color:#64748b!important;box-shadow:none!important}.chip-btn.active,.chip-btn:hover,.pill.primary{background:#fbf5ef!important;border-color:rgba(196,143,90,.28)!important;color:#8a6238!important}.visit,.btn,.btn2{background:#f9ecdf!important;border:1px solid rgba(196,143,90,.24)!important;color:#8a6238!important;box-shadow:none!important}.count{background:#fbf5ef!important;border:1px solid rgba(196,143,90,.2)!important;color:#8a6238!important}.tool-card,.quick-card,.card,.summary-card,.stat,.panel,.panel-card,.hero-card,.ranking-panel,.ranking-hero{background:#fff!important;background-image:none!important;border:1px solid rgba(15,23,42,.08)!important;box-shadow:none!important}.tool-card:hover,.quick-card:hover,.card:hover{transform:translateY(-2px)!important;box-shadow:0 10px 24px rgba(15,23,42,.06)!important}.tool-card::before,.quick-card::before,.card::before{opacity:.78!important}</style></head>
 <body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
@@ -104,6 +104,6 @@
     searchEl.addEventListener("input",()=>{state.search=searchEl.value.trim().toLowerCase(); renderPage(window.SiteI18n.getLang());});
     window.SiteI18n.bindPage(pageCopy,renderPage);
   </script>
-</body>
+<script id="minimal-directory-script">(function(){const hideBlock=(selector)=>{const el=document.querySelector(selector);if(!el)return;const section=el.closest(".section")||el.closest(".stats");if(section)section.style.display="none";};hideBlock("#stats");hideBlock("#quick-grid");hideBlock("#featured-grid");})();</script></body>
 </html>
 
