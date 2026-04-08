@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>技能 | 88220066.xyz</title>
-  <meta name="description" content="收录可直接使用的技能与方案。当前包含局域网传书到 Kindle。">
+  <meta name="description" content="可直接下载和使用的技能页面。当前提供 Kindle 局域网临时传书。">
   <script src="/notes/site-i18n.js"></script>
   <style>
     :root{--bg:#f8fafc;--panel:#ffffff;--line:rgba(15,23,42,.08);--text:#0f172a;--muted:#64748b;--accent:#c48f5a;--radius-xl:22px;--radius-lg:16px;--radius-md:12px;--max:1180px}
@@ -33,13 +33,13 @@
     .top{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:start}
     .logo{width:36px;height:36px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#7a5531;background:#fbf5ef;border:1px solid rgba(196,143,90,.18)}
     .top h3{margin:0;font-size:1.08rem;line-height:1.3}
-    .meta,.card p,.list li{color:var(--muted)}
+    .meta,.card p,.list li,.note{color:var(--muted)}
     .meta{font-size:.84rem}
     .badge{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 10px;border-radius:999px;font-size:12px;background:#fbf5ef;border:1px solid rgba(196,143,90,.22);color:#8a6238}
     .tag-row{display:flex;flex-wrap:wrap;gap:8px}
     .chip{display:inline-flex;padding:6px 9px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:11px}
     .btn-row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn,.ghost{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:999px}
+    .btn,.ghost{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border-radius:999px}
     .btn{background:#f9ecdf;border:1px solid rgba(196,143,90,.24);color:#8a6238}
     .ghost{background:#fff;border:1px solid var(--line);color:var(--muted)}
     .detail{display:grid;gap:16px}
@@ -47,6 +47,7 @@
     .panel{padding:16px;border-radius:var(--radius-lg);border:1px solid var(--line);background:#fff}
     .panel h3{margin:0 0 10px;font-size:1rem}
     .list{margin:0;padding-left:18px;display:grid;gap:8px}
+    .download-box{display:grid;gap:10px;padding:16px;border-radius:16px;border:1px solid rgba(196,143,90,.2);background:#fcf7f1}
     code{font-family:Consolas,monospace;background:#f8fafc;padding:2px 6px;border-radius:8px;border:1px solid var(--line)}
     @media (max-width:900px){.grid,.subgrid{grid-template-columns:1fr}.nav{flex-direction:column;align-items:flex-start}}
   </style>
@@ -65,7 +66,7 @@
       <div class="toolbar-head">
         <div>
           <h1 data-i18n="heroTitle">技能</h1>
-          <p data-i18n="heroCopy">把可直接落地的小工具、小方案和工作流单独收起来。当前先放“局域网传书到 Kindle”。</p>
+          <p data-i18n="heroCopy">这里放可以直接下载和使用的小工具。当前先做 Kindle 局域网临时传书。</p>
         </div>
         <div class="count" data-i18n="countText">1 个技能</div>
       </div>
@@ -83,19 +84,20 @@
             <span class="logo">K</span>
             <div>
               <h3 data-i18n="skillTitle">局域网传书到 Kindle</h3>
-              <div class="meta" data-i18n="skillMeta">本地中转 / 6 位取书码 / 自动清理</div>
+              <div class="meta" data-i18n="skillMeta">本地网页 / 6 位取书码 / 10 分钟自动删</div>
             </div>
-            <span class="badge" data-i18n="skillBadge">本地技能</span>
+            <span class="badge" data-i18n="skillBadge">Windows</span>
           </div>
-          <p data-i18n="skillSummary">电脑上传一本书，Kindle 在同一局域网里输入 6 位取书码后下载。下载成功后自动删除，适合临时传书，不做长期书库。</p>
+          <p data-i18n="skillSummary">在电脑上打开一个本地网页上传书，Kindle 连到同一局域网后输入取书码下载。下载成功后立刻删除，10 分钟内没人取也会自动删掉，网站不保留任何书。</p>
           <div class="tag-row">
             <span class="chip">Kindle</span>
             <span class="chip" data-i18n="chipLan">局域网</span>
-            <span class="chip" data-i18n="chipTemp">临时中转</span>
-            <span class="chip">Python</span>
+            <span class="chip" data-i18n="chipDelete">自动删除</span>
+            <span class="chip" data-i18n="chipNoStore">不存书</span>
           </div>
           <div class="btn-row">
-            <a class="btn" href="#kindle-share" data-i18n="btnView">查看说明</a>
+            <a class="btn" href="/downloads/KindleShare-Windows.zip" data-i18n="btnDownload" download>下载 Windows 版</a>
+            <a class="ghost" href="#kindle-share" data-i18n="btnView">查看说明</a>
           </div>
         </article>
       </div>
@@ -105,27 +107,33 @@
       <div class="section-head">
         <div>
           <h2 data-i18n="detailTitle">局域网传书到 Kindle</h2>
-          <p data-i18n="detailCopy">整理自本地项目 <code>F:\\codex\\kindle-share</code>，当前是一个本地服务，不是公网网站。</p>
+          <p data-i18n="detailCopy">这个工具实际跑在你的电脑上，不经过 88220066.xyz 存书。网站这里只放下载入口和说明。</p>
         </div>
       </div>
       <div class="subgrid">
         <div class="panel">
+          <h3 data-i18n="downloadTitle">直接下载</h3>
+          <div class="download-box">
+            <a class="btn" href="/downloads/KindleShare-Windows.zip" data-i18n="btnDownloadLarge" download>下载 KindleShare Windows 版</a>
+            <div class="note" data-i18n="downloadNote">下载后解压，双击 <code>KindleShare.exe</code> 就能开始用。</div>
+          </div>
+        </div>
+        <div class="panel">
           <h3 data-i18n="howTitle">怎么用</h3>
           <ol class="list">
-            <li data-i18n="how1">Windows 里双击 <code>start_kindle_share.bat</code>，或者在目录里运行 <code>python run.py</code>。</li>
-            <li data-i18n="how2">电脑页面上传一本书，系统会生成一个 6 位取书码。</li>
-            <li data-i18n="how3">Kindle 在同一局域网里打开取书页，输入取书码并下载。</li>
-            <li data-i18n="how4">下载成功后文件立即删除；如果一直没人取，也会在超时后自动清掉。</li>
+            <li data-i18n="how1">电脑上双击 <code>KindleShare.exe</code>。</li>
+            <li data-i18n="how2">在电脑页面上传一本书，页面会给你一个 6 位取书码。</li>
+            <li data-i18n="how3">Kindle 连到同一局域网，打开工具显示的 <code>/kindle</code> 页面。</li>
+            <li data-i18n="how4">输入取书码并下载，送达后文件会立刻删除。</li>
           </ol>
         </div>
         <div class="panel">
-          <h3 data-i18n="addrTitle">地址与参数</h3>
+          <h3 data-i18n="ruleTitle">规则</h3>
           <ul class="list">
-            <li><code>/</code> <span data-i18n="addr1">电脑上传页</span></li>
-            <li><code>/kindle</code> <span data-i18n="addr2">Kindle 取书页</span></li>
-            <li><code>/health</code> <span data-i18n="addr3">服务状态检查</span></li>
-            <li><code>--port 9000</code> <span data-i18n="addr4">改端口</span></li>
-            <li><code>--ttl-minutes 10</code> <span data-i18n="addr5">改自动清理时间</span></li>
+            <li data-i18n="rule1">默认只保留 10 分钟。</li>
+            <li data-i18n="rule2">下载成功后会马上删掉临时文件。</li>
+            <li data-i18n="rule3">如果 10 分钟内没人取，系统会自动清掉。</li>
+            <li data-i18n="rule4">网站 88220066.xyz 不保存任何书。</li>
           </ul>
         </div>
         <div class="panel">
@@ -141,14 +149,6 @@
             <span class="chip">.txt</span>
           </div>
         </div>
-        <div class="panel">
-          <h3 data-i18n="deployTitle">部署方式</h3>
-          <ul class="list">
-            <li data-i18n="deploy1">本地直接跑，默认端口 <code>8866</code>。</li>
-            <li data-i18n="deploy2">也可以用项目自带 <code>Dockerfile</code> 部署到服务器。</li>
-            <li data-i18n="deploy3">如果要外网访问，需要自己再接反向代理和域名。</li>
-          </ul>
-        </div>
       </div>
     </section>
   </div>
@@ -156,38 +156,38 @@
   <script>
     const messages = {
       pageTitle:{zh:"技能 | 88220066.xyz",en:"Skills | 88220066.xyz"},
-      pageDescription:{zh:"收录可直接使用的技能与方案。当前包含局域网传书到 Kindle。",en:"A place for directly usable skills and workflows. Current entry: LAN transfer to Kindle."},
+      pageDescription:{zh:"可直接下载和使用的技能页面。当前提供 Kindle 局域网临时传书。",en:"A place for directly downloadable and usable skills. Current entry: Kindle LAN transfer."},
       navHome:{zh:"首页",en:"Home"},
       navSkills:{zh:"技能",en:"Skills"},
       heroTitle:{zh:"技能",en:"Skills"},
-      heroCopy:{zh:"把可直接落地的小工具、小方案和工作流单独收起来。当前先放“局域网传书到 Kindle”。",en:"A place for practical tools, workflows, and small deployable solutions. Current entry: LAN transfer to Kindle."},
+      heroCopy:{zh:"这里放可以直接下载和使用的小工具。当前先做 Kindle 局域网临时传书。",en:"This page hosts small tools you can download and use directly. Current entry: Kindle LAN transfer."},
       countText:{zh:"1 个技能",en:"1 skill"},
       listTitle:{zh:"技能列表",en:"Skill List"},
       skillTitle:{zh:"局域网传书到 Kindle",en:"LAN Transfer to Kindle"},
-      skillMeta:{zh:"本地中转 / 6 位取书码 / 自动清理",en:"Local relay / 6-char pickup code / auto cleanup"},
-      skillBadge:{zh:"本地技能",en:"Local Skill"},
-      skillSummary:{zh:"电脑上传一本书，Kindle 在同一局域网里输入 6 位取书码后下载。下载成功后自动删除，适合临时传书，不做长期书库。",en:"Upload one book from your computer, then download it on Kindle with a 6-character pickup code on the same LAN. The file is deleted after pickup, so this is for temporary transfer, not a library."},
+      skillMeta:{zh:"本地网页 / 6 位取书码 / 10 分钟自动删",en:"Local web app / 6-char code / auto delete in 10 minutes"},
+      skillBadge:{zh:"Windows",en:"Windows"},
+      skillSummary:{zh:"在电脑上打开一个本地网页上传书，Kindle 连到同一局域网后输入取书码下载。下载成功后立刻删除，10 分钟内没人取也会自动删掉，网站不保留任何书。",en:"Open a local web page on your computer, upload one book, then let Kindle download it on the same LAN with a pickup code. Files are deleted right after pickup, or after 10 minutes if unused. The website does not store your books."},
       chipLan:{zh:"局域网",en:"LAN"},
-      chipTemp:{zh:"临时中转",en:"Temporary Relay"},
+      chipDelete:{zh:"自动删除",en:"Auto Delete"},
+      chipNoStore:{zh:"不存书",en:"No Storage"},
+      btnDownload:{zh:"下载 Windows 版",en:"Download Windows Version"},
       btnView:{zh:"查看说明",en:"View Details"},
       detailTitle:{zh:"局域网传书到 Kindle",en:"LAN Transfer to Kindle"},
-      detailCopy:{zh:"整理自本地项目 <code>F:\\codex\\kindle-share</code>，当前是一个本地服务，不是公网网站。",en:"Organized from the local project <code>F:\\codex\\kindle-share</code>. This is a local service, not a public website."},
+      detailCopy:{zh:"这个工具实际跑在你的电脑上，不经过 88220066.xyz 存书。网站这里只放下载入口和说明。",en:"This tool runs on your own computer. Your books do not pass through 88220066.xyz. The site only provides the download and usage guide."},
+      downloadTitle:{zh:"直接下载",en:"Direct Download"},
+      btnDownloadLarge:{zh:"下载 KindleShare Windows 版",en:"Download KindleShare for Windows"},
+      downloadNote:{zh:"下载后解压，双击 <code>KindleShare.exe</code> 就能开始用。",en:"Unzip the package and double-click <code>KindleShare.exe</code> to start."},
       howTitle:{zh:"怎么用",en:"How to Use"},
-      how1:{zh:"Windows 里双击 <code>start_kindle_share.bat</code>，或者在目录里运行 <code>python run.py</code>。",en:"On Windows, double-click <code>start_kindle_share.bat</code>, or run <code>python run.py</code> in the project folder."},
-      how2:{zh:"电脑页面上传一本书，系统会生成一个 6 位取书码。",en:"Upload one book from the desktop page. The service will generate a 6-character pickup code."},
-      how3:{zh:"Kindle 在同一局域网里打开取书页，输入取书码并下载。",en:"On the same LAN, open the Kindle pickup page and enter the pickup code."},
-      how4:{zh:"下载成功后文件立即删除；如果一直没人取，也会在超时后自动清掉。",en:"Files are deleted after a successful pickup, or automatically removed after timeout if nobody downloads them."},
-      addrTitle:{zh:"地址与参数",en:"Routes and Options"},
-      addr1:{zh:"电脑上传页",en:"Desktop upload page"},
-      addr2:{zh:"Kindle 取书页",en:"Kindle pickup page"},
-      addr3:{zh:"服务状态检查",en:"Health endpoint"},
-      addr4:{zh:"改端口",en:"Change port"},
-      addr5:{zh:"改自动清理时间",en:"Change cleanup TTL"},
-      formatTitle:{zh:"支持格式",en:"Supported Formats"},
-      deployTitle:{zh:"部署方式",en:"Deployment"},
-      deploy1:{zh:"本地直接跑，默认端口 <code>8866</code>。",en:"Run locally first. Default port is <code>8866</code>."},
-      deploy2:{zh:"也可以用项目自带 <code>Dockerfile</code> 部署到服务器。",en:"The included <code>Dockerfile</code> can also be used for server deployment."},
-      deploy3:{zh:"如果要外网访问，需要自己再接反向代理和域名。",en:"If you want public access, add a reverse proxy and domain yourself."}
+      how1:{zh:"电脑上双击 <code>KindleShare.exe</code>。",en:"Double-click <code>KindleShare.exe</code> on your computer."},
+      how2:{zh:"在电脑页面上传一本书，页面会给你一个 6 位取书码。",en:"Upload one book from the desktop page. The app will show a 6-character pickup code."},
+      how3:{zh:"Kindle 连到同一局域网，打开工具显示的 <code>/kindle</code> 页面。",en:"Connect Kindle to the same LAN and open the shown <code>/kindle</code> page."},
+      how4:{zh:"输入取书码并下载，送达后文件会立刻删除。",en:"Enter the pickup code and download. The file is deleted immediately after delivery."},
+      ruleTitle:{zh:"规则",en:"Rules"},
+      rule1:{zh:"默认只保留 10 分钟。",en:"Files are kept for 10 minutes by default."},
+      rule2:{zh:"下载成功后会马上删掉临时文件。",en:"Temporary files are deleted right after a successful download."},
+      rule3:{zh:"如果 10 分钟内没人取，系统会自动清掉。",en:"If nobody picks up the file within 10 minutes, it is removed automatically."},
+      rule4:{zh:"网站 88220066.xyz 不保存任何书。",en:"88220066.xyz does not store any of your books."},
+      formatTitle:{zh:"支持格式",en:"Supported Formats"}
     };
     window.SiteI18n.bindPage(messages, () => {});
   </script>
