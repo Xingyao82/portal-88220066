@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>技能 | 88220066.xyz</title>
-  <meta name="description" content="可直接下载和使用的技能页面。当前提供 Kindle 局域网临时传书。">
+  <meta name="description" content="可直接在网站里使用的技能页面。当前提供 Kindle 临时传书。">
   <script src="/notes/site-i18n.js"></script>
   <style>
     :root{--bg:#f8fafc;--panel:#ffffff;--line:rgba(15,23,42,.08);--text:#0f172a;--muted:#64748b;--accent:#c48f5a;--radius-xl:22px;--radius-lg:16px;--radius-md:12px;--max:1180px}
@@ -66,7 +66,7 @@
       <div class="toolbar-head">
         <div>
           <h1 data-i18n="heroTitle">技能</h1>
-          <p data-i18n="heroCopy">这里放可以直接下载和使用的小工具。当前先做 Kindle 局域网临时传书。</p>
+          <p data-i18n="heroCopy">这里放可以直接在网站里使用的技能。当前先做 Kindle 临时传书。</p>
         </div>
         <div class="count" data-i18n="countText">1 个技能</div>
       </div>
@@ -84,19 +84,19 @@
             <span class="logo">K</span>
             <div>
               <h3 data-i18n="skillTitle">局域网传书到 Kindle</h3>
-              <div class="meta" data-i18n="skillMeta">本地网页 / 6 位取书码 / 10 分钟自动删</div>
+              <div class="meta" data-i18n="skillMeta">网页版 / 6 位取书码 / 10 分钟自动删</div>
             </div>
-            <span class="badge" data-i18n="skillBadge">Windows</span>
+            <span class="badge" data-i18n="skillBadge">网页版</span>
           </div>
-          <p data-i18n="skillSummary">在电脑上打开一个本地网页上传书，Kindle 连到同一局域网后输入取书码下载。下载成功后立刻删除，10 分钟内没人取也会自动删掉，网站不保留任何书。</p>
+          <p data-i18n="skillSummary">直接在网站上传一本书，生成取书码，10 分钟内在 Kindle 上下载。下载成功后立刻删除，超时也会自动删掉。</p>
           <div class="tag-row">
             <span class="chip">Kindle</span>
-            <span class="chip" data-i18n="chipLan">局域网</span>
+            <span class="chip" data-i18n="chipWeb">网页版</span>
             <span class="chip" data-i18n="chipDelete">自动删除</span>
-            <span class="chip" data-i18n="chipNoStore">不存书</span>
+            <span class="chip" data-i18n="chipTtl">10 分钟</span>
           </div>
           <div class="btn-row">
-            <a class="btn" href="https://raw.githubusercontent.com/Xingyao82/portal-88220066/main/downloads/KindleShare-Windows.zip" data-i18n="btnDownload">下载 Windows 版</a>
+            <a class="btn" href="/kindle-share/" data-i18n="btnOpenWeb">打开网页版</a>
             <a class="ghost" href="#kindle-share" data-i18n="btnView">查看说明</a>
           </div>
         </article>
@@ -112,19 +112,19 @@
       </div>
       <div class="subgrid">
         <div class="panel">
-          <h3 data-i18n="downloadTitle">直接下载</h3>
+          <h3 data-i18n="downloadTitle">直接使用</h3>
           <div class="download-box">
-            <a class="btn" href="https://raw.githubusercontent.com/Xingyao82/portal-88220066/main/downloads/KindleShare-Windows.zip" data-i18n="btnDownloadLarge">下载 KindleShare Windows 版</a>
-            <div class="note" data-i18n="downloadNote">下载后解压，双击 <code>KindleShare.exe</code> 就能开始用。</div>
+            <a class="btn" href="/kindle-share/" data-i18n="btnOpenWebLarge">打开 Kindle 传书网页版</a>
+            <div class="note" data-i18n="downloadNote">直接在网站上传书，生成取书码后在 Kindle 下载。</div>
           </div>
         </div>
         <div class="panel">
           <h3 data-i18n="howTitle">怎么用</h3>
           <ol class="list">
-            <li data-i18n="how1">电脑上双击 <code>KindleShare.exe</code>。</li>
-            <li data-i18n="how2">在电脑页面上传一本书，页面会给你一个 6 位取书码。</li>
-            <li data-i18n="how3">Kindle 连到同一局域网，打开工具显示的 <code>/kindle</code> 页面。</li>
-            <li data-i18n="how4">输入取书码并下载，送达后文件会立刻删除。</li>
+            <li data-i18n="how1">在电脑上打开网页版并上传一本书。</li>
+            <li data-i18n="how2">页面会给你一个 6 位取书码。</li>
+            <li data-i18n="how3">在 Kindle 上打开同一个网页，输入取书码。</li>
+            <li data-i18n="how4">下载成功后，文件会立刻删除。</li>
           </ol>
         </div>
         <div class="panel">
@@ -133,7 +133,7 @@
             <li data-i18n="rule1">默认只保留 10 分钟。</li>
             <li data-i18n="rule2">下载成功后会马上删掉临时文件。</li>
             <li data-i18n="rule3">如果 10 分钟内没人取，系统会自动清掉。</li>
-            <li data-i18n="rule4">网站 88220066.xyz 不保存任何书。</li>
+            <li data-i18n="rule4">这个网页版本只做临时中转，不做长期保存。</li>
           </ul>
         </div>
         <div class="panel">
@@ -156,37 +156,37 @@
   <script>
     const messages = {
       pageTitle:{zh:"技能 | 88220066.xyz",en:"Skills | 88220066.xyz"},
-      pageDescription:{zh:"可直接下载和使用的技能页面。当前提供 Kindle 局域网临时传书。",en:"A place for directly downloadable and usable skills. Current entry: Kindle LAN transfer."},
+      pageDescription:{zh:"可直接在网站里使用的技能页面。当前提供 Kindle 临时传书。",en:"A place for directly usable web skills. Current entry: Kindle temporary transfer."},
       navHome:{zh:"首页",en:"Home"},
       navSkills:{zh:"技能",en:"Skills"},
       heroTitle:{zh:"技能",en:"Skills"},
-      heroCopy:{zh:"这里放可以直接下载和使用的小工具。当前先做 Kindle 局域网临时传书。",en:"This page hosts small tools you can download and use directly. Current entry: Kindle LAN transfer."},
+      heroCopy:{zh:"这里放可以直接在网站里使用的技能。当前先做 Kindle 临时传书。",en:"This page hosts skills you can use directly on the website. Current entry: Kindle temporary transfer."},
       countText:{zh:"1 个技能",en:"1 skill"},
       listTitle:{zh:"技能列表",en:"Skill List"},
       skillTitle:{zh:"局域网传书到 Kindle",en:"LAN Transfer to Kindle"},
-      skillMeta:{zh:"本地网页 / 6 位取书码 / 10 分钟自动删",en:"Local web app / 6-char code / auto delete in 10 minutes"},
-      skillBadge:{zh:"Windows",en:"Windows"},
-      skillSummary:{zh:"在电脑上打开一个本地网页上传书，Kindle 连到同一局域网后输入取书码下载。下载成功后立刻删除，10 分钟内没人取也会自动删掉，网站不保留任何书。",en:"Open a local web page on your computer, upload one book, then let Kindle download it on the same LAN with a pickup code. Files are deleted right after pickup, or after 10 minutes if unused. The website does not store your books."},
-      chipLan:{zh:"局域网",en:"LAN"},
+      skillMeta:{zh:"网页版 / 6 位取书码 / 10 分钟自动删",en:"Web version / 6-char code / auto delete in 10 minutes"},
+      skillBadge:{zh:"网页版",en:"Web"},
+      skillSummary:{zh:"直接在网站上传一本书，生成取书码，10 分钟内在 Kindle 上下载。下载成功后立刻删除，超时也会自动删掉。",en:"Upload a book directly on the site, get a pickup code, and download it on Kindle within 10 minutes. Files are deleted right after pickup or on timeout."},
+      chipWeb:{zh:"网页版",en:"Web"},
       chipDelete:{zh:"自动删除",en:"Auto Delete"},
-      chipNoStore:{zh:"不存书",en:"No Storage"},
-      btnDownload:{zh:"下载 Windows 版",en:"Download Windows Version"},
+      chipTtl:{zh:"10 分钟",en:"10 Minutes"},
+      btnOpenWeb:{zh:"打开网页版",en:"Open Web Version"},
       btnView:{zh:"查看说明",en:"View Details"},
-      detailTitle:{zh:"局域网传书到 Kindle",en:"LAN Transfer to Kindle"},
-      detailCopy:{zh:"这个工具实际跑在你的电脑上，不经过 88220066.xyz 存书。网站这里只放下载入口和说明。",en:"This tool runs on your own computer. Your books do not pass through 88220066.xyz. The site only provides the download and usage guide."},
-      downloadTitle:{zh:"直接下载",en:"Direct Download"},
-      btnDownloadLarge:{zh:"下载 KindleShare Windows 版",en:"Download KindleShare for Windows"},
-      downloadNote:{zh:"下载后解压，双击 <code>KindleShare.exe</code> 就能开始用。",en:"Unzip the package and double-click <code>KindleShare.exe</code> to start."},
+      detailTitle:{zh:"Kindle 临时传书",en:"Kindle Temporary Transfer"},
+      detailCopy:{zh:"这个版本可以直接在网站里用。它会把书临时中转 10 分钟，然后自动删除。",en:"This version works directly on the website. Files are relayed for 10 minutes, then deleted automatically."},
+      downloadTitle:{zh:"直接使用",en:"Direct Use"},
+      btnOpenWebLarge:{zh:"打开 Kindle 传书网页版",en:"Open Kindle Web Transfer"},
+      downloadNote:{zh:"直接在网站上传书，生成取书码后在 Kindle 下载。",en:"Upload on the site, get a pickup code, then download on Kindle."},
       howTitle:{zh:"怎么用",en:"How to Use"},
-      how1:{zh:"电脑上双击 <code>KindleShare.exe</code>。",en:"Double-click <code>KindleShare.exe</code> on your computer."},
-      how2:{zh:"在电脑页面上传一本书，页面会给你一个 6 位取书码。",en:"Upload one book from the desktop page. The app will show a 6-character pickup code."},
-      how3:{zh:"Kindle 连到同一局域网，打开工具显示的 <code>/kindle</code> 页面。",en:"Connect Kindle to the same LAN and open the shown <code>/kindle</code> page."},
-      how4:{zh:"输入取书码并下载，送达后文件会立刻删除。",en:"Enter the pickup code and download. The file is deleted immediately after delivery."},
+      how1:{zh:"在电脑上打开网页版并上传一本书。",en:"Open the web version on your computer and upload a book."},
+      how2:{zh:"页面会给你一个 6 位取书码。",en:"The page will give you a 6-character pickup code."},
+      how3:{zh:"在 Kindle 上打开同一个网页，输入取书码。",en:"Open the same page on Kindle and enter the pickup code."},
+      how4:{zh:"下载成功后，文件会立刻删除。",en:"After a successful download, the file is deleted immediately."},
       ruleTitle:{zh:"规则",en:"Rules"},
       rule1:{zh:"默认只保留 10 分钟。",en:"Files are kept for 10 minutes by default."},
       rule2:{zh:"下载成功后会马上删掉临时文件。",en:"Temporary files are deleted right after a successful download."},
       rule3:{zh:"如果 10 分钟内没人取，系统会自动清掉。",en:"If nobody picks up the file within 10 minutes, it is removed automatically."},
-      rule4:{zh:"网站 88220066.xyz 不保存任何书。",en:"88220066.xyz does not store any of your books."},
+      rule4:{zh:"这个网页版本只做临时中转，不做长期保存。",en:"This web version is only a temporary relay, not long-term storage."},
       formatTitle:{zh:"支持格式",en:"Supported Formats"}
     };
     window.SiteI18n.bindPage(messages, () => {});
