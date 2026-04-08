@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kindle 临时传书 | 88220066.xyz</title>
-  <meta name="description" content="上传一本书，生成取书码，10 分钟内在 Kindle 上下载，之后自动删除。">
+  <meta name="description" content="上传一本书，生成 4 位取书码，10 分钟内在 Kindle 上下载，之后自动删除。">
   <script src="/notes/site-i18n.js"></script>
   <style>
     :root{--bg:#f8fafc;--panel:#ffffff;--line:rgba(15,23,42,.08);--text:#0f172a;--muted:#64748b;--accent:#c48f5a;--accent-soft:#fbf5ef;--radius-xl:22px;--radius-lg:16px;--max:1180px}
@@ -64,7 +64,7 @@
       <div class="hero-row">
         <div>
           <h1 data-i18n="heroTitle">Kindle 临时传书</h1>
-          <p data-i18n="heroCopy">上传一本书，生成 6 位取书码，10 分钟内在 Kindle 上下载。取书成功后立刻删除，超时也会自动删除。</p>
+          <p data-i18n="heroCopy">上传一本书，生成 4 位数字取书码，10 分钟内在 Kindle 上下载。取书成功后立刻删除，超时也会自动删除。</p>
         </div>
         <div class="pill" data-i18n="ttlPill">自动删除：10 分钟</div>
       </div>
@@ -95,9 +95,9 @@
 
         <section class="section">
           <h2 data-i18n="pickupTitle">2. 在 Kindle 取书</h2>
-          <p data-i18n="pickupCopy">Kindle 打开这个页面，输入 6 位取书码，就能看到下载按钮。</p>
+          <p data-i18n="pickupCopy">Kindle 打开这个页面，输入 4 位数字取书码，就能看到下载按钮。</p>
           <div class="pickup-box">
-            <input id="pickup-input" type="text" maxlength="6" inputmode="latin" placeholder="输入 6 位取书码">
+            <input id="pickup-input" type="text" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="输入 4 位数字取书码">
             <div class="btn-row">
               <button class="btn" id="pickup-btn" type="button" data-i18n="pickupBtn">查看这本书</button>
             </div>
@@ -152,13 +152,13 @@
   <script>
     const messages = {
       pageTitle:{zh:"Kindle 临时传书 | 88220066.xyz",en:"Kindle Temporary Transfer | 88220066.xyz"},
-      pageDescription:{zh:"上传一本书，生成取书码，10 分钟内在 Kindle 上下载，之后自动删除。",en:"Upload one book, get a pickup code, download on Kindle within 10 minutes, then auto delete."},
+      pageDescription:{zh:"上传一本书，生成 4 位数字取书码，10 分钟内在 Kindle 上下载，之后自动删除。",en:"Upload one book, get a 4-digit pickup code, download on Kindle within 10 minutes, then auto delete."},
       navTitle:{zh:"Kindle 临时传书",en:"Kindle Transfer"},
       navHome:{zh:"首页",en:"Home"},
       navSkills:{zh:"技能",en:"Skills"},
       navTool:{zh:"Kindle 传书",en:"Kindle Transfer"},
       heroTitle:{zh:"Kindle 临时传书",en:"Kindle Temporary Transfer"},
-      heroCopy:{zh:"上传一本书，生成 6 位取书码，10 分钟内在 Kindle 上下载。取书成功后立刻删除，超时也会自动删除。",en:"Upload one book, get a 6-character pickup code, and download it on Kindle within 10 minutes. The file is deleted after pickup or on timeout."},
+      heroCopy:{zh:"上传一本书，生成 4 位数字取书码，10 分钟内在 Kindle 上下载。取书成功后立刻删除，超时也会自动删除。",en:"Upload one book, get a 4-digit numeric pickup code, and download it on Kindle within 10 minutes. The file is deleted after pickup or on timeout."},
       ttlPill:{zh:"自动删除：10 分钟",en:"Auto Delete: 10 Minutes"},
       heroWarn:{zh:"这个版本是网站临时中转，不是长期书库。书会短暂经过网站接口，只保留 10 分钟。",en:"This version uses the website as a temporary relay, not a library. Your file passes through the site briefly and is kept for only 10 minutes."},
       uploadTitle:{zh:"1. 在电脑上传书",en:"1. Upload on Computer"},
@@ -168,7 +168,7 @@
       metaExpiry:{zh:"失效时间",en:"Expires At"},
       metaLink:{zh:"Kindle 打开页",en:"Kindle Page"},
       pickupTitle:{zh:"2. 在 Kindle 取书",en:"2. Pick Up on Kindle"},
-      pickupCopy:{zh:"Kindle 打开这个页面，输入 6 位取书码，就能看到下载按钮。",en:"Open this page on Kindle, enter the 6-character code, and you will get the download button."},
+      pickupCopy:{zh:"Kindle 打开这个页面，输入 4 位数字取书码，就能看到下载按钮。",en:"Open this page on Kindle, enter the 4-digit pickup code, and you will get the download button."},
       pickupBtn:{zh:"查看这本书",en:"Find This Book"},
       pickupFile:{zh:"文件名",en:"File Name"},
       pickupSize:{zh:"大小",en:"Size"},
@@ -238,11 +238,12 @@
     }
 
     async function lookupBook() {
-      const code = (pickupInput.value || "").trim().toUpperCase();
+      const code = (pickupInput.value || "").trim().replace(/\\D+/g, "").slice(0, 4);
       if (!code) {
         setStatus(pickupStatus, window.SiteI18n.getLang() === "en" ? "Enter the pickup code." : "请输入取书码。", "error");
         return;
       }
+      pickupInput.value = code;
       pickupBtn.disabled = true;
       pickupResult.classList.add("hidden");
       setStatus(pickupStatus, window.SiteI18n.getLang() === "en" ? "Checking..." : "正在查询...");
@@ -265,6 +266,7 @@
 
     uploadBtn.addEventListener("click", uploadBook);
     pickupBtn.addEventListener("click", lookupBook);
+    pickupInput.addEventListener("input", () => { pickupInput.value = pickupInput.value.replace(/\\D+/g, "").slice(0, 4); });
     pickupInput.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); lookupBook(); } });
     window.SiteI18n.bindPage(messages, () => {});
   </script>
