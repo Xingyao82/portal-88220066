@@ -26,7 +26,6 @@
     .section{margin-top:16px;padding:18px}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}
     .section-head h2{margin:0;font-size:1.24rem;letter-spacing:-.04em}
-    .section-head p{margin:6px 0 0;color:var(--muted);line-height:1.65}
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
     .card{display:grid;gap:12px;padding:16px;border-radius:var(--radius-lg);border:1px solid var(--line);background:#fff;transition:160ms ease}
     .card:hover{box-shadow:0 10px 24px rgba(15,23,42,.05);transform:translateY(-1px)}
@@ -83,7 +82,7 @@
           <div class="top">
             <span class="logo">K</span>
             <div>
-              <h3 data-i18n="skillTitle">局域网传书到 Kindle</h3>
+              <h3 data-i18n="skillTitle">Kindle 临时传书</h3>
               <div class="meta" data-i18n="skillMeta">网页版 / 6 位取书码 / 10 分钟自动删</div>
             </div>
             <span class="badge" data-i18n="skillBadge">网页版</span>
@@ -96,7 +95,7 @@
             <span class="chip" data-i18n="chipTtl">10 分钟</span>
           </div>
           <div class="btn-row">
-            <a class="btn" href="/kindle-share/" data-i18n="btnOpenWeb">打开网页版</a>
+            <a class="btn" href="/kindle" data-i18n="btnOpenWeb">打开网页版</a>
             <a class="ghost" href="#kindle-share" data-i18n="btnView">查看说明</a>
           </div>
         </article>
@@ -106,15 +105,15 @@
     <section class="section detail" id="kindle-share">
       <div class="section-head">
         <div>
-          <h2 data-i18n="detailTitle">局域网传书到 Kindle</h2>
-          <p data-i18n="detailCopy">这个工具实际跑在你的电脑上，不经过 88220066.xyz 存书。网站这里只放下载入口和说明。</p>
+          <h2 data-i18n="detailTitle">Kindle 临时传书</h2>
+          <p data-i18n="detailCopy">这个版本可以直接在网站里用。它会把书临时中转 10 分钟，然后自动删除。</p>
         </div>
       </div>
       <div class="subgrid">
         <div class="panel">
           <h3 data-i18n="downloadTitle">直接使用</h3>
           <div class="download-box">
-            <a class="btn" href="/kindle-share/" data-i18n="btnOpenWebLarge">打开 Kindle 传书网页版</a>
+            <a class="btn" href="/kindle" data-i18n="btnOpenWebLarge">打开 Kindle 传书网页版</a>
             <div class="note" data-i18n="downloadNote">直接在网站上传书，生成取书码后在 Kindle 下载。</div>
           </div>
         </div>
@@ -163,7 +162,7 @@
       heroCopy:{zh:"这里放可以直接在网站里使用的技能。当前先做 Kindle 临时传书。",en:"This page hosts skills you can use directly on the website. Current entry: Kindle temporary transfer."},
       countText:{zh:"1 个技能",en:"1 skill"},
       listTitle:{zh:"技能列表",en:"Skill List"},
-      skillTitle:{zh:"局域网传书到 Kindle",en:"LAN Transfer to Kindle"},
+      skillTitle:{zh:"Kindle 临时传书",en:"Kindle Temporary Transfer"},
       skillMeta:{zh:"网页版 / 6 位取书码 / 10 分钟自动删",en:"Web version / 6-char code / auto delete in 10 minutes"},
       skillBadge:{zh:"网页版",en:"Web"},
       skillSummary:{zh:"直接在网站上传一本书，生成取书码，10 分钟内在 Kindle 上下载。下载成功后立刻删除，超时也会自动删掉。",en:"Upload a book directly on the site, get a pickup code, and download it on Kindle within 10 minutes. Files are deleted right after pickup or on timeout."},
