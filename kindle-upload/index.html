@@ -31,6 +31,7 @@
     .tips{margin:0;padding-left:18px;color:var(--muted);line-height:1.8}
     .tags{display:flex;flex-wrap:wrap;gap:8px}
     .chip{display:inline-flex;padding:7px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted);background:#fff}
+    .note{color:#7a6a59;line-height:1.8}
   </style>
 </head>
 <body>
@@ -48,7 +49,7 @@
       <div class="hero-row">
         <div>
           <h1>电脑上传一本书</h1>
-          <p>上传后会生成 4 位数字取书码。然后在 Kindle 上打开取书页，输入这个数字码下载。</p>
+          <p>上传后会生成 4 位数字取书码。然后在 Kindle 上打开取书页，输入这个数字码下载。现在只支持 azw、prc、mobi、txt。</p>
         </div>
         <div class="pill">单本上限 24MB</div>
       </div>
@@ -57,8 +58,8 @@
     <section class="panel">
       <h2>上传</h2>
       <form class="upload-form" action="/api/kindle-share/upload-page" method="post" enctype="multipart/form-data">
-        <input class="file-input" type="file" name="book" accept=".azw,.azw3,.epub,.kfx,.mobi,.pdf,.prc,.txt" required>
-        <div style="color:#7a6a59;line-height:1.8">文件名请只用英文字母和数字，不要带中文、空格和标点符号。</div>
+        <input class="file-input" type="file" name="book" accept=".azw,.prc,.mobi,.txt" required>
+        <div class="note">文件名请只用英文字母和数字，不要带中文、空格和标点符号。</div>
         <div class="btn-row">
           <button class="btn" type="submit">上传并生成取书码</button>
           <a class="ghost" href="/kindle/">打开 Kindle 取书页</a>
@@ -70,12 +71,8 @@
       <h2>支持格式</h2>
       <div class="tags">
         <span class="chip">.azw</span>
-        <span class="chip">.azw3</span>
-        <span class="chip">.epub</span>
-        <span class="chip">.kfx</span>
-        <span class="chip">.mobi</span>
-        <span class="chip">.pdf</span>
         <span class="chip">.prc</span>
+        <span class="chip">.mobi</span>
         <span class="chip">.txt</span>
       </div>
     </section>
@@ -85,6 +82,7 @@
       <ul class="tips">
         <li>每次只传一本书。</li>
         <li>文件名请只用英文字母和数字，扩展名正常保留就行。</li>
+        <li>目前只支持 azw、prc、mobi、txt。</li>
         <li>书会在网站里临时保存 10 分钟。</li>
         <li>下载成功后马上删掉。</li>
         <li>10 分钟内没人取，也会自动删除。</li>
