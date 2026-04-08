@@ -58,6 +58,7 @@
       <h2>上传</h2>
       <form class="upload-form" action="/api/kindle-share/upload-page" method="post" enctype="multipart/form-data">
         <input class="file-input" type="file" name="book" accept=".azw,.azw3,.epub,.kfx,.mobi,.pdf,.prc,.txt" required>
+        <div style="color:#7a6a59;line-height:1.8">文件名请只用英文字母和数字，不要带中文、空格和标点符号。</div>
         <div class="btn-row">
           <button class="btn" type="submit">上传并生成取书码</button>
           <a class="ghost" href="/kindle/">打开 Kindle 取书页</a>
@@ -83,6 +84,7 @@
       <h2>规则</h2>
       <ul class="tips">
         <li>每次只传一本书。</li>
+        <li>文件名请只用英文字母和数字，扩展名正常保留就行。</li>
         <li>书会在网站里临时保存 10 分钟。</li>
         <li>下载成功后马上删掉。</li>
         <li>10 分钟内没人取，也会自动删除。</li>
