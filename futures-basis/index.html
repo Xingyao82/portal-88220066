@@ -820,7 +820,8 @@
           throw new Error(payload.error || messages.loadFailed[lang()]);
         }
         state.snapshot = payload;
-        state.selectedKey = (payload.items || []).flatMap((item) => item.contracts || [item])[0]?.key || payload.items?.[0]?.key || "";
+        const firstProduct = payload.items?.[0];
+        state.selectedKey = firstProduct?.contracts?.find((item) => item.isMainContract)?.key || firstProduct?.contracts?.[0]?.key || firstProduct?.key || "";
         renderSummary();
         renderProductOptions();
         renderMarket();
