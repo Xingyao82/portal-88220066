@@ -857,8 +857,8 @@
         [messages.calcDays[lang()], Number.isFinite(result.daysLeft) ? String(result.daysLeft) : "--"],
         [messages.calcAnnual[lang()], Number.isFinite(result.annualized) ? formatPct(result.annualized, 3) : "--"],
         [messages.calcMarginAnnual[lang()], Number.isFinite(result.marginAnnualized) ? formatPct(result.marginAnnualized, 3) : "--"],
-        [messages.calcWipeout[lang()], Number.isFinite(result.wipeoutDropPct) ? formatPct(-result.wipeoutDropPct, 2) : "--"],
-        [messages.calcMarginCall[lang()], Number.isFinite(result.marginCallDropPct) ? formatPct(-result.marginCallDropPct, 2) : "--"]
+        [messages.calcWipeout[lang()], Number.isFinite(result.wipeoutDropPct) ? `${formatNumber(result.wipeoutDropPct, 2)}%` : "--"],
+        [messages.calcMarginCall[lang()], Number.isFinite(result.marginCallDropPct) ? `${formatNumber(result.marginCallDropPct, 2)}%` : "--"]
       ];
       resultGrid.innerHTML = cards.map(([label, value]) => `<div class="result-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
       riskGrid.innerHTML = result.stress.map((item) => `
