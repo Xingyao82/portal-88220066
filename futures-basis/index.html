@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>股指期货升贴水 | 88220066.xyz</title>
+  <meta name="description" content="用公开网页数据做 15 分钟延迟展示，查看股指期货主力合约的升贴水、剩余天数和年化基差。">
+  <script src="/notes/site-i18n.js"></script>
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --panel: #ffffff;
+      --panel-soft: #fbf7f1;
+      --line: rgba(165, 130, 96, 0.18);
+      --line-strong: rgba(165, 130, 96, 0.28);
+      --text: #1f1a15;
+      --muted: #756657;
+      --accent: #be8c5a;
+      --accent-soft: #f6e7d6;
+      --danger: #b42318;
+      --shadow: 0 16px 42px rgba(62, 47, 31, 0.08);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1260px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(212, 176, 140, 0.18), transparent 0 24%),
+        radial-gradient(circle at 88% 12%, rgba(232, 200, 170, 0.2), transparent 0 18%),
+        linear-gradient(180deg, #fbf8f3 0%, #f6f3ee 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: 28px 0 48px; }
+    .hero,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(190, 140, 90, 0.3);
+    }
+
+    h1 {
+      margin: 10px 0 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy {
+      margin: 12px 0 0;
+      max-width: 58rem;
+      color: var(--muted);
+      line-height: 1.82;
+      font-size: 1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill,
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .pill.primary {
+      background: var(--accent-soft);
+      border-color: rgba(190, 140, 90, 0.26);
+      color: #8b6138;
+    }
+
+    .link-btn {
+      background: #fffaf4;
+      border-color: rgba(190, 140, 90, 0.2);
+      color: #8b6138;
+    }
+
+    .summary-grid,
+    .card-grid,
+    .result-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .summary-card,
+    .result-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .summary-card span,
+    .result-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong,
+    .result-card strong {
+      display: block;
+      font-size: 1.18rem;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 24px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+    }
+
+    .panel-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quote-card {
+      position: relative;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #fdfaf6);
+      display: grid;
+      gap: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.96);
+    }
+
+    .quote-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      background: var(--card-accent, var(--accent));
+    }
+
+    .quote-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .icon-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--card-soft, var(--accent-soft));
+      color: #8b6138;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .quote-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quote-name {
+      margin: 8px 0 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .quote-body {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .quote-stat {
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: var(--panel-soft);
+      border: 1px solid rgba(165, 130, 96, 0.12);
+    }
+
+    .quote-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-bottom: 6px;
+    }
+
+    .quote-stat strong {
+      display: block;
+      font-size: 1.08rem;
+      letter-spacing: -0.03em;
+    }
+
+    .quote-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(190, 140, 90, 0.2);
+      background: var(--accent-soft);
+      color: #8b6138;
+      cursor: pointer;
+    }
+
+    .calc-shell {
+      display: grid;
+      grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .field,
+    .select {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .field-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.66;
+    }
+
+    .result-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: start;
+    }
+
+    .formula {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: #fffaf4;
+      border: 1px solid rgba(190, 140, 90, 0.18);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .note-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .error,
+    .loading {
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .error {
+      border-color: rgba(180, 35, 24, 0.16);
+      color: var(--danger);
+      background: #fff6f4;
+    }
+
+    @media (max-width: 1100px) {
+      .summary-grid,
+      .card-grid,
+      .result-grid,
+      .calc-shell {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .calc-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .hero,
+      .panel { padding: 18px; }
+      .summary-grid,
+      .card-grid,
+      .quote-body,
+      .result-grid { grid-template-columns: 1fr; }
+      .hero-top,
+      .panel-head,
+      .quote-foot { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow" data-i18n="eyebrow">INDEX FUTURES BASIS</div>
+          <h1 data-i18n="heroTitle">股指期货升贴水</h1>
+          <p class="hero-copy" data-i18n="heroCopy">用公开网页数据做 15 分钟延迟展示，直接看主力合约的升贴水、剩余天数和年化基差。下面的试算区可以继续手动改数字。</p>
+        </div>
+        <div class="hero-actions">
+          <span class="pill primary" id="delay-pill" data-i18n="delayValue">15 分钟延迟</span>
+          <a class="link-btn" href="/finance-nav/" data-i18n="backFinance">返回金融导航</a>
+        </div>
+      </div>
+      <div class="summary-grid" id="summary-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 data-i18n="marketTitle">主力合约看板</h2>
+          <p data-i18n="marketCopy">默认展示 IF、IH、IC、IM 四个股指期货主力合约和对应指数现货。</p>
+        </div>
+      </div>
+      <div id="market-status" class="loading" data-i18n="loading">正在读取公开数据…</div>
+      <div id="market-grid" class="card-grid" hidden></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 data-i18n="calcTitle">手动试算</h2>
+          <p data-i18n="calcCopy">如果你想自己改价格或换到别的日期，直接在这里输入即可。</p>
+        </div>
+      </div>
+      <div class="calc-shell">
+        <div class="form-grid">
+          <label>
+            <span class="field-label" data-i18n="productLabel">合约组</span>
+            <select id="product-select" class="select"></select>
+          </label>
+          <label>
+            <span class="field-label" data-i18n="spotLabel">现货指数</span>
+            <input id="spot-input" class="field" type="number" step="0.01" inputmode="decimal">
+          </label>
+          <label>
+            <span class="field-label" data-i18n="futuresLabel">期货价格</span>
+            <input id="futures-input" class="field" type="number" step="0.01" inputmode="decimal">
+          </label>
+          <label>
+            <span class="field-label" data-i18n="expiryLabel">到期日</span>
+            <input id="expiry-input" class="field" type="date">
+          </label>
+          <div class="field-note" data-i18n="formulaNote">年化基差按 (期货 - 现货) / 现货 × 365 / 剩余天数 估算，不含手续费、分红、保证金占用和跟踪误差。</div>
+        </div>
+        <div>
+          <div class="result-grid" id="result-grid"></div>
+          <div class="formula">
+            <div id="result-direction" style="font-weight:700; color:#8b6138;">--</div>
+            <div id="result-description" class="tiny" data-i18n="directionPlaceholder">选择一组合约后，这里会说明当前是升水还是贴水。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 data-i18n="notesTitle">说明</h2>
+        </div>
+      </div>
+      <ul class="note-list">
+        <li data-i18n="note1">页面使用公开网页行情，并由本站缓存成 15 分钟延迟版本。</li>
+        <li data-i18n="note2">这里更适合做对比和观察，不适合当成交指令依据。</li>
+        <li data-i18n="note3">到期日按股指期货合约月份估算，正常情况下对应当月第三个周五。</li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    const messages = {
+      pageTitle: { zh: "股指期货升贴水 | 88220066.xyz", en: "Index Futures Basis | 88220066.xyz" },
+      pageDescription: {
+        zh: "用公开网页数据做 15 分钟延迟展示，查看股指期货主力合约的升贴水、剩余天数和年化基差。",
+        en: "A 15-minute delayed view of public quote pages for index futures basis, days to expiry, and annualized spread."
+      },
+      eyebrow: { zh: "INDEX FUTURES BASIS", en: "INDEX FUTURES BASIS" },
+      heroTitle: { zh: "股指期货升贴水", en: "Index Futures Basis" },
+      heroCopy: {
+        zh: "用公开网页数据做 15 分钟延迟展示，直接看主力合约的升贴水、剩余天数和年化基差。下面的试算区可以继续手动改数字。",
+        en: "This page turns public quote pages into a 15-minute delayed view of basis, days to expiry, and annualized spread. You can still adjust the numbers manually below."
+      },
+      backFinance: { zh: "返回金融导航", en: "Back to Finance" },
+      marketTitle: { zh: "主力合约看板", en: "Main Contract Board" },
+      marketCopy: { zh: "默认展示 IF、IH、IC、IM 四个股指期货主力合约和对应指数现货。", en: "The default board covers IF, IH, IC, and IM together with their matching spot indexes." },
+      calcTitle: { zh: "手动试算", en: "Manual Calculator" },
+      calcCopy: { zh: "如果你想自己改价格或换到别的日期，直接在这里输入即可。", en: "If you want to adjust prices or try another expiry date, edit the inputs here." },
+      productLabel: { zh: "合约组", en: "Product" },
+      spotLabel: { zh: "现货指数", en: "Spot Index" },
+      futuresLabel: { zh: "期货价格", en: "Futures Price" },
+      expiryLabel: { zh: "到期日", en: "Expiry Date" },
+      formulaNote: {
+        zh: "年化基差按 (期货 - 现货) / 现货 × 365 / 剩余天数 估算，不含手续费、分红、保证金占用和跟踪误差。",
+        en: "Annualized basis is estimated as (futures - spot) / spot × 365 / days to expiry, without fees, dividends, margin carry, or tracking error."
+      },
+      notesTitle: { zh: "说明", en: "Notes" },
+      note1: { zh: "页面使用公开网页行情，并由本站缓存成 15 分钟延迟版本。", en: "This page uses public quote pages and serves them through a 15-minute delayed cache." },
+      note2: { zh: "这里更适合做对比和观察，不适合当成交指令依据。", en: "It is built for comparison and observation, not as a trading instruction screen." },
+      note3: { zh: "到期日按股指期货合约月份估算，正常情况下对应当月第三个周五。", en: "Expiry dates are estimated from the contract month and usually map to the third Friday of that month." },
+      loading: { zh: "正在读取公开数据…", en: "Loading public quote data…" },
+      loadFailed: { zh: "这会儿没拉到数据。你仍然可以在下面手动输入价格试算。", en: "The public snapshot is unavailable right now. You can still use the manual calculator below." },
+      lastUpdate: { zh: "最近刷新", en: "Last Refresh" },
+      delayLabel: { zh: "展示方式", en: "Display Mode" },
+      sourceLabel: { zh: "数据来源", en: "Source" },
+      countLabel: { zh: "当前覆盖", en: "Coverage" },
+      delayValue: { zh: "15 分钟延迟", en: "15-minute delay" },
+      sourceValue: { zh: "公开网页行情", en: "Public quote pages" },
+      countValue: { zh: "4 组合约", en: "4 products" },
+      calcBasis: { zh: "升贴水", en: "Basis" },
+      calcBasisRate: { zh: "基差率", en: "Basis Rate" },
+      calcDays: { zh: "剩余天数", en: "Days Left" },
+      calcAnnual: { zh: "年化基差", en: "Annualized Basis" },
+      directionPlaceholder: { zh: "选择一组合约后，这里会说明当前是升水还是贴水。", en: "Once a product is selected, this area explains whether the contract is trading at a premium or discount." },
+      marketSpot: { zh: "现货", en: "Spot" },
+      marketFutures: { zh: "期货", en: "Futures" },
+      marketBasis: { zh: "升贴水", en: "Basis" },
+      marketAnnual: { zh: "年化", en: "Annualized" },
+      marketExpiry: { zh: "到期日", en: "Expiry" },
+      marketUse: { zh: "带入试算", en: "Use in Calculator" },
+      marketSidePremium: { zh: "升水", en: "Premium" },
+      marketSideDiscount: { zh: "贴水", en: "Discount" },
+      marketSideFlat: { zh: "平水", en: "Flat" },
+      marketContract: { zh: "主力对应", en: "Main Contract" },
+      statusStale: { zh: "当前显示的是上一次成功快照。", en: "The page is showing the last successful cached snapshot." },
+      sourceLink: { zh: "产品说明", en: "Product Page" }
+    };
+
+    const state = {
+      snapshot: null,
+      selectedKey: "",
+      loading: true,
+      error: ""
+    };
+
+    const summaryGrid = document.getElementById("summary-grid");
+    const marketStatus = document.getElementById("market-status");
+    const marketGrid = document.getElementById("market-grid");
+    const productSelect = document.getElementById("product-select");
+    const spotInput = document.getElementById("spot-input");
+    const futuresInput = document.getElementById("futures-input");
+    const expiryInput = document.getElementById("expiry-input");
+    const resultGrid = document.getElementById("result-grid");
+    const resultDirection = document.getElementById("result-direction");
+    const resultDescription = document.getElementById("result-description");
+
+    function lang() {
+      return window.SiteI18n.getLang();
+    }
+
+    function formatNumber(value, digits = 2) {
+      if (!Number.isFinite(value)) return "--";
+      return new Intl.NumberFormat(lang() === "en" ? "en-US" : "zh-CN", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      }).format(value);
+    }
+
+    function formatPct(value, digits = 2) {
+      if (!Number.isFinite(value)) return "--";
+      const sign = value > 0 ? "+" : "";
+      return `${sign}${formatNumber(value, digits)}%`;
+    }
+
+    function getSelectedItem() {
+      return state.snapshot?.items?.find((item) => item.key === state.selectedKey) || null;
+    }
+
+    function daysBetween(fromDate, toDate) {
+      if (!fromDate || !toDate) return null;
+      const from = Date.parse(`${fromDate}T00:00:00Z`);
+      const to = Date.parse(`${toDate}T00:00:00Z`);
+      if (!Number.isFinite(from) || !Number.isFinite(to)) return null;
+      return Math.max(0, Math.round((to - from) / 86400000));
+    }
+
+    function computeResult() {
+      const spot = Number(spotInput.value);
+      const futures = Number(futuresInput.value);
+      const expiry = expiryInput.value;
+      const tradingDate = state.snapshot?.tradingDate;
+      const daysLeft = tradingDate && expiry ? daysBetween(tradingDate, expiry) : null;
+
+      if (!Number.isFinite(spot) || !Number.isFinite(futures) || !expiry) {
+        return {
+          basis: null,
+          basisRate: null,
+          daysLeft,
+          annualized: null
+        };
+      }
+
+      const basis = futures - spot;
+      const basisRate = spot !== 0 ? (basis / spot) * 100 : null;
+      const annualized = basisRate !== null && Number.isFinite(daysLeft) && daysLeft > 0
+        ? (basisRate * 365) / daysLeft
+        : null;
+
+      return {
+        basis,
+        basisRate,
+        daysLeft,
+        annualized
+      };
+    }
+
+    function sideLabel(side) {
+      const key = side === "premium" ? "marketSidePremium" : side === "discount" ? "marketSideDiscount" : "marketSideFlat";
+      return messages[key][lang()];
+    }
+
+    function sideDescription(result) {
+      if (!Number.isFinite(result.basis)) {
+        return {
+          title: "--",
+          text: messages.directionPlaceholder[lang()]
+        };
+      }
+      if (result.basis > 0) {
+        return {
+          title: messages.marketSidePremium[lang()],
+          text: lang() === "en"
+            ? "The futures price is above spot. The annualized figure is a simple basis estimate based on the days left."
+            : "当前期货价格高于现货，处于升水。年化值只是按剩余天数摊开的简单基差估算。"
+        };
+      }
+      if (result.basis < 0) {
+        return {
+          title: messages.marketSideDiscount[lang()],
+          text: lang() === "en"
+            ? "The futures price is below spot. The annualized figure is a simple basis estimate based on the days left."
+            : "当前期货价格低于现货，处于贴水。年化值只是按剩余天数摊开的简单基差估算。"
+        };
+      }
+      return {
+        title: messages.marketSideFlat[lang()],
+        text: lang() === "en"
+          ? "Futures and spot are nearly flat to each other at the current snapshot."
+          : "当前快照下，期货和现货基本平水。"
+      };
+    }
+
+    function syncCalculatorFromItem(item) {
+      if (!item) return;
+      spotInput.value = Number.isFinite(item.spotPrice) ? item.spotPrice : "";
+      futuresInput.value = Number.isFinite(item.futuresPrice) ? item.futuresPrice : "";
+      expiryInput.value = item.expiryDate || "";
+      renderResults();
+    }
+
+    function renderSummary() {
+      const updatedAt = state.snapshot?.fetchedAtShanghai || "--";
+      const cards = [
+        [messages.lastUpdate[lang()], updatedAt],
+        [messages.delayLabel[lang()], messages.delayValue[lang()]],
+        [messages.sourceLabel[lang()], messages.sourceValue[lang()]],
+        [messages.countLabel[lang()], messages.countValue[lang()]]
+      ];
+      summaryGrid.innerHTML = cards.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+    }
+
+    function renderMarket() {
+      if (state.loading) {
+        marketStatus.hidden = false;
+        marketGrid.hidden = true;
+        marketStatus.className = "loading";
+        marketStatus.textContent = messages.loading[lang()];
+        return;
+      }
+
+      const items = state.snapshot?.items || [];
+      if (!items.length) {
+        marketStatus.hidden = false;
+        marketGrid.hidden = true;
+        marketStatus.className = "error";
+        marketStatus.textContent = state.error || messages.loadFailed[lang()];
+        return;
+      }
+
+      marketStatus.hidden = false;
+      marketStatus.className = state.snapshot?.stale ? "error" : "loading";
+      marketStatus.textContent = state.snapshot?.stale ? messages.statusStale[lang()] : messages.loading[lang()];
+      if (!state.snapshot?.stale) {
+        marketStatus.hidden = true;
+      }
+
+      marketGrid.hidden = false;
+      marketGrid.innerHTML = items.map((item) => `
+        <article class="quote-card" style="--card-accent:${item.accent};--card-soft:${hexToSoft(item.accent)}">
+          <div class="quote-top">
+            <div style="display:flex; gap:12px; align-items:flex-start">
+              <span class="icon-badge">${item.key}</span>
+              <div>
+                <div class="quote-meta">${messages.marketContract[lang()]} ${item.contractLabel || "--"}</div>
+                <div class="quote-name">${lang() === "en" ? item.nameEn : item.nameZh}</div>
+              </div>
+            </div>
+            <span class="pill">${sideLabel(item.basisSide)}</span>
+          </div>
+          <div class="quote-body">
+            <div class="quote-stat"><span>${messages.marketSpot[lang()]}</span><strong>${formatNumber(item.spotPrice)}</strong></div>
+            <div class="quote-stat"><span>${messages.marketFutures[lang()]}</span><strong>${formatNumber(item.futuresPrice)}</strong></div>
+            <div class="quote-stat"><span>${messages.marketBasis[lang()]}</span><strong>${formatNumber(item.basisPoints)}</strong></div>
+            <div class="quote-stat"><span>${messages.marketAnnual[lang()]}</span><strong>${formatPct(item.annualizedBasisRatePct, 2)}</strong></div>
+          </div>
+          <div class="quote-foot">
+            <div class="tiny">${messages.marketExpiry[lang()]} ${item.expiryDate || "--"}</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <a class="link-btn" href="${item.productLink}" target="_blank" rel="noreferrer">${messages.sourceLink[lang()]}</a>
+              <button class="action-btn" type="button" data-use-product="${item.key}">${messages.marketUse[lang()]}</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderProductOptions() {
+      const items = state.snapshot?.items || [];
+      productSelect.innerHTML = items.map((item) => `
+        <option value="${item.key}">${item.key} / ${lang() === "en" ? item.nameEn : item.nameZh}</option>
+      `).join("");
+      if (items.length) {
+        productSelect.value = state.selectedKey;
+      }
+    }
+
+    function renderResults() {
+      const result = computeResult();
+      const cards = [
+        [messages.calcBasis[lang()], Number.isFinite(result.basis) ? formatNumber(result.basis) : "--"],
+        [messages.calcBasisRate[lang()], Number.isFinite(result.basisRate) ? formatPct(result.basisRate, 3) : "--"],
+        [messages.calcDays[lang()], Number.isFinite(result.daysLeft) ? String(result.daysLeft) : "--"],
+        [messages.calcAnnual[lang()], Number.isFinite(result.annualized) ? formatPct(result.annualized, 3) : "--"]
+      ];
+      resultGrid.innerHTML = cards.map(([label, value]) => `<div class="result-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+      const direction = sideDescription(result);
+      resultDirection.textContent = direction.title;
+      resultDescription.textContent = direction.text;
+    }
+
+    function applySelectedProduct(nextKey) {
+      state.selectedKey = nextKey;
+      renderProductOptions();
+      syncCalculatorFromItem(getSelectedItem());
+    }
+
+    function hexToSoft(hex) {
+      if (!/^#?[0-9a-fA-F]{6}$/.test(hex || "")) return "#f6e7d6";
+      const value = hex.replace("#", "");
+      const r = parseInt(value.slice(0, 2), 16);
+      const g = parseInt(value.slice(2, 4), 16);
+      const b = parseInt(value.slice(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, 0.14)`;
+    }
+
+    async function loadSnapshot() {
+      state.loading = true;
+      state.error = "";
+      renderSummary();
+      renderMarket();
+      try {
+        const response = await fetch("/api/finance/futures-basis", { headers: { "accept": "application/json" } });
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || messages.loadFailed[lang()]);
+        }
+        state.snapshot = payload;
+        state.selectedKey = payload.items?.[0]?.key || "";
+        renderSummary();
+        renderProductOptions();
+        renderMarket();
+        syncCalculatorFromItem(getSelectedItem());
+      } catch (error) {
+        state.snapshot = {
+          tradingDate: "",
+          fetchedAtShanghai: "--",
+          items: []
+        };
+        state.error = error.message || messages.loadFailed[lang()];
+        renderSummary();
+        renderProductOptions();
+        renderMarket();
+        renderResults();
+      } finally {
+        state.loading = false;
+        renderMarket();
+      }
+    }
+
+    document.body.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-use-product]");
+      if (!button) return;
+      applySelectedProduct(button.getAttribute("data-use-product"));
+    });
+
+    productSelect.addEventListener("change", () => {
+      applySelectedProduct(productSelect.value);
+    });
+
+    [spotInput, futuresInput, expiryInput].forEach((input) => {
+      input.addEventListener("input", renderResults);
+      input.addEventListener("change", renderResults);
+    });
+
+    let booted = false;
+    window.SiteI18n.bindPage(messages, () => {
+      renderSummary();
+      renderProductOptions();
+      renderMarket();
+      renderResults();
+      if (!booted) {
+        booted = true;
+        loadSnapshot();
+      }
+    });
+  </script>
+</body>
+</html>
