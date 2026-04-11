@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>股指期货升贴水 | 88220066.xyz</title>
-  <meta name="description" content="用公开网页数据做 15 分钟延迟展示，查看股指期货主力合约的升贴水、剩余天数和年化基差。">
+  <meta name="description" content="用公开网页数据做 15 分钟延迟展示，查看股指期货不同期限合约的升贴水、剩余天数和多单持有年化。">
   <script src="/notes/site-i18n.js"></script>
   <style>
     :root {
@@ -280,6 +280,28 @@
       flex-wrap: wrap;
     }
 
+    .contract-list {
+      display: grid;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    .contract-row {
+      display: grid;
+      grid-template-columns: 74px 1fr 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(165, 130, 96, 0.12);
+      background: #fffaf4;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .contract-row strong { color: var(--text); }
+    .contract-row.is-main { background: var(--accent-soft); border-color: rgba(190, 140, 90, 0.26); }
+
     .tiny {
       color: var(--muted);
       font-size: 0.92rem;
@@ -392,7 +414,8 @@
       .summary-grid,
       .card-grid,
       .quote-body,
-      .result-grid { grid-template-columns: 1fr; }
+      .result-grid,
+      .contract-row { grid-template-columns: 1fr; }
       .hero-top,
       .panel-head,
       .quote-foot { flex-direction: column; align-items: flex-start; }
@@ -406,7 +429,7 @@
         <div>
           <div class="eyebrow" data-i18n="eyebrow">INDEX FUTURES BASIS</div>
           <h1 data-i18n="heroTitle">股指期货升贴水</h1>
-          <p class="hero-copy" data-i18n="heroCopy">用公开网页数据做 15 分钟延迟展示，直接看主力合约的升贴水、剩余天数和年化基差。下面的试算区可以继续手动改数字。</p>
+          <p class="hero-copy" data-i18n="heroCopy">用公开网页数据做 15 分钟延迟展示，直接看不同期限合约的升贴水、剩余天数和多单持有年化。下面的试算区可以继续手动改数字。</p>
         </div>
         <div class="hero-actions">
           <span class="pill primary" id="delay-pill" data-i18n="delayValue">15 分钟延迟</span>
@@ -419,8 +442,8 @@
     <section class="panel">
       <div class="panel-head">
         <div>
-          <h2 data-i18n="marketTitle">主力合约看板</h2>
-          <p data-i18n="marketCopy">默认展示 IF、IH、IC、IM 四个股指期货主力合约和对应指数现货。</p>
+          <h2 data-i18n="marketTitle">合约看板</h2>
+          <p data-i18n="marketCopy">默认展示 IF、IH、IC、IM 的当月、下月、下季和隔季等公开合约。</p>
         </div>
       </div>
       <div id="market-status" class="loading" data-i18n="loading">正在读取公开数据…</div>
@@ -452,7 +475,7 @@
             <span class="field-label" data-i18n="expiryLabel">到期日</span>
             <input id="expiry-input" class="field" type="date">
           </label>
-          <div class="field-note" data-i18n="formulaNote">年化基差按 (期货 - 现货) / 现货 × 365 / 剩余天数 估算，不含手续费、分红、保证金占用和跟踪误差。</div>
+          <div class="field-note" data-i18n="formulaNote">多单持有年化按 (现货 - 期货) / 期货 × 365 / 剩余天数 估算。期货贴水时为正，升水时为负，不含手续费、分红、保证金占用和跟踪误差。</div>
         </div>
         <div>
           <div class="result-grid" id="result-grid"></div>
@@ -482,18 +505,18 @@
     const messages = {
       pageTitle: { zh: "股指期货升贴水 | 88220066.xyz", en: "Index Futures Basis | 88220066.xyz" },
       pageDescription: {
-        zh: "用公开网页数据做 15 分钟延迟展示，查看股指期货主力合约的升贴水、剩余天数和年化基差。",
-        en: "A 15-minute delayed view of public quote pages for index futures basis, days to expiry, and annualized spread."
+        zh: "用公开网页数据做 15 分钟延迟展示，查看股指期货不同期限合约的升贴水、剩余天数和多单持有年化。",
+        en: "A 15-minute delayed view of public quote pages for index futures contracts, days to expiry, and long-hold annualized carry."
       },
       eyebrow: { zh: "INDEX FUTURES BASIS", en: "INDEX FUTURES BASIS" },
       heroTitle: { zh: "股指期货升贴水", en: "Index Futures Basis" },
       heroCopy: {
-        zh: "用公开网页数据做 15 分钟延迟展示，直接看主力合约的升贴水、剩余天数和年化基差。下面的试算区可以继续手动改数字。",
-        en: "This page turns public quote pages into a 15-minute delayed view of basis, days to expiry, and annualized spread. You can still adjust the numbers manually below."
+        zh: "用公开网页数据做 15 分钟延迟展示，直接看不同期限合约的升贴水、剩余天数和多单持有年化。下面的试算区可以继续手动改数字。",
+        en: "This page turns public quote pages into a 15-minute delayed view of basis, days to expiry, and long-hold annualized carry. You can still adjust the numbers manually below."
       },
       backFinance: { zh: "返回金融导航", en: "Back to Finance" },
-      marketTitle: { zh: "主力合约看板", en: "Main Contract Board" },
-      marketCopy: { zh: "默认展示 IF、IH、IC、IM 四个股指期货主力合约和对应指数现货。", en: "The default board covers IF, IH, IC, and IM together with their matching spot indexes." },
+      marketTitle: { zh: "合约看板", en: "Contract Board" },
+      marketCopy: { zh: "默认展示 IF、IH、IC、IM 的当月、下月、下季和隔季等公开合约。", en: "The board covers public contracts such as current month, next month, next quarter, and far quarter for IF, IH, IC, and IM." },
       calcTitle: { zh: "手动试算", en: "Manual Calculator" },
       calcCopy: { zh: "如果你想自己改价格或换到别的日期，直接在这里输入即可。", en: "If you want to adjust prices or try another expiry date, edit the inputs here." },
       productLabel: { zh: "合约组", en: "Product" },
@@ -501,8 +524,8 @@
       futuresLabel: { zh: "期货价格", en: "Futures Price" },
       expiryLabel: { zh: "到期日", en: "Expiry Date" },
       formulaNote: {
-        zh: "年化基差按 (期货 - 现货) / 现货 × 365 / 剩余天数 估算，不含手续费、分红、保证金占用和跟踪误差。",
-        en: "Annualized basis is estimated as (futures - spot) / spot × 365 / days to expiry, without fees, dividends, margin carry, or tracking error."
+        zh: "多单持有年化按 (现货 - 期货) / 期货 × 365 / 剩余天数 估算。期货贴水时为正，升水时为负，不含手续费、分红、保证金占用和跟踪误差。",
+        en: "Long-hold annualized carry is estimated as (spot - futures) / futures × 365 / days to expiry. Discount is positive for long futures; premium is negative. Fees, dividends, margin carry, and tracking error are not included."
       },
       notesTitle: { zh: "说明", en: "Notes" },
       note1: { zh: "页面使用公开网页行情，并由本站缓存成 15 分钟延迟版本。", en: "This page uses public quote pages and serves them through a 15-minute delayed cache." },
@@ -520,18 +543,23 @@
       calcBasis: { zh: "升贴水", en: "Basis" },
       calcBasisRate: { zh: "基差率", en: "Basis Rate" },
       calcDays: { zh: "剩余天数", en: "Days Left" },
-      calcAnnual: { zh: "年化基差", en: "Annualized Basis" },
+      calcAnnual: { zh: "多单年化", en: "Long Annualized" },
       directionPlaceholder: { zh: "选择一组合约后，这里会说明当前是升水还是贴水。", en: "Once a product is selected, this area explains whether the contract is trading at a premium or discount." },
       marketSpot: { zh: "现货", en: "Spot" },
       marketFutures: { zh: "期货", en: "Futures" },
       marketBasis: { zh: "升贴水", en: "Basis" },
-      marketAnnual: { zh: "年化", en: "Annualized" },
+      marketAnnual: { zh: "多单年化", en: "Long Annualized" },
       marketExpiry: { zh: "到期日", en: "Expiry" },
       marketUse: { zh: "带入试算", en: "Use in Calculator" },
       marketSidePremium: { zh: "升水", en: "Premium" },
       marketSideDiscount: { zh: "贴水", en: "Discount" },
       marketSideFlat: { zh: "平水", en: "Flat" },
       marketContract: { zh: "主力对应", en: "Main Contract" },
+      contractTerm: { zh: "期限", en: "Term" },
+      contractPrice: { zh: "价格", en: "Price" },
+      contractBasis: { zh: "升贴水", en: "Basis" },
+      contractLongAnnual: { zh: "多单年化", en: "Long Annualized" },
+      mainMark: { zh: "主力", en: "Main" },
       statusStale: { zh: "当前显示的是上一次成功快照。", en: "The page is showing the last successful cached snapshot." },
       sourceLink: { zh: "产品说明", en: "Product Page" }
     };
@@ -602,13 +630,15 @@
 
       const basis = futures - spot;
       const basisRate = spot !== 0 ? (basis / spot) * 100 : null;
-      const annualized = basisRate !== null && Number.isFinite(daysLeft) && daysLeft > 0
-        ? (basisRate * 365) / daysLeft
+      const longCarryRate = futures !== 0 ? ((spot - futures) / futures) * 100 : null;
+      const annualized = longCarryRate !== null && Number.isFinite(daysLeft) && daysLeft > 0
+        ? (longCarryRate * 365) / daysLeft
         : null;
 
       return {
         basis,
         basisRate,
+        longCarryRate,
         daysLeft,
         annualized
       };
@@ -630,16 +660,16 @@
         return {
           title: messages.marketSidePremium[lang()],
           text: lang() === "en"
-            ? "The futures price is above spot. The annualized figure is a simple basis estimate based on the days left."
-            : "当前期货价格高于现货，处于升水。年化值只是按剩余天数摊开的简单基差估算。"
+            ? "The futures price is above spot. For a long futures holder, this is negative carry if prices converge toward spot."
+            : "当前期货价格高于现货，处于升水。对多单持有来说，如果到期向现货收敛，这部分持有年化为负。"
         };
       }
       if (result.basis < 0) {
         return {
           title: messages.marketSideDiscount[lang()],
           text: lang() === "en"
-            ? "The futures price is below spot. The annualized figure is a simple basis estimate based on the days left."
-            : "当前期货价格低于现货，处于贴水。年化值只是按剩余天数摊开的简单基差估算。"
+            ? "The futures price is below spot. For a long futures holder, this is positive carry if prices converge toward spot."
+            : "当前期货价格低于现货，处于贴水。对多单持有来说，如果到期向现货收敛，这部分持有年化为正。"
         };
       }
       return {
@@ -648,6 +678,10 @@
           ? "Futures and spot are nearly flat to each other at the current snapshot."
           : "当前快照下，期货和现货基本平水。"
       };
+    }
+
+    function allContracts() {
+      return (state.snapshot?.items || []).flatMap((item) => item.contracts || [item]);
     }
 
     function syncCalculatorFromItem(item) {
@@ -664,7 +698,7 @@
         [messages.lastUpdate[lang()], updatedAt],
         [messages.delayLabel[lang()], messages.delayValue[lang()]],
         [messages.sourceLabel[lang()], messages.sourceValue[lang()]],
-        [messages.countLabel[lang()], messages.countValue[lang()]]
+        [messages.countLabel[lang()], `${state.snapshot?.contractCount || allContracts().length || 0} ${lang() === "en" ? "contracts" : "个合约"}`]
       ];
       summaryGrid.innerHTML = cards.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
     }
@@ -711,7 +745,17 @@
             <div class="quote-stat"><span>${messages.marketSpot[lang()]}</span><strong>${formatNumber(item.spotPrice)}</strong></div>
             <div class="quote-stat"><span>${messages.marketFutures[lang()]}</span><strong>${formatNumber(item.futuresPrice)}</strong></div>
             <div class="quote-stat"><span>${messages.marketBasis[lang()]}</span><strong>${formatNumber(item.basisPoints)}</strong></div>
-            <div class="quote-stat"><span>${messages.marketAnnual[lang()]}</span><strong>${formatPct(item.annualizedBasisRatePct, 2)}</strong></div>
+            <div class="quote-stat"><span>${messages.marketAnnual[lang()]}</span><strong>${formatPct(item.annualizedLongCarryRatePct, 2)}</strong></div>
+          </div>
+          <div class="contract-list">
+            ${(item.contracts || []).map((contract) => `
+              <button class="contract-row ${contract.isMainContract ? "is-main" : ""}" type="button" data-use-contract="${contract.key}">
+                <strong>${contract.contractLabel}${contract.isMainContract ? ` · ${messages.mainMark[lang()]}` : ""}</strong>
+                <span>${messages.contractPrice[lang()]} ${formatNumber(contract.futuresPrice)}</span>
+                <span>${messages.contractBasis[lang()]} ${formatNumber(contract.basisPoints)}</span>
+                <span>${messages.contractLongAnnual[lang()]} ${formatPct(contract.annualizedLongCarryRatePct, 2)}</span>
+              </button>
+            `).join("")}
           </div>
           <div class="quote-foot">
             <div class="tiny">${messages.marketExpiry[lang()]} ${item.expiryDate || "--"}</div>
@@ -725,9 +769,9 @@
     }
 
     function renderProductOptions() {
-      const items = state.snapshot?.items || [];
+      const items = allContracts();
       productSelect.innerHTML = items.map((item) => `
-        <option value="${item.key}">${item.key} / ${lang() === "en" ? item.nameEn : item.nameZh}</option>
+        <option value="${item.key}">${item.contractLabel || item.productKey || item.key} / ${lang() === "en" ? item.nameEn : item.nameZh}${item.isMainContract ? ` / ${messages.mainMark[lang()]}` : ""}</option>
       `).join("");
       if (items.length) {
         productSelect.value = state.selectedKey;
@@ -751,7 +795,8 @@
     function applySelectedProduct(nextKey) {
       state.selectedKey = nextKey;
       renderProductOptions();
-      syncCalculatorFromItem(getSelectedItem());
+      const item = allContracts().find((contract) => contract.key === nextKey) || getSelectedItem();
+      syncCalculatorFromItem(item);
     }
 
     function hexToSoft(hex) {
@@ -775,11 +820,11 @@
           throw new Error(payload.error || messages.loadFailed[lang()]);
         }
         state.snapshot = payload;
-        state.selectedKey = payload.items?.[0]?.key || "";
+        state.selectedKey = (payload.items || []).flatMap((item) => item.contracts || [item])[0]?.key || payload.items?.[0]?.key || "";
         renderSummary();
         renderProductOptions();
         renderMarket();
-        syncCalculatorFromItem(getSelectedItem());
+        syncCalculatorFromItem(allContracts().find((contract) => contract.key === state.selectedKey) || getSelectedItem());
       } catch (error) {
         state.snapshot = {
           tradingDate: "",
@@ -798,9 +843,16 @@
     }
 
     document.body.addEventListener("click", (event) => {
+      const contractButton = event.target.closest("[data-use-contract]");
+      if (contractButton) {
+        applySelectedProduct(contractButton.getAttribute("data-use-contract"));
+        return;
+      }
       const button = event.target.closest("[data-use-product]");
       if (!button) return;
-      applySelectedProduct(button.getAttribute("data-use-product"));
+      const product = state.snapshot?.items?.find((item) => item.key === button.getAttribute("data-use-product"));
+      const contract = product?.contracts?.find((item) => item.isMainContract) || product;
+      applySelectedProduct(contract?.key || button.getAttribute("data-use-product"));
     });
 
     productSelect.addEventListener("change", () => {
