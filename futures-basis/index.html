@@ -26,6 +26,7 @@
     }
 
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html, body { min-height: 100%; }
     body {
       margin: 0;
@@ -930,11 +931,13 @@
         state.snapshot = payload;
         const firstProduct = payload.items?.[0];
         state.selectedKey = firstProduct?.contracts?.find((item) => item.isMainContract)?.key || firstProduct?.contracts?.[0]?.key || firstProduct?.key || "";
+        state.loading = false;
         renderSummary();
         renderProductOptions();
         renderMarket();
         syncCalculatorFromItem(allContracts().find((contract) => contract.key === state.selectedKey) || getSelectedItem());
       } catch (error) {
+        state.loading = false;
         state.snapshot = {
           tradingDate: "",
           fetchedAtShanghai: "--",
@@ -947,7 +950,6 @@
         renderResults();
       } finally {
         state.loading = false;
-        renderMarket();
       }
     }
 
