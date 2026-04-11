@@ -290,7 +290,7 @@
 
     .contract-row {
       display: grid;
-      grid-template-columns: 74px 1fr 1fr 1fr;
+      grid-template-columns: 74px 0.9fr 0.9fr 0.9fr 1.2fr;
       gap: 8px;
       align-items: center;
       padding: 10px 12px;
@@ -303,6 +303,11 @@
 
     .contract-row strong { color: var(--text); }
     .contract-row.is-main { background: var(--accent-soft); border-color: rgba(190, 140, 90, 0.26); }
+
+    .roll-hint {
+      color: #8b6138;
+      font-weight: 700;
+    }
 
     .tiny {
       color: var(--muted);
@@ -588,6 +593,7 @@
       calcDays: { zh: "剩余天数", en: "Days Left" },
       calcNotional: { zh: "1 手价格（不带杠杆）", en: "1-lot Notional, Unlevered" },
       calcMultiplier: { zh: "合约乘数", en: "Contract Multiplier" },
+      calcRollReference: { zh: "换仓参考", en: "Roll Reference" },
       calcAnnual: { zh: "多单年化（不带杠杆）", en: "Long Annualized, Unlevered" },
       calcMarginAnnual: { zh: "保证金年化", en: "Margin Annualized" },
       calcWipeout: { zh: "亏完保证金跌幅", en: "Drop to Lose Margin" },
@@ -610,7 +616,15 @@
       contractPrice: { zh: "价格", en: "Price" },
       contractBasis: { zh: "升贴水", en: "Basis" },
       contractLongAnnual: { zh: "多单年化", en: "Long Annualized" },
+      contractRollHint: { zh: "换仓", en: "Roll" },
       mainMark: { zh: "主力", en: "Main" },
+      rollNegative: { zh: "升水，不适合吃贴水", en: "Premium, not for discount carry" },
+      rollNearExpiry: { zh: "临近到期，年化易放大", en: "Near expiry, annualized figure can be inflated" },
+      rollShort: { zh: "近月偏短，注意换仓成本", en: "Short dated, watch roll cost" },
+      rollLiquidity: { zh: "先确认流动性", en: "Check liquidity first" },
+      rollFar: { zh: "远月，注意成交", en: "Far month, watch execution" },
+      rollObserve: { zh: "适合观察", en: "Worth watching" },
+      rollCompare: { zh: "可对比观察", en: "Compare and watch" },
       statusStale: { zh: "当前显示的是上一次成功快照。", en: "The page is showing the last successful cached snapshot." },
       sourceLink: { zh: "产品说明", en: "Product Page" }
     };
@@ -673,6 +687,17 @@
       return null;
     }
 
+    function rollReference(item, annualized, daysLeft) {
+      if (!Number.isFinite(annualized) || !Number.isFinite(daysLeft)) return "--";
+      if (annualized <= 0) return messages.rollNegative[lang()];
+      if (daysLeft <= 10) return messages.rollNearExpiry[lang()];
+      if (daysLeft < 25) return messages.rollShort[lang()];
+      if (daysLeft > 130) return messages.rollFar[lang()];
+      if (item && !item.isMainContract) return messages.rollLiquidity[lang()];
+      if (annualized >= 4 && daysLeft >= 30 && daysLeft <= 120) return messages.rollObserve[lang()];
+      return messages.rollCompare[lang()];
+    }
+
     function daysBetween(fromDate, toDate) {
       if (!fromDate || !toDate) return null;
       const from = Date.parse(`${fromDate}T00:00:00Z`);
@@ -710,6 +735,7 @@
           daysLeft,
           contractNotional,
           multiplier,
+          rollHint: "--",
           annualized: null,
           marginAnnualized: null,
           wipeoutDropPct: marginPct,
@@ -734,6 +760,7 @@
         contractNotional,
         multiplier,
         annualized,
+        rollHint: rollReference(selectedItem, annualized, daysLeft),
         marginAnnualized,
         wipeoutDropPct: marginPct,
         marginCallDropPct: Math.max(0, (marginRatio - maintenanceRatio) * 100),
@@ -844,6 +871,7 @@
             <div class="quote-stat"><span>${messages.marketNotional[lang()]}</span><strong>${formatCny(item.futuresPrice * contractMultiplier(item))}</strong></div>
             <div class="quote-stat"><span>${messages.marketBasis[lang()]}</span><strong>${formatNumber(item.basisPoints)}</strong></div>
             <div class="quote-stat"><span>${messages.marketAnnual[lang()]}</span><strong>${formatPct(item.annualizedLongCarryRatePct, 2)}</strong></div>
+            <div class="quote-stat"><span>${messages.calcRollReference[lang()]}</span><strong>${rollReference(item, item.annualizedLongCarryRatePct, item.daysToExpiry)}</strong></div>
           </div>
           <div class="contract-list">
             ${(item.contracts || []).map((contract) => `
@@ -852,6 +880,7 @@
                 <span>${messages.contractPrice[lang()]} ${formatNumber(contract.futuresPrice)}</span>
                 <span>${messages.contractBasis[lang()]} ${formatNumber(contract.basisPoints)}</span>
                 <span>${messages.contractLongAnnual[lang()]} ${formatPct(contract.annualizedLongCarryRatePct, 2)}</span>
+                <span class="roll-hint">${messages.contractRollHint[lang()]} ${rollReference(contract, contract.annualizedLongCarryRatePct, contract.daysToExpiry)}</span>
               </button>
             `).join("")}
           </div>
@@ -884,6 +913,7 @@
         [messages.calcDays[lang()], Number.isFinite(result.daysLeft) ? String(result.daysLeft) : "--"],
         [messages.calcNotional[lang()], Number.isFinite(result.contractNotional) ? formatCny(result.contractNotional) : "--"],
         [messages.calcMultiplier[lang()], Number.isFinite(result.multiplier) ? `${result.multiplier} ${lang() === "en" ? "CNY/point" : "元/点"}` : "--"],
+        [messages.calcRollReference[lang()], result.rollHint || "--"],
         [messages.calcAnnual[lang()], Number.isFinite(result.annualized) ? formatPct(result.annualized, 3) : "--"],
         [messages.calcMarginAnnual[lang()], Number.isFinite(result.marginAnnualized) ? formatPct(result.marginAnnualized, 3) : "--"],
         [messages.calcWipeout[lang()], Number.isFinite(result.wipeoutDropPct) ? `${formatNumber(result.wipeoutDropPct, 2)}%` : "--"],
