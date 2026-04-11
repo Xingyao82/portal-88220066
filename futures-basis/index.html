@@ -585,6 +585,8 @@
       calcBasis: { zh: "升贴水", en: "Basis" },
       calcBasisRate: { zh: "基差率", en: "Basis Rate" },
       calcDays: { zh: "剩余天数", en: "Days Left" },
+      calcNotional: { zh: "1 手价格（不带杠杆）", en: "1-lot Notional, Unlevered" },
+      calcMultiplier: { zh: "合约乘数", en: "Contract Multiplier" },
       calcAnnual: { zh: "多单年化（不带杠杆）", en: "Long Annualized, Unlevered" },
       calcMarginAnnual: { zh: "保证金年化", en: "Margin Annualized" },
       calcWipeout: { zh: "亏完保证金跌幅", en: "Drop to Lose Margin" },
@@ -594,6 +596,7 @@
       directionPlaceholder: { zh: "选择一组合约后，这里会说明当前是升水还是贴水。", en: "Once a product is selected, this area explains whether the contract is trading at a premium or discount." },
       marketSpot: { zh: "现货", en: "Spot" },
       marketFutures: { zh: "期货", en: "Futures" },
+      marketNotional: { zh: "1 手价格", en: "1-lot Notional" },
       marketBasis: { zh: "升贴水", en: "Basis" },
       marketAnnual: { zh: "多单年化", en: "Long Annualized" },
       marketExpiry: { zh: "到期日", en: "Expiry" },
@@ -650,8 +653,23 @@
       return `${sign}${formatNumber(value, digits)}%`;
     }
 
+    function formatCny(value) {
+      if (!Number.isFinite(value)) return "--";
+      if (lang() === "en") {
+        return value >= 1000000 ? `¥${formatNumber(value / 1000000, 2)}M` : `¥${formatNumber(value, 0)}`;
+      }
+      return value >= 10000 ? `约 ${formatNumber(value / 10000, 2)} 万元` : `约 ${formatNumber(value, 0)} 元`;
+    }
+
     function getSelectedItem() {
       return state.snapshot?.items?.find((item) => item.key === state.selectedKey) || null;
+    }
+
+    function contractMultiplier(item) {
+      const key = (item?.productKey || item?.contractLabel || state.selectedKey || "").toUpperCase();
+      if (key.startsWith("IF") || key.startsWith("IH")) return 300;
+      if (key.startsWith("IC") || key.startsWith("IM")) return 200;
+      return null;
     }
 
     function daysBetween(fromDate, toDate) {
@@ -670,6 +688,9 @@
       const spot = Number(spotInput.value);
       const futures = Number(futuresInput.value);
       const expiry = expiryInput.value;
+      const selectedItem = allContracts().find((contract) => contract.key === state.selectedKey) || null;
+      const multiplier = contractMultiplier(selectedItem);
+      const contractNotional = Number.isFinite(futures) && Number.isFinite(multiplier) ? futures * multiplier : null;
       const marginPct = clamp(Number(marginInput.value) || 50, 1, 100);
       const maintenancePct = clamp(Number(maintenanceInput.value) || 0, 0, marginPct);
       const marginRatio = marginPct / 100;
@@ -686,6 +707,8 @@
           basis: null,
           basisRate: null,
           daysLeft,
+          contractNotional,
+          multiplier,
           annualized: null,
           marginAnnualized: null,
           wipeoutDropPct: marginPct,
@@ -707,6 +730,8 @@
         basisRate,
         longCarryRate,
         daysLeft,
+        contractNotional,
+        multiplier,
         annualized,
         marginAnnualized,
         wipeoutDropPct: marginPct,
@@ -815,6 +840,7 @@
           <div class="quote-body">
             <div class="quote-stat"><span>${messages.marketSpot[lang()]}</span><strong>${formatNumber(item.spotPrice)}</strong></div>
             <div class="quote-stat"><span>${messages.marketFutures[lang()]}</span><strong>${formatNumber(item.futuresPrice)}</strong></div>
+            <div class="quote-stat"><span>${messages.marketNotional[lang()]}</span><strong>${formatCny(item.futuresPrice * contractMultiplier(item))}</strong></div>
             <div class="quote-stat"><span>${messages.marketBasis[lang()]}</span><strong>${formatNumber(item.basisPoints)}</strong></div>
             <div class="quote-stat"><span>${messages.marketAnnual[lang()]}</span><strong>${formatPct(item.annualizedLongCarryRatePct, 2)}</strong></div>
           </div>
@@ -855,6 +881,8 @@
         [messages.calcBasis[lang()], Number.isFinite(result.basis) ? formatNumber(result.basis) : "--"],
         [messages.calcBasisRate[lang()], Number.isFinite(result.basisRate) ? formatPct(result.basisRate, 3) : "--"],
         [messages.calcDays[lang()], Number.isFinite(result.daysLeft) ? String(result.daysLeft) : "--"],
+        [messages.calcNotional[lang()], Number.isFinite(result.contractNotional) ? formatCny(result.contractNotional) : "--"],
+        [messages.calcMultiplier[lang()], Number.isFinite(result.multiplier) ? `${result.multiplier} ${lang() === "en" ? "CNY/point" : "元/点"}` : "--"],
         [messages.calcAnnual[lang()], Number.isFinite(result.annualized) ? formatPct(result.annualized, 3) : "--"],
         [messages.calcMarginAnnual[lang()], Number.isFinite(result.marginAnnualized) ? formatPct(result.marginAnnualized, 3) : "--"],
         [messages.calcWipeout[lang()], Number.isFinite(result.wipeoutDropPct) ? `${formatNumber(result.wipeoutDropPct, 2)}%` : "--"],
