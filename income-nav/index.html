@@ -339,8 +339,8 @@
         open: "打开",
         stats: [
           ["市场", "中国 + 美国"],
-          ["类型", "红利、债券、REITs、期权增强"],
-          ["使用方式", "先按结构筛，再自己看持仓和分配规则"],
+          ["类型", "红利、债券、REITs、preferred、期权增强"],
+          ["使用方式", "先按结构筛，再自己看持仓、分配和税务规则"],
           ["提醒", "income 不等于低波，更不等于保本"]
         ],
         typeLabel: "类型",
@@ -352,8 +352,8 @@
         open: "Open",
         stats: [
           ["Markets", "China + U.S."],
-          ["Styles", "Dividend, bonds, REITs, option income"],
-          ["Use", "Filter by structure first, then inspect holdings and distribution rules"],
+          ["Styles", "Dividend, bonds, REITs, preferreds, option income"],
+          ["Use", "Filter by structure first, then inspect holdings, distributions, and tax rules"],
           ["Reminder", "Income is not the same as low volatility or principal safety"]
         ],
         typeLabel: "Type",
@@ -429,6 +429,74 @@
         note: {
           zh: "看信用利差和流动性。",
           en: "Watch spreads and liquidity."
+        }
+      },
+      {
+        name: "红利ETF易方达",
+        ticker: "515180",
+        accent: "#22c55e",
+        url: "https://fundf10.eastmoney.com/515180.html",
+        type: { zh: "红利股息", en: "Dividend equity" },
+        market: { zh: "中国 A 股", en: "China A-shares" },
+        summary: {
+          zh: "也是国内红利主线里很常见的观察样本，适合和 510880 放在一起比较。",
+          en: "Another common dividend benchmark in China, useful to compare side by side with 510880."
+        },
+        tags: { zh: ["红利", "股息", "对照样本"], en: ["dividend", "yield", "comparison"] },
+        note: {
+          zh: "看指数口径和成分股差异。",
+          en: "Watch the index methodology and holdings mix."
+        }
+      },
+      {
+        name: "国债ETF国泰",
+        ticker: "511010",
+        accent: "#38bdf8",
+        url: "https://fund.eastmoney.com/511010.html",
+        type: { zh: "国债", en: "Treasury bonds" },
+        market: { zh: "中国债券", en: "China bonds" },
+        summary: {
+          zh: "更适合拿来当低波债券底仓样本，看中短久期国债的 income 和波动平衡。",
+          en: "A cleaner lower-volatility treasury ETF for the core bond side of a China income basket."
+        },
+        tags: { zh: ["国债", "固收", "低波"], en: ["treasury", "fixed income", "lower vol"] },
+        note: {
+          zh: "看久期和利率下行空间。",
+          en: "Watch duration and the room for rate moves."
+        }
+      },
+      {
+        name: "活跃国债ETF",
+        ticker: "511020",
+        accent: "#0ea5e9",
+        url: "https://fund.eastmoney.com/a/202506043421663013.html",
+        type: { zh: "活跃国债", en: "Active treasury basket" },
+        market: { zh: "中国债券", en: "China bonds" },
+        summary: {
+          zh: "如果你想在国债里找更活跃、更方便切换的交易工具，这类产品值得一起看。",
+          en: "Useful when you want a more actively traded treasury ETF in the same income watchlist."
+        },
+        tags: { zh: ["国债", "活跃券", "交易性"], en: ["treasury", "active", "trading"] },
+        note: {
+          zh: "看成交活跃度和久期变化。",
+          en: "Watch liquidity and maturity exposure."
+        }
+      },
+      {
+        name: "国开债券ETF",
+        ticker: "159651",
+        accent: "#f97316",
+        url: "https://fund.eastmoney.com/data/xininfo_159651.html",
+        type: { zh: "国开债", en: "CDB bonds" },
+        market: { zh: "中国债券", en: "China bonds" },
+        summary: {
+          zh: "偏政策性金融债短端，适合放在更稳的 fixed-income income 观察组里。",
+          en: "A shorter-end policy-bank bond ETF that fits the steadier side of fixed-income income allocations."
+        },
+        tags: { zh: ["国开债", "政策性金融债", "短久期"], en: ["CDB", "policy bank", "short duration"] },
+        note: {
+          zh: "看久期更短带来的收益和弹性取舍。",
+          en: "Watch the trade-off between lower duration and lower carry."
         }
       }
     ];
@@ -534,6 +602,91 @@
         note: {
           zh: "看利率周期和债券久期。",
           en: "Watch rate cycles and duration."
+        }
+      },
+      {
+        name: "HDV",
+        ticker: "iShares Core High Dividend ETF",
+        accent: "#22c55e",
+        url: "https://www.ishares.com/us/products/239563/ishares-high-dividend-etf",
+        type: { zh: "高股息", en: "High dividend yield" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "比 SCHD 更偏高股息表达，适合拿来看更直接的 yield 取向。",
+          en: "A more direct high-yield expression than SCHD, useful when comparing pure yield tilts."
+        },
+        tags: { zh: ["HDV", "高股息", "yield"], en: ["HDV", "high yield", "dividend"] },
+        note: {
+          zh: "看行业集中和收益率陷阱。",
+          en: "Watch concentration and yield-trap risk."
+        }
+      },
+      {
+        name: "DGRO",
+        ticker: "iShares Core Dividend Growth ETF",
+        accent: "#06b6d4",
+        url: "https://www.ishares.com/us/literature/fact-sheet/dgro-ishares-core-dividend-growth-etf-fund-fact-sheet-en-us.pdf",
+        type: { zh: "股息增长", en: "Dividend growth" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "如果你想要的不是当下最高息，而是更稳的 dividend growth，DGRO 很值得一起看。",
+          en: "A good contrast case when you prefer steadier dividend growth over the highest current yield."
+        },
+        tags: { zh: ["DGRO", "股息增长", "quality"], en: ["DGRO", "dividend growth", "quality"] },
+        note: {
+          zh: "看增长稳定性而不是只盯当前收益率。",
+          en: "Watch growth durability, not just current yield."
+        }
+      },
+      {
+        name: "PFF",
+        ticker: "iShares Preferred and Income Securities ETF",
+        accent: "#f97316",
+        url: "https://www.cnbc.com/quotes/PFF",
+        type: { zh: "优先股 income", en: "Preferred income" },
+        market: { zh: "美国证券", en: "U.S. securities" },
+        summary: {
+          zh: "偏 preferred income，和普通 dividend ETF 的底层风险完全不一样，适合单独放一栏看。",
+          en: "A preferred-securities income ETF with a very different risk profile from plain dividend funds."
+        },
+        tags: { zh: ["PFF", "preferred", "income"], en: ["PFF", "preferred", "income"] },
+        note: {
+          zh: "看利率敏感度和金融权重。",
+          en: "Watch rate sensitivity and financial-sector exposure."
+        }
+      },
+      {
+        name: "QYLD",
+        ticker: "Global X Nasdaq 100 Covered Call ETF",
+        accent: "#fb7185",
+        url: "https://www.globalxetfs.com/funds/qyld/",
+        type: { zh: "covered call", en: "Covered call" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "更典型的 covered call income 工具，适合和 JEPI、JEPQ 放在一起对比。",
+          en: "A classic covered-call income ETF and a natural comparison point for JEPI and JEPQ."
+        },
+        tags: { zh: ["QYLD", "covered call", "monthly"], en: ["QYLD", "covered call", "monthly"] },
+        note: {
+          zh: "看分配来源和长期总回报折损。",
+          en: "Watch the source of distributions and long-term total-return drag."
+        }
+      },
+      {
+        name: "DIVO",
+        ticker: "Amplify CWP Enhanced Dividend Income ETF",
+        accent: "#a78bfa",
+        url: "https://amplifyetfs.com/divo",
+        type: { zh: "增强分红 income", en: "Enhanced dividend income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "兼顾股息和部分期权增强，常被拿来当更均衡的 equity income 方案。",
+          en: "Blends dividends with a lighter options overlay, often used as a more balanced equity-income idea."
+        },
+        tags: { zh: ["DIVO", "enhanced", "income"], en: ["DIVO", "enhanced", "income"] },
+        note: {
+          zh: "看它和纯 covered call 产品的上涨参与度差异。",
+          en: "Watch how much upside participation it preserves versus pure covered-call funds."
         }
       }
     ];
