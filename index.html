@@ -4,25 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>88220066.xyz</title>
-  <meta name="description" content="深色导航工作台，集中整理站内入口与常用资源。">
+  <meta name="description" content="简约资源导航首页，整理常用网站、站内入口和工作流工具。">
   <script src="/notes/site-i18n.js"></script>
   <style>
     :root {
-      --bg: #101512;
-      --bg-soft: #161d18;
-      --panel: rgba(24, 31, 27, 0.88);
-      --panel-soft: rgba(34, 42, 37, 0.72);
-      --line: rgba(221, 230, 223, 0.10);
-      --line-strong: rgba(221, 230, 223, 0.18);
-      --text: #f2f5ef;
-      --muted: #a7b2aa;
-      --accent: #d9c6a4;
-      --accent-soft: rgba(217, 198, 164, 0.12);
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --panel-soft: #f4f6fa;
+      --line: #e7ebf2;
+      --text: #131722;
+      --muted: #667085;
+      --accent: #3677ff;
+      --accent-soft: rgba(54, 119, 255, 0.10);
+      --shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
     }
 
     * { box-sizing: border-box; }
-
     html, body { min-height: 100%; }
 
     body {
@@ -30,60 +27,149 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
       background:
-        linear-gradient(180deg, rgba(9, 12, 10, 0.78), rgba(9, 12, 10, 0.92)),
-        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80") center/cover fixed;
+        radial-gradient(circle at top left, rgba(54, 119, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, #fbfcfe 0%, var(--bg) 100%);
     }
 
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
 
     .shell {
-      width: min(calc(100% - 24px), 1380px);
+      width: min(calc(100% - 24px), 1320px);
       margin: 0 auto;
-      padding: 14px 0 24px;
+      padding: 14px 0 28px;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: 228px minmax(0, 1fr);
-      gap: 16px;
-      align-items: start;
-    }
-
-    .sidebar {
+    .topbar {
       position: sticky;
-      top: 14px;
-      min-height: calc(100vh - 28px);
-      padding: 18px 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(19, 24, 21, 0.92);
-      backdrop-filter: blur(22px);
-      box-shadow: var(--shadow);
+      top: 10px;
+      z-index: 20;
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
       gap: 18px;
+      min-height: 74px;
+      padding: 0 18px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
     }
 
-    .brand-block { display: grid; gap: 8px; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
     .brand-mark {
-      color: var(--accent);
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .brand-title {
-      margin: 0;
-      font-size: 31px;
-      line-height: 0.96;
-      letter-spacing: -0.04em;
-      font-weight: 600;
-    }
-    .brand-copy {
-      margin: 0;
-      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4d8bff, #6aa5ff);
+      color: #ffffff;
       font-size: 14px;
-      line-height: 1.65;
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(54, 119, 255, 0.18);
+    }
+
+    .brand-copy {
+      min-width: 0;
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand-copy strong {
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-copy span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text);
+      background: rgba(54, 119, 255, 0.06);
+    }
+
+    .nav-btn.active {
+      color: var(--accent);
+      border-color: rgba(54, 119, 255, 0.12);
+      background: var(--accent-soft);
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-mini {
+      display: grid;
+      grid-template-columns: 16px minmax(180px, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      min-width: 320px;
+    }
+
+    .search-mini input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .search-mini input::placeholder { color: #98a2b3; }
+
+    .search-key {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #98a2b3;
+      font-size: 12px;
     }
 
     .lang {
@@ -91,817 +177,589 @@
       gap: 4px;
       padding: 3px;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.03);
-      width: max-content;
+      border-radius: 999px;
+      background: #ffffff;
     }
+
     .lang button {
-      min-width: 40px;
-      min-height: 30px;
+      min-width: 38px;
+      min-height: 34px;
       padding: 0 10px;
       border: 0;
-      border-radius: 6px;
-      color: var(--muted);
+      border-radius: 999px;
       background: transparent;
+      color: var(--muted);
       cursor: pointer;
     }
+
     .lang button.active {
-      color: #111512;
+      color: #ffffff;
       background: var(--accent);
     }
 
-    .nav-list {
-      display: grid;
-      gap: 8px;
-      align-content: start;
-    }
-    .nav-btn {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 18px 1fr;
-      align-items: center;
-      gap: 10px;
-      min-height: 44px;
-      padding: 0 12px;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      text-align: left;
-      transition: 160ms ease;
-    }
-    .nav-btn:hover {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.04);
-      border-color: var(--line);
-    }
-    .nav-btn.active {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--line-strong);
-    }
-    .nav-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .sidebar-card {
-      margin-top: auto;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(6, 8, 7, 0.18), rgba(6, 8, 7, 0.52)),
-        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80") center/cover;
-      display: grid;
-      gap: 44px;
-      min-height: 132px;
-    }
-    .sidebar-card span {
-      display: inline-flex;
-      width: max-content;
-      min-height: 24px;
-      padding: 0 8px;
-      align-items: center;
-      border-radius: 999px;
-      color: #111512;
-      background: rgba(217, 198, 164, 0.9);
-      font-size: 11px;
-      font-weight: 700;
-    }
-    .sidebar-card strong {
-      display: block;
-      font-size: 18px;
-      line-height: 1.15;
-    }
-    .sidebar-card p {
-      margin: 6px 0 0;
-      color: rgba(242, 245, 239, 0.82);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .main {
-      display: grid;
-      gap: 16px;
-    }
-
     .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 430px;
-      padding: 20px;
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 18px;
+      align-items: center;
+      padding: 28px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(18, 22, 19, 0.28), rgba(14, 18, 16, 0.76)),
-        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80") center/cover;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 252, 255, 0.96));
       box-shadow: var(--shadow);
-      display: grid;
-      align-content: space-between;
-      gap: 24px;
-    }
-
-    .hero-top {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .ghost,
-    .profile {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(12, 16, 14, 0.44);
-      backdrop-filter: blur(12px);
-      color: var(--text);
-    }
-    .profile {
-      width: 40px;
-      padding: 0;
-      font-weight: 700;
     }
 
     .hero-copy {
       max-width: 760px;
-      justify-self: center;
       text-align: center;
+      justify-self: center;
       display: grid;
-      gap: 16px;
-      padding-top: 24px;
+      gap: 14px;
     }
+
     .hero-kicker {
       justify-self: center;
       display: inline-flex;
       align-items: center;
       min-height: 28px;
       padding: 0 10px;
-      border: 1px solid rgba(217, 198, 164, 0.24);
       border-radius: 999px;
-      background: rgba(12, 16, 14, 0.38);
       color: var(--accent);
+      background: var(--accent-soft);
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
+
     .hero h1 {
       margin: 0;
-      font-size: 64px;
-      line-height: 1.02;
+      font-size: clamp(34px, 5.2vw, 60px);
+      line-height: 1.06;
       letter-spacing: -0.05em;
-      font-weight: 500;
-    }
-    .hero p {
-      margin: 0;
-      color: rgba(242, 245, 239, 0.82);
-      font-size: 16px;
-      line-height: 1.7;
     }
 
-    .search-wrap {
-      width: min(820px, 100%);
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .hero-search {
+      width: min(680px, 100%);
       justify-self: center;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 64px;
+      gap: 0;
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .hero-search input {
+      min-height: 58px;
+      padding: 0 18px;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .hero-search input::placeholder { color: #98a2b3; }
+
+    .hero-search button {
+      border: 0;
+      color: #ffffff;
+      background: var(--accent);
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .hero-visual {
+      justify-self: end;
+      width: 100%;
+      max-width: 240px;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #eef4ff, #ffffff);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.8);
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sections {
+      margin-top: 16px;
       display: grid;
       gap: 16px;
     }
 
-    .search-bar {
-      display: grid;
-      grid-template-columns: 18px minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 12px;
-      min-height: 62px;
-      padding: 0 18px;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 8px;
-      background: rgba(32, 40, 35, 0.58);
-      backdrop-filter: blur(18px);
-    }
-    .search-bar input {
-      width: 100%;
-      min-width: 0;
-      border: 0;
-      outline: none;
-      color: var(--text);
-      background: transparent;
-    }
-    .search-bar input::placeholder { color: rgba(242, 245, 239, 0.50); }
-    .search-hint {
-      color: rgba(242, 245, 239, 0.60);
-      font-size: 13px;
-    }
-
-    .shortcut-row {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .shortcut {
-      display: grid;
-      gap: 10px;
-      justify-items: center;
-      align-content: center;
-      min-height: 108px;
-      padding: 14px 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      background: rgba(12, 16, 14, 0.36);
-      backdrop-filter: blur(18px);
-      color: var(--text);
-      cursor: pointer;
-      transition: 160ms ease;
-    }
-    .shortcut:hover,
-    .shortcut.active {
-      background: rgba(22, 27, 24, 0.62);
-      border-color: rgba(217, 198, 164, 0.24);
-    }
-    .shortcut-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(217, 198, 164, 0.18);
-      border-radius: 8px;
-      color: var(--accent);
-      background: rgba(255, 255, 255, 0.04);
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .shortcut span {
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .section {
+    .section-card {
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(18, 24, 20, 0.88);
-      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.95);
       box-shadow: var(--shadow);
     }
+
     .section-head {
       display: flex;
       align-items: end;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
+
     .section-head h2 {
       margin: 0;
-      font-size: 34px;
+      font-size: 28px;
       line-height: 1.08;
       letter-spacing: -0.04em;
-      font-weight: 600;
     }
+
     .section-head p {
-      margin: 8px 0 0;
+      margin: 6px 0 0;
       color: var(--muted);
-      line-height: 1.65;
       font-size: 14px;
+      line-height: 1.65;
     }
 
-    .toolbar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .toolbar-btn {
-      min-height: 36px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--muted);
-      cursor: pointer;
-    }
-    .toolbar-btn.active {
-      color: #111512;
-      background: var(--accent);
-      border-color: transparent;
-    }
-    .toolbar-select {
-      min-height: 36px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--muted);
-    }
-
-    .grid {
+    .section-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+      gap: 12px;
     }
 
-    .card {
+    .tile {
       display: grid;
-      gap: 14px;
-      padding: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 10px;
+      align-content: start;
+      min-height: 162px;
+      padding: 16px;
+      border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(29, 37, 32, 0.90);
-      min-height: 208px;
+      background: linear-gradient(180deg, #ffffff, #fbfcff);
       transition: 160ms ease;
     }
-    .card:hover {
+
+    .tile:hover {
       transform: translateY(-2px);
-      border-color: rgba(217, 198, 164, 0.20);
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+      border-color: rgba(54, 119, 255, 0.18);
+      box-shadow: 0 14px 26px rgba(54, 119, 255, 0.08);
     }
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .card-brand {
+
+    .tile-top {
       display: grid;
-      grid-template-columns: 44px minmax(0, 1fr);
+      grid-template-columns: 42px minmax(0, 1fr);
       align-items: start;
       gap: 12px;
-      min-width: 0;
     }
-    .card-icon {
+
+    .tile-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.04);
       color: var(--accent);
+      background: linear-gradient(180deg, #ffffff, #f7f9ff);
       font-size: 14px;
       font-weight: 700;
-      flex: none;
     }
-    .card h3 {
+
+    .tile h3 {
       margin: 0;
-      font-size: 25px;
-      line-height: 1.04;
-      letter-spacing: -0.04em;
-      font-weight: 600;
+      font-size: 19px;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
     }
-    .card-kicker {
-      margin: 2px 0 0;
+
+    .tile-meta {
+      margin: 4px 0 0;
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 10px;
-      border-radius: 999px;
-      background: rgba(217, 198, 164, 0.12);
-      color: var(--accent);
-      font-size: 12px;
-      white-space: nowrap;
-    }
-    .card p {
+
+    .tile p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.68;
+      line-height: 1.65;
     }
-    .tag-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.03);
-      font-size: 12px;
-    }
-    .card-bottom {
+
+    .tile-bottom {
       margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
     }
-    .host {
-      color: rgba(242, 245, 239, 0.60);
+
+    .tile-host {
+      color: #98a2b3;
       font-size: 12px;
       line-height: 1.45;
       word-break: break-all;
     }
-    .visit {
+
+    .open {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 40px;
-      padding: 0 14px;
+      min-height: 36px;
+      padding: 0 12px;
       border-radius: 999px;
-      background: var(--accent);
-      color: #141815;
-      font-size: 14px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
       font-weight: 600;
       white-space: nowrap;
     }
 
     .empty {
-      padding: 28px;
-      border: 1px dashed rgba(255, 255, 255, 0.12);
+      padding: 26px;
+      border: 1px dashed var(--line);
       border-radius: 8px;
+      background: #ffffff;
       color: var(--muted);
       text-align: center;
     }
 
-    @media (max-width: 1240px) {
-      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .shortcut-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (max-width: 1200px) {
+      .section-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 960px) {
-      .layout { grid-template-columns: 1fr; }
-      .sidebar {
-        position: static;
-        min-height: auto;
-        grid-template-rows: auto auto auto auto;
+    @media (max-width: 980px) {
+      .topbar {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 14px;
       }
-      .hero h1 { font-size: 46px; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .nav-links {
+        order: 3;
+      }
+
+      .top-actions {
+        justify-content: space-between;
+      }
+
+      .search-mini { min-width: 0; width: 100%; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        justify-self: center;
+        max-width: 220px;
+      }
+
+      .section-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 700px) {
-      .shell { width: min(calc(100% - 16px), 1380px); padding: 8px 0 18px; }
-      .hero { min-height: 0; padding: 14px; }
-      .hero-copy { padding-top: 6px; }
-      .hero h1 { font-size: 34px; }
-      .shortcut-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid { grid-template-columns: 1fr; }
-      .section-head h2 { font-size: 28px; }
+    @media (max-width: 640px) {
+      .shell {
+        width: min(calc(100% - 16px), 1320px);
+        padding: 8px 0 20px;
+      }
+
+      .hero,
+      .section-card { padding: 14px; }
+
+      .hero-search {
+        grid-template-columns: 1fr 56px;
+      }
+
+      .section-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body data-site-lang="off" data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
-    <div class="layout">
-      <aside class="sidebar">
-        <div class="brand-block">
-          <div class="brand-mark">88220066</div>
-          <h1 class="brand-title">探索<br>发现</h1>
-          <p class="brand-copy" data-i18n="sidebarCopy">把站内入口和常用资源收在一页，打开就能继续往下做。</p>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">82</div>
+        <div class="brand-copy">
+          <strong>88220066</strong>
+          <span data-i18n="brandSub">灵感与工具导航</span>
         </div>
+      </div>
 
+      <nav class="nav-links" id="nav-links"></nav>
+
+      <div class="top-actions">
+        <label class="search-mini">
+          <span aria-hidden="true">⌕</span>
+          <input id="search-mini" type="search">
+          <span class="search-key">Ctrl K</span>
+        </label>
         <div class="lang">
           <button type="button" data-lang="zh">中</button>
           <button type="button" data-lang="en">EN</button>
         </div>
+      </div>
+    </header>
 
-        <div class="nav-list" id="sidebar-nav"></div>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="hero-kicker" data-i18n="heroKicker">resource hub</div>
+        <h1 data-i18n="heroTitle">发现优质资源，提升效率与灵感</h1>
+        <p data-i18n="heroCopy">把站内入口、外部网站和研究工具放进一个简约首页，切换项目和找资源都更顺手。</p>
+        <label class="hero-search">
+          <input id="search-main" type="search">
+          <button type="button" id="focus-search" aria-label="Search">⌕</button>
+        </label>
+      </div>
 
-        <a class="sidebar-card" href="/finance-nav/" target="_self">
-          <span data-i18n="sidebarCardBadge">本周关注</span>
-          <div>
-            <strong data-i18n="sidebarCardTitle">期货与金融研究</strong>
-            <p data-i18n="sidebarCardCopy">从股指贴水到资源工具，常用入口直接打开。</p>
-          </div>
-        </a>
-      </aside>
+      <div class="hero-visual">
+        <img alt="workspace illustration" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80">
+      </div>
+    </section>
 
-      <main class="main">
-        <section class="hero">
-          <div class="hero-top">
-            <a class="ghost" href="/tools-nav/" data-i18n="heroAction">打开工具</a>
-            <div class="profile">82</div>
-          </div>
-
-          <div class="hero-copy">
-            <div class="hero-kicker" data-i18n="heroKicker">navigation hub</div>
-            <h1 data-i18n="heroTitle">探索、发现、连接</h1>
-            <p data-i18n="heroText">用一个首页把 AI、金融、Agent、学习和常用工具串起来，找入口、切项目、继续工作都更快。</p>
-          </div>
-
-          <div class="search-wrap">
-            <label class="search-bar">
-              <span aria-hidden="true">⌕</span>
-              <input id="search-input" type="search">
-              <span class="search-hint" data-i18n="searchHint">按 K 聚焦</span>
-            </label>
-            <div class="shortcut-row" id="shortcut-row"></div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2 data-i18n="sectionTitle">热门推荐</h2>
-              <p data-i18n="sectionCopy">先放你真正会反复打开的入口。站内分区和外部资源混排，但搜索和分类会把它们理顺。</p>
-            </div>
-            <div class="toolbar">
-              <button class="toolbar-btn active" type="button" data-filter="all"></button>
-              <button class="toolbar-btn" type="button" data-filter="internal"></button>
-              <button class="toolbar-btn" type="button" data-filter="external"></button>
-            </div>
-          </div>
-
-          <div class="grid" id="resource-grid"></div>
-          <div class="empty" id="empty-state" hidden data-i18n="emptyState">没有找到匹配内容，换个关键词试试。</div>
-        </section>
-      </main>
-    </div>
+    <main class="sections" id="sections"></main>
+    <div class="empty" id="empty-state" hidden data-i18n="emptyState">没有找到匹配内容，换个关键词试试。</div>
   </div>
 
   <script>
     const messages = {
       pageTitle: { zh: "88220066.xyz", en: "88220066.xyz" },
-      pageDescription: { zh: "深色导航工作台，集中整理站内入口与常用资源。", en: "A dark navigation workspace for internal pages and daily tools." },
-      sidebarCopy: { zh: "把站内入口和常用资源收在一页，打开就能继续往下做。", en: "Keep internal pages and daily resources on one page so work can continue without friction." },
-      sidebarCardBadge: { zh: "本周关注", en: "Weekly focus" },
-      sidebarCardTitle: { zh: "期货与金融研究", en: "Futures and finance" },
-      sidebarCardCopy: { zh: "从股指贴水到资源工具，常用入口直接打开。", en: "From index basis research to useful tools, keep the right tabs close." },
-      heroAction: { zh: "打开工具", en: "Open tools" },
-      heroKicker: { zh: "navigation hub", en: "navigation hub" },
-      heroTitle: { zh: "探索、发现、连接", en: "Explore, discover, connect" },
-      heroText: { zh: "用一个首页把 AI、金融、Agent、学习和常用工具串起来，找入口、切项目、继续工作都更快。", en: "Bring AI, finance, agents, learning, and daily tools into one homepage so switching context feels faster." },
-      searchHint: { zh: "按 K 聚焦", en: "Press K to focus" },
-      sectionTitle: { zh: "热门推荐", en: "Popular picks" },
-      sectionCopy: { zh: "先放你真正会反复打开的入口。站内分区和外部资源混排，但搜索和分类会把它们理顺。", en: "Start with the entries you actually open often. Internal sections and external links can live together when filtering stays simple." },
+      pageDescription: { zh: "简约资源导航首页，整理常用网站、站内入口和工作流工具。", en: "A clean resource homepage for internal pages, websites, and workflow tools." },
+      brandSub: { zh: "灵感与工具导航", en: "Inspiration and tools" },
+      heroKicker: { zh: "resource hub", en: "resource hub" },
+      heroTitle: { zh: "发现优质资源，提升效率与灵感", en: "Find better resources, move faster with less friction" },
+      heroCopy: { zh: "把站内入口、外部网站和研究工具放进一个简约首页，切换项目和找资源都更顺手。", en: "Bring internal pages, external resources, and research tools into one clean homepage." },
       emptyState: { zh: "没有找到匹配内容，换个关键词试试。", en: "No matches yet. Try another keyword." }
     };
 
-    const filters = {
-      all: { zh: "全部", en: "All" },
-      internal: { zh: "站内入口", en: "Internal" },
-      external: { zh: "外部资源", en: "External" }
-    };
-
     const categories = [
-      { id: "all", icon: "⌂", label: { zh: "首页", en: "Home" } },
-      { id: "ai", icon: "AI", label: { zh: "AI 导航", en: "AI Nav" } },
-      { id: "finance", icon: "F", label: { zh: "金融研究", en: "Finance" } },
-      { id: "agent", icon: "AG", label: { zh: "Agent 导航", en: "Agent Nav" } },
-      { id: "tools", icon: "T", label: { zh: "工具资源", en: "Tools" } },
-      { id: "learning", icon: "L", label: { zh: "学习提升", en: "Learning" } },
-      { id: "design", icon: "D", label: { zh: "设计灵感", en: "Design" } },
-      { id: "api", icon: "API", label: { zh: "API 与模型", en: "API and models" } }
+      { id: "all", label: { zh: "首页", en: "Home" }, title: { zh: "首页", en: "Home" } },
+      { id: "ai", label: { zh: "AI", en: "AI" }, title: { zh: "AI 工具", en: "AI tools" } },
+      { id: "finance", label: { zh: "金融", en: "Finance" }, title: { zh: "金融研究", en: "Finance research" } },
+      { id: "agent", label: { zh: "Agent", en: "Agent" }, title: { zh: "Agent 导航", en: "Agent hub" } },
+      { id: "api", label: { zh: "模型", en: "Models" }, title: { zh: "API 与模型", en: "APIs and models" } },
+      { id: "tools", label: { zh: "办公", en: "Work" }, title: { zh: "工具与办公", en: "Tools and work" } },
+      { id: "learning", label: { zh: "学习", en: "Learning" }, title: { zh: "学习提升", en: "Learning" } },
+      { id: "design", label: { zh: "设计", en: "Design" }, title: { zh: "设计灵感", en: "Design inspiration" } }
     ];
 
     const resources = [
       {
         name: "AI 导航",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "聚合 AI 产品、模型入口和常用站点。", en: "A curated entry page for AI products, model directories, and tools." },
+        icon: "AI",
         category: "ai",
-        mode: "internal",
-        badge: { zh: "站内", en: "Internal" },
-        tags: { zh: ["AI", "模型", "站内"], en: ["AI", "models", "internal"] },
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "聚合 AI 产品、模型入口和常用站点。", en: "A curated entry page for AI products, model directories, and daily tools." },
         url: "/ai-nav/",
-        host: "88220066.xyz/ai-nav/",
-        icon: "AI"
-      },
-      {
-        name: "金融导航",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "整理金融研究、行情和数据资源。", en: "A focused directory for finance research, market tools, and data." },
-        category: "finance",
-        mode: "internal",
-        badge: { zh: "站内", en: "Internal" },
-        tags: { zh: ["金融", "研究", "数据"], en: ["finance", "research", "data"] },
-        url: "/finance-nav/",
-        host: "88220066.xyz/finance-nav/",
-        icon: "F"
-      },
-      {
-        name: "股指期货升贴水",
-        subtitle: { zh: "站内工具", en: "Internal tool" },
-        summary: { zh: "直接看 IF、IH、IC、IM 的升贴水和持有年化。", en: "Track IF, IH, IC, and IM basis levels and implied annualized carry." },
-        category: "finance",
-        mode: "internal",
-        badge: { zh: "研究", en: "Research" },
-        tags: { zh: ["期货", "贴水", "工具"], en: ["futures", "basis", "tool"] },
-        url: "/futures-basis/",
-        host: "88220066.xyz/futures-basis/",
-        icon: "IF"
-      },
-      {
-        name: "Agent 导航",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "收拢 Agent 产品、框架、平台和工作流入口。", en: "A dense hub for agent products, frameworks, and workflows." },
-        category: "agent",
-        mode: "internal",
-        badge: { zh: "站内", en: "Internal" },
-        tags: { zh: ["Agent", "框架", "工作流"], en: ["agent", "frameworks", "workflow"] },
-        url: "/lobster-nav/",
-        host: "88220066.xyz/lobster-nav/",
-        icon: "AG"
-      },
-      {
-        name: "模型排名",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "公开模型榜单和能力对比入口。", en: "Public leaderboards and capability comparisons for models." },
-        category: "api",
-        mode: "internal",
-        badge: { zh: "榜单", en: "Rankings" },
-        tags: { zh: ["模型", "榜单", "评测"], en: ["models", "rankings", "benchmarks"] },
-        url: "/model-ranking/",
-        host: "88220066.xyz/model-ranking/",
-        icon: "R"
-      },
-      {
-        name: "API 导航",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "模型 API、兼容性和免费方案一页查。", en: "Browse model APIs, compatibility, and access routes on one page." },
-        category: "api",
-        mode: "internal",
-        badge: { zh: "API", en: "API" },
-        tags: { zh: ["API", "模型", "接入"], en: ["API", "models", "access"] },
-        url: "/free-api-nav/",
-        host: "88220066.xyz/free-api-nav/",
-        icon: "API"
-      },
-      {
-        name: "工具导航",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "网页工具、开发工具和实用站点集中整理。", en: "A practical mix of web tools, developer utilities, and daily helpers." },
-        category: "tools",
-        mode: "internal",
-        badge: { zh: "工具", en: "Tools" },
-        tags: { zh: ["工具", "开发", "效率"], en: ["tools", "dev", "productivity"] },
-        url: "/tools-nav/",
-        host: "88220066.xyz/tools-nav/",
-        icon: "T"
-      },
-      {
-        name: "英语资源",
-        subtitle: { zh: "站内入口", en: "Internal page" },
-        summary: { zh: "英语学习、阅读、跟读和词卡入口。", en: "English learning resources for reading, shadowing, and vocabulary." },
-        category: "learning",
-        mode: "internal",
-        badge: { zh: "学习", en: "Learning" },
-        tags: { zh: ["英语", "学习", "词汇"], en: ["english", "learning", "vocabulary"] },
-        url: "/english-tools/",
-        host: "88220066.xyz/english-tools/",
-        icon: "EN"
-      },
-      {
-        name: "GitHub",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "项目代码、Issue、PR 和文档入口。", en: "Source code, issues, pull requests, and docs in one place." },
-        category: "tools",
-        mode: "external",
-        badge: { zh: "协作", en: "Collab" },
-        tags: { zh: ["代码", "协作", "开源"], en: ["code", "collaboration", "open source"] },
-        url: "https://github.com/",
-        host: "github.com",
-        icon: "GH"
+        host: "88220066.xyz/ai-nav/"
       },
       {
         name: "ChatGPT",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "AI 对话、写作、整理和探索的基础入口。", en: "A general starting point for AI chat, writing, and synthesis." },
+        icon: "GPT",
         category: "ai",
-        mode: "external",
-        badge: { zh: "AI", en: "AI" },
-        tags: { zh: ["AI", "写作", "助手"], en: ["AI", "writing", "assistant"] },
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "AI 对话、写作和整理工作的基础入口。", en: "A dependable starting point for AI chat, writing, and synthesis." },
         url: "https://chatgpt.com/",
-        host: "chatgpt.com",
-        icon: "GPT"
+        host: "chatgpt.com"
       },
       {
-        name: "Hermes",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "开源多 Agent 编排项目，适合看工具调用和自动化流程。", en: "An open multi-agent orchestration project for tool use and automation flows." },
-        category: "agent",
-        mode: "external",
-        badge: { zh: "Agent", en: "Agent" },
-        tags: { zh: ["Hermes", "多 Agent", "编排"], en: ["Hermes", "multi-agent", "orchestration"] },
-        url: "https://github.com/Entropy-Labs-AI/hermes",
-        host: "github.com/Entropy-Labs-AI/hermes",
-        icon: "H"
-      },
-      {
-        name: "TradingView",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "看图、盯盘和快速验证技术思路的高频入口。", en: "A fast route for charting, market monitoring, and technical validation." },
+        name: "金融导航",
+        icon: "F",
         category: "finance",
-        mode: "external",
-        badge: { zh: "行情", en: "Markets" },
-        tags: { zh: ["图表", "盯盘", "金融"], en: ["charts", "markets", "finance"] },
-        url: "https://www.tradingview.com/",
-        host: "www.tradingview.com",
-        icon: "TV"
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "集中整理行情、研究和金融数据工具。", en: "A focused directory for research, markets, and finance data tools." },
+        url: "/finance-nav/",
+        host: "88220066.xyz/finance-nav/"
+      },
+      {
+        name: "股指期货升贴水",
+        icon: "IF",
+        category: "finance",
+        subtitle: { zh: "站内工具", en: "Internal tool" },
+        summary: { zh: "直接看 IF、IH、IC、IM 的升贴水和持有年化。", en: "Track IF, IH, IC, and IM basis levels and annualized carry." },
+        url: "/futures-basis/",
+        host: "88220066.xyz/futures-basis/"
       },
       {
         name: "聚宽",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "量化研究、回测和策略学习的国内入口。", en: "A domestic platform for quant research, backtesting, and strategy study." },
+        icon: "JQ",
         category: "finance",
-        mode: "external",
-        badge: { zh: "量化", en: "Quant" },
-        tags: { zh: ["量化", "回测", "策略"], en: ["quant", "backtest", "strategy"] },
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "量化研究、回测和策略学习的常用入口。", en: "A practical destination for quant research, backtests, and strategy study." },
         url: "https://www.joinquant.com/",
-        host: "www.joinquant.com",
-        icon: "JQ"
+        host: "www.joinquant.com"
+      },
+      {
+        name: "TradingView",
+        icon: "TV",
+        category: "finance",
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "看图、盯盘和验证行情想法的高频入口。", en: "A fast route for charting, monitoring, and testing market ideas." },
+        url: "https://www.tradingview.com/",
+        host: "www.tradingview.com"
+      },
+      {
+        name: "Agent 导航",
+        icon: "AG",
+        category: "agent",
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "收拢 Agent 产品、框架、平台和工作流入口。", en: "A dense hub for agent products, frameworks, and workflows." },
+        url: "/lobster-nav/",
+        host: "88220066.xyz/lobster-nav/"
+      },
+      {
+        name: "Hermes",
+        icon: "H",
+        category: "agent",
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "开源多 Agent 编排项目，适合看工具调用和自动化流程。", en: "An open orchestration project for multi-agent workflows and tool use." },
+        url: "https://github.com/Entropy-Labs-AI/hermes",
+        host: "github.com/Entropy-Labs-AI/hermes"
+      },
+      {
+        name: "API 导航",
+        icon: "API",
+        category: "api",
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "模型 API、兼容性和接入方式一页查。", en: "Browse model APIs, compatibility, and access routes in one place." },
+        url: "/free-api-nav/",
+        host: "88220066.xyz/free-api-nav/"
+      },
+      {
+        name: "模型排名",
+        icon: "R",
+        category: "api",
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "公开模型榜单和能力对比入口。", en: "Public leaderboards and model capability comparisons." },
+        url: "/model-ranking/",
+        host: "88220066.xyz/model-ranking/"
       },
       {
         name: "Hugging Face",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "模型、数据集和 Demo 一起查，适合模型探索。", en: "A single home for models, datasets, and demos." },
+        icon: "HF",
         category: "api",
-        mode: "external",
-        badge: { zh: "模型", en: "Models" },
-        tags: { zh: ["模型", "数据集", "开源"], en: ["models", "datasets", "open source"] },
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "模型、数据集和 Demo 一起查，适合模型探索。", en: "A single place for models, datasets, and demos." },
         url: "https://huggingface.co/",
-        host: "huggingface.co",
-        icon: "HF"
+        host: "huggingface.co"
       },
       {
-        name: "Figma",
-        subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "做界面、看参考和协同设计的基础站点。", en: "A core destination for interface design, references, and collaboration." },
-        category: "design",
-        mode: "external",
-        badge: { zh: "设计", en: "Design" },
-        tags: { zh: ["设计", "协作", "原型"], en: ["design", "collab", "prototype"] },
-        url: "https://www.figma.com/",
-        host: "www.figma.com",
-        icon: "FG"
+        name: "工具导航",
+        icon: "T",
+        category: "tools",
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "网页工具、开发工具和实用站点集中整理。", en: "A practical mix of web tools, developer utilities, and helpers." },
+        url: "/tools-nav/",
+        host: "88220066.xyz/tools-nav/"
       },
       {
-        name: "Behance",
+        name: "GitHub",
+        icon: "GH",
+        category: "tools",
         subtitle: { zh: "外部资源", en: "External" },
-        summary: { zh: "视觉参考、排版和品牌案例很适合找灵感。", en: "A strong source for visual references, layouts, and branding inspiration." },
-        category: "design",
-        mode: "external",
-        badge: { zh: "灵感", en: "Inspo" },
-        tags: { zh: ["灵感", "视觉", "作品集"], en: ["inspiration", "visual", "portfolio"] },
-        url: "https://www.behance.net/",
-        host: "www.behance.net",
-        icon: "Be"
+        summary: { zh: "项目代码、Issue、PR 和文档入口。", en: "Source code, issues, pull requests, and docs." },
+        url: "https://github.com/",
+        host: "github.com"
       },
       {
         name: "Notion",
+        icon: "N",
+        category: "tools",
         subtitle: { zh: "外部资源", en: "External" },
         summary: { zh: "文档、资料库和项目流程管理的通用入口。", en: "A flexible home for docs, databases, and project workflows." },
-        category: "tools",
-        mode: "external",
-        badge: { zh: "协作", en: "Collab" },
-        tags: { zh: ["文档", "工作流", "整理"], en: ["docs", "workflow", "organize"] },
         url: "https://www.notion.so/",
-        host: "www.notion.so",
-        icon: "N"
+        host: "www.notion.so"
+      },
+      {
+        name: "英语资源",
+        icon: "EN",
+        category: "learning",
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "英语学习、阅读、跟读和词卡入口。", en: "English learning resources for reading, shadowing, and vocabulary." },
+        url: "/english-tools/",
+        host: "88220066.xyz/english-tools/"
+      },
+      {
+        name: "技能导航",
+        icon: "S",
+        category: "learning",
+        subtitle: { zh: "站内入口", en: "Internal page" },
+        summary: { zh: "工具链、工作流和实践技能整理。", en: "A compact hub for workflows, tooling, and applied skills." },
+        url: "/skills-nav/",
+        host: "88220066.xyz/skills-nav/"
+      },
+      {
+        name: "Figma",
+        icon: "FG",
+        category: "design",
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "做界面、看参考和协同设计的基础站点。", en: "A core destination for interface design, references, and collaboration." },
+        url: "https://www.figma.com/",
+        host: "www.figma.com"
+      },
+      {
+        name: "Behance",
+        icon: "Be",
+        category: "design",
+        subtitle: { zh: "外部资源", en: "External" },
+        summary: { zh: "视觉参考、排版和品牌案例很适合找灵感。", en: "A strong source for visual references, layouts, and branding inspiration." },
+        url: "https://www.behance.net/",
+        host: "www.behance.net"
       }
     ];
 
     const state = {
       lang: "zh",
       category: "all",
-      mode: "all",
       search: ""
     };
 
-    const navEl = document.getElementById("sidebar-nav");
-    const shortcutEl = document.getElementById("shortcut-row");
-    const gridEl = document.getElementById("resource-grid");
+    const navEl = document.getElementById("nav-links");
+    const sectionsEl = document.getElementById("sections");
     const emptyEl = document.getElementById("empty-state");
-    const searchEl = document.getElementById("search-input");
+    const searchMiniEl = document.getElementById("search-mini");
+    const searchMainEl = document.getElementById("search-main");
+    const focusBtn = document.getElementById("focus-search");
     const langButtons = [...document.querySelectorAll("[data-lang]")];
-    const modeButtons = [...document.querySelectorAll("[data-filter]")];
 
     function categoryLabel(id) {
       return categories.find((item) => item.id === id)?.label[state.lang] || "";
     }
 
+    function sectionTitle(id) {
+      return categories.find((item) => item.id === id)?.title[state.lang] || "";
+    }
+
+    function filteredResources() {
+      const query = state.search.trim().toLowerCase();
+      return resources.filter((item) => {
+        const categoryPass = state.category === "all" || item.category === state.category;
+        const haystack = [item.name, item.subtitle.zh, item.subtitle.en, item.summary.zh, item.summary.en, item.host].join(" ").toLowerCase();
+        return categoryPass && (!query || haystack.includes(query));
+      });
+    }
+
     function applyMessages() {
       window.SiteI18n.applyMessages(messages, state.lang);
-      searchEl.placeholder = state.lang === "zh"
-        ? "搜索你想要的网站、站内入口或工具..."
-        : "Search for tools, internal pages, or websites...";
-
-      modeButtons.forEach((button) => {
-        const key = button.dataset.filter;
-        button.textContent = filters[key][state.lang];
-      });
+      const placeholder = state.lang === "zh"
+        ? "搜索你想用的站点、工具或站内入口..."
+        : "Search for websites, tools, or internal pages...";
+      searchMiniEl.placeholder = placeholder;
+      searchMainEl.placeholder = placeholder;
     }
 
     function renderLang() {
@@ -910,96 +768,74 @@
       });
     }
 
-    function renderSidebar() {
+    function renderNav() {
       navEl.innerHTML = categories.map((item) => `
         <button class="nav-btn ${item.id === state.category ? "active" : ""}" type="button" data-category="${item.id}">
-          <span class="nav-icon">${item.icon}</span>
-          <span>${item.label[state.lang]}</span>
+          ${item.label[state.lang]}
         </button>
       `).join("");
     }
 
-    function renderShortcuts() {
-      shortcutEl.innerHTML = categories.slice(1).map((item) => `
-        <button class="shortcut ${item.id === state.category ? "active" : ""}" type="button" data-category="${item.id}">
-          <span class="shortcut-icon">${item.icon}</span>
-          <span>${item.label[state.lang]}</span>
-        </button>
-      `).join("");
-    }
-
-    function filteredResources() {
-      const query = state.search.trim().toLowerCase();
-      return resources.filter((item) => {
-        const categoryPass = state.category === "all" || item.category === state.category;
-        const modePass = state.mode === "all" || item.mode === state.mode;
-        const haystack = [
-          item.name,
-          item.subtitle.zh,
-          item.subtitle.en,
-          item.summary.zh,
-          item.summary.en,
-          ...item.tags.zh,
-          ...item.tags.en
-        ].join(" ").toLowerCase();
-        const searchPass = !query || haystack.includes(query);
-        return categoryPass && modePass && searchPass;
-      });
-    }
-
-    function renderGrid() {
+    function renderSections() {
       const items = filteredResources();
       emptyEl.hidden = items.length > 0;
-      gridEl.innerHTML = items.map((item) => `
-        <article class="card">
-          <div class="card-top">
-            <div class="card-brand">
-              <div class="card-icon">${item.icon}</div>
-              <div>
-                <h3>${item.name}</h3>
-                <div class="card-kicker">${item.subtitle[state.lang]}</div>
-              </div>
+
+      if (items.length === 0) {
+        sectionsEl.innerHTML = "";
+        return;
+      }
+
+      const groups = state.category === "all"
+        ? categories.filter((item) => item.id !== "all").map((item) => ({
+            id: item.id,
+            items: items.filter((resource) => resource.category === item.id)
+          })).filter((group) => group.items.length)
+        : [{ id: state.category, items }];
+
+      sectionsEl.innerHTML = groups.map((group) => `
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <h2>${sectionTitle(group.id)}</h2>
+              <p>${state.lang === "zh" ? "保留常用入口和短说明，先找得到，再打开。" : "Keep the essentials visible: a short summary, a clear label, and one click to open."}</p>
             </div>
-            <span class="badge">${item.badge[state.lang]}</span>
           </div>
-          <p>${item.summary[state.lang]}</p>
-          <div class="tag-row">
-            ${item.tags[state.lang].slice(0, 3).map((tag) => `<span class="chip">${tag}</span>`).join("")}
+          <div class="section-grid">
+            ${group.items.map((item) => `
+              <article class="tile">
+                <div class="tile-top">
+                  <div class="tile-icon">${item.icon}</div>
+                  <div>
+                    <h3>${item.name}</h3>
+                    <div class="tile-meta">${item.subtitle[state.lang]}</div>
+                  </div>
+                </div>
+                <p>${item.summary[state.lang]}</p>
+                <div class="tile-bottom">
+                  <span class="tile-host">${item.host}</span>
+                  <a class="open" href="${item.url}" target="${item.url.startsWith("/") ? "_self" : "_blank"}" rel="noreferrer">${state.lang === "zh" ? "打开" : "Open"}</a>
+                </div>
+              </article>
+            `).join("")}
           </div>
-          <div class="card-bottom">
-            <span class="host">${item.host}</span>
-            <a class="visit" href="${item.url}" target="${item.mode === "external" ? "_blank" : "_self"}" rel="noreferrer">${state.lang === "zh" ? "打开" : "Open"}</a>
-          </div>
-        </article>
+        </section>
       `).join("");
     }
 
-    function renderModes() {
-      modeButtons.forEach((button) => {
-        button.classList.toggle("active", button.dataset.filter === state.mode);
-      });
+    function syncSearch(value) {
+      state.search = value;
+      if (searchMiniEl.value !== value) searchMiniEl.value = value;
+      if (searchMainEl.value !== value) searchMainEl.value = value;
+      renderSections();
     }
 
-    function bindInteractions() {
+    function bindEvents() {
       navEl.addEventListener("click", (event) => {
         const button = event.target.closest("[data-category]");
         if (!button) return;
         state.category = button.dataset.category;
-        render();
-      });
-
-      shortcutEl.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-category]");
-        if (!button) return;
-        state.category = button.dataset.category;
-        render();
-      });
-
-      modeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          state.mode = button.dataset.filter;
-          render();
-        });
+        renderNav();
+        renderSections();
       });
 
       langButtons.forEach((button) => {
@@ -1010,15 +846,14 @@
         });
       });
 
-      searchEl.addEventListener("input", (event) => {
-        state.search = event.target.value;
-        renderGrid();
-      });
+      searchMiniEl.addEventListener("input", (event) => syncSearch(event.target.value));
+      searchMainEl.addEventListener("input", (event) => syncSearch(event.target.value));
+      focusBtn.addEventListener("click", () => searchMainEl.focus());
 
       window.addEventListener("keydown", (event) => {
-        if (event.key.toLowerCase() === "k" && !event.metaKey && !event.ctrlKey && document.activeElement !== searchEl) {
+        if (event.key.toLowerCase() === "k" && (event.ctrlKey || event.metaKey)) {
           event.preventDefault();
-          searchEl.focus();
+          searchMainEl.focus();
         }
       });
     }
@@ -1026,10 +861,8 @@
     function render() {
       applyMessages();
       renderLang();
-      renderSidebar();
-      renderShortcuts();
-      renderModes();
-      renderGrid();
+      renderNav();
+      renderSections();
     }
 
     state.lang = window.SiteI18n.getLang();
@@ -1038,7 +871,7 @@
       render();
     });
 
-    bindInteractions();
+    bindEvents();
     render();
   </script>
 </body>
