@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小龙虾导航 | 88220066.xyz</title>
-  <meta name="description" content="高密度的小龙虾/OpenClaw 生态导航，按本地、云端与平台产品直接浏览。">
+  <title>Agent 导航 | 88220066.xyz</title>
+  <meta name="description" content="高密度的 Agent 生态导航，按本地、云端与平台产品直接浏览。">
   <script src="/notes/site-i18n.js"></script>
   <style>
     :root{--bg:#f8fafc;--panel:#ffffff;--line:rgba(15,23,42,.08);--text:#0f172a;--muted:#64748b;--accent:#c48f5a;--accent-soft:rgba(196,143,90,.14);--radius-xl:22px;--radius-lg:16px;--radius-md:12px;--max:1240px}
@@ -87,19 +87,19 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
 <body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand" id="brand">88220066.xyz / 小龙虾导航</div>
+      <div class="brand" id="brand">88220066.xyz / Agent 导航</div>
       <nav class="nav-links" aria-label="Primary">
         <a href="/" data-i18n="navHome">首页</a>
         <a href="/ai-nav/" data-i18n="navAi">AI 导航</a>
-        <a href="/lobster-nav/" class="active" data-i18n="navLobster">小龙虾导航</a>
+        <a href="/lobster-nav/" class="active" data-i18n="navLobster">Agent 导航</a>
       </nav>
     </header>
 
     <section class="toolbar">
       <div class="toolbar-head">
         <div>
-          <h1 data-i18n="heroTitle">小龙虾导航</h1>
-          <p data-i18n="heroCopy">按本地、云端、平台和常见入口直接平铺，优先做成一眼能扫完的密集视图。</p>
+          <h1 data-i18n="heroTitle">Agent 导航</h1>
+          <p data-i18n="heroCopy">按本地、云端、平台和常见入口直接平铺，优先做成一眼能扫完的密集 Agent 视图。</p>
         </div>
         <div class="count" id="count">加载中</div>
       </div>
@@ -127,13 +127,13 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
 
   <script>
     const pageCopy = {
-      pageTitle:{zh:"小龙虾导航 | 88220066.xyz",en:"Lobster Nav | 88220066.xyz"},
-      pageDescription:{zh:"高密度的小龙虾/OpenClaw 生态导航，按本地、云端与平台产品直接浏览。",en:"A dense OpenClaw ecosystem directory for hosted, local, and platform products."},
+      pageTitle:{zh:"Agent 导航 | 88220066.xyz",en:"Agent Nav | 88220066.xyz"},
+      pageDescription:{zh:"高密度的 Agent 生态导航，按本地、云端与平台产品直接浏览。",en:"A dense agent ecosystem directory for hosted, local, and platform products."},
       navHome:{zh:"首页",en:"Home"},
       navAi:{zh:"AI 导航",en:"AI Nav"},
-      navLobster:{zh:"小龙虾导航",en:"Lobster Nav"},
-      heroTitle:{zh:"小龙虾导航",en:"Lobster Nav"},
-      heroCopy:{zh:"按本地、云端、平台和常见入口直接平铺，优先做成一眼能扫完的密集视图。",en:"A dense wall of local, hosted, and platform entries you can scan quickly."},
+      navLobster:{zh:"Agent 导航",en:"Agent Nav"},
+      heroTitle:{zh:"Agent 导航",en:"Agent Nav"},
+      heroCopy:{zh:"按本地、云端、平台和常见入口直接平铺，优先做成一眼能扫完的密集 Agent 视图。",en:"A dense wall of local, hosted, and platform agent entries you can scan quickly."},
       filterCategory:{zh:"分类",en:"Category"},
       listTitle:{zh:"入口列表",en:"Directory"},
       listCopy:{zh:"保留短说明，不做长介绍，直接看名称、类型和一句话用途。",en:"Short summaries only. Name, type, and one-line use case come first."}
@@ -141,8 +141,8 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
 
     const labels = {
       zh:{
-        brand:"88220066.xyz / 小龙虾导航",
-        searchPlaceholder:"搜索名称、标签或说明，例如：云端、本地、部署、GitHub、Agent",
+        brand:"88220066.xyz / Agent 导航",
+        searchPlaceholder:"搜索名称、标签或说明，例如：云端、本地、部署、GitHub、Hermes",
         allCategory:"全部分类",
         showing:"当前显示",
         items:"个入口",
@@ -150,8 +150,8 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
         noMatch:"没有找到匹配内容，换个关键词或分类试试。"
       },
       en:{
-        brand:"88220066.xyz / Lobster Nav",
-        searchPlaceholder:"Search by name, tag, or use case: hosted, local, deploy, GitHub, agent",
+        brand:"88220066.xyz / Agent Nav",
+        searchPlaceholder:"Search by name, tag, or use case: hosted, local, deploy, GitHub, Hermes",
         allCategory:"All Categories",
         showing:"Showing",
         items:"items",
@@ -170,6 +170,7 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
     const items = [
       {name:"OpenClaw 官网",logo:"OC",category:"official",accent:"#f39b67",logoBg:"#fff1e6",url:"https://openclaw.ai/",summary:{zh:"开源、本地优先的自主 AI 助手主页。",en:"Official homepage for the local-first OpenClaw assistant."},tags:{zh:["官网","开源"],en:["official","open source"]}},
       {name:"官方 GitHub",logo:"GH",category:"official",accent:"#b98cf2",logoBg:"#f6f0ff",url:"https://github.com/openclaw/openclaw",summary:{zh:"源代码、更新和 Issue 汇总入口。",en:"Source code, updates, and issues."},tags:{zh:["源码","更新"],en:["source","updates"]}},
+      {name:"Hermes",logo:"H",category:"platform",accent:"#8fd0c4",logoBg:"#effaf7",url:"https://github.com/Entropy-Labs-AI/hermes",summary:{zh:"面向多 Agent 编排、工具调用和自动化流程的开源项目。",en:"An open source project for multi-agent orchestration, tool use, and automation flows."},tags:{zh:["Hermes","多 Agent"],en:["Hermes","multi-agent"]}},
       {name:"Kimi Claw",logo:"K",category:"hosted",accent:"#8fb8ff",logoBg:"#edf4ff",url:"https://www.kimi.com/",summary:{zh:"云端 OpenClaw 风格产品入口。",en:"A hosted OpenClaw-style product route."},tags:{zh:["云端","产品"],en:["hosted","product"]}},
       {name:"MaxClaw",logo:"M",category:"hosted",accent:"#9fd7b7",logoBg:"#eef9f2",url:"https://agent.minimaxi.com/",summary:{zh:"偏一键开通和快速部署。",en:"Focused on quick setup and hosted use."},tags:{zh:["云端","快速部署"],en:["hosted","quick setup"]}},
       {name:"飞书 OpenClaw",logo:"飞",category:"hosted",accent:"#89b8f5",logoBg:"#edf4ff",url:"https://openclaw.feishu.cn/",summary:{zh:"飞书体系下的云端入口。",en:"Hosted entry inside the Feishu ecosystem."},tags:{zh:["飞书","云端"],en:["Feishu","hosted"]}},
