@@ -59,6 +59,7 @@ body {
   scrollbar-width: none;
   color: var(--muted) !important;
   min-width: 0;
+  flex: 1 1 auto;
   white-space: nowrap;
 }
 
@@ -92,6 +93,11 @@ body {
   background: transparent !important;
   border-bottom-color: var(--accent);
   box-shadow: none !important;
+}
+
+.nav .site-lang-switch,
+.nav #site-lang-switch {
+  align-self: center;
 }
 
 .hero,

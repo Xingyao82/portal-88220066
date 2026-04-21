@@ -13,33 +13,29 @@
     style.id = "site-lang-style";
     style.textContent = `
       #${switchId}{
-        position:fixed;
-        top:16px;
-        right:16px;
-        z-index:999999;
         display:flex;
         gap:6px;
-        padding:6px;
+        padding:4px;
         border-radius:999px;
-        border:1px solid rgba(255,255,255,.16);
-        background:rgba(10,16,30,.72);
-        backdrop-filter:blur(12px);
-        box-shadow:0 12px 30px rgba(0,0,0,.22);
+        border:1px solid var(--line, rgba(148,163,184,.22));
+        background:rgba(255,255,255,.92);
+        margin-left:auto;
+        flex:none;
       }
       #${switchId} button{
-        min-width:44px;
-        height:34px;
+        min-width:42px;
+        height:30px;
         border:0;
         border-radius:999px;
-        padding:0 12px;
+        padding:0 10px;
         cursor:pointer;
         font:600 13px/1 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;
-        color:#d7e1ff;
+        color:var(--muted, #667085);
         background:transparent;
       }
       #${switchId} button.active{
-        color:#08111f;
-        background:#ffffff;
+        color:#ffffff;
+        background:var(--accent, #3677ff);
       }
       #${translateId}{
         position:fixed;
@@ -63,14 +59,12 @@
       .goog-te-gadget span{
         display:none !important;
       }
-      @media (max-width:720px){
-        #${switchId}{
-          top:12px;
-          right:12px;
-        }
-      }
     `;
     document.head.appendChild(style);
+  }
+
+  function getSwitchHost() {
+    return document.querySelector(".nav") || document.querySelector(".topbar") || document.body;
   }
 
   function getSavedLang() {
@@ -110,7 +104,7 @@
         <button type="button" data-lang="zh-CN">中</button>
         <button type="button" data-lang="en">EN</button>
       `;
-      document.body.appendChild(wrap);
+      getSwitchHost().appendChild(wrap);
       wrap.addEventListener("click", (event) => {
         const button = event.target.closest("[data-lang]");
         if (!button) return;
