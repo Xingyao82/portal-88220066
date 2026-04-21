@@ -20,14 +20,15 @@ body {
 .shell {
   width: min(calc(100% - 24px), 1320px) !important;
   margin: 0 auto !important;
-  padding: 14px 0 28px !important;
+  padding: 0 0 28px !important;
 }
 
 .nav {
   position: sticky;
-  top: 10px;
+  top: 0;
   z-index: 20;
   min-height: 74px;
+  margin-bottom: 14px;
   padding: 14px 18px !important;
   border: 1px solid rgba(255, 255, 255, 0.9) !important;
   border-radius: 8px !important;
