@@ -26,72 +26,72 @@ body {
 .nav {
   position: sticky;
   top: 0;
-  z-index: 20;
-  min-height: 74px;
+  z-index: 40;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 56px;
   margin-bottom: 14px;
-  padding: 14px 18px !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
-  border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.86) !important;
-  backdrop-filter: blur(18px) !important;
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06) !important;
+  padding: 0 4px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: none !important;
 }
 
 .brand {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700 !important;
-  letter-spacing: -0.03em !important;
+  display: none !important;
 }
 
 .brand::before {
-  content: "82";
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #4d8bff, #6aa5ff);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 700;
-  box-shadow: 0 10px 20px rgba(54, 119, 255, 0.18);
-  flex: none;
+  display: none !important;
 }
 
 .nav-links,
 .links {
   display: flex !important;
   align-items: center;
-  gap: 4px !important;
-  flex-wrap: wrap;
+  gap: 14px !important;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
   color: var(--muted) !important;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.nav-links::-webkit-scrollbar,
+.links::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-links a,
 .links a {
   display: inline-flex !important;
   align-items: center;
-  min-height: 40px;
-  padding: 0 12px;
-  border-radius: 8px;
+  min-height: 56px;
+  padding: 0 2px;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
   color: var(--muted) !important;
   transition: 160ms ease;
+  font-size: 14px;
 }
 
 .nav-links a:hover,
 .links a:hover {
   color: var(--text) !important;
-  background: rgba(54, 119, 255, 0.06) !important;
+  background: transparent !important;
 }
 
 .nav-links a.active,
 .links a.active {
   color: var(--accent) !important;
-  background: var(--accent-soft) !important;
-  box-shadow: inset 0 -2px 0 var(--accent);
+  background: transparent !important;
+  border-bottom-color: var(--accent);
+  box-shadow: none !important;
 }
 
 .hero,
@@ -274,7 +274,6 @@ code {
 
 @media (max-width: 980px) {
   .nav {
-    position: static;
-    min-height: 0;
+    top: 0;
   }
 }
