@@ -271,10 +271,13 @@
     <header class="nav">
       <div class="brand" id="brand">88220066.xyz / Income 导航</div>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/ai-nav/" data-i18n="navAi">AI 导航</a>
-        <a href="/finance-nav/" data-i18n="navFinance">金融导航</a>
-        <a href="/income-nav/" class="active" data-i18n="navIncome">Income 导航</a>
-        <a href="/tools-nav/" data-i18n="navTools">工具导航</a>
+        <a href="/ai-nav/">AI 导航</a>
+        <a href="/finance-nav/">金融导航</a>
+        <a href="/income-nav/" class="active">Income 导航</a>
+        <a href="/free-api-nav/">API 导航</a>
+        <a href="/tools-nav/">工具导航</a>
+        <a href="/english-tools/">英语导航</a>
+        <a href="/skills-nav/">技能</a>
       </nav>
     </header>
 
@@ -317,6 +320,17 @@
       </div>
       <div class="grid" id="advanced-grid"></div>
     </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="researchTitle">Income 研究与筛选</h2>
+          <p data-i18n="researchCopy">这组不是直接买的 ETF，而是拿来查分红节奏、收益率筛选、周配月配和 provider 动态的工具入口。</p>
+        </div>
+        <div class="section-badge" data-i18n="researchBadge">Research / screener + calendar + rankings</div>
+      </div>
+      <div class="grid" id="research-grid"></div>
+    </section>
   </div>
 
   <script>
@@ -347,7 +361,13 @@
         zh: "这组更偏 weekly、0DTE、single-stock covered call 和 provider 入口，收益看起来更猛，但结构也更复杂。",
         en: "This set leans toward weekly, 0DTE, single-stock covered call, and provider hubs. The yields can look stronger, but the structure is also more complex."
       },
-      advancedBadge: { zh: "进阶 / 期权 + 周配 + 单股", en: "Advanced / options + weekly + single-stock" }
+      advancedBadge: { zh: "进阶 / 期权 + 周配 + 单股", en: "Advanced / options + weekly + single-stock" },
+      researchTitle: { zh: "Income 研究与筛选", en: "Income Research & Screening" },
+      researchCopy: {
+        zh: "这组不是直接买的 ETF，而是拿来查分红节奏、收益率筛选、周配月配和 provider 动态的工具入口。",
+        en: "These are tools for checking distributions, screening yields, and tracking weekly or monthly income ideas."
+      },
+      researchBadge: { zh: "研究 / 筛选 / 日历", en: "Research / screener / calendar" }
     };
 
     const labels = {
@@ -812,6 +832,23 @@
         }
       },
       {
+        name: "QUSA",
+        ticker: "VistaShares Target 15 USA Quality Income ETF",
+        accent: "#8b5cf6",
+        url: "https://www.vistashares.com/qusa-bringing-monthly-income-to-quality-factor-investing/",
+        type: { zh: "质量股 income", en: "Quality-income equity" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "更像把 quality factor 和 monthly income 拼在一起的路线，适合和 JEPI、DIVO 做风格对照。",
+          en: "A quality-factor plus monthly-income angle that is useful to compare against JEPI and DIVO."
+        },
+        tags: { zh: ["QUSA", "quality", "monthly"], en: ["QUSA", "quality", "monthly"] },
+        note: {
+          zh: "看 quality 暴露和 income 目标是否真的兼容。",
+          en: "Watch whether the quality tilt and the income target really align."
+        }
+      },
+      {
         name: "YieldMax",
         ticker: "Option Income ETF Hub",
         accent: "#f59e0b",
@@ -826,6 +863,57 @@
         note: {
           zh: "看分配率的同时，一定要盯总回报和净值路径。",
           en: "Watch total return and NAV path, not just the yield headline."
+        }
+      },
+      {
+        name: "TSLY",
+        ticker: "YieldMax TSLA Option Income Strategy ETF",
+        accent: "#f97316",
+        url: "https://yieldmaxetfs.com/our-etfs/tsly/",
+        type: { zh: "单股高收益", en: "Single-stock option income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "这是更典型的单股高收益 ETF，适合放在最激进那组里单独观察。",
+          en: "A very typical aggressive single-stock income ETF that belongs in the high-risk bucket."
+        },
+        tags: { zh: ["TSLY", "Tesla", "single-stock"], en: ["TSLY", "Tesla", "single-stock"] },
+        note: {
+          zh: "看单股波动放大后的净值侵蚀。",
+          en: "Watch NAV erosion when single-name volatility gets monetized too aggressively."
+        }
+      },
+      {
+        name: "MSTY",
+        ticker: "YieldMax MSTR Option Income Strategy ETF",
+        accent: "#fb7185",
+        url: "https://www.sec.gov/Archives/edgar/data/1924868/000183988225000683/yieldmax-497_010625.htm",
+        type: { zh: "高波动单股 income", en: "High-vol single-stock income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "这类产品收益率看起来很夸张，但本质上是把高波动单股再做一次 income 包装。",
+          en: "This is the kind of product where the yield headline can look huge because the underlying volatility is huge."
+        },
+        tags: { zh: ["MSTY", "MSTR", "high vol"], en: ["MSTY", "MSTR", "high vol"] },
+        note: {
+          zh: "高收益往往对应高波动和更脆弱的总回报。",
+          en: "Very high yield often comes with very fragile total-return behavior."
+        }
+      },
+      {
+        name: "YMAX",
+        ticker: "YieldMax Universe Fund of Option Income ETFs",
+        accent: "#f59e0b",
+        url: "https://yieldmaxetfs.com/our-etfs/ymax/",
+        type: { zh: "基金中的基金 income", en: "Fund-of-funds option income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "想一眼看 YieldMax 全家桶怎么打包，YMAX 会比只看单个产品更直观。",
+          en: "A more direct way to view the YieldMax ecosystem as a bundled income stack."
+        },
+        tags: { zh: ["YMAX", "fund of funds", "YieldMax"], en: ["YMAX", "fund of funds", "YieldMax"] },
+        note: {
+          zh: "看打包后是不是只是把风险分散了一点，而不是本质变稳。",
+          en: "Watch whether bundling only diversifies risk a bit rather than truly de-risking it."
         }
       },
       {
@@ -860,6 +948,77 @@
         note: {
           zh: "看名字背后的真实结构和分配来源。",
           en: "Watch the real structure and distribution source behind the product names."
+        }
+      }
+    ];
+
+    const incomeResearch = [
+      {
+        name: "Lazy Portfolio ETF",
+        ticker: "High Dividend ETF Screener",
+        accent: "#38bdf8",
+        url: "https://www.lazyportfolioetf.com/high-dividend-etfs/",
+        type: { zh: "收益率筛选", en: "Yield screener" },
+        market: { zh: "全球 ETF", en: "Global ETFs" },
+        summary: {
+          zh: "适合先粗筛高分红 ETF，再回头看真实总回报和波动。",
+          en: "A useful first pass for high-dividend ETF screening before you evaluate total return and risk."
+        },
+        tags: { zh: ["筛选", "高分红", "排名"], en: ["screener", "high dividend", "ranking"] },
+        note: {
+          zh: "别只按 yield 排序，记得回头看回报和回撤。",
+          en: "Do not rank by yield alone; check returns and drawdowns next."
+        }
+      },
+      {
+        name: "TopDividendETFs",
+        ticker: "Dividend Calendar & Rankings",
+        accent: "#22c55e",
+        url: "https://topdividendetfs.com/",
+        type: { zh: "分红日历", en: "Dividend calendar" },
+        market: { zh: "美国 ETF", en: "U.S. ETFs" },
+        summary: {
+          zh: "适合查 ETF 的分红节奏、季度变化和 ex-dividend 日期。",
+          en: "Helpful for checking dividend cadence, changes, and ex-dividend dates."
+        },
+        tags: { zh: ["分红日历", "季度分红", "日期"], en: ["calendar", "dividends", "dates"] },
+        note: {
+          zh: "用来跟踪节奏可以，最终数据还是要和官方交叉确认。",
+          en: "Good for timing checks, but cross-check important data with fund providers."
+        }
+      },
+      {
+        name: "Dividend ETF List",
+        ticker: "ETF Distribution List",
+        accent: "#06b6d4",
+        url: "https://dividendetf.org/list",
+        type: { zh: "ETF 分红列表", en: "ETF distribution list" },
+        market: { zh: "美国 ETF", en: "U.S. ETFs" },
+        summary: {
+          zh: "适合查哪些 ETF 真正在发分红，以及分红频率是月配、季配还是年配。",
+          en: "Useful for checking which ETFs actually distribute and how often they pay."
+        },
+        tags: { zh: ["月配", "季配", "列表"], en: ["monthly", "quarterly", "list"] },
+        note: {
+          zh: "看频率的时候，也要看分红是不是稳定。",
+          en: "Check not only frequency, but also stability."
+        }
+      },
+      {
+        name: "Best Weekly Dividend ETFs",
+        ticker: "Weekly Income Watchlist",
+        accent: "#a78bfa",
+        url: "https://www.dividendvision.com/best/weekly-dividend-etfs",
+        type: { zh: "周配观察", en: "Weekly-income watch" },
+        market: { zh: "美国 ETF", en: "U.S. ETFs" },
+        summary: {
+          zh: "如果你想专门盯 weekly income 这条线，这类榜单比泛泛看大盘 ETF 更快。",
+          en: "A faster way to monitor the weekly-income niche than scanning broad ETF lists."
+        },
+        tags: { zh: ["weekly", "周配", "income"], en: ["weekly", "income", "watchlist"] },
+        note: {
+          zh: "周配不代表更稳，很多只是把波动切得更碎。",
+          en: "Weekly distributions do not necessarily mean lower risk."
         }
       }
     ];
@@ -902,6 +1061,7 @@
       document.getElementById("china-grid").innerHTML = chinaEtfs.map((item) => cardTemplate(item, lang)).join("");
       document.getElementById("us-grid").innerHTML = usEtfs.map((item) => cardTemplate(item, lang)).join("");
       document.getElementById("advanced-grid").innerHTML = advancedIncome.map((item) => cardTemplate(item, lang)).join("");
+      document.getElementById("research-grid").innerHTML = incomeResearch.map((item) => cardTemplate(item, lang)).join("");
     }
 
     window.SiteI18n.bindPage(pageCopy, renderPage);
