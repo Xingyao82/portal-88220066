@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income 导航 | 88220066.xyz</title>
+  <meta name="description" content="整理中国和美国市场里偏 income 的 ETF，按红利、债券、REITs 和期权增强分区。">
+  <meta name="theme-color" content="#0f172a">
+  <script src="/notes/site-i18n.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: rgba(15, 23, 42, 0.96);
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #edf2ff;
+      --muted: #9fb0d4;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --accent-3: #f59e0b;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(96, 165, 250, 0.18), transparent 22%),
+        radial-gradient(circle at 88% 12%, rgba(52, 211, 153, 0.12), transparent 18%),
+        radial-gradient(circle at 52% 82%, rgba(245, 158, 11, 0.08), transparent 20%),
+        linear-gradient(180deg, #0f172a 0%, #111827 56%, #0b1220 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: 22px 0 54px; }
+    .nav, .hero, .section {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.94), rgba(15, 23, 42, 0.98));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 24px;
+    }
+
+    .brand { font-weight: 700; letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .hero {
+      margin-top: 18px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 56rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .summary-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: var(--radius-xl);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.42rem;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--card-accent, rgba(255,255,255,.18)) 56%, rgba(255,255,255,.08));
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-accent, rgba(255,255,255,.15)) 16%, transparent);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .card-top h3 {
+      margin: 4px 0 0;
+      font-size: 1.12rem;
+    }
+
+    .meta, .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #f8fafc;
+      font-size: 12px;
+      background: color-mix(in srgb, var(--card-accent, var(--accent)) 74%, black 26%);
+    }
+
+    .mini-list { display: grid; gap: 8px; }
+    .mini-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .mini-list strong {
+      color: var(--text);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+      flex-wrap: wrap;
+    }
+
+    .visit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #0f172a;
+      background: color-mix(in srgb, var(--card-accent, var(--accent)) 82%, white 18%);
+    }
+
+    @media (max-width: 1180px) {
+      .summary-grid,
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .summary-grid,
+      .grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+  <link rel="stylesheet" href="/notes/page-sync.css">
+  <script defer src="/notes/project-nav.js"></script>
+</head>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
+  <div class="shell">
+    <header class="nav">
+      <div class="brand" id="brand">88220066.xyz / Income 导航</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/ai-nav/" data-i18n="navAi">AI 导航</a>
+        <a href="/finance-nav/" data-i18n="navFinance">金融导航</a>
+        <a href="/income-nav/" class="active" data-i18n="navIncome">Income 导航</a>
+        <a href="/tools-nav/" data-i18n="navTools">工具导航</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">INCOME ETF</div>
+      <h1 data-i18n="heroTitle">Income 导航</h1>
+      <p class="hero-copy" data-i18n="heroCopy">先把偏 income 的 ETF 收在一页里。中国这块偏红利和债券，美国这块补上红利、期权增强、REITs 和债券，方便从现金流视角先筛一轮。</p>
+      <div class="summary-grid" id="stats"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="chinaTitle">中国 Income ETF</h2>
+          <p data-i18n="chinaCopy">更偏防守型 income，先看红利和债券 ETF。</p>
+        </div>
+        <div class="section-badge" data-i18n="chinaBadge">中国 / 红利 + 债券</div>
+      </div>
+      <div class="grid" id="china-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="usTitle">美国 Income ETF</h2>
+          <p data-i18n="usCopy">美国这块选择更全，适合把 dividend、covered call、REITs 和 bond 放一起比较。</p>
+        </div>
+        <div class="section-badge" data-i18n="usBadge">US / dividend + options + REITs + bonds</div>
+      </div>
+      <div class="grid" id="us-grid"></div>
+    </section>
+  </div>
+
+  <script>
+    const pageCopy = {
+      pageTitle: { zh: "Income 导航 | 88220066.xyz", en: "Income Nav | 88220066.xyz" },
+      pageDescription: {
+        zh: "整理中国和美国市场里偏 income 的 ETF，按红利、债券、REITs 和期权增强分区。",
+        en: "A curated list of income-oriented ETFs across China and the U.S., split into dividend, bonds, REITs, and option-income styles."
+      },
+      navAi: { zh: "AI 导航", en: "AI Nav" },
+      navFinance: { zh: "金融导航", en: "Finance" },
+      navIncome: { zh: "Income 导航", en: "Income" },
+      navTools: { zh: "工具导航", en: "Tools" },
+      eyebrow: { zh: "INCOME ETF", en: "INCOME ETF" },
+      heroTitle: { zh: "Income 导航", en: "Income Nav" },
+      heroCopy: {
+        zh: "先把偏 income 的 ETF 收在一页里。中国这块偏红利和债券，美国这块补上红利、期权增强、REITs 和债券，方便从现金流视角先筛一轮。",
+        en: "A clean starting page for income-focused ETFs. China leans toward dividend and bond ETFs, while the U.S. adds dividend, option-income, REIT, and bond exposure."
+      },
+      chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
+      chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
+      chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
+      usTitle: { zh: "美国 Income ETF", en: "U.S. Income ETFs" },
+      usCopy: { zh: "美国这块选择更全，适合把 dividend、covered call、REITs 和 bond 放一起比较。", en: "The U.S. side offers more variety across dividend, covered call, REITs, and bond income styles." },
+      usBadge: { zh: "美国 / 红利 + 期权增强 + REITs + 债券", en: "U.S. / dividend + options + REITs + bonds" }
+    };
+
+    const labels = {
+      zh: {
+        brand: "88220066.xyz / Income 导航",
+        open: "打开",
+        stats: [
+          ["市场", "中国 + 美国"],
+          ["类型", "红利、债券、REITs、期权增强"],
+          ["使用方式", "先按结构筛，再自己看持仓和分配规则"],
+          ["提醒", "income 不等于低波，更不等于保本"]
+        ],
+        typeLabel: "类型",
+        marketLabel: "市场",
+        noteLabel: "观察点"
+      },
+      en: {
+        brand: "88220066.xyz / Income Nav",
+        open: "Open",
+        stats: [
+          ["Markets", "China + U.S."],
+          ["Styles", "Dividend, bonds, REITs, option income"],
+          ["Use", "Filter by structure first, then inspect holdings and distribution rules"],
+          ["Reminder", "Income is not the same as low volatility or principal safety"]
+        ],
+        typeLabel: "Type",
+        marketLabel: "Market",
+        noteLabel: "Watch"
+      }
+    };
+
+    const chinaEtfs = [
+      {
+        name: "红利ETF华泰柏瑞",
+        ticker: "510880",
+        accent: "#60a5fa",
+        url: "https://fundf10.eastmoney.com/510880.html",
+        type: { zh: "红利股息", en: "Dividend equity" },
+        market: { zh: "中国 A 股", en: "China A-shares" },
+        summary: {
+          zh: "偏传统高股息，适合把它当成中国 dividend income 的基础观察样本。",
+          en: "A classic high-dividend ETF and a clean baseline for China equity income."
+        },
+        tags: { zh: ["红利", "股息", "A股"], en: ["dividend", "yield", "A-shares"] },
+        note: {
+          zh: "看行业集中和股息持续性。",
+          en: "Watch sector concentration and dividend persistence."
+        }
+      },
+      {
+        name: "红利低波ETF华泰柏瑞",
+        ticker: "512890",
+        accent: "#34d399",
+        url: "https://fundf10.eastmoney.com/srfx_512890.html",
+        type: { zh: "红利低波", en: "Dividend low-vol" },
+        market: { zh: "中国 A 股", en: "China A-shares" },
+        summary: {
+          zh: "比纯红利多一层低波筛选，更接近很多人想要的“带 income 属性的防守仓”。",
+          en: "Adds a lower-volatility tilt on top of dividend exposure, useful for defensive income watchlists."
+        },
+        tags: { zh: ["红利低波", "防守", "股息"], en: ["low vol", "defensive", "income"] },
+        note: {
+          zh: "看风格拥挤和估值抬升。",
+          en: "Watch crowding risk and richer valuations."
+        }
+      },
+      {
+        name: "政金债ETF富国",
+        ticker: "511520",
+        accent: "#f59e0b",
+        url: "https://finance.sina.com.cn/money/fund/aiassistant/etfshzj/2025-11-26/doc-infystcn1270006.shtml",
+        type: { zh: "政策性金融债", en: "Policy bank bonds" },
+        market: { zh: "中国债券", en: "China bonds" },
+        summary: {
+          zh: "更偏利率债思路，适合把它放在中国 income 里的债券腿观察。",
+          en: "A policy-bank bond ETF that works as the bond leg in a China income basket."
+        },
+        tags: { zh: ["债券", "政金债", "利率债"], en: ["bond", "policy bank", "rates"] },
+        note: {
+          zh: "看久期和利率波动。",
+          en: "Watch duration and rate sensitivity."
+        }
+      },
+      {
+        name: "公司债ETF",
+        ticker: "511030",
+        accent: "#c084fc",
+        url: "https://fund.eastmoney.com/a/202501173300421116.html",
+        type: { zh: "公司债", en: "Corporate bonds" },
+        market: { zh: "中国债券", en: "China bonds" },
+        summary: {
+          zh: "比政金债多一层信用利差逻辑，适合补充中国固定收益 income 的另一侧。",
+          en: "Adds credit-spread exposure and complements policy-bank bond ETFs on the fixed-income side."
+        },
+        tags: { zh: ["公司债", "信用债", "债券ETF"], en: ["credit", "corporate bond", "ETF"] },
+        note: {
+          zh: "看信用利差和流动性。",
+          en: "Watch spreads and liquidity."
+        }
+      }
+    ];
+
+    const usEtfs = [
+      {
+        name: "SCHD",
+        ticker: "Schwab U.S. Dividend Equity ETF",
+        accent: "#60a5fa",
+        url: "https://www.schwabassetmanagement.com/products/schd",
+        type: { zh: "红利股息", en: "Dividend equity" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "偏高质量 dividend，很多人做长期 income 观察都会先看它。",
+          en: "A quality dividend staple and one of the first stops for long-term equity income."
+        },
+        tags: { zh: ["SCHD", "dividend", "quality"], en: ["SCHD", "dividend", "quality"] },
+        note: {
+          zh: "看行业偏重和股息增长节奏。",
+          en: "Watch sector tilts and dividend growth pacing."
+        }
+      },
+      {
+        name: "VYM",
+        ticker: "Vanguard High Dividend Yield ETF",
+        accent: "#34d399",
+        url: "https://workplace.vanguard.com/assets/corp/fund_communications/pdf_publish/us-products/fact-sheet/F0923.pdf",
+        type: { zh: "高股息", en: "High dividend yield" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "更偏 broad high dividend，常拿来和 SCHD 对照。",
+          en: "A broad high-dividend ETF that is often compared directly with SCHD."
+        },
+        tags: { zh: ["VYM", "高股息", "broad"], en: ["VYM", "yield", "broad"] },
+        note: {
+          zh: "看持仓更分散还是更偏金融能源。",
+          en: "Watch how broad the basket stays across sectors."
+        }
+      },
+      {
+        name: "JEPI",
+        ticker: "JPMorgan Equity Premium Income ETF",
+        accent: "#f59e0b",
+        url: "https://am.jpmorgan.com/us/en/asset-management/adv/investment-strategies/etf-investing/investment-ideas/why-invest-in-equity-premium-income-etf-jepi/",
+        type: { zh: "期权增强 income", en: "Option-income equity" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "靠股票组合加期权 premium 做 monthly income，是典型 covered-call/option-income 路线。",
+          en: "Built for regular monthly income through an equity portfolio plus option premium."
+        },
+        tags: { zh: ["JEPI", "covered call", "monthly"], en: ["JEPI", "option income", "monthly"] },
+        note: {
+          zh: "看分配稳定性和上涨封顶问题。",
+          en: "Watch distribution stability and capped upside."
+        }
+      },
+      {
+        name: "JEPQ",
+        ticker: "JPMorgan Nasdaq Equity Premium Income ETF",
+        accent: "#c084fc",
+        url: "https://am.jpmorgan.com/content/dam/jpm-am-aem/americas/us/en/literature/fact-sheet/etfs/FS-JEPQ.PDF",
+        type: { zh: "纳指期权增强", en: "Nasdaq option income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "和 JEPI 类似，但底层更偏纳指科技风格，收益和波动都更敏感。",
+          en: "Similar to JEPI, but with a Nasdaq-heavy base that makes both upside and drawdowns more pronounced."
+        },
+        tags: { zh: ["JEPQ", "Nasdaq", "monthly"], en: ["JEPQ", "Nasdaq", "monthly"] },
+        note: {
+          zh: "看科技集中度和回撤。",
+          en: "Watch tech concentration and drawdowns."
+        }
+      },
+      {
+        name: "VNQ",
+        ticker: "Vanguard Real Estate ETF",
+        accent: "#fb7185",
+        url: "https://institutional.vanguard.com/assets/corp/fund_communications/pdf_publish/us-products/investment-profiles/0986.pdf",
+        type: { zh: "REITs", en: "REITs" },
+        market: { zh: "美国不动产", en: "U.S. real estate" },
+        summary: {
+          zh: "如果你想把不动产租金逻辑也算进 income，VNQ 是很自然的一站。",
+          en: "A common first stop when you want REIT-style real-estate income in the mix."
+        },
+        tags: { zh: ["VNQ", "REIT", "real estate"], en: ["VNQ", "REIT", "real estate"] },
+        note: {
+          zh: "看利率敏感度和地产子行业结构。",
+          en: "Watch rate sensitivity and property-type mix."
+        }
+      },
+      {
+        name: "BND",
+        ticker: "Vanguard Total Bond Market ETF",
+        accent: "#38bdf8",
+        url: "https://corporate.vanguard.com/content/corporatesite/us/en/corp/who-we-are/pressroom/Press-Release-Vanguard-Launches-Total-World-Bond-ETF-090618.html/1000",
+        type: { zh: "综合债券", en: "Core bond market" },
+        market: { zh: "美国债券", en: "U.S. bonds" },
+        summary: {
+          zh: "更像美国 income 组合里的核心债券底仓，拿来和股息类做搭配很常见。",
+          en: "A core bond holding that often anchors the lower-volatility side of an income portfolio."
+        },
+        tags: { zh: ["BND", "bond", "core"], en: ["BND", "bond", "core"] },
+        note: {
+          zh: "看利率周期和债券久期。",
+          en: "Watch rate cycles and duration."
+        }
+      }
+    ];
+
+    function cardTemplate(item, lang) {
+      return `
+        <article class="card" style="--card-accent:${item.accent}">
+          <div class="card-top">
+            <div>
+              <div class="meta">${item.market[lang]}</div>
+              <h3>${item.name}</h3>
+            </div>
+            <span class="badge">${item.ticker}</span>
+          </div>
+          <p>${item.summary[lang]}</p>
+          <div class="pill-row">
+            ${item.tags[lang].map((tag) => `<span class="pill">${tag}</span>`).join("")}
+          </div>
+          <div class="mini-list">
+            <div><span>${labels[lang].typeLabel}</span><strong>${item.type[lang]}</strong></div>
+            <div><span>${labels[lang].marketLabel}</span><strong>${item.market[lang]}</strong></div>
+            <div><span>${labels[lang].noteLabel}</span><strong>${item.note[lang]}</strong></div>
+          </div>
+          <div class="card-bottom">
+            <span class="meta">${item.ticker}</span>
+            <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderPage(lang) {
+      document.getElementById("brand").textContent = labels[lang].brand;
+      document.getElementById("stats").innerHTML = labels[lang].stats.map(([label, value]) => `
+        <div class="summary-card">
+          <span>${label}</span>
+          <strong>${value}</strong>
+        </div>
+      `).join("");
+      document.getElementById("china-grid").innerHTML = chinaEtfs.map((item) => cardTemplate(item, lang)).join("");
+      document.getElementById("us-grid").innerHTML = usEtfs.map((item) => cardTemplate(item, lang)).join("");
+    }
+
+    window.SiteI18n.bindPage(pageCopy, renderPage);
+  </script>
+</body>
+</html>

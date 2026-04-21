@@ -2,6 +2,7 @@
   const NAV_ITEMS = [
     { key: "ai", href: "/ai-nav/", zh: "AI 导航", en: "AI Nav" },
     { key: "finance", href: "/finance-nav/", zh: "金融导航", en: "Finance" },
+    { key: "income", href: "/income-nav/", zh: "Income 导航", en: "Income" },
     { key: "api", href: "/free-api-nav/", zh: "API 导航", en: "API" },
     { key: "tools", href: "/tools-nav/", zh: "工具导航", en: "Tools" },
     { key: "english", href: "/english-tools/", zh: "英语导航", en: "English" },
@@ -10,6 +11,7 @@
 
   function currentKey(pathname) {
     if (pathname.startsWith("/finance-nav/") || pathname.startsWith("/futures-basis/")) return "finance";
+    if (pathname.startsWith("/income-nav/")) return "income";
     if (pathname.startsWith("/free-api-nav/")) return "api";
     if (pathname.startsWith("/tools-nav/") || pathname.startsWith("/asterlab-tools/")) return "tools";
     if (pathname.startsWith("/english-tools/") || pathname.startsWith("/dictation/")) return "english";
