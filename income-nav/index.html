@@ -306,6 +306,17 @@
       </div>
       <div class="grid" id="us-grid"></div>
     </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="advancedTitle">高收益 / 期权 Income</h2>
+          <p data-i18n="advancedCopy">这组更偏 weekly、0DTE、single-stock covered call 和 provider 入口，收益看起来更猛，但结构也更复杂。</p>
+        </div>
+        <div class="section-badge" data-i18n="advancedBadge">Advanced / options + weekly + single-stock</div>
+      </div>
+      <div class="grid" id="advanced-grid"></div>
+    </section>
   </div>
 
   <script>
@@ -330,7 +341,13 @@
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
       usTitle: { zh: "美国 Income ETF", en: "U.S. Income ETFs" },
       usCopy: { zh: "美国这块选择更全，适合把 dividend、covered call、REITs 和 bond 放一起比较。", en: "The U.S. side offers more variety across dividend, covered call, REITs, and bond income styles." },
-      usBadge: { zh: "美国 / 红利 + 期权增强 + REITs + 债券", en: "U.S. / dividend + options + REITs + bonds" }
+      usBadge: { zh: "美国 / 红利 + 期权增强 + REITs + 债券", en: "U.S. / dividend + options + REITs + bonds" },
+      advancedTitle: { zh: "高收益 / 期权 Income", en: "High-Yield / Options Income" },
+      advancedCopy: {
+        zh: "这组更偏 weekly、0DTE、single-stock covered call 和 provider 入口，收益看起来更猛，但结构也更复杂。",
+        en: "This set leans toward weekly, 0DTE, single-stock covered call, and provider hubs. The yields can look stronger, but the structure is also more complex."
+      },
+      advancedBadge: { zh: "进阶 / 期权 + 周配 + 单股", en: "Advanced / options + weekly + single-stock" }
     };
 
     const labels = {
@@ -691,6 +708,162 @@
       }
     ];
 
+    const advancedIncome = [
+      {
+        name: "SPYI",
+        ticker: "NEOS S&P 500 High Income ETF",
+        accent: "#2563eb",
+        url: "https://neosfunds.com/spyi/",
+        type: { zh: "税务优化 covered call", en: "Tax-efficient covered call" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "NEOS 这条线里最常被拿来当核心 broad-market income 样本，偏 S&P 500 + 期权 overlay。",
+          en: "A core broad-market income example from NEOS, built around S&P 500 exposure with an options overlay."
+        },
+        tags: { zh: ["SPYI", "NEOS", "monthly"], en: ["SPYI", "NEOS", "monthly"] },
+        note: {
+          zh: "看税务结构、分配分类和上涨参与度。",
+          en: "Watch tax structure, distribution makeup, and upside participation."
+        }
+      },
+      {
+        name: "QQQI",
+        ticker: "NEOS Nasdaq-100 High Income ETF",
+        accent: "#1d4ed8",
+        url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
+        type: { zh: "纳指高收益", en: "Nasdaq high income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "NEOS 的纳指版本，风格和科技暴露更强，收益和回撤都会更明显。",
+          en: "The Nasdaq version from NEOS, with stronger growth-tech exposure and a sharper risk/return profile."
+        },
+        tags: { zh: ["QQQI", "Nasdaq", "high income"], en: ["QQQI", "Nasdaq", "high income"] },
+        note: {
+          zh: "看纳指波动和 option overlay 成本。",
+          en: "Watch Nasdaq volatility and the cost of the options overlay."
+        }
+      },
+      {
+        name: "XDTE",
+        ticker: "Roundhill S&P 500 0DTE Covered Call Strategy ETF",
+        accent: "#7c3aed",
+        url: "https://www.roundhillinvestments.com/etf/xdte/",
+        type: { zh: "0DTE covered call", en: "0DTE covered call" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "更偏 weekly income 观察样本，核心区别是它把 0DTE 也拉进来了。",
+          en: "A weekly-income style case, with 0DTE options as the key structural difference."
+        },
+        tags: { zh: ["XDTE", "0DTE", "weekly"], en: ["XDTE", "0DTE", "weekly"] },
+        note: {
+          zh: "看日内波动货币化，不要只盯分配率。",
+          en: "Watch how intraday volatility is monetized, not just the headline yield."
+        }
+      },
+      {
+        name: "ISPY",
+        ticker: "ProShares S&P 500 High Income ETF",
+        accent: "#0f766e",
+        url: "https://www.proshares.com/our-etfs/strategic/ispy",
+        type: { zh: "S&P 500 high income", en: "S&P 500 high income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "ProShares 版本的 S&P 500 high income，适合和 SPYI、JEPI 做同类对照。",
+          en: "A ProShares take on S&P 500 income, useful as a comparison point for SPYI and JEPI."
+        },
+        tags: { zh: ["ISPY", "ProShares", "S&P 500"], en: ["ISPY", "ProShares", "S&P 500"] },
+        note: {
+          zh: "看它和其他 broad index income ETF 的实现路径差异。",
+          en: "Watch how its implementation differs from other broad-index income ETFs."
+        }
+      },
+      {
+        name: "TSPY",
+        ticker: "TappAlpha SPY Growth & Daily Income ETF",
+        accent: "#111827",
+        url: "https://www.tappalphafunds.com/etfs/tspy",
+        type: { zh: "日频 income", en: "Daily income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "偏 daily income 叙事，适合放进更高频的 options-income 一组里看。",
+          en: "A daily-income framing that fits the higher-frequency end of the options-income spectrum."
+        },
+        tags: { zh: ["TSPY", "daily", "SPY"], en: ["TSPY", "daily", "SPY"] },
+        note: {
+          zh: "看日频分配背后的真实收益来源。",
+          en: "Watch the true source of income behind the daily-distribution story."
+        }
+      },
+      {
+        name: "MSFY",
+        ticker: "Kurv Yield Premium Strategy Microsoft ETF",
+        accent: "#10b981",
+        url: "https://www.kurvinvest.com/etf/msfy",
+        type: { zh: "单股期权 income", en: "Single-stock option income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "Kurv 这种路线更像单股 covered call 工具，不再是 broad ETF 的低配替代。",
+          en: "Kurv-style funds are much closer to single-stock covered call tools than broad-market income funds."
+        },
+        tags: { zh: ["MSFY", "Kurv", "Microsoft"], en: ["MSFY", "Kurv", "Microsoft"] },
+        note: {
+          zh: "看单一标的风险，不要拿它当分散收入底仓。",
+          en: "Watch single-name risk and avoid treating it like a diversified core holding."
+        }
+      },
+      {
+        name: "YieldMax",
+        ticker: "Option Income ETF Hub",
+        accent: "#f59e0b",
+        url: "https://yieldmaxetfs.com/",
+        type: { zh: "单股高收益平台", en: "Single-stock income platform" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "如果你想看 TSLY、MSTY 这类更猛的产品，YieldMax 这一站最直接。",
+          en: "The quickest hub for the more aggressive single-name products like TSLY and MSTY."
+        },
+        tags: { zh: ["YieldMax", "TSLY", "MSTY"], en: ["YieldMax", "TSLY", "MSTY"] },
+        note: {
+          zh: "看分配率的同时，一定要盯总回报和净值路径。",
+          en: "Watch total return and NAV path, not just the yield headline."
+        }
+      },
+      {
+        name: "REX Shares",
+        ticker: "Growth & Income ETF Hub",
+        accent: "#4f46e5",
+        url: "https://www.rexshares.com/rex-growth-and-income-etfs/",
+        type: { zh: "成长股 income 平台", en: "Growth-income platform" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "REX 也在做增长股 + income 这条线，适合当 provider 入口留着看新产品。",
+          en: "A good provider hub to track newer growth-plus-income ETF structures."
+        },
+        tags: { zh: ["REX", "provider", "growth income"], en: ["REX", "provider", "growth income"] },
+        note: {
+          zh: "看新品种的底层规则，不要只看名字像不像。",
+          en: "Watch the underlying mechanics of new launches rather than the branding."
+        }
+      },
+      {
+        name: "Defiance Income ETFs",
+        ticker: "Income ETF Hub",
+        accent: "#ef4444",
+        url: "https://www.defianceetfs.com/explore-our-etfs/",
+        type: { zh: "高收益平台", en: "High-yield platform" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "Defiance 这条线的新 income ETF 也很多，适合当 provider 入口做扩展观察。",
+          en: "Defiance has become another active provider hub for newer high-yield income ETF launches."
+        },
+        tags: { zh: ["Defiance", "income", "provider"], en: ["Defiance", "income", "provider"] },
+        note: {
+          zh: "看名字背后的真实结构和分配来源。",
+          en: "Watch the real structure and distribution source behind the product names."
+        }
+      }
+    ];
+
     function cardTemplate(item, lang) {
       return `
         <article class="card" style="--card-accent:${item.accent}">
@@ -728,6 +901,7 @@
       `).join("");
       document.getElementById("china-grid").innerHTML = chinaEtfs.map((item) => cardTemplate(item, lang)).join("");
       document.getElementById("us-grid").innerHTML = usEtfs.map((item) => cardTemplate(item, lang)).join("");
+      document.getElementById("advanced-grid").innerHTML = advancedIncome.map((item) => cardTemplate(item, lang)).join("");
     }
 
     window.SiteI18n.bindPage(pageCopy, renderPage);
