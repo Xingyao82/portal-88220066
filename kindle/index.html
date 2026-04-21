@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kindle 取书 | 88220066.xyz</title>
   <meta name="description" content="在 Kindle 上输入 4 位数字取书码，直接下载书。">
+  <script src="/notes/site-i18n.js"></script>
   <link rel="stylesheet" href="/notes/page-sync.css">
 <script defer src="/notes/project-nav.js"></script>
   <style>
@@ -32,10 +33,10 @@
     .foot{margin-top:16px;color:var(--muted);font-size:.94rem;text-align:center}
   </style>
 </head>
-<body>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand">88220066.xyz / Kindle 取书</div>
+      <div class="brand" data-i18n="brand">88220066.xyz / Kindle 取书</div>
       <nav class="links">
         <a href="/">首页</a>
         <a href="/skills-nav/">技能</a>
@@ -45,30 +46,48 @@
     <section class="panel hero">
       <div class="hero-row">
         <div>
-          <h1>Kindle 取书</h1>
-          <p>这里只负责输码取书。输入 4 位数字取书码，确认后就能看到下载按钮。</p>
+          <h1 data-i18n="heroTitle">Kindle 取书</h1>
+          <p data-i18n="heroCopy">这里只负责输码取书。输入 4 位数字取书码，确认后就能看到下载按钮。</p>
         </div>
-        <div class="pill">10 分钟后自动删除</div>
+        <div class="pill" data-i18n="heroPill">10 分钟后自动删除</div>
       </div>
     </section>
 
     <section class="panel">
-      <h2>输入取书码</h2>
+      <h2 data-i18n="formTitle">输入取书码</h2>
       <form class="pickup-form" action="/api/kindle-share/pickup-page" method="get">
-        <input class="pickup-input" type="text" name="code" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" placeholder="4 位数字" autocomplete="off" required>
-        <button class="btn" type="submit">查看这本书</button>
+        <input class="pickup-input" type="text" name="code" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" placeholder="4 位数字" data-i18n-placeholder="codePlaceholder" autocomplete="off" required>
+        <button class="btn" type="submit" data-i18n="submitBtn">查看这本书</button>
       </form>
     </section>
 
     <section class="panel">
-      <h2>说明</h2>
+      <h2 data-i18n="tipsTitle">说明</h2>
       <ul class="tips">
-        <li>电脑上传后会拿到 4 位数字码。</li>
-        <li>书在网站里只做临时中转，不会长期保留。</li>
-        <li>下载成功后会立刻删除，没人取的话 10 分钟后也会自动删掉。</li>
+        <li data-i18n="tip1">电脑上传后会拿到 4 位数字码。</li>
+        <li data-i18n="tip2">书在网站里只做临时中转，不会长期保留。</li>
+        <li data-i18n="tip3">下载成功后会立刻删除，没人取的话 10 分钟后也会自动删掉。</li>
       </ul>
     </section>
 
   </div>
+  <script>
+    const pageCopy = {
+      pageTitle: { zh: "Kindle 取书 | 88220066.xyz", en: "Kindle Pickup | 88220066.xyz" },
+      pageDescription: { zh: "在 Kindle 上输入 4 位数字取书码，直接下载书。", en: "Enter a 4-digit pickup code on Kindle and download the book directly." },
+      brand: { zh: "88220066.xyz / Kindle 取书", en: "88220066.xyz / Kindle Pickup" },
+      heroTitle: { zh: "Kindle 取书", en: "Kindle Pickup" },
+      heroCopy: { zh: "这里只负责输码取书。输入 4 位数字取书码，确认后就能看到下载按钮。", en: "This page is only for pickup. Enter the 4-digit code and you will get the download button." },
+      heroPill: { zh: "10 分钟后自动删除", en: "Auto-delete in 10 min" },
+      formTitle: { zh: "输入取书码", en: "Enter Pickup Code" },
+      codePlaceholder: { zh: "4 位数字", en: "4 digits" },
+      submitBtn: { zh: "查看这本书", en: "Open This Book" },
+      tipsTitle: { zh: "说明", en: "Notes" },
+      tip1: { zh: "电脑上传后会拿到 4 位数字码。", en: "After uploading on desktop, you will get a 4-digit code." },
+      tip2: { zh: "书在网站里只做临时中转，不会长期保留。", en: "Books are only stored temporarily and are not kept long term." },
+      tip3: { zh: "下载成功后会立刻删除，没人取的话 10 分钟后也会自动删掉。", en: "The file is deleted after a successful download, or automatically after 10 minutes if nobody picks it up." }
+    };
+    window.SiteI18n.bindPage(pageCopy);
+  </script>
 </body>
 </html>

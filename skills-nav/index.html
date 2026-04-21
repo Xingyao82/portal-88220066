@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>技能 | 88220066.xyz</title>
   <meta name="description" content="网站里可以直接使用的技能页面。">
+  <script src="/notes/site-i18n.js"></script>
   <style>
     :root{--bg:#f8f6f2;--panel:#ffffff;--line:rgba(120,98,73,.14);--text:#221b14;--muted:#7a6a59;--accent:#c58e5b;--accent-soft:#fbf2e9;--max:1060px}
     *{box-sizing:border-box}
@@ -36,10 +37,10 @@
 <link rel="stylesheet" href="/notes/page-sync.css">
 <script defer src="/notes/project-nav.js"></script>
 </head>
-<body>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand">88220066.xyz / 技能</div>
+      <div class="brand" data-i18n="brand">88220066.xyz / 技能</div>
       <nav class="links">
         <a href="/">首页</a>
         <a href="/skills-nav/">技能</a>
@@ -47,44 +48,68 @@
     </header>
 
     <section class="hero">
-      <h1>技能</h1>
-      <p>这里放可以直接在网站里使用的能力。现在先放 Kindle 传书。</p>
+      <h1 data-i18n="heroTitle">技能</h1>
+      <p data-i18n="heroCopy">这里放可以直接在网站里使用的能力。现在先放 Kindle 传书。</p>
     </section>
 
     <section class="section">
-      <h2>技能列表</h2>
+      <h2 data-i18n="sectionTitle">技能列表</h2>
       <article class="card">
         <div class="head">
           <div class="logo">K</div>
           <div>
-            <div style="font-weight:700;font-size:1.1rem">Kindle 传书</div>
-            <div class="meta">电脑上传 / Kindle 输码下载 / 10 分钟自动删</div>
+            <div style="font-weight:700;font-size:1.1rem" data-i18n="skillTitle">Kindle 传书</div>
+            <div class="meta" data-i18n="skillMeta">电脑上传 / Kindle 输码下载 / 10 分钟自动删</div>
           </div>
         </div>
 
-        <p>电脑先上传一本书，拿到 4 位数字取书码。然后在 Kindle 上打开取书页，输入这个数字码直接下载。目前只支持 azw、prc、mobi、txt。</p>
+        <p data-i18n="skillCopy">电脑先上传一本书，拿到 4 位数字取书码。然后在 Kindle 上打开取书页，输入这个数字码直接下载。目前只支持 azw、prc、mobi、txt。</p>
 
         <div class="tags">
-          <span class="chip">网页直接用</span>
-          <span class="chip">4 位数字码</span>
+          <span class="chip" data-i18n="chipWeb">网页直接用</span>
+          <span class="chip" data-i18n="chipCode">4 位数字码</span>
           <span class="chip">azw / prc / mobi / txt</span>
-          <span class="chip">下载后立刻删</span>
-          <span class="chip">10 分钟自动删</span>
+          <span class="chip" data-i18n="chipDeleteNow">下载后立刻删</span>
+          <span class="chip" data-i18n="chipDeleteLater">10 分钟自动删</span>
         </div>
 
         <div class="btn-row">
-          <a class="btn" href="/kindle-upload/">电脑上传</a>
-          <a class="ghost" href="/kindle/">Kindle 取书</a>
+          <a class="btn" href="/kindle-upload/" data-i18n="uploadBtn">电脑上传</a>
+          <a class="ghost" href="/kindle/" data-i18n="pickupBtn">Kindle 取书</a>
         </div>
 
         <ol class="steps">
-          <li>电脑打开上传页，传一本书。</li>
-          <li>文件名只用英文字母和数字，不要带中文和标点。</li>
-          <li>页面给出 4 位数字取书码。</li>
-          <li>Kindle 打开取书页，输入数字码下载。</li>
+          <li data-i18n="step1">电脑打开上传页，传一本书。</li>
+          <li data-i18n="step2">文件名只用英文字母和数字，不要带中文和标点。</li>
+          <li data-i18n="step3">页面给出 4 位数字取书码。</li>
+          <li data-i18n="step4">Kindle 打开取书页，输入数字码下载。</li>
         </ol>
       </article>
     </section>
   </div>
+  <script>
+    const pageCopy = {
+      pageTitle: { zh: "技能 | 88220066.xyz", en: "Skills | 88220066.xyz" },
+      pageDescription: { zh: "网站里可以直接使用的技能页面。", en: "Skills and utilities you can use directly on the site." },
+      brand: { zh: "88220066.xyz / 技能", en: "88220066.xyz / Skills" },
+      heroTitle: { zh: "技能", en: "Skills" },
+      heroCopy: { zh: "这里放可以直接在网站里使用的能力。现在先放 Kindle 传书。", en: "This page keeps the capabilities you can use directly on the site. For now, it starts with Kindle book delivery." },
+      sectionTitle: { zh: "技能列表", en: "Skill List" },
+      skillTitle: { zh: "Kindle 传书", en: "Kindle Delivery" },
+      skillMeta: { zh: "电脑上传 / Kindle 输码下载 / 10 分钟自动删", en: "Upload on desktop / enter code on Kindle / auto-delete in 10 minutes" },
+      skillCopy: { zh: "电脑先上传一本书，拿到 4 位数字取书码。然后在 Kindle 上打开取书页，输入这个数字码直接下载。目前只支持 azw、prc、mobi、txt。", en: "Upload one book on desktop and get a 4-digit pickup code. Then open the Kindle pickup page and enter the code to download it. Supported formats: azw, prc, mobi, and txt." },
+      chipWeb: { zh: "网页直接用", en: "Use in browser" },
+      chipCode: { zh: "4 位数字码", en: "4-digit code" },
+      chipDeleteNow: { zh: "下载后立刻删", en: "Delete after download" },
+      chipDeleteLater: { zh: "10 分钟自动删", en: "Auto-delete in 10 min" },
+      uploadBtn: { zh: "电脑上传", en: "Upload" },
+      pickupBtn: { zh: "Kindle 取书", en: "Kindle Pickup" },
+      step1: { zh: "电脑打开上传页，传一本书。", en: "Open the upload page on desktop and upload one book." },
+      step2: { zh: "文件名只用英文字母和数字，不要带中文和标点。", en: "Use only English letters and numbers in the filename. Avoid Chinese characters and punctuation." },
+      step3: { zh: "页面给出 4 位数字取书码。", en: "The page gives you a 4-digit pickup code." },
+      step4: { zh: "Kindle 打开取书页，输入数字码下载。", en: "Open the pickup page on Kindle and enter the code to download." }
+    };
+    window.SiteI18n.bindPage(pageCopy);
+  </script>
 </body>
 </html>
