@@ -4,25 +4,356 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>88220066.xyz</title>
-  <meta name="description" content="&#x7B80;&#x6D01;&#x9879;&#x76EE;&#x5DE5;&#x4F5C;&#x53F0;">
+  <meta name="description" content="简洁项目工作台。">
   <script src="/notes/site-i18n.js"></script>
   <style>
-    :root{--bg:#eef4ff;--panel:rgba(255,255,255,.84);--panel-soft:rgba(250,252,255,.96);--line:rgba(255,255,255,.94);--text:#0f172a;--muted:#64748b;--shadow:0 20px 50px rgba(15,23,42,.08)}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;background:radial-gradient(circle at 12% 14%, rgba(111,92,255,.14), transparent 0 24%),radial-gradient(circle at 88% 16%, rgba(20,184,166,.10), transparent 0 20%),linear-gradient(180deg,#f7faff 0%,#eef4ff 100%)}
-    a{text-decoration:none;color:inherit}button{font:inherit}
-    .shell{width:min(calc(100% - 24px),1360px);margin:0 auto;padding:18px 0}.workspace{display:grid;grid-template-columns:248px minmax(0,1fr);gap:18px}
-    .sidebar,.stage{border:1px solid var(--line);border-radius:28px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:var(--shadow)}
-    .sidebar{padding:18px;display:grid;gap:14px;align-content:start;position:sticky;top:18px;min-height:calc(100vh - 36px)}
-    .sidebar h1{margin:0;font-size:1.55rem;letter-spacing:-.05em}.sidebar p{margin:0;color:var(--muted);line-height:1.7}
-    .rail-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.switches{display:grid;gap:8px;justify-items:end}.lang{display:inline-flex;gap:6px;padding:4px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid var(--line);box-shadow:0 10px 24px rgba(15,23,42,.06)}
-    .lang button{border:0;background:transparent;color:var(--muted);min-height:28px;border-radius:999px;cursor:pointer;padding:0 10px}
-    .lang button{min-width:38px;font-size:.82rem}
-    .lang button.active{background:#dbeafe;color:#1d4ed8}
-    .list{display:grid;gap:10px}.item{width:100%;padding:14px 14px 14px 16px;border:1px solid color-mix(in srgb,var(--accent) 30%,rgba(255,255,255,.10));border-radius:18px;background:linear-gradient(180deg,color-mix(in srgb,var(--soft) 14%,rgba(255,255,255,.03)),rgba(255,255,255,.03));color:var(--text);text-align:left;cursor:pointer;transition:160ms ease}.item:hover,.item.active{box-shadow:0 16px 36px rgba(0,0,0,.18);transform:translateX(2px)}
-    .top{display:flex;align-items:center;justify-content:space-between}.badge{display:inline-flex;align-items:center;gap:8px;padding:0 10px;min-height:28px;border-radius:999px;background:rgba(255,255,255,.08)}.icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,#ffffff);color:#08111f;font-size:.78rem;font-weight:700}.type{color:var(--muted);font-size:.75rem}.name{margin:10px 0 0;font-size:1rem;font-weight:700}.desc{margin:6px 0 0;color:var(--muted);font-size:.9rem;line-height:1.6}.foot{padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;line-height:1.7}
-    .stage{padding:14px;display:grid;gap:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(248,251,255,.98))}.stage-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 8px 0}.stage-title{font-weight:700;letter-spacing:-.03em}.stage-sub{color:#94a3b8;font-size:.9rem}.open{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:999px;background:#f8fafc;border:1px solid rgba(15,23,42,.08);color:#475569}
-    .frame-wrap{min-height:calc(100vh - 72px);border:1px solid rgba(255,255,255,.99);border-radius:22px;overflow:hidden;background:#ffffff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.98)}.frame{width:100%;height:calc(100vh - 104px);border:0;display:block;background:#ffffff}
-    @media (max-width:1100px){.workspace{grid-template-columns:1fr}.sidebar{position:static;min-height:auto}.frame-wrap{min-height:70vh}.frame{height:70vh}}
+    :root {
+      --bg: #f4f7f3;
+      --panel: #ffffff;
+      --panel-soft: #f8fbf8;
+      --line: #d8e2db;
+      --text: #142119;
+      --muted: #5d7064;
+      --accent: #0f8a63;
+      --accent-strong: #0b6f50;
+      --accent-soft: rgba(15, 138, 99, 0.12);
+      --warm-soft: #fff4e2;
+      --warm-line: rgba(201, 138, 40, 0.24);
+      --shadow: 0 18px 40px rgba(20, 33, 25, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(15, 138, 99, 0.08), transparent 24%),
+        linear-gradient(180deg, #f8fbf8 0%, var(--bg) 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .shell {
+      width: min(calc(100% - 24px), 1380px);
+      margin: 0 auto;
+      padding: 16px 0 22px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .sidebar,
+    .stage {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      min-height: calc(100vh - 32px);
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .rail-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .sidebar h1 {
+      margin: 10px 0 0;
+      font-size: 30px;
+      line-height: 1.05;
+    }
+
+    .sidebar p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .switches {
+      display: grid;
+      justify-items: end;
+    }
+
+    .lang {
+      display: inline-flex;
+      gap: 4px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+    }
+
+    .lang button {
+      min-width: 42px;
+      min-height: 32px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .lang button.active {
+      background: var(--text);
+      color: #ffffff;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .item {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .item:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
+    }
+
+    .item.active {
+      border-color: var(--accent);
+      background: #f3fbf7;
+      box-shadow: 0 14px 28px rgba(15, 138, 99, 0.10);
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+    }
+
+    .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 18%, #ffffff);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .type {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .name {
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .desc {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .foot {
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .stage {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fcfb 100%);
+    }
+
+    .stage-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .stage-meta {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stage-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--warm-line);
+      border-radius: 999px;
+      background: var(--warm-soft);
+      color: #8c5f1a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stage-title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.14;
+    }
+
+    .stage-sub {
+      max-width: 56ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid var(--text);
+      border-radius: 8px;
+      background: var(--text);
+      color: #ffffff;
+    }
+
+    .frame-wrap {
+      min-height: calc(100vh - 128px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .frame {
+      width: 100%;
+      height: calc(100vh - 160px);
+      border: 0;
+      display: block;
+      background: #ffffff;
+    }
+
+    @media (max-width: 1100px) {
+      .workspace { grid-template-columns: 1fr; }
+      .sidebar { position: static; min-height: auto; }
+      .stage-head { flex-direction: column; }
+      .frame-wrap { min-height: 72vh; }
+      .frame { height: 72vh; }
+    }
+
+    @media (max-width: 700px) {
+      .shell {
+        width: min(calc(100% - 16px), 1380px);
+        padding: 8px 0 18px;
+      }
+
+      .sidebar,
+      .stage { padding: 14px; }
+
+      .sidebar h1 { font-size: 26px; }
+      .stage-title { font-size: 22px; }
+    }
   </style>
 </head>
 <body data-site-lang="off" data-i18n-title="pageTitle" data-i18n-description="pageDescription">
@@ -31,49 +362,212 @@
       <aside class="sidebar">
         <div class="rail-top">
           <div>
-            <h1 data-i18n="sidebarTitle">&#x9879;&#x76EE;</h1>
+            <div class="eyebrow" data-i18n="sidebarEyebrow">工作台</div>
+            <h1 data-i18n="sidebarTitle">项目入口</h1>
+            <p data-i18n="sidebarIntro">把常用入口收在一个地方，打开就能继续工作。</p>
           </div>
           <div class="switches">
             <div class="lang">
-              <button type="button" data-lang="zh">&#x4E2D;</button>
+              <button type="button" data-lang="zh">中</button>
               <button type="button" data-lang="en">EN</button>
             </div>
           </div>
         </div>
+        <div class="summary">
+          <div class="stat">
+            <strong id="project-count">8</strong>
+            <span data-i18n="projectCountLabel">当前入口</span>
+          </div>
+          <div class="stat">
+            <strong data-i18n="projectModeValue">实时</strong>
+            <span data-i18n="projectModeLabel">预览方式</span>
+          </div>
+        </div>
         <div class="list" id="list"></div>
-        <div class="foot" data-i18n="sidebarFoot"></div>
+        <div class="foot" data-i18n="sidebarFoot">左边切换入口，右边直接看实际页面。</div>
       </aside>
+
       <main class="stage">
         <div class="stage-head">
-          <div>
+          <div class="stage-meta">
+            <div class="stage-kicker" data-i18n="stageKicker">选中项目</div>
             <div class="stage-title" id="stage-title"></div>
             <div class="stage-sub" id="stage-sub"></div>
           </div>
-          <a class="open" id="stage-open" href="/" target="_blank" rel="noreferrer" data-i18n="openLink">&#x65B0;&#x9875;&#x6253;&#x5F00;</a>
+          <div class="actions">
+            <div class="pill" data-i18n="stageHint">右侧是实际页面预览</div>
+            <a class="open" id="stage-open" href="/" target="_blank" rel="noreferrer" data-i18n="openLink">新页打开</a>
+          </div>
         </div>
         <div class="frame-wrap"><iframe class="frame" id="frame" referrerpolicy="no-referrer"></iframe></div>
       </main>
     </section>
   </div>
+
   <script>
-    const messages={pageTitle:{zh:"88220066.xyz",en:"88220066.xyz"},pageDescription:{zh:"\u7b80\u6d01\u9879\u76ee\u5de5\u4f5c\u53f0",en:"Minimal project workspace"},sidebarTitle:{zh:"\u9879\u76ee",en:"Projects"},sidebarCopy:{zh:"\u5de6\u8fb9\u5207\u6362\u9879\u76ee\uff0c\u53f3\u8fb9\u76f4\u63a5\u770b\u5185\u5bb9\u672c\u4f53\u3002",en:"Switch projects on the left and see the real page content on the right."},sidebarFoot:{zh:"",en:""},openLink:{zh:"\u65b0\u9875\u6253\u5f00",en:"Open in new tab"}};
-    const projects=[{id:"ai",icon:"AI",color:"#b98cf2",soft:"rgba(185,140,242,.16)",name:{zh:"AI \u5bfc\u822a",en:"AI Nav"},desc:{zh:"AI \u5de5\u5177\u5bfc\u822a",en:"AI product directory"},path:"/ai-nav/"},{id:"api",icon:"A",color:"#89b8f5",soft:"rgba(137,184,245,.16)",name:{zh:"API",en:"APIs"},desc:{zh:"\u6a21\u578b API \u5bfc\u822a",en:"Model API directory"},path:"/free-api-nav/"},{id:"ranking",icon:"R",color:"#f2c38b",soft:"rgba(242,195,139,.18)",name:{zh:"\u6a21\u578b\u6392\u540d",en:"Model Rankings"},desc:{zh:"\u516c\u5f00\u6a21\u578b\u699c\u5355",en:"Public model leaderboards"},path:"/model-ranking/"},{id:"finance",icon:"F",color:"#8fd0c4",soft:"rgba(143,208,196,.18)",name:{zh:"\u91d1\u878d\u5bfc\u822a",en:"Finance Nav"},desc:{zh:"\u91d1\u878d\u4E0E\u6570\u636E\u8D44\u6E90",en:"Finance and data resources"},path:"/finance-nav/"},{id:"lobster",icon:"L",color:"#f0b78b",soft:"rgba(240,183,139,.18)",name:{zh:"\u5c0f\u9f99\u867e\u5bfc\u822a",en:"Lobster Nav"},desc:{zh:"OpenClaw \u4e0e\u76f8\u5173\u751f\u6001",en:"OpenClaw ecosystem"},path:"/lobster-nav/"},{id:"skills",icon:"S",color:"#d8be8a",soft:"rgba(216,190,138,.18)",name:{zh:"\u6280\u80fd",en:"Skills"},desc:{zh:"\u5de5\u5177\u4e0e\u5de5\u4f5c\u6d41\u65b9\u6848",en:"Tools and workflows"},path:"/skills-nav/"},{id:"tools",icon:"T",color:"#9fd7b7",soft:"rgba(159,215,183,.18)",name:{zh:"\u5de5\u5177",en:"Tools"},desc:{zh:"\u514d\u8d39\u7f51\u9875\u5de5\u5177",en:"Free web tools"},path:"/tools-nav/"},{id:"english",icon:"E",color:"#f1bc8a",soft:"rgba(241,188,138,.18)",name:{zh:"\u82f1\u8bed",en:"English"},desc:{zh:"\u514d\u8d39\u82f1\u8bed\u8d44\u6E90",en:"Free English resources"},path:"/english-tools/"}];
-    const state={activeId:"ai",lang:"zh"}; const listEl=document.getElementById("list"), frameEl=document.getElementById("frame"), titleEl=document.getElementById("stage-title"), subEl=document.getElementById("stage-sub"), openEl=document.getElementById("stage-open"), langButtons=[...document.querySelectorAll('[data-lang]')];
-    const getProject=(id)=>projects.find((p)=>p.id===id)||projects[0];
-    function renderList(){listEl.innerHTML="";projects.forEach((p)=>{const b=document.createElement("button");b.type="button";b.className="item"+(p.id===state.activeId?" active":"");b.style.setProperty("--accent",p.color);b.style.setProperty("--soft",p.soft);b.innerHTML='<div class="top"><span class="badge"><span class="icon">'+p.icon+'</span><span class="type">'+p.name[state.lang]+'</span></span><span class="type">&#8594;</span></div><div class="name">'+p.name[state.lang]+'</div><p class="desc">'+p.desc[state.lang]+'</p>';b.addEventListener("click",()=>{state.activeId=p.id;render();loadFrame()});listEl.appendChild(b)})}
-    function renderLang(){langButtons.forEach((b)=>b.classList.toggle("active",b.dataset.lang===state.lang))}
-    function renderHead(){const p=getProject(state.activeId);titleEl.textContent=p.name[state.lang];subEl.textContent=p.desc[state.lang];openEl.href=p.path}
-    function hideByHeading(doc, texts){doc.querySelectorAll('.section').forEach((section)=>{const h=section.querySelector('h2'); if(!h) return; const text=(h.textContent||'').trim(); if(texts.includes(text)) section.style.display='none';})}
-    function trimFrame(){const doc=frameEl.contentDocument; if(!doc) return; const body=doc.body; const html=doc.documentElement; html.style.background='#ffffff'; body.style.background='#ffffff'; body.style.margin='0'; const langSwitch=doc.getElementById('site-lang-switch'); if(langSwitch) langSwitch.style.display='none'; doc.querySelectorAll('.nav,.toolbar').forEach((n)=>n.style.display='none'); hideByHeading(doc,['快捷入口','先看这几个','Start Here','Quick Paths']); doc.querySelectorAll('.filter-row').forEach((row)=>{const label=row.querySelector('.filter-label'); const text=(label&&label.textContent||'').trim(); if(['上手','Access','使用方式','How to use'].includes(text)) row.style.display='none';}); const shell=doc.querySelector('.shell'); if(shell){shell.style.width='100%';shell.style.maxWidth='none';shell.style.margin='0';shell.style.padding='0'}; doc.querySelectorAll('.section').forEach((s)=>{s.style.marginTop='0'}); doc.querySelectorAll('.status-badge').forEach((badge)=>{const text=(badge.textContent||'').trim(); if(['打开网页先看看','Instant Preview'].includes(text)) badge.style.display='none';}); const style=doc.createElement('style'); style.textContent='body{overflow:auto!important} .section:first-of-type{margin-top:0!important} :root{--text:#0f172a!important;--muted:#64748b!important;--line:rgba(15,23,42,.08)!important;--accent:#d9a373!important;--accent-soft:rgba(217,163,115,.12)!important;--panel:#ffffff!important;--panel-soft:#ffffff!important;--bg-soft:#ffffff!important} html,body{background:#ffffff!important;color:#0f172a!important} .shell,.nav,.toolbar,.hero,.hero-card,.hero-panel,.ranking-hero,.ranking-panel,.controls,.filters,.summary,.summary-card,.stats,.panel,.panel-card,.section,.quick-card,.tool-card,.card,.stat,.meta-card,.info-card,.search,.filter-stack,.footnote,.grid > *, .quick-grid > *{background:#ffffff!important;background-image:none!important;border-color:rgba(255,255,255,.99)!important;box-shadow:none!important} .frame, .frame-wrap, .shell, .section, .hero, .panel, .summary, .search, .filter-stack,.controls,.filters,.stats,.footnote{color:#0f172a!important} .meta,.tool-card p,.quick-card p,.stat-label,.filter-label,.chip,.status-badge,.nav-links,.section-head p,.hero p,.hero-copy,.subtitle,.subcopy,.desc,.muted,.mini-list div,.project-type,.project-desc,.summary-card span,.pill,.footnote,.empty{color:#64748b!important} h1,h2,h3,h4,strong,.brand,.count,.value,.tool-card h3,.quick-card h3,.hero h1,.hero h2,.hero strong,.mini-list strong,.card-bottom strong,.name,.stage-title,.summary-card strong,.section-count{color:#0f172a!important} .chip-btn,.chip,.status-badge,.badge,.pill{background:#fcf7f2!important;border-color:rgba(217,163,115,.22)!important;color:#8a6238!important;box-shadow:none!important} .chip-btn.active,.chip-btn:hover,.lang button.active,.pill.primary{background:#f6e7d7!important;border-color:rgba(217,163,115,.34)!important;color:#9a6234!important} .visit,.btn,.btn2,.count{box-shadow:none!important} .visit,.btn,.btn2{color:#8a6238!important;background:#f9ecdf!important;border-color:rgba(217,163,115,.28)!important} input{background:#fff!important;border-color:rgba(15,23,42,.08)!important;color:#0f172a!important} .summary-card,.tool-card,.card,.section,.filters,.controls,.hero,.footnote{outline:none!important} .badge.open,.badge.closed,.status-badge,.pill{background:#fcf7f2!important;border-color:rgba(217,163,115,.22)!important;color:#8a6238!important} .card::before,.tool-card::before{opacity:.7!important} [style*=\"background:linear-gradient\"],[style*=\"background: radial-gradient\"],[style*=\"background:radial-gradient\"]{background:#ffffff!important;background-image:none!important}'; doc.head.appendChild(style); try{frameEl.style.height=Math.max(doc.documentElement.scrollHeight,760)+'px'}catch(e){}
-      const innerSetLang=doc.defaultView&&doc.defaultView.SiteI18n&&doc.defaultView.SiteI18n.setLang; if(innerSetLang) innerSetLang(state.lang);
+    const messages = {
+      pageTitle: { zh: "88220066.xyz", en: "88220066.xyz" },
+      pageDescription: { zh: "简洁项目工作台", en: "Minimal project workspace" },
+      sidebarEyebrow: { zh: "工作台", en: "Workspace" },
+      sidebarTitle: { zh: "项目入口", en: "Project Hub" },
+      sidebarIntro: {
+        zh: "把常用入口收在一个地方，打开就能继续工作。",
+        en: "Keep the pages you use most in one place so you can pick up work right away."
+      },
+      projectCountLabel: { zh: "当前入口", en: "Active entries" },
+      projectModeValue: { zh: "实时", en: "Live" },
+      projectModeLabel: { zh: "预览方式", en: "Preview mode" },
+      sidebarFoot: {
+        zh: "左边切换入口，右边直接看实际页面。",
+        en: "Switch entries on the left and preview the real page on the right."
+      },
+      stageKicker: { zh: "选中项目", en: "Selected" },
+      stageHint: { zh: "右侧是实际页面预览", en: "Live page preview on the right" },
+      openLink: { zh: "新页打开", en: "Open in new tab" }
+    };
+
+    const projects = [
+      { id: "ai", icon: "AI", color: "#0f8a63", soft: "rgba(15,138,99,.10)", name: { zh: "AI 导航", en: "AI Nav" }, desc: { zh: "AI 工具导航", en: "AI product directory" }, path: "/ai-nav/" },
+      { id: "api", icon: "A", color: "#16836d", soft: "rgba(22,131,109,.10)", name: { zh: "API", en: "APIs" }, desc: { zh: "模型 API 导航", en: "Model API directory" }, path: "/free-api-nav/" },
+      { id: "ranking", icon: "R", color: "#c98a28", soft: "rgba(201,138,40,.12)", name: { zh: "模型排名", en: "Model Rankings" }, desc: { zh: "公开模型榜单", en: "Public model leaderboards" }, path: "/model-ranking/" },
+      { id: "finance", icon: "F", color: "#1f9b76", soft: "rgba(31,155,118,.10)", name: { zh: "金融导航", en: "Finance Nav" }, desc: { zh: "金融与数据资源", en: "Finance and data resources" }, path: "/finance-nav/" },
+      { id: "lobster", icon: "L", color: "#c8784f", soft: "rgba(200,120,79,.12)", name: { zh: "小龙虾导航", en: "Lobster Nav" }, desc: { zh: "OpenClaw 与相关生态", en: "OpenClaw ecosystem" }, path: "/lobster-nav/" },
+      { id: "skills", icon: "S", color: "#7f9a3c", soft: "rgba(127,154,60,.12)", name: { zh: "技能", en: "Skills" }, desc: { zh: "工具与工作流方案", en: "Tools and workflows" }, path: "/skills-nav/" },
+      { id: "tools", icon: "T", color: "#2f8f77", soft: "rgba(47,143,119,.10)", name: { zh: "工具", en: "Tools" }, desc: { zh: "免费网页工具", en: "Free web tools" }, path: "/tools-nav/" },
+      { id: "english", icon: "E", color: "#c98a28", soft: "rgba(201,138,40,.12)", name: { zh: "英语", en: "English" }, desc: { zh: "免费英语资源", en: "Free English resources" }, path: "/english-tools/" }
+    ];
+
+    const state = { activeId: "ai", lang: "zh" };
+    const listEl = document.getElementById("list");
+    const frameEl = document.getElementById("frame");
+    const titleEl = document.getElementById("stage-title");
+    const subEl = document.getElementById("stage-sub");
+    const openEl = document.getElementById("stage-open");
+    const langButtons = [...document.querySelectorAll("[data-lang]")];
+    const projectCountEl = document.getElementById("project-count");
+
+    const getProject = (id) => projects.find((project) => project.id === id) || projects[0];
+
+    function renderList() {
+      listEl.innerHTML = "";
+      projects.forEach((project) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "item" + (project.id === state.activeId ? " active" : "");
+        button.style.setProperty("--accent", project.color);
+        button.style.setProperty("--soft", project.soft);
+        button.innerHTML =
+          '<div class="top"><span class="badge"><span class="icon">' + project.icon +
+          '</span><span class="type">' + project.name[state.lang] +
+          '</span></span><span class="type">&#8594;</span></div><div class="name">' +
+          project.name[state.lang] + '</div><p class="desc">' + project.desc[state.lang] + "</p>";
+        button.addEventListener("click", () => {
+          state.activeId = project.id;
+          render();
+          loadFrame();
+        });
+        listEl.appendChild(button);
+      });
     }
-    function loadFrame(){const p=getProject(state.activeId); frameEl.src=p.path+(p.path.includes('?')?'&':'?')+'embed=1&v=home';}
-    function render(){window.SiteI18n.applyMessages(messages,state.lang);renderLang();renderList();renderHead()}
-    frameEl.addEventListener('load',()=>setTimeout(trimFrame,80));
-    langButtons.forEach((b)=>b.addEventListener('click',()=>{state.lang=b.dataset.lang;window.SiteI18n.setLang(state.lang);render(); try{const inner=frameEl.contentWindow&&frameEl.contentWindow.SiteI18n; if(inner) inner.setLang(state.lang)}catch(e){}}));
-    state.lang=window.SiteI18n.getLang(); window.SiteI18n.bindPage(messages,(lang)=>{state.lang=lang;render()}); loadFrame();
+
+    function renderLang() {
+      langButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === state.lang));
+    }
+
+    function renderHead() {
+      const project = getProject(state.activeId);
+      titleEl.textContent = project.name[state.lang];
+      subEl.textContent = project.desc[state.lang];
+      openEl.href = project.path;
+      projectCountEl.textContent = String(projects.length);
+    }
+
+    function hideByHeading(doc, texts) {
+      doc.querySelectorAll(".section").forEach((section) => {
+        const heading = section.querySelector("h2");
+        if (!heading) return;
+        const text = (heading.textContent || "").trim();
+        if (texts.includes(text)) section.style.display = "none";
+      });
+    }
+
+    function trimFrame() {
+      const doc = frameEl.contentDocument;
+      if (!doc) return;
+
+      const body = doc.body;
+      const html = doc.documentElement;
+      html.style.background = "#ffffff";
+      body.style.background = "#ffffff";
+      body.style.margin = "0";
+
+      const langSwitch = doc.getElementById("site-lang-switch");
+      if (langSwitch) langSwitch.style.display = "none";
+
+      doc.querySelectorAll(".nav,.toolbar").forEach((node) => { node.style.display = "none"; });
+      hideByHeading(doc, ["快捷入口", "先看这几个", "Start Here", "Quick Paths"]);
+
+      doc.querySelectorAll(".filter-row").forEach((row) => {
+        const label = row.querySelector(".filter-label");
+        const text = ((label && label.textContent) || "").trim();
+        if (["上手", "Access", "使用方式", "How to use"].includes(text)) row.style.display = "none";
+      });
+
+      const shell = doc.querySelector(".shell");
+      if (shell) {
+        shell.style.width = "100%";
+        shell.style.maxWidth = "none";
+        shell.style.margin = "0";
+        shell.style.padding = "0";
+      }
+
+      doc.querySelectorAll(".section").forEach((section) => { section.style.marginTop = "0"; });
+      doc.querySelectorAll(".status-badge").forEach((badge) => {
+        const text = (badge.textContent || "").trim();
+        if (["打开网页先看看", "Instant Preview"].includes(text)) badge.style.display = "none";
+      });
+
+      const style = doc.createElement("style");
+      style.textContent = 'body{overflow:auto!important}.section:first-of-type{margin-top:0!important}:root{--text:#142119!important;--muted:#5d7064!important;--line:rgba(20,33,25,.08)!important;--accent:#c98a28!important;--accent-soft:rgba(201,138,40,.12)!important;--panel:#ffffff!important;--panel-soft:#ffffff!important;--bg-soft:#ffffff!important}html,body{background:#ffffff!important;color:#142119!important}.shell,.nav,.toolbar,.hero,.hero-card,.hero-panel,.ranking-hero,.ranking-panel,.controls,.filters,.summary,.summary-card,.stats,.panel,.panel-card,.section,.quick-card,.tool-card,.card,.stat,.meta-card,.info-card,.search,.filter-stack,.footnote,.grid > *,.quick-grid > *{background:#ffffff!important;background-image:none!important;border-color:rgba(20,33,25,.08)!important;box-shadow:none!important}.frame,.frame-wrap,.shell,.section,.hero,.panel,.summary,.search,.filter-stack,.controls,.filters,.stats,.footnote{color:#142119!important}.meta,.tool-card p,.quick-card p,.stat-label,.filter-label,.chip,.status-badge,.nav-links,.section-head p,.hero p,.hero-copy,.subtitle,.subcopy,.desc,.muted,.mini-list div,.project-type,.project-desc,.summary-card span,.pill,.footnote,.empty{color:#5d7064!important}h1,h2,h3,h4,strong,.brand,.count,.value,.tool-card h3,.quick-card h3,.hero h1,.hero h2,.hero strong,.mini-list strong,.card-bottom strong,.name,.stage-title,.summary-card strong,.section-count{color:#142119!important}.chip-btn,.chip,.status-badge,.badge,.pill{background:#fff6e8!important;border-color:rgba(201,138,40,.24)!important;color:#8c5f1a!important;box-shadow:none!important}.chip-btn.active,.chip-btn:hover,.lang button.active,.pill.primary{background:#f8ead1!important;border-color:rgba(201,138,40,.34)!important;color:#8c5f1a!important}.visit,.btn,.btn2,.count{box-shadow:none!important}.visit,.btn,.btn2{color:#8c5f1a!important;background:#fff1dd!important;border-color:rgba(201,138,40,.24)!important}input{background:#fff!important;border-color:rgba(20,33,25,.08)!important;color:#142119!important}[style*="background:linear-gradient"],[style*="background: radial-gradient"],[style*="background:radial-gradient"]{background:#ffffff!important;background-image:none!important}';
+      doc.head.appendChild(style);
+
+      try {
+        frameEl.style.height = Math.max(doc.documentElement.scrollHeight, 760) + "px";
+      } catch (error) {}
+
+      const innerSetLang = doc.defaultView && doc.defaultView.SiteI18n && doc.defaultView.SiteI18n.setLang;
+      if (innerSetLang) innerSetLang(state.lang);
+    }
+
+    function loadFrame() {
+      const project = getProject(state.activeId);
+      frameEl.src = project.path + (project.path.includes("?") ? "&" : "?") + "embed=1&v=home";
+    }
+
+    function render() {
+      window.SiteI18n.applyMessages(messages, state.lang);
+      renderLang();
+      renderList();
+      renderHead();
+    }
+
+    frameEl.addEventListener("load", () => setTimeout(trimFrame, 80));
+    langButtons.forEach((button) => button.addEventListener("click", () => {
+      state.lang = button.dataset.lang;
+      window.SiteI18n.setLang(state.lang);
+      render();
+      try {
+        const inner = frameEl.contentWindow && frameEl.contentWindow.SiteI18n;
+        if (inner) inner.setLang(state.lang);
+      } catch (error) {}
+    }));
+
+    state.lang = window.SiteI18n.getLang();
+    window.SiteI18n.bindPage(messages, (lang) => {
+      state.lang = lang;
+      render();
+    });
+    loadFrame();
   </script>
 </body>
 </html>
-
-
