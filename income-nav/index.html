@@ -290,7 +290,8 @@
     .trend-label,
     .trend-meta,
     .trend-loading,
-    .trend-error {
+    .trend-error,
+    .metric-label {
       color: var(--muted);
       font-size: 0.84rem;
       line-height: 1.6;
@@ -300,6 +301,32 @@
       color: var(--text);
       font-size: 0.95rem;
       font-weight: 700;
+    }
+
+    .trend-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .trend-metric {
+      display: grid;
+      gap: 2px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+    }
+
+    .metric-value {
+      color: var(--text);
+      font-size: 0.98rem;
+      font-weight: 700;
+      line-height: 1.3;
     }
 
     .trend-meta {
@@ -594,6 +621,8 @@
         trendReturn: "成立以来总回报",
         trendAnnualized: "年化总回报",
         trendYears: "成立时长",
+        trendMetricPending: "加载中",
+        trendMetricMissing: "暂缺",
         trendFrom: "起点",
         trendTo: "当前",
         trendUpdated: "更新",
@@ -648,6 +677,8 @@
         trendReturn: "Total return since inception",
         trendAnnualized: "Annualized return",
         trendYears: "Track record",
+        trendMetricPending: "Loading",
+        trendMetricMissing: "N/A",
         trendFrom: "Start",
         trendTo: "Now",
         trendUpdated: "Updated",
@@ -1426,6 +1457,28 @@
       `;
     }
 
+    function buildMetricStrip(lang, values = {}) {
+      const totalReturn = values.totalReturn ?? labels[lang].trendMetricPending;
+      const annualizedReturn = values.annualizedReturn ?? labels[lang].trendMetricPending;
+      const trackRecord = values.trackRecord ?? labels[lang].trendMetricPending;
+      return `
+        <div class="trend-metrics">
+          <div class="trend-metric">
+            <span class="metric-label">${labels[lang].trendReturn}</span>
+            <strong class="metric-value">${totalReturn}</strong>
+          </div>
+          <div class="trend-metric">
+            <span class="metric-label">${labels[lang].trendAnnualized}</span>
+            <strong class="metric-value">${annualizedReturn}</strong>
+          </div>
+          <div class="trend-metric">
+            <span class="metric-label">${labels[lang].trendYears}</span>
+            <strong class="metric-value">${trackRecord}</strong>
+          </div>
+        </div>
+      `;
+    }
+
     function trendPlaceholder(item, lang) {
       if (!item.symbol) return "";
       return `
@@ -1434,6 +1487,7 @@
             <span class="trend-label">${labels[lang].trendTitle}</span>
             <strong class="trend-return">--</strong>
           </div>
+          ${buildMetricStrip(lang)}
           <div class="trend-loading">${labels[lang].trendLoading}</div>
         </div>
       `;
@@ -1548,11 +1602,12 @@
                 <span class="trend-label">${labels[lang].trendTitle}</span>
                 <strong class="trend-return">${trend.totalReturnPct > 0 ? "+" : ""}${trend.totalReturnPct}%</strong>
               </div>
+              ${buildMetricStrip(lang, {
+                totalReturn: `${trend.totalReturnPct > 0 ? "+" : ""}${trend.totalReturnPct}%`,
+                annualizedReturn: `${trend.annualizedReturnPct > 0 ? "+" : ""}${trend.annualizedReturnPct}%`,
+                trackRecord: `${trend.yearsSinceInception}`
+              })}
               ${buildSparkline(trend.series)}
-              <div class="trend-foot">
-                <span class="trend-meta">${labels[lang].trendAnnualized} ${trend.annualizedReturnPct > 0 ? "+" : ""}${trend.annualizedReturnPct}%</span>
-                <span class="trend-meta">${labels[lang].trendYears} ${trend.yearsSinceInception}</span>
-              </div>
               <div class="trend-foot">
                 <span class="trend-meta">${labels[lang].trendFrom} ${formatDate(trend.inceptionTs, lang)}</span>
                 <span class="trend-meta">${labels[lang].trendTo} ${formatDate(trend.latestTs, lang)}</span>
@@ -1571,6 +1626,11 @@
                 <span class="trend-label">${labels[lang].trendTitle}</span>
                 <strong class="trend-return">--</strong>
               </div>
+              ${buildMetricStrip(lang, {
+                totalReturn: labels[lang].trendMetricMissing,
+                annualizedReturn: labels[lang].trendMetricMissing,
+                trackRecord: labels[lang].trendMetricMissing
+              })}
               <div class="trend-error">${labels[lang].trendError}</div>
             `;
           }
