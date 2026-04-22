@@ -397,6 +397,13 @@
       padding-left: 2px;
     }
 
+    .active-summary {
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      padding-left: 2px;
+    }
+
     .filter-row {
       display: flex;
       justify-content: space-between;
@@ -517,6 +524,7 @@
       <div class="summary-grid" id="stats"></div>
       <div class="view-presets" id="view-presets" aria-label="View presets"></div>
       <div class="preset-note" id="preset-note"></div>
+      <div class="active-summary" id="active-summary"></div>
       <div class="filter-panel">
         <div class="filter-row">
           <div class="filter-label" data-i18n="scopeTitle">范围</div>
@@ -608,6 +616,7 @@
       sortFilterTitle: { zh: "排序", en: "Sort" },
       viewPresetTitle: { zh: "视图", en: "Views" },
       presetNoteTitle: { zh: "当前视图", en: "Current view" },
+      activeSummaryTitle: { zh: "当前筛选", en: "Active filters" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -680,6 +689,8 @@
         filterSortAnnualized: "按年化总回报",
         filterSortTotalReturn: "按总回报",
         filterSortTrackRecord: "按成立时长",
+        activeSummaryAll: "全范围 / 全结构 / 全定位 / 默认顺序",
+        activeSummaryJoin: " / ",
         viewPresetDefault: "默认视图",
         viewPresetCompare: "对比视图",
         viewPresetResearch: "研究视图",
@@ -745,6 +756,8 @@
         filterSortAnnualized: "Annualized return",
         filterSortTotalReturn: "Total return",
         filterSortTrackRecord: "Track record",
+        activeSummaryAll: "All scopes / All structures / All roles / Default order",
+        activeSummaryJoin: " / ",
         viewPresetDefault: "Default view",
         viewPresetCompare: "Compare",
         viewPresetResearch: "Research",
@@ -1742,6 +1755,26 @@
       return labels[lang].presetNoteCustom;
     }
 
+    function activeFilterSummary(lang) {
+      const parts = [];
+      if (filterState.scope !== "all") {
+        const option = scopeOptions.find((item) => item.key === filterState.scope);
+        if (option) parts.push(getFilterLabel(lang, option));
+      }
+      if (filterState.style !== "all") {
+        const option = styleOptions.find((item) => item.key === filterState.style);
+        if (option) parts.push(getFilterLabel(lang, option));
+      }
+      if (filterState.role !== "all") {
+        const option = roleOptions.find((item) => item.key === filterState.role);
+        if (option) parts.push(getFilterLabel(lang, option));
+      }
+      const sortOption = sortOptions.find((item) => item.key === filterState.sort);
+      if (sortOption) parts.push(getFilterLabel(lang, sortOption));
+      if (!parts.length || (parts.length === 1 && filterState.sort === "default")) return labels[lang].activeSummaryAll;
+      return parts.join(labels[lang].activeSummaryJoin);
+    }
+
     function renderPresetButtons(lang) {
       const title = labels[lang].viewPresetTitle;
       const html = presetOptions.map((option) => {
@@ -1750,6 +1783,7 @@
       }).join("");
       document.getElementById("view-presets").innerHTML = `<span class="filter-label">${title}</span><div class="filter-group">${html}</div>`;
       document.getElementById("preset-note").textContent = `${labels[lang].presetNoteTitle}: ${presetDescription(lang)}`;
+      document.getElementById("active-summary").textContent = `${labels[lang].activeSummaryTitle}: ${activeFilterSummary(lang)}`;
       document.querySelectorAll("[data-preset-value]").forEach((button) => {
         button.addEventListener("click", () => {
           applyPreset(button.getAttribute("data-preset-value"));
