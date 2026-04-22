@@ -159,6 +159,36 @@
       gap: 14px;
     }
 
+    .subgroup {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .subgroup[hidden] {
+      display: none;
+    }
+
+    .subgroup-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .subgroup-head h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+    }
+
+    .subgroup-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
     .card {
       display: grid;
       gap: 14px;
@@ -599,6 +629,15 @@
         <div class="section-badge" data-i18n="advancedBadge">Advanced / options + weekly + single-stock</div>
       </div>
       <div class="grid" id="advanced-grid"></div>
+      <div class="subgroup" id="provider-subgroup" hidden>
+        <div class="subgroup-head">
+          <div>
+            <h3 data-i18n="providerGroupTitle">Provider / 平台入口</h3>
+            <p data-i18n="providerGroupCopy">这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。</p>
+          </div>
+        </div>
+        <div class="grid" id="provider-grid"></div>
+      </div>
     </section>
 
     <section class="section" id="research-section">
@@ -649,6 +688,11 @@
         en: "This set leans toward weekly, 0DTE, single-stock covered call, and provider hubs. The yields can look stronger, but the structure is also more complex."
       },
       advancedBadge: { zh: "进阶 / 期权 + 周配 + 单股", en: "Advanced / options + weekly + single-stock" },
+      providerGroupTitle: { zh: "Provider / 平台入口", en: "Provider hubs" },
+      providerGroupCopy: {
+        zh: "这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。",
+        en: "These are lineup entry points rather than single-ETF positions, useful for tracking launches, structures, and provider direction."
+      },
       researchTitle: { zh: "Income 研究与筛选", en: "Income Research & Screening" },
       researchCopy: {
         zh: "这组不是直接买的 ETF，而是拿来查分红节奏、收益率筛选、周配月配和 provider 动态的工具入口。",
@@ -1953,6 +1997,16 @@
       let totalMatches = 0;
       sectionConfigs.forEach((section) => {
         const items = getVisibleItems(section);
+        if (section.key === "advanced") {
+          const providerItems = items.filter((item) => !item.symbol);
+          const etfItems = items.filter((item) => item.symbol);
+          totalMatches += providerItems.length + etfItems.length;
+          document.getElementById(section.gridId).innerHTML = etfItems.map((item) => cardTemplate(item, lang)).join("");
+          document.getElementById("provider-grid").innerHTML = providerItems.map((item) => cardTemplate(item, lang)).join("");
+          document.getElementById("provider-subgroup").hidden = providerItems.length === 0;
+          document.getElementById(section.sectionId).hidden = providerItems.length + etfItems.length === 0;
+          return;
+        }
         totalMatches += items.length;
         document.getElementById(section.gridId).innerHTML = items.map((item) => cardTemplate(item, lang)).join("");
         document.getElementById(section.sectionId).hidden = items.length === 0;
