@@ -384,6 +384,13 @@
       background: var(--panel);
     }
 
+    .view-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
     .filter-row {
       display: flex;
       justify-content: space-between;
@@ -502,6 +509,7 @@
       <h1 data-i18n="heroTitle">Income 导航</h1>
       <p class="hero-copy" data-i18n="heroCopy">先把偏 income 的 ETF 收在一页里。中国这块偏红利和债券，美国这块补上红利、期权增强、REITs 和债券，方便从现金流视角先筛一轮。</p>
       <div class="summary-grid" id="stats"></div>
+      <div class="view-presets" id="view-presets" aria-label="View presets"></div>
       <div class="filter-panel">
         <div class="filter-row">
           <div class="filter-label" data-i18n="scopeTitle">范围</div>
@@ -591,6 +599,7 @@
       styleFilterTitle: { zh: "结构", en: "Structure" },
       roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
       sortFilterTitle: { zh: "排序", en: "Sort" },
+      viewPresetTitle: { zh: "视图", en: "Views" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -663,6 +672,10 @@
         filterSortAnnualized: "按年化总回报",
         filterSortTotalReturn: "按总回报",
         filterSortTrackRecord: "按成立时长",
+        viewPresetDefault: "默认视图",
+        viewPresetCompare: "对比视图",
+        viewPresetResearch: "研究视图",
+        viewPresetYieldScan: "高收益扫描",
         filterHintResearch: "研究工具不参与底仓 / 增强分类，适合先查分红节奏和分配规则，再回到 ETF 卡片看复权后总回报。",
         filterHintPrefix: "当前筛到",
         filterHintSuffix: "个项目。先按结构缩小范围，再看复权后总回报、成立时长和风险提醒。",
@@ -719,6 +732,10 @@
         filterSortAnnualized: "Annualized return",
         filterSortTotalReturn: "Total return",
         filterSortTrackRecord: "Track record",
+        viewPresetDefault: "Default view",
+        viewPresetCompare: "Compare",
+        viewPresetResearch: "Research",
+        viewPresetYieldScan: "High-yield scan",
         filterHintResearch: "Research tools are outside the core/enhanced role model. Use them to check distribution cadence first, then go back to ETF cards for adjusted total return.",
         filterHintPrefix: "Showing",
         filterHintSuffix: "matching entries. Narrow by structure first, then compare adjusted total return, track record, and risk notes.",
@@ -1382,7 +1399,7 @@
     const trendCache = new Map();
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
-    const filterState = { scope: "all", style: "all", role: "all", sort: "default" };
+    const filterState = { scope: "all", style: "all", role: "all", sort: "default", preset: "default" };
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -1423,6 +1440,13 @@
       { key: "annualized", labelKey: "filterSortAnnualized" },
       { key: "totalReturn", labelKey: "filterSortTotalReturn" },
       { key: "trackRecord", labelKey: "filterSortTrackRecord" }
+    ];
+
+    const presetOptions = [
+      { key: "default", labelKey: "viewPresetDefault" },
+      { key: "compare", labelKey: "viewPresetCompare" },
+      { key: "research", labelKey: "viewPresetResearch" },
+      { key: "yieldScan", labelKey: "viewPresetYieldScan" }
     ];
 
     function formatDate(ts, lang) {
@@ -1642,6 +1666,71 @@
       return option.dynamic ? classLabel(option.dynamic, lang) : labels[lang][option.labelKey];
     }
 
+    function applyPreset(presetKey) {
+      filterState.preset = presetKey;
+      if (presetKey === "default") {
+        filterState.scope = "all";
+        filterState.style = "all";
+        filterState.role = "all";
+        filterState.sort = "default";
+        return;
+      }
+      if (presetKey === "compare") {
+        filterState.scope = "all";
+        filterState.style = "all";
+        filterState.role = "core";
+        filterState.sort = "annualized";
+        return;
+      }
+      if (presetKey === "research") {
+        filterState.scope = "research";
+        filterState.style = "research";
+        filterState.role = "all";
+        filterState.sort = "default";
+        return;
+      }
+      if (presetKey === "yieldScan") {
+        filterState.scope = "advanced";
+        filterState.style = "option";
+        filterState.role = "watch";
+        filterState.sort = "totalReturn";
+      }
+    }
+
+    function syncPresetFromFilters() {
+      const matched = presetOptions.find((option) => {
+        if (option.key === "default") {
+          return filterState.scope === "all" && filterState.style === "all" && filterState.role === "all" && filterState.sort === "default";
+        }
+        if (option.key === "compare") {
+          return filterState.scope === "all" && filterState.style === "all" && filterState.role === "core" && filterState.sort === "annualized";
+        }
+        if (option.key === "research") {
+          return filterState.scope === "research" && filterState.style === "research" && filterState.role === "all" && filterState.sort === "default";
+        }
+        if (option.key === "yieldScan") {
+          return filterState.scope === "advanced" && filterState.style === "option" && filterState.role === "watch" && filterState.sort === "totalReturn";
+        }
+        return false;
+      });
+      filterState.preset = matched ? matched.key : "custom";
+    }
+
+    function renderPresetButtons(lang) {
+      const title = labels[lang].viewPresetTitle;
+      const html = presetOptions.map((option) => {
+        const active = filterState.preset === option.key ? " active" : "";
+        return `<button class="filter-chip${active}" type="button" data-preset-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
+      }).join("");
+      document.getElementById("view-presets").innerHTML = `<span class="filter-label">${title}</span><div class="filter-group">${html}</div>`;
+      document.querySelectorAll("[data-preset-value]").forEach((button) => {
+        button.addEventListener("click", () => {
+          applyPreset(button.getAttribute("data-preset-value"));
+          renderPage(activeLang);
+        });
+      });
+    }
+
     function isResearchMode() {
       return filterState.scope === "research" || filterState.style === "research";
     }
@@ -1697,6 +1786,8 @@
     }
 
     function renderFilterButtons(lang) {
+      syncPresetFromFilters();
+      renderPresetButtons(lang);
       const scopeHtml = scopeOptions.map((option) => {
         const active = filterState.scope === option.key ? " active" : "";
         return `<button class="filter-chip${active}" type="button" data-filter-group="scope" data-filter-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
@@ -1748,6 +1839,7 @@
           } else if (!roleDisabled) {
             filterState.role = value;
           }
+          syncPresetFromFilters();
           renderPage(activeLang);
         });
       });
