@@ -1616,6 +1616,41 @@
       { key: "yieldScan", labelKey: "viewPresetYieldScan" }
     ];
 
+    function readUrlState() {
+      const params = new URLSearchParams(window.location.search);
+      const next = {};
+      if (presetOptions.some((option) => option.key === params.get("preset"))) next.preset = params.get("preset");
+      if (scopeOptions.some((option) => option.key === params.get("scope"))) next.scope = params.get("scope");
+      if (styleOptions.some((option) => option.key === params.get("style"))) next.style = params.get("style");
+      if (roleOptions.some((option) => option.key === params.get("role"))) next.role = params.get("role");
+      if (sortOptions.some((option) => option.key === params.get("sort"))) next.sort = params.get("sort");
+      return next;
+    }
+
+    function applyUrlState() {
+      const next = readUrlState();
+      if (next.preset) {
+        applyPreset(next.preset);
+      }
+      if (next.scope) filterState.scope = next.scope;
+      if (next.style) filterState.style = next.style;
+      if (next.role) filterState.role = next.role;
+      if (next.sort) filterState.sort = next.sort;
+      syncPresetFromFilters();
+    }
+
+    function writeUrlState() {
+      const params = new URLSearchParams();
+      if (filterState.preset !== "custom") params.set("preset", filterState.preset);
+      if (filterState.scope !== "all") params.set("scope", filterState.scope);
+      if (filterState.style !== "all") params.set("style", filterState.style);
+      if (filterState.role !== "all") params.set("role", filterState.role);
+      if (filterState.sort !== "default") params.set("sort", filterState.sort);
+      const query = params.toString();
+      const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+      window.history.replaceState(null, "", nextUrl);
+    }
+
     function formatDate(ts, lang) {
       const date = new Date(ts * 1000);
       return new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en-US", {
@@ -2107,9 +2142,15 @@
       const totalMatches = renderSections(lang);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
+      writeUrlState();
       if (!options.skipWarm) warmVisibleTrendData(lang);
     }
 
+    applyUrlState();
+    window.addEventListener("popstate", () => {
+      applyUrlState();
+      renderPage(activeLang || window.SiteI18n?.getLang?.() || "zh", { skipWarm: true });
+    });
     window.SiteI18n.bindPage(pageCopy, renderPage);
   </script>
 </body>
