@@ -385,10 +385,16 @@
     }
 
     .view-presets {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 8px;
-      align-items: center;
+      align-items: start;
+    }
+
+    .preset-note {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.94rem;
+      padding-left: 2px;
     }
 
     .filter-row {
@@ -510,6 +516,7 @@
       <p class="hero-copy" data-i18n="heroCopy">先把偏 income 的 ETF 收在一页里。中国这块偏红利和债券，美国这块补上红利、期权增强、REITs 和债券，方便从现金流视角先筛一轮。</p>
       <div class="summary-grid" id="stats"></div>
       <div class="view-presets" id="view-presets" aria-label="View presets"></div>
+      <div class="preset-note" id="preset-note"></div>
       <div class="filter-panel">
         <div class="filter-row">
           <div class="filter-label" data-i18n="scopeTitle">范围</div>
@@ -600,6 +607,7 @@
       roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
       sortFilterTitle: { zh: "排序", en: "Sort" },
       viewPresetTitle: { zh: "视图", en: "Views" },
+      presetNoteTitle: { zh: "当前视图", en: "Current view" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -676,6 +684,11 @@
         viewPresetCompare: "对比视图",
         viewPresetResearch: "研究视图",
         viewPresetYieldScan: "高收益扫描",
+        presetNoteDefault: "不预设方向，先从全量清单开始，适合自己往下筛。",
+        presetNoteCompare: "优先看更像底仓的 income ETF，并按年化总回报排，适合横向比较。",
+        presetNoteResearch: "直接切到研究工具，先看分红节奏、筛选器和 provider 动态。",
+        presetNoteYieldScan: "聚焦高收益期权 income 里更激进的一组，并按总回报快速扫风险兑现结果。",
+        presetNoteCustom: "你已经手动改过筛选，现在看到的是自定义组合。",
         filterHintResearch: "研究工具不参与底仓 / 增强分类，适合先查分红节奏和分配规则，再回到 ETF 卡片看复权后总回报。",
         filterHintPrefix: "当前筛到",
         filterHintSuffix: "个项目。先按结构缩小范围，再看复权后总回报、成立时长和风险提醒。",
@@ -736,6 +749,11 @@
         viewPresetCompare: "Compare",
         viewPresetResearch: "Research",
         viewPresetYieldScan: "High-yield scan",
+        presetNoteDefault: "Start from the full list with no strong bias, then narrow it down manually.",
+        presetNoteCompare: "Focus on more core-like income ETFs and rank them by annualized total return for comparison.",
+        presetNoteResearch: "Jump straight to research tools for distribution cadence, screeners, and provider tracking.",
+        presetNoteYieldScan: "Isolate the more aggressive high-yield option-income set and scan how total return actually held up.",
+        presetNoteCustom: "Filters were adjusted manually, so this is now a custom mix.",
         filterHintResearch: "Research tools are outside the core/enhanced role model. Use them to check distribution cadence first, then go back to ETF cards for adjusted total return.",
         filterHintPrefix: "Showing",
         filterHintSuffix: "matching entries. Narrow by structure first, then compare adjusted total return, track record, and risk notes.",
@@ -1716,6 +1734,14 @@
       filterState.preset = matched ? matched.key : "custom";
     }
 
+    function presetDescription(lang) {
+      if (filterState.preset === "default") return labels[lang].presetNoteDefault;
+      if (filterState.preset === "compare") return labels[lang].presetNoteCompare;
+      if (filterState.preset === "research") return labels[lang].presetNoteResearch;
+      if (filterState.preset === "yieldScan") return labels[lang].presetNoteYieldScan;
+      return labels[lang].presetNoteCustom;
+    }
+
     function renderPresetButtons(lang) {
       const title = labels[lang].viewPresetTitle;
       const html = presetOptions.map((option) => {
@@ -1723,6 +1749,7 @@
         return `<button class="filter-chip${active}" type="button" data-preset-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
       }).join("");
       document.getElementById("view-presets").innerHTML = `<span class="filter-label">${title}</span><div class="filter-group">${html}</div>`;
+      document.getElementById("preset-note").textContent = `${labels[lang].presetNoteTitle}: ${presetDescription(lang)}`;
       document.querySelectorAll("[data-preset-value]").forEach((button) => {
         button.addEventListener("click", () => {
           applyPreset(button.getAttribute("data-preset-value"));
