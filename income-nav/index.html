@@ -654,6 +654,15 @@
         <div class="section-badge" data-i18n="advancedBadge">Advanced / options + weekly + single-stock</div>
       </div>
       <div class="grid" id="advanced-grid"></div>
+      <div class="subgroup" id="watch-subgroup" hidden>
+        <div class="subgroup-head">
+          <div>
+            <h3 id="watch-group-title" data-i18n="watchGroupTitle">高波动观察</h3>
+            <p data-i18n="watchGroupCopy">这组收益叙事更猛，但波动和净值侵蚀也更直接，适合单独看，不要和普通 options-income 混读。</p>
+          </div>
+        </div>
+        <div class="grid" id="watch-grid"></div>
+      </div>
       <details class="subgroup" id="provider-subgroup" hidden>
         <summary class="subgroup-toggle">
           <div class="subgroup-head">
@@ -715,6 +724,12 @@
         en: "This set leans toward weekly, 0DTE, single-stock covered call, and provider hubs. The yields can look stronger, but the structure is also more complex."
       },
       advancedBadge: { zh: "进阶 / 期权 + 周配 + 单股", en: "Advanced / options + weekly + single-stock" },
+      watchGroupTitle: { zh: "高波动观察", en: "High-vol watch" },
+      watchGroupCount: { zh: "个产品", en: "products" },
+      watchGroupCopy: {
+        zh: "这组收益叙事更猛，但波动和净值侵蚀也更直接，适合单独看，不要和普通 options-income 混读。",
+        en: "These products push the income story harder, but volatility and NAV damage are also more direct, so they are better viewed separately."
+      },
       providerGroupTitle: { zh: "Provider / 平台入口", en: "Provider hubs" },
       providerGroupCount: { zh: "个入口", en: "hubs" },
       providerGroupCopy: {
@@ -2027,13 +2042,17 @@
         const items = getVisibleItems(section);
         if (section.key === "advanced") {
           const providerItems = items.filter((item) => !item.symbol);
-          const etfItems = items.filter((item) => item.symbol);
-          totalMatches += providerItems.length + etfItems.length;
+          const watchItems = items.filter((item) => item.symbol && classifyIncomeItem(item) === "watch");
+          const etfItems = items.filter((item) => item.symbol && classifyIncomeItem(item) !== "watch");
+          totalMatches += providerItems.length + watchItems.length + etfItems.length;
           document.getElementById(section.gridId).innerHTML = etfItems.map((item) => cardTemplate(item, lang)).join("");
+          document.getElementById("watch-grid").innerHTML = watchItems.map((item) => cardTemplate(item, lang)).join("");
+          document.getElementById("watch-group-title").textContent = `${pageCopy.watchGroupTitle[lang]} (${watchItems.length} ${pageCopy.watchGroupCount[lang]})`;
+          document.getElementById("watch-subgroup").hidden = watchItems.length === 0;
           document.getElementById("provider-grid").innerHTML = providerItems.map((item) => cardTemplate(item, lang)).join("");
           document.getElementById("provider-group-title").textContent = `${pageCopy.providerGroupTitle[lang]} (${providerItems.length} ${pageCopy.providerGroupCount[lang]})`;
           document.getElementById("provider-subgroup").hidden = providerItems.length === 0;
-          document.getElementById(section.sectionId).hidden = providerItems.length + etfItems.length === 0;
+          document.getElementById(section.sectionId).hidden = providerItems.length + watchItems.length + etfItems.length === 0;
           return;
         }
         totalMatches += items.length;
