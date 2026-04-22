@@ -269,7 +269,8 @@
       background: color-mix(in srgb, var(--card-accent, var(--accent)) 82%, white 18%);
     }
 
-    .trend-block {
+    .trend-block,
+    .info-block {
       display: grid;
       gap: 10px;
       padding: 12px;
@@ -279,7 +280,9 @@
     }
 
     .trend-head,
-    .trend-foot {
+    .trend-foot,
+    .info-head,
+    .info-foot {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -291,7 +294,8 @@
     .trend-meta,
     .trend-loading,
     .trend-error,
-    .metric-label {
+    .metric-label,
+    .info-copy {
       color: var(--muted);
       font-size: 0.84rem;
       line-height: 1.6;
@@ -353,6 +357,16 @@
       border-color: rgba(245, 158, 11, 0.28);
       background: rgba(245, 158, 11, 0.12);
       color: #fde68a;
+    }
+
+    .info-title {
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .info-copy {
+      margin: 0;
     }
 
     .trend-chart {
@@ -658,6 +672,9 @@
         trendTimeliness: "一般会跟到最近一个交易日，免费源偶尔会慢一拍。",
         trendYoungFund: "样本还短，年化参考意义有限。",
         trendRiskHot: "高波动 income，别只看分配率。",
+        hubTitle: "平台入口",
+        hubCopy: "这张卡不是单只 ETF 的复权走势，而是留作 provider 入口，适合继续点进去看新品、规则和产品线扩展。",
+        hubFocus: "适合用来追踪新产品和发行方向。",
         stats: [
           ["市场", "中国 + 美国"],
           ["类型", "红利、债券、REITs、preferred、期权增强"],
@@ -725,6 +742,9 @@
         trendTimeliness: "Usually up to the latest trading day, though free sources can lag a bit.",
         trendYoungFund: "Short track record, so annualized return needs extra caution.",
         trendRiskHot: "High-vol income product. Do not judge it by yield alone.",
+        hubTitle: "Provider hub",
+        hubCopy: "This card is a provider entry point rather than a single-ETF total-return view, so use it to inspect new launches, structures, and lineup changes.",
+        hubFocus: "Useful for tracking new launches and product direction.",
         stats: [
           ["Markets", "China + U.S."],
           ["Styles", "Dividend, bonds, REITs, preferreds, option income"],
@@ -1534,8 +1554,23 @@
       `;
     }
 
+    function hubPlaceholder(lang) {
+      return `
+        <div class="info-block">
+          <div class="info-head">
+            <span class="trend-label">${labels[lang].hubTitle}</span>
+            <strong class="info-title">Hub</strong>
+          </div>
+          <p class="info-copy">${labels[lang].hubCopy}</p>
+          <div class="info-foot">
+            <span class="trend-source">${labels[lang].hubFocus}</span>
+          </div>
+        </div>
+      `;
+    }
+
     function trendPlaceholder(item, lang) {
-      if (!item.symbol) return "";
+      if (!item.symbol) return hubPlaceholder(lang);
       return `
         <div class="trend-block" data-trend-block data-symbol="${item.symbol}">
           <div class="trend-head">
