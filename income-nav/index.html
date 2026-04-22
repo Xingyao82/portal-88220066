@@ -653,6 +653,7 @@
       <div class="active-summary" id="active-summary"></div>
       <div class="share-row">
         <button class="share-button" id="copy-view-link" type="button" data-i18n="copyLinkButton">复制当前视图链接</button>
+        <button class="share-button" id="reset-view" type="button" data-i18n="resetViewButton">重置筛选</button>
         <span class="share-status" id="copy-view-status"></span>
       </div>
       <div class="filter-panel">
@@ -769,6 +770,7 @@
       presetNoteTitle: { zh: "当前视图", en: "Current view" },
       activeSummaryTitle: { zh: "当前筛选", en: "Active filters" },
       copyLinkButton: { zh: "复制当前视图链接", en: "Copy current view link" },
+      resetViewButton: { zh: "重置筛选", en: "Reset filters" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -1711,6 +1713,11 @@
       }
     }
 
+    function resetCurrentView() {
+      applyPreset("default");
+      setCopyStatus(activeLang || "zh", null);
+    }
+
     function writeUrlState() {
       const params = new URLSearchParams();
       if (filterState.preset !== "custom") params.set("preset", filterState.preset);
@@ -2045,6 +2052,12 @@
       const copyButton = document.getElementById("copy-view-link");
       copyButton.textContent = pageCopy.copyLinkButton[lang];
       copyButton.onclick = () => copyCurrentViewLink(lang);
+      const resetButton = document.getElementById("reset-view");
+      resetButton.textContent = pageCopy.resetViewButton[lang];
+      resetButton.onclick = () => {
+        resetCurrentView();
+        renderPage(lang);
+      };
       document.querySelectorAll("[data-preset-value]").forEach((button) => {
         button.addEventListener("click", () => {
           applyPreset(button.getAttribute("data-preset-value"));
