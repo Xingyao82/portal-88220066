@@ -303,6 +303,12 @@
       line-height: 1.4;
     }
 
+    .trend-source.warn {
+      border-color: rgba(245, 158, 11, 0.28);
+      background: rgba(245, 158, 11, 0.12);
+      color: #fde68a;
+    }
+
     .trend-chart {
       width: 100%;
       height: 78px;
@@ -459,6 +465,8 @@
         trendSourceCn: "东财累计净值",
         trendSourceUs: "Yahoo adjusted close",
         trendTimeliness: "一般会跟到最近一个交易日，免费源偶尔会慢一拍。",
+        trendYoungFund: "样本还短，年化参考意义有限。",
+        trendRiskHot: "高波动 income，别只看分配率。",
         stats: [
           ["市场", "中国 + 美国"],
           ["类型", "红利、债券、REITs、preferred、期权增强"],
@@ -485,6 +493,8 @@
         trendSourceCn: "Eastmoney accumulated NAV",
         trendSourceUs: "Yahoo adjusted close",
         trendTimeliness: "Usually up to the latest trading day, though free sources can lag a bit.",
+        trendYoungFund: "Short track record, so annualized return needs extra caution.",
+        trendRiskHot: "High-vol income product. Do not judge it by yield alone.",
         stats: [
           ["Markets", "China + U.S."],
           ["Styles", "Dividend, bonds, REITs, preferreds, option income"],
@@ -1250,6 +1260,8 @@
             const trend = await getTrend(symbol);
             if (!trend?.series?.length) throw new Error("Missing series");
             const sourceLabel = isCnFund ? labels[lang].trendSourceCn : labels[lang].trendSourceUs;
+            const isYoung = trend.yearsSinceInception < 3;
+            const isHotRisk = /^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol || "");
             block.innerHTML = `
               <div class="trend-head">
                 <span class="trend-label">${labels[lang].trendTitle}</span>
@@ -1268,6 +1280,8 @@
                 <span class="trend-source">${labels[lang].trendSourceLabel}: ${sourceLabel}</span>
                 <span class="trend-source">${labels[lang].trendUpdated}: ${formatDate(trend.latestTs, lang)}</span>
               </div>
+              ${isYoung ? `<div class="trend-source warn">${labels[lang].trendYoungFund}</div>` : ""}
+              ${isHotRisk ? `<div class="trend-source warn">${labels[lang].trendRiskHot}</div>` : ""}
               <div class="trend-meta">${labels[lang].trendTimeliness}</div>
             `;
           } catch (error) {
