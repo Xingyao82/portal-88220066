@@ -169,6 +169,25 @@
       box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-accent, rgba(255,255,255,.15)) 16%, transparent);
     }
 
+    .card-class {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .card-class.core { color: #bbf7d0; border-color: rgba(34,197,94,.24); background: rgba(34,197,94,.12); }
+    .card-class.enhanced { color: #dbeafe; border-color: rgba(96,165,250,.24); background: rgba(96,165,250,.12); }
+    .card-class.satellite { color: #fde68a; border-color: rgba(245,158,11,.24); background: rgba(245,158,11,.12); }
+    .card-class.watch { color: #fecdd3; border-color: rgba(244,63,94,.24); background: rgba(244,63,94,.12); }
+
     .card-top {
       display: flex;
       justify-content: space-between;
@@ -475,7 +494,12 @@
         ],
         typeLabel: "类型",
         marketLabel: "市场",
-        noteLabel: "观察点"
+        noteLabel: "观察点",
+        classLabel: "定位",
+        classCore: "底仓 income",
+        classEnhanced: "增强 income",
+        classSatellite: "卫星配置",
+        classWatch: "高波动观察"
       },
       en: {
         brand: "88220066.xyz / Income Nav",
@@ -503,7 +527,12 @@
         ],
         typeLabel: "Type",
         marketLabel: "Market",
-        noteLabel: "Watch"
+        noteLabel: "Watch",
+        classLabel: "Role",
+        classCore: "Core income",
+        classEnhanced: "Enhanced income",
+        classSatellite: "Satellite",
+        classWatch: "High-vol watch"
       }
     };
 
@@ -1207,7 +1236,26 @@
       `;
     }
 
+    function classifyIncomeItem(item) {
+      const symbol = item.symbol || "";
+      const typeZh = item.type?.zh || "";
+      if (/^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol)) return "watch";
+      if (/covered call|0DTE|single-stock|期权|单股|高收益平台|高波动/.test(`${item.type?.en || ''} ${typeZh}`)) return "satellite";
+      if (/增强|option-income|quality-income|preferred/.test(`${item.type?.en || ''} ${typeZh}`)) return "enhanced";
+      return "core";
+    }
+
+    function classLabel(role, lang) {
+      return {
+        core: labels[lang].classCore,
+        enhanced: labels[lang].classEnhanced,
+        satellite: labels[lang].classSatellite,
+        watch: labels[lang].classWatch
+      }[role] || labels[lang].classCore;
+    }
+
     function cardTemplate(item, lang) {
+      const role = classifyIncomeItem(item);
       return `
         <article class="card" style="--card-accent:${item.accent}">
           <div class="card-top">
@@ -1217,6 +1265,7 @@
             </div>
             <span class="badge">${item.ticker}</span>
           </div>
+          <div class="card-class ${role}">${labels[lang].classLabel}: ${classLabel(role, lang)}</div>
           <p>${item.summary[lang]}</p>
           <div class="pill-row">
             ${item.tags[lang].map((tag) => `<span class="pill">${tag}</span>`).join("")}
