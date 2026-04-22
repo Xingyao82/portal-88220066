@@ -498,6 +498,38 @@
       padding-left: 2px;
     }
 
+    .share-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .share-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .share-status {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .share-status.ready {
+      color: #bbf7d0;
+    }
+
     .filter-row {
       display: flex;
       justify-content: space-between;
@@ -619,6 +651,10 @@
       <div class="view-presets" id="view-presets" aria-label="View presets"></div>
       <div class="preset-note" id="preset-note"></div>
       <div class="active-summary" id="active-summary"></div>
+      <div class="share-row">
+        <button class="share-button" id="copy-view-link" type="button" data-i18n="copyLinkButton">复制当前视图链接</button>
+        <span class="share-status" id="copy-view-status"></span>
+      </div>
       <div class="filter-panel">
         <div class="filter-row">
           <div class="filter-label" data-i18n="scopeTitle">范围</div>
@@ -732,6 +768,7 @@
       viewPresetTitle: { zh: "视图", en: "Views" },
       presetNoteTitle: { zh: "当前视图", en: "Current view" },
       activeSummaryTitle: { zh: "当前筛选", en: "Active filters" },
+      copyLinkButton: { zh: "复制当前视图链接", en: "Copy current view link" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -823,6 +860,8 @@
         filterSortTrackRecord: "按成立时长",
         activeSummaryAll: "全范围 / 全结构 / 全定位 / 默认顺序",
         activeSummaryJoin: " / ",
+        copyLinkReady: "当前链接已复制。",
+        copyLinkError: "复制失败，先手动复制地址栏。",
         viewPresetDefault: "默认视图",
         viewPresetCompare: "对比视图",
         viewPresetResearch: "研究视图",
@@ -894,6 +933,8 @@
         filterSortTrackRecord: "Track record",
         activeSummaryAll: "All scopes / All structures / All roles / Default order",
         activeSummaryJoin: " / ",
+        copyLinkReady: "Current view link copied.",
+        copyLinkError: "Copy failed. Please copy the address bar manually.",
         viewPresetDefault: "Default view",
         viewPresetCompare: "Compare",
         viewPresetResearch: "Research",
@@ -1566,6 +1607,7 @@
     const trendCache = new Map();
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
+    let copyStatusTimer = null;
     const filterState = { scope: "all", style: "all", role: "all", sort: "default", preset: "default" };
     let activeLang = "zh";
 
@@ -1637,6 +1679,36 @@
       if (next.role) filterState.role = next.role;
       if (next.sort) filterState.sort = next.sort;
       syncPresetFromFilters();
+    }
+
+    function currentViewUrl() {
+      return window.location.href;
+    }
+
+    function setCopyStatus(lang, kind) {
+      const el = document.getElementById("copy-view-status");
+      if (!el) return;
+      if (copyStatusTimer) clearTimeout(copyStatusTimer);
+      if (!kind) {
+        el.textContent = "";
+        el.classList.remove("ready");
+        return;
+      }
+      el.textContent = kind === "ready" ? labels[lang].copyLinkReady : labels[lang].copyLinkError;
+      el.classList.toggle("ready", kind === "ready");
+      copyStatusTimer = window.setTimeout(() => {
+        el.textContent = "";
+        el.classList.remove("ready");
+      }, 2200);
+    }
+
+    async function copyCurrentViewLink(lang) {
+      try {
+        await navigator.clipboard.writeText(currentViewUrl());
+        setCopyStatus(lang, "ready");
+      } catch (error) {
+        setCopyStatus(lang, "error");
+      }
     }
 
     function writeUrlState() {
@@ -1970,6 +2042,9 @@
       document.getElementById("view-presets").innerHTML = `<span class="filter-label">${title}</span><div class="filter-group">${html}</div>`;
       document.getElementById("preset-note").textContent = `${labels[lang].presetNoteTitle}: ${presetDescription(lang)}`;
       document.getElementById("active-summary").textContent = `${labels[lang].activeSummaryTitle}: ${activeFilterSummary(lang)}`;
+      const copyButton = document.getElementById("copy-view-link");
+      copyButton.textContent = pageCopy.copyLinkButton[lang];
+      copyButton.onclick = () => copyCurrentViewLink(lang);
       document.querySelectorAll("[data-preset-value]").forEach((button) => {
         button.addEventListener("click", () => {
           applyPreset(button.getAttribute("data-preset-value"));
