@@ -658,7 +658,7 @@
         <summary class="subgroup-toggle">
           <div class="subgroup-head">
             <div>
-              <h3 data-i18n="providerGroupTitle">Provider / 平台入口</h3>
+              <h3 id="provider-group-title" data-i18n="providerGroupTitle">Provider / 平台入口</h3>
               <p data-i18n="providerGroupCopy">这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。</p>
             </div>
           </div>
@@ -716,6 +716,7 @@
       },
       advancedBadge: { zh: "进阶 / 期权 + 周配 + 单股", en: "Advanced / options + weekly + single-stock" },
       providerGroupTitle: { zh: "Provider / 平台入口", en: "Provider hubs" },
+      providerGroupCount: { zh: "个入口", en: "hubs" },
       providerGroupCopy: {
         zh: "这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。",
         en: "These are lineup entry points rather than single-ETF positions, useful for tracking launches, structures, and provider direction."
@@ -2030,6 +2031,7 @@
           totalMatches += providerItems.length + etfItems.length;
           document.getElementById(section.gridId).innerHTML = etfItems.map((item) => cardTemplate(item, lang)).join("");
           document.getElementById("provider-grid").innerHTML = providerItems.map((item) => cardTemplate(item, lang)).join("");
+          document.getElementById("provider-group-title").textContent = `${pageCopy.providerGroupTitle[lang]} (${providerItems.length} ${pageCopy.providerGroupCount[lang]})`;
           document.getElementById("provider-subgroup").hidden = providerItems.length === 0;
           document.getElementById(section.sectionId).hidden = providerItems.length + etfItems.length === 0;
           return;
