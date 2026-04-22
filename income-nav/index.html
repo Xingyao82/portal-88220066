@@ -250,6 +250,65 @@
       background: color-mix(in srgb, var(--card-accent, var(--accent)) 82%, white 18%);
     }
 
+    .trend-block {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .trend-head,
+    .trend-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .trend-label,
+    .trend-meta,
+    .trend-loading,
+    .trend-error {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .trend-return {
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .trend-meta {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .trend-chart {
+      width: 100%;
+      height: 78px;
+      display: block;
+    }
+
+    .trend-chart path {
+      fill: none;
+      stroke: color-mix(in srgb, var(--card-accent, var(--accent)) 78%, white 22%);
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .trend-chart .trend-area {
+      fill: color-mix(in srgb, var(--card-accent, var(--accent)) 18%, transparent);
+      stroke: none;
+    }
+
     @media (max-width: 1180px) {
       .summary-grid,
       .grid { grid-template-columns: 1fr 1fr; }
@@ -374,6 +433,12 @@
       zh: {
         brand: "88220066.xyz / Income 导航",
         open: "打开",
+        trendTitle: "复权后总走势",
+        trendLoading: "正在加载成立以来复权走势",
+        trendError: "免费源暂时没取到复权走势",
+        trendReturn: "成立以来总回报",
+        trendFrom: "起点",
+        trendTo: "当前",
         stats: [
           ["市场", "中国 + 美国"],
           ["类型", "红利、债券、REITs、preferred、期权增强"],
@@ -387,6 +452,12 @@
       en: {
         brand: "88220066.xyz / Income Nav",
         open: "Open",
+        trendTitle: "Adjusted total-return chart",
+        trendLoading: "Loading adjusted total-return since inception",
+        trendError: "Free source could not return adjusted total-return right now",
+        trendReturn: "Total return since inception",
+        trendFrom: "Start",
+        trendTo: "Now",
         stats: [
           ["Markets", "China + U.S."],
           ["Styles", "Dividend, bonds, REITs, preferreds, option income"],
@@ -402,6 +473,7 @@
     const chinaEtfs = [
       {
         name: "红利ETF华泰柏瑞",
+        symbol: "510880.SS",
         ticker: "510880",
         accent: "#60a5fa",
         url: "https://fundf10.eastmoney.com/510880.html",
@@ -419,6 +491,7 @@
       },
       {
         name: "红利低波ETF华泰柏瑞",
+        symbol: "512890.SS",
         ticker: "512890",
         accent: "#34d399",
         url: "https://fundf10.eastmoney.com/srfx_512890.html",
@@ -436,6 +509,7 @@
       },
       {
         name: "政金债ETF富国",
+        symbol: "511520.SS",
         ticker: "511520",
         accent: "#f59e0b",
         url: "https://finance.sina.com.cn/money/fund/aiassistant/etfshzj/2025-11-26/doc-infystcn1270006.shtml",
@@ -453,6 +527,7 @@
       },
       {
         name: "公司债ETF",
+        symbol: "511030.SS",
         ticker: "511030",
         accent: "#c084fc",
         url: "https://fund.eastmoney.com/a/202501173300421116.html",
@@ -470,6 +545,7 @@
       },
       {
         name: "红利ETF易方达",
+        symbol: "515180.SS",
         ticker: "515180",
         accent: "#22c55e",
         url: "https://fundf10.eastmoney.com/515180.html",
@@ -487,6 +563,7 @@
       },
       {
         name: "国债ETF国泰",
+        symbol: "511010.SS",
         ticker: "511010",
         accent: "#38bdf8",
         url: "https://fund.eastmoney.com/511010.html",
@@ -504,6 +581,7 @@
       },
       {
         name: "活跃国债ETF",
+        symbol: "511020.SS",
         ticker: "511020",
         accent: "#0ea5e9",
         url: "https://fund.eastmoney.com/a/202506043421663013.html",
@@ -521,6 +599,7 @@
       },
       {
         name: "国开债券ETF",
+        symbol: "159651.SZ",
         ticker: "159651",
         accent: "#f97316",
         url: "https://fund.eastmoney.com/data/xininfo_159651.html",
@@ -541,6 +620,7 @@
     const usEtfs = [
       {
         name: "SCHD",
+        symbol: "SCHD",
         ticker: "Schwab U.S. Dividend Equity ETF",
         accent: "#60a5fa",
         url: "https://www.schwabassetmanagement.com/products/schd",
@@ -558,6 +638,7 @@
       },
       {
         name: "VYM",
+        symbol: "VYM",
         ticker: "Vanguard High Dividend Yield ETF",
         accent: "#34d399",
         url: "https://workplace.vanguard.com/assets/corp/fund_communications/pdf_publish/us-products/fact-sheet/F0923.pdf",
@@ -575,6 +656,7 @@
       },
       {
         name: "JEPI",
+        symbol: "JEPI",
         ticker: "JPMorgan Equity Premium Income ETF",
         accent: "#f59e0b",
         url: "https://am.jpmorgan.com/us/en/asset-management/adv/investment-strategies/etf-investing/investment-ideas/why-invest-in-equity-premium-income-etf-jepi/",
@@ -592,6 +674,7 @@
       },
       {
         name: "JEPQ",
+        symbol: "JEPQ",
         ticker: "JPMorgan Nasdaq Equity Premium Income ETF",
         accent: "#c084fc",
         url: "https://am.jpmorgan.com/content/dam/jpm-am-aem/americas/us/en/literature/fact-sheet/etfs/FS-JEPQ.PDF",
@@ -609,6 +692,7 @@
       },
       {
         name: "VNQ",
+        symbol: "VNQ",
         ticker: "Vanguard Real Estate ETF",
         accent: "#fb7185",
         url: "https://institutional.vanguard.com/assets/corp/fund_communications/pdf_publish/us-products/investment-profiles/0986.pdf",
@@ -626,6 +710,7 @@
       },
       {
         name: "BND",
+        symbol: "BND",
         ticker: "Vanguard Total Bond Market ETF",
         accent: "#38bdf8",
         url: "https://corporate.vanguard.com/content/corporatesite/us/en/corp/who-we-are/pressroom/Press-Release-Vanguard-Launches-Total-World-Bond-ETF-090618.html/1000",
@@ -643,6 +728,7 @@
       },
       {
         name: "HDV",
+        symbol: "HDV",
         ticker: "iShares Core High Dividend ETF",
         accent: "#22c55e",
         url: "https://www.ishares.com/us/products/239563/ishares-high-dividend-etf",
@@ -660,6 +746,7 @@
       },
       {
         name: "DGRO",
+        symbol: "DGRO",
         ticker: "iShares Core Dividend Growth ETF",
         accent: "#06b6d4",
         url: "https://www.ishares.com/us/literature/fact-sheet/dgro-ishares-core-dividend-growth-etf-fund-fact-sheet-en-us.pdf",
@@ -677,6 +764,7 @@
       },
       {
         name: "PFF",
+        symbol: "PFF",
         ticker: "iShares Preferred and Income Securities ETF",
         accent: "#f97316",
         url: "https://www.cnbc.com/quotes/PFF",
@@ -694,6 +782,7 @@
       },
       {
         name: "QYLD",
+        symbol: "QYLD",
         ticker: "Global X Nasdaq 100 Covered Call ETF",
         accent: "#fb7185",
         url: "https://www.globalxetfs.com/funds/qyld/",
@@ -711,6 +800,7 @@
       },
       {
         name: "DIVO",
+        symbol: "DIVO",
         ticker: "Amplify CWP Enhanced Dividend Income ETF",
         accent: "#a78bfa",
         url: "https://amplifyetfs.com/divo",
@@ -731,6 +821,7 @@
     const advancedIncome = [
       {
         name: "SPYI",
+        symbol: "SPYI",
         ticker: "NEOS S&P 500 High Income ETF",
         accent: "#2563eb",
         url: "https://neosfunds.com/spyi/",
@@ -748,6 +839,7 @@
       },
       {
         name: "QQQI",
+        symbol: "QQQI",
         ticker: "NEOS Nasdaq-100 High Income ETF",
         accent: "#1d4ed8",
         url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
@@ -765,6 +857,7 @@
       },
       {
         name: "XDTE",
+        symbol: "XDTE",
         ticker: "Roundhill S&P 500 0DTE Covered Call Strategy ETF",
         accent: "#7c3aed",
         url: "https://www.roundhillinvestments.com/etf/xdte/",
@@ -782,6 +875,7 @@
       },
       {
         name: "ISPY",
+        symbol: "ISPY",
         ticker: "ProShares S&P 500 High Income ETF",
         accent: "#0f766e",
         url: "https://www.proshares.com/our-etfs/strategic/ispy",
@@ -799,6 +893,7 @@
       },
       {
         name: "TSPY",
+        symbol: "TSPY",
         ticker: "TappAlpha SPY Growth & Daily Income ETF",
         accent: "#111827",
         url: "https://www.tappalphafunds.com/etfs/tspy",
@@ -816,6 +911,7 @@
       },
       {
         name: "MSFY",
+        symbol: "MSFY",
         ticker: "Kurv Yield Premium Strategy Microsoft ETF",
         accent: "#10b981",
         url: "https://www.kurvinvest.com/etf/msfy",
@@ -833,6 +929,7 @@
       },
       {
         name: "QUSA",
+        symbol: "QUSA",
         ticker: "VistaShares Target 15 USA Quality Income ETF",
         accent: "#8b5cf6",
         url: "https://www.vistashares.com/qusa-bringing-monthly-income-to-quality-factor-investing/",
@@ -867,6 +964,7 @@
       },
       {
         name: "TSLY",
+        symbol: "TSLY",
         ticker: "YieldMax TSLA Option Income Strategy ETF",
         accent: "#f97316",
         url: "https://yieldmaxetfs.com/our-etfs/tsly/",
@@ -884,6 +982,7 @@
       },
       {
         name: "MSTY",
+        symbol: "MSTY",
         ticker: "YieldMax MSTR Option Income Strategy ETF",
         accent: "#fb7185",
         url: "https://www.sec.gov/Archives/edgar/data/1924868/000183988225000683/yieldmax-497_010625.htm",
@@ -901,6 +1000,7 @@
       },
       {
         name: "YMAX",
+        symbol: "YMAX",
         ticker: "YieldMax Universe Fund of Option Income ETFs",
         accent: "#f59e0b",
         url: "https://yieldmaxetfs.com/our-etfs/ymax/",
@@ -1023,6 +1123,53 @@
       }
     ];
 
+    const trendCache = new Map();
+
+    function formatDate(ts, lang) {
+      const date = new Date(ts * 1000);
+      return new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en-US", {
+        year: "numeric",
+        month: "short"
+      }).format(date);
+    }
+
+    function buildSparkline(series) {
+      if (!Array.isArray(series) || series.length < 2) return "";
+      const width = 280;
+      const height = 78;
+      const pad = 4;
+      const values = series.map((point) => point.value);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const span = max - min || 1;
+      const points = series.map((point, index) => {
+        const x = pad + (index / (series.length - 1)) * (width - pad * 2);
+        const y = height - pad - ((point.value - min) / span) * (height - pad * 2);
+        return [Number(x.toFixed(2)), Number(y.toFixed(2))];
+      });
+      const line = points.map(([x, y]) => `${x},${y}`).join(" ");
+      const area = `M ${points[0][0]} ${height - pad} L ${line.replace(/ /g, " L ")} L ${points[points.length - 1][0]} ${height - pad} Z`;
+      return `
+        <svg class="trend-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+          <path class="trend-area" d="${area}"></path>
+          <polyline points="${line}"></polyline>
+        </svg>
+      `;
+    }
+
+    function trendPlaceholder(item, lang) {
+      if (!item.symbol) return "";
+      return `
+        <div class="trend-block" data-trend-block data-symbol="${item.symbol}">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].trendTitle}</span>
+            <strong class="trend-return">--</strong>
+          </div>
+          <div class="trend-loading">${labels[lang].trendLoading}</div>
+        </div>
+      `;
+    }
+
     function cardTemplate(item, lang) {
       return `
         <article class="card" style="--card-accent:${item.accent}">
@@ -1042,12 +1189,60 @@
             <div><span>${labels[lang].marketLabel}</span><strong>${item.market[lang]}</strong></div>
             <div><span>${labels[lang].noteLabel}</span><strong>${item.note[lang]}</strong></div>
           </div>
+          ${trendPlaceholder(item, lang)}
           <div class="card-bottom">
             <span class="meta">${item.ticker}</span>
             <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a>
           </div>
         </article>
       `;
+    }
+
+    async function getTrend(symbol) {
+      if (!symbol) return null;
+      if (!trendCache.has(symbol)) {
+        trendCache.set(
+          symbol,
+          fetch(`/api/total-return?symbol=${encodeURIComponent(symbol)}`)
+            .then((response) => {
+              if (!response.ok) throw new Error(`HTTP ${response.status}`);
+              return response.json();
+            })
+        );
+      }
+      return trendCache.get(symbol);
+    }
+
+    async function hydrateTrendBlocks(lang) {
+      const blocks = Array.from(document.querySelectorAll("[data-trend-block]"));
+      await Promise.all(
+        blocks.map(async (block) => {
+          const symbol = block.getAttribute("data-symbol");
+          try {
+            const trend = await getTrend(symbol);
+            if (!trend?.series?.length) throw new Error("Missing series");
+            block.innerHTML = `
+              <div class="trend-head">
+                <span class="trend-label">${labels[lang].trendTitle}</span>
+                <strong class="trend-return">${trend.totalReturnPct > 0 ? "+" : ""}${trend.totalReturnPct}%</strong>
+              </div>
+              ${buildSparkline(trend.series)}
+              <div class="trend-foot">
+                <span class="trend-meta">${labels[lang].trendFrom} ${formatDate(trend.inceptionTs, lang)}</span>
+                <span class="trend-meta">${labels[lang].trendTo} ${formatDate(trend.latestTs, lang)}</span>
+              </div>
+            `;
+          } catch (error) {
+            block.innerHTML = `
+              <div class="trend-head">
+                <span class="trend-label">${labels[lang].trendTitle}</span>
+                <strong class="trend-return">--</strong>
+              </div>
+              <div class="trend-error">${labels[lang].trendError}</div>
+            `;
+          }
+        })
+      );
     }
 
     function renderPage(lang) {
@@ -1062,6 +1257,7 @@
       document.getElementById("us-grid").innerHTML = usEtfs.map((item) => cardTemplate(item, lang)).join("");
       document.getElementById("advanced-grid").innerHTML = advancedIncome.map((item) => cardTemplate(item, lang)).join("");
       document.getElementById("research-grid").innerHTML = incomeResearch.map((item) => cardTemplate(item, lang)).join("");
+      hydrateTrendBlocks(lang);
     }
 
     window.SiteI18n.bindPage(pageCopy, renderPage);
