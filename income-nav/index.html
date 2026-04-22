@@ -169,6 +169,31 @@
       display: none;
     }
 
+    .subgroup-toggle {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .subgroup-toggle::-webkit-details-marker {
+      display: none;
+    }
+
+    .subgroup-toggle::after {
+      content: "+";
+      color: var(--muted);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .subgroup[open] .subgroup-toggle::after {
+      content: "-";
+    }
+
     .subgroup-head {
       display: flex;
       justify-content: space-between;
@@ -629,15 +654,17 @@
         <div class="section-badge" data-i18n="advancedBadge">Advanced / options + weekly + single-stock</div>
       </div>
       <div class="grid" id="advanced-grid"></div>
-      <div class="subgroup" id="provider-subgroup" hidden>
-        <div class="subgroup-head">
-          <div>
-            <h3 data-i18n="providerGroupTitle">Provider / 平台入口</h3>
-            <p data-i18n="providerGroupCopy">这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。</p>
+      <details class="subgroup" id="provider-subgroup" hidden>
+        <summary class="subgroup-toggle">
+          <div class="subgroup-head">
+            <div>
+              <h3 data-i18n="providerGroupTitle">Provider / 平台入口</h3>
+              <p data-i18n="providerGroupCopy">这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。</p>
+            </div>
           </div>
-        </div>
+        </summary>
         <div class="grid" id="provider-grid"></div>
-      </div>
+      </details>
     </section>
 
     <section class="section" id="research-section">
