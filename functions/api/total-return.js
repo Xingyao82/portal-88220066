@@ -31,6 +31,17 @@ function compactSeries(values) {
   return values.filter((_, index) => index % step === 0 || index === values.length - 1);
 }
 
+function enrichMetrics(first, last, firstTs, lastTs) {
+  const totalReturnPct = ((last / first) - 1) * 100;
+  const years = Math.max((lastTs - firstTs) / (365.25 * 24 * 60 * 60), 1 / 365.25);
+  const annualizedReturnPct = (Math.pow(last / first, 1 / years) - 1) * 100;
+  return {
+    totalReturnPct,
+    years,
+    annualizedReturnPct
+  };
+}
+
 function validateSeries(points, symbol) {
   if (!Array.isArray(points) || points.length < MIN_POINTS) {
     throw new Error(`Not enough history for ${symbol}`);
@@ -42,7 +53,7 @@ function validateSeries(points, symbol) {
     throw new Error(`Invalid endpoints for ${symbol}`);
   }
 
-  const totalReturnPct = ((last / first) - 1) * 100;
+  const { totalReturnPct } = enrichMetrics(first, last, points[0].ts, points[points.length - 1].ts);
   if (!Number.isFinite(totalReturnPct) || Math.abs(totalReturnPct) > MAX_REASONABLE_RETURN_PCT) {
     throw new Error(`Unreasonable total return for ${symbol}`);
   }
@@ -81,11 +92,14 @@ function normalizeSeries(payload) {
 
   const first = points[0].value;
   const totalReturnPct = validateSeries(points, payload?.meta?.symbol || "unknown");
+  const metrics = enrichMetrics(first, points[points.length - 1].value, points[0].ts, points[points.length - 1].ts);
   const compact = compactSeries(points);
   return {
     firstAdjClose: Number(first.toFixed(4)),
     latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
     totalReturnPct: Number(totalReturnPct.toFixed(2)),
+    annualizedReturnPct: Number(metrics.annualizedReturnPct.toFixed(2)),
+    yearsSinceInception: Number(metrics.years.toFixed(2)),
     inceptionTs: points[0].ts,
     latestTs: points[points.length - 1].ts,
     series: compact.map((point) => ({
@@ -162,6 +176,7 @@ async function fetchEastmoneyFund(symbol) {
 
   const first = points[0].value;
   const totalReturnPct = validateSeries(points, symbol);
+  const metrics = enrichMetrics(first, points[points.length - 1].value, points[0].ts, points[points.length - 1].ts);
   const compact = compactSeries(points);
   return {
     symbol,
@@ -170,6 +185,8 @@ async function fetchEastmoneyFund(symbol) {
     firstAdjClose: Number(first.toFixed(4)),
     latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
     totalReturnPct: Number(totalReturnPct.toFixed(2)),
+    annualizedReturnPct: Number(metrics.annualizedReturnPct.toFixed(2)),
+    yearsSinceInception: Number(metrics.years.toFixed(2)),
     inceptionTs: points[0].ts,
     latestTs: points[points.length - 1].ts,
     series: compact.map((point) => ({

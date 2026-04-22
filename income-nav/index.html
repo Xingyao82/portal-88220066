@@ -450,6 +450,8 @@
         trendLoading: "正在加载成立以来复权走势",
         trendError: "免费源暂时没取到复权走势",
         trendReturn: "成立以来总回报",
+        trendAnnualized: "年化总回报",
+        trendYears: "成立时长",
         trendFrom: "起点",
         trendTo: "当前",
         trendUpdated: "更新",
@@ -474,6 +476,8 @@
         trendLoading: "Loading adjusted total-return since inception",
         trendError: "Free source could not return adjusted total-return right now",
         trendReturn: "Total return since inception",
+        trendAnnualized: "Annualized return",
+        trendYears: "Track record",
         trendFrom: "Start",
         trendTo: "Now",
         trendUpdated: "Updated",
@@ -1252,6 +1256,10 @@
                 <strong class="trend-return">${trend.totalReturnPct > 0 ? "+" : ""}${trend.totalReturnPct}%</strong>
               </div>
               ${buildSparkline(trend.series)}
+              <div class="trend-foot">
+                <span class="trend-meta">${labels[lang].trendAnnualized} ${trend.annualizedReturnPct > 0 ? "+" : ""}${trend.annualizedReturnPct}%</span>
+                <span class="trend-meta">${labels[lang].trendYears} ${trend.yearsSinceInception}</span>
+              </div>
               <div class="trend-foot">
                 <span class="trend-meta">${labels[lang].trendFrom} ${formatDate(trend.inceptionTs, lang)}</span>
                 <span class="trend-meta">${labels[lang].trendTo} ${formatDate(trend.latestTs, lang)}</span>
