@@ -187,6 +187,12 @@
     .card-class.enhanced { color: #dbeafe; border-color: rgba(96,165,250,.24); background: rgba(96,165,250,.12); }
     .card-class.satellite { color: #fde68a; border-color: rgba(245,158,11,.24); background: rgba(245,158,11,.12); }
     .card-class.watch { color: #fecdd3; border-color: rgba(244,63,94,.24); background: rgba(244,63,94,.12); }
+    .card-class.provider { color: #c7d2fe; border-color: rgba(129,140,248,.28); background: rgba(129,140,248,.12); }
+
+    .card.provider-card {
+      border-style: dashed;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent, rgba(255,255,255,.04)) 7%, rgba(255,255,255,.03)), rgba(255,255,255,.025));
+    }
 
     .card-top {
       display: flex;
@@ -689,6 +695,7 @@
         classEnhanced: "增强 income",
         classSatellite: "卫星配置",
         classWatch: "高波动观察",
+        classProvider: "平台入口",
         filterScopeAll: "全部",
         filterScopeChina: "中国",
         filterScopeUs: "美国",
@@ -759,6 +766,7 @@
         classEnhanced: "Enhanced income",
         classSatellite: "Satellite",
         classWatch: "High-vol watch",
+        classProvider: "Provider hub",
         filterScopeAll: "All",
         filterScopeChina: "China",
         filterScopeUs: "U.S.",
@@ -1615,17 +1623,17 @@
         core: labels[lang].classCore,
         enhanced: labels[lang].classEnhanced,
         satellite: labels[lang].classSatellite,
-        watch: labels[lang].classWatch
+        watch: labels[lang].classWatch,
+        provider: labels[lang].classProvider
       }[role] || labels[lang].classCore;
     }
 
     function cardTemplate(item, lang) {
-      const role = classifyIncomeItem(item);
-      const roleBlock = item.symbol
-        ? `<div class="card-class ${role}">${labels[lang].classLabel}: ${classLabel(role, lang)}</div>`
-        : "";
+      const role = item.symbol ? classifyIncomeItem(item) : "provider";
+      const roleBlock = `<div class="card-class ${role}">${labels[lang].classLabel}: ${classLabel(role, lang)}</div>`;
+      const cardClass = item.symbol ? "card" : "card provider-card";
       return `
-        <article class="card" style="--card-accent:${item.accent}">
+        <article class="${cardClass}" style="--card-accent:${item.accent}">
           <div class="card-top">
             <div>
               <div class="meta">${item.market[lang]}</div>
