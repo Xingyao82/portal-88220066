@@ -5,6 +5,14 @@ const DEFAULT_HEADERS = {
 
 const MAX_POINTS = 120;
 
+function isCnFundSymbol(symbol) {
+  return /\.(SS|SZ)$/.test(symbol);
+}
+
+function eastmoneyCode(symbol) {
+  return symbol.replace(/\.(SS|SZ)$/i, "");
+}
+
 function buildYahooUrl(symbol, interval) {
   const params = new URLSearchParams({
     interval,
@@ -54,6 +62,10 @@ function normalizeSeries(payload) {
 }
 
 async function fetchChart(symbol, interval) {
+  if (isCnFundSymbol(symbol)) {
+    return fetchEastmoneyFund(symbol);
+  }
+
   const response = await fetch(buildYahooUrl(symbol, interval), {
     headers: DEFAULT_HEADERS,
     cf: { cacheTtl: 21600, cacheEverything: true }
@@ -79,6 +91,56 @@ async function fetchChart(symbol, interval) {
     currency: result.meta?.currency || "",
     interval,
     ...normalized
+  };
+}
+
+function parseEastmoneyArray(script, key) {
+  const marker = `var ${key} =`;
+  const start = script.indexOf(marker);
+  if (start === -1) return null;
+  const slice = script.slice(start + marker.length);
+  const end = slice.indexOf(";");
+  if (end === -1) return null;
+  return JSON.parse(slice.slice(0, end).trim());
+}
+
+async function fetchEastmoneyFund(symbol) {
+  const code = eastmoneyCode(symbol);
+  const url = `https://fund.eastmoney.com/pingzhongdata/${code}.js?v=${Date.now()}`;
+  const response = await fetch(url, {
+    headers: { "User-Agent": DEFAULT_HEADERS["User-Agent"] },
+    cf: { cacheTtl: 21600, cacheEverything: true }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Eastmoney returned ${response.status}`);
+  }
+
+  const script = await response.text();
+  const accWorth = parseEastmoneyArray(script, "Data_ACWorthTrend");
+  if (!Array.isArray(accWorth) || accWorth.length < 2) {
+    throw new Error("Eastmoney adjusted-worth series missing");
+  }
+
+  const points = accWorth
+    .filter((point) => Array.isArray(point) && Number.isFinite(point[0]) && Number.isFinite(point[1]) && point[1] > 0)
+    .map(([tsMs, value]) => ({ ts: Math.floor(tsMs / 1000), value: Number(value) }));
+
+  const first = points[0].value;
+  const compact = compactSeries(points);
+  return {
+    symbol,
+    currency: "CNY",
+    interval: "1d",
+    firstAdjClose: Number(first.toFixed(4)),
+    latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
+    totalReturnPct: Number((((points[points.length - 1].value / first) - 1) * 100).toFixed(2)),
+    inceptionTs: points[0].ts,
+    latestTs: points[points.length - 1].ts,
+    series: compact.map((point) => ({
+      ts: point.ts,
+      value: Number(point.value.toFixed(4))
+    }))
   };
 }
 
