@@ -214,6 +214,25 @@
       line-height: 1.7;
     }
 
+    .subgroup-risk {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(244, 63, 94, 0.28);
+      background: rgba(244, 63, 94, 0.12);
+      color: #fecdd3;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .subgroup.high-risk {
+      padding-top: 2px;
+      border-top: 1px solid rgba(244, 63, 94, 0.18);
+    }
+
     .card {
       display: grid;
       gap: 14px;
@@ -654,12 +673,13 @@
         <div class="section-badge" data-i18n="advancedBadge">Advanced / options + weekly + single-stock</div>
       </div>
       <div class="grid" id="advanced-grid"></div>
-      <div class="subgroup" id="watch-subgroup" hidden>
+      <div class="subgroup high-risk" id="watch-subgroup" hidden>
         <div class="subgroup-head">
           <div>
             <h3 id="watch-group-title" data-i18n="watchGroupTitle">高波动观察</h3>
             <p data-i18n="watchGroupCopy">这组收益叙事更猛，但波动和净值侵蚀也更直接，适合单独看，不要和普通 options-income 混读。</p>
           </div>
+          <div class="subgroup-risk" data-i18n="watchRiskBadge">高波动 / 高回撤风险</div>
         </div>
         <div class="grid" id="watch-grid"></div>
       </div>
@@ -730,6 +750,7 @@
         zh: "这组收益叙事更猛，但波动和净值侵蚀也更直接，适合单独看，不要和普通 options-income 混读。",
         en: "These products push the income story harder, but volatility and NAV damage are also more direct, so they are better viewed separately."
       },
+      watchRiskBadge: { zh: "高波动 / 高回撤风险", en: "High vol / drawdown risk" },
       providerGroupTitle: { zh: "Provider / 平台入口", en: "Provider hubs" },
       providerGroupCount: { zh: "个入口", en: "hubs" },
       providerGroupCopy: {
