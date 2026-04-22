@@ -347,6 +347,98 @@
       stroke: none;
     }
 
+    .filter-panel {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .filter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-top: 10px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font: inherit;
+      cursor: pointer;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    .filter-chip:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .filter-chip.active {
+      color: #0f172a;
+      border-color: transparent;
+      background: linear-gradient(135deg, #dbeafe, #86efac);
+    }
+
+    .filter-chip:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .filter-help {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.94rem;
+    }
+
+    .empty-state {
+      display: none;
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .section[hidden] {
+      display: none;
+    }
+
     @media (max-width: 1180px) {
       .summary-grid,
       .grid { grid-template-columns: 1fr 1fr; }
@@ -383,9 +475,22 @@
       <h1 data-i18n="heroTitle">Income 导航</h1>
       <p class="hero-copy" data-i18n="heroCopy">先把偏 income 的 ETF 收在一页里。中国这块偏红利和债券，美国这块补上红利、期权增强、REITs 和债券，方便从现金流视角先筛一轮。</p>
       <div class="summary-grid" id="stats"></div>
+      <div class="filter-panel">
+        <div class="filter-row">
+          <div class="filter-label" data-i18n="scopeTitle">范围</div>
+          <div class="filter-group" id="scope-filters" aria-label="Scope filters"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label" data-i18n="roleFilterTitle">组合定位</div>
+          <div class="filter-group" id="role-filters" aria-label="Role filters"></div>
+        </div>
+        <div class="filter-help" id="filter-help"></div>
+      </div>
     </section>
 
-    <section class="section">
+    <div class="empty-state" id="filter-empty"></div>
+
+    <section class="section" id="china-section">
       <div class="section-head">
         <div>
           <h2 data-i18n="chinaTitle">中国 Income ETF</h2>
@@ -396,7 +501,7 @@
       <div class="grid" id="china-grid"></div>
     </section>
 
-    <section class="section">
+    <section class="section" id="us-section">
       <div class="section-head">
         <div>
           <h2 data-i18n="usTitle">美国 Income ETF</h2>
@@ -407,7 +512,7 @@
       <div class="grid" id="us-grid"></div>
     </section>
 
-    <section class="section">
+    <section class="section" id="advanced-section">
       <div class="section-head">
         <div>
           <h2 data-i18n="advancedTitle">高收益 / 期权 Income</h2>
@@ -418,7 +523,7 @@
       <div class="grid" id="advanced-grid"></div>
     </section>
 
-    <section class="section">
+    <section class="section" id="research-section">
       <div class="section-head">
         <div>
           <h2 data-i18n="researchTitle">Income 研究与筛选</h2>
@@ -447,6 +552,8 @@
         zh: "先把偏 income 的 ETF 收在一页里。中国这块偏红利和债券，美国这块补上红利、期权增强、REITs 和债券，方便从现金流视角先筛一轮。",
         en: "A clean starting page for income-focused ETFs. China leans toward dividend and bond ETFs, while the U.S. adds dividend, option-income, REIT, and bond exposure."
       },
+      scopeTitle: { zh: "范围", en: "Scope" },
+      roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -499,7 +606,17 @@
         classCore: "底仓 income",
         classEnhanced: "增强 income",
         classSatellite: "卫星配置",
-        classWatch: "高波动观察"
+        classWatch: "高波动观察",
+        filterScopeAll: "全部",
+        filterScopeChina: "中国",
+        filterScopeUs: "美国",
+        filterScopeAdvanced: "高收益 / 期权",
+        filterScopeResearch: "研究工具",
+        filterRoleAll: "全部定位",
+        filterHintResearch: "研究工具不参与底仓 / 增强分类，适合先查分红节奏和分配规则，再回到 ETF 卡片看复权后总回报。",
+        filterHintPrefix: "当前筛到",
+        filterHintSuffix: "个项目。先按结构缩小范围，再看复权后总回报、成立时长和风险提醒。",
+        filterEmpty: "这个筛选组合下还没有匹配项，先切回全部或换一个组合定位。"
       },
       en: {
         brand: "88220066.xyz / Income Nav",
@@ -532,7 +649,17 @@
         classCore: "Core income",
         classEnhanced: "Enhanced income",
         classSatellite: "Satellite",
-        classWatch: "High-vol watch"
+        classWatch: "High-vol watch",
+        filterScopeAll: "All",
+        filterScopeChina: "China",
+        filterScopeUs: "U.S.",
+        filterScopeAdvanced: "Advanced",
+        filterScopeResearch: "Research",
+        filterRoleAll: "All roles",
+        filterHintResearch: "Research tools are outside the core/enhanced role model. Use them to check distribution cadence first, then go back to ETF cards for adjusted total return.",
+        filterHintPrefix: "Showing",
+        filterHintSuffix: "matching entries. Narrow by structure first, then compare adjusted total return, track record, and risk notes.",
+        filterEmpty: "No entries match this filter combination right now. Switch back to all or try another role."
       }
     };
 
@@ -1190,6 +1317,31 @@
     ];
 
     const trendCache = new Map();
+    const filterState = { scope: "all", role: "all" };
+    let activeLang = "zh";
+
+    const sectionConfigs = [
+      { key: "china", sectionId: "china-section", gridId: "china-grid", items: chinaEtfs },
+      { key: "us", sectionId: "us-section", gridId: "us-grid", items: usEtfs },
+      { key: "advanced", sectionId: "advanced-section", gridId: "advanced-grid", items: advancedIncome },
+      { key: "research", sectionId: "research-section", gridId: "research-grid", items: incomeResearch }
+    ];
+
+    const scopeOptions = [
+      { key: "all", labelKey: "filterScopeAll" },
+      { key: "china", labelKey: "filterScopeChina" },
+      { key: "us", labelKey: "filterScopeUs" },
+      { key: "advanced", labelKey: "filterScopeAdvanced" },
+      { key: "research", labelKey: "filterScopeResearch" }
+    ];
+
+    const roleOptions = [
+      { key: "all", labelKey: "filterRoleAll" },
+      { key: "core", dynamic: "core" },
+      { key: "enhanced", dynamic: "enhanced" },
+      { key: "satellite", dynamic: "satellite" },
+      { key: "watch", dynamic: "watch" }
+    ];
 
     function formatDate(ts, lang) {
       const date = new Date(ts * 1000);
@@ -1256,6 +1408,9 @@
 
     function cardTemplate(item, lang) {
       const role = classifyIncomeItem(item);
+      const roleBlock = item.symbol
+        ? `<div class="card-class ${role}">${labels[lang].classLabel}: ${classLabel(role, lang)}</div>`
+        : "";
       return `
         <article class="card" style="--card-accent:${item.accent}">
           <div class="card-top">
@@ -1265,7 +1420,7 @@
             </div>
             <span class="badge">${item.ticker}</span>
           </div>
-          <div class="card-class ${role}">${labels[lang].classLabel}: ${classLabel(role, lang)}</div>
+          ${roleBlock}
           <p>${item.summary[lang]}</p>
           <div class="pill-row">
             ${item.tags[lang].map((tag) => `<span class="pill">${tag}</span>`).join("")}
@@ -1346,7 +1501,67 @@
       );
     }
 
+    function getFilterLabel(lang, option) {
+      return option.dynamic ? classLabel(option.dynamic, lang) : labels[lang][option.labelKey];
+    }
+
+    function matchesFilters(item, sectionKey) {
+      if (filterState.scope !== "all" && filterState.scope !== sectionKey) return false;
+      if (sectionKey === "research") return filterState.role === "all";
+      return filterState.role === "all" || classifyIncomeItem(item) === filterState.role;
+    }
+
+    function renderFilterButtons(lang) {
+      const scopeHtml = scopeOptions.map((option) => {
+        const active = filterState.scope === option.key ? " active" : "";
+        return `<button class="filter-chip${active}" type="button" data-filter-group="scope" data-filter-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
+      }).join("");
+      const roleDisabled = filterState.scope === "research";
+      const roleHtml = roleOptions.map((option) => {
+        const active = filterState.role === option.key ? " active" : "";
+        const disabled = roleDisabled ? " disabled" : "";
+        return `<button class="filter-chip${active}" type="button" data-filter-group="role" data-filter-value="${option.key}"${disabled}>${getFilterLabel(lang, option)}</button>`;
+      }).join("");
+      document.getElementById("scope-filters").innerHTML = scopeHtml;
+      document.getElementById("role-filters").innerHTML = roleHtml;
+      document.querySelectorAll("[data-filter-group]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const group = button.getAttribute("data-filter-group");
+          const value = button.getAttribute("data-filter-value");
+          if (group === "scope") {
+            filterState.scope = value;
+            if (value === "research") filterState.role = "all";
+          } else if (filterState.scope !== "research") {
+            filterState.role = value;
+          }
+          renderPage(activeLang);
+        });
+      });
+    }
+
+    function renderSections(lang) {
+      let totalMatches = 0;
+      sectionConfigs.forEach((section) => {
+        const items = section.items.filter((item) => matchesFilters(item, section.key));
+        totalMatches += items.length;
+        document.getElementById(section.gridId).innerHTML = items.map((item) => cardTemplate(item, lang)).join("");
+        document.getElementById(section.sectionId).hidden = items.length === 0;
+      });
+      return totalMatches;
+    }
+
+    function renderFilterMeta(lang, totalMatches) {
+      const help = document.getElementById("filter-help");
+      const empty = document.getElementById("filter-empty");
+      help.textContent = filterState.scope === "research"
+        ? labels[lang].filterHintResearch
+        : `${labels[lang].filterHintPrefix} ${totalMatches} ${labels[lang].filterHintSuffix}`;
+      empty.textContent = labels[lang].filterEmpty;
+      empty.classList.toggle("show", totalMatches === 0);
+    }
+
     function renderPage(lang) {
+      activeLang = lang;
       document.getElementById("brand").textContent = labels[lang].brand;
       document.getElementById("stats").innerHTML = labels[lang].stats.map(([label, value]) => `
         <div class="summary-card">
@@ -1354,10 +1569,9 @@
           <strong>${value}</strong>
         </div>
       `).join("");
-      document.getElementById("china-grid").innerHTML = chinaEtfs.map((item) => cardTemplate(item, lang)).join("");
-      document.getElementById("us-grid").innerHTML = usEtfs.map((item) => cardTemplate(item, lang)).join("");
-      document.getElementById("advanced-grid").innerHTML = advancedIncome.map((item) => cardTemplate(item, lang)).join("");
-      document.getElementById("research-grid").innerHTML = incomeResearch.map((item) => cardTemplate(item, lang)).join("");
+      renderFilterButtons(lang);
+      const totalMatches = renderSections(lang);
+      renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
     }
 
