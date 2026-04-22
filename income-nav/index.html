@@ -481,6 +481,10 @@
           <div class="filter-group" id="scope-filters" aria-label="Scope filters"></div>
         </div>
         <div class="filter-row">
+          <div class="filter-label" data-i18n="styleFilterTitle">结构</div>
+          <div class="filter-group" id="style-filters" aria-label="Style filters"></div>
+        </div>
+        <div class="filter-row">
           <div class="filter-label" data-i18n="roleFilterTitle">组合定位</div>
           <div class="filter-group" id="role-filters" aria-label="Role filters"></div>
         </div>
@@ -553,6 +557,7 @@
         en: "A clean starting page for income-focused ETFs. China leans toward dividend and bond ETFs, while the U.S. adds dividend, option-income, REIT, and bond exposure."
       },
       scopeTitle: { zh: "范围", en: "Scope" },
+      styleFilterTitle: { zh: "结构", en: "Structure" },
       roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
@@ -612,6 +617,13 @@
         filterScopeUs: "美国",
         filterScopeAdvanced: "高收益 / 期权",
         filterScopeResearch: "研究工具",
+        filterStyleAll: "全部结构",
+        filterStyleDividend: "红利",
+        filterStyleBond: "债券",
+        filterStyleReit: "REITs",
+        filterStylePreferred: "优先股",
+        filterStyleOption: "期权 income",
+        filterStyleResearch: "研究工具",
         filterRoleAll: "全部定位",
         filterHintResearch: "研究工具不参与底仓 / 增强分类，适合先查分红节奏和分配规则，再回到 ETF 卡片看复权后总回报。",
         filterHintPrefix: "当前筛到",
@@ -655,6 +667,13 @@
         filterScopeUs: "U.S.",
         filterScopeAdvanced: "Advanced",
         filterScopeResearch: "Research",
+        filterStyleAll: "All structures",
+        filterStyleDividend: "Dividend",
+        filterStyleBond: "Bond",
+        filterStyleReit: "REITs",
+        filterStylePreferred: "Preferred",
+        filterStyleOption: "Option income",
+        filterStyleResearch: "Research",
         filterRoleAll: "All roles",
         filterHintResearch: "Research tools are outside the core/enhanced role model. Use them to check distribution cadence first, then go back to ETF cards for adjusted total return.",
         filterHintPrefix: "Showing",
@@ -1317,7 +1336,7 @@
     ];
 
     const trendCache = new Map();
-    const filterState = { scope: "all", role: "all" };
+    const filterState = { scope: "all", style: "all", role: "all" };
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -1333,6 +1352,16 @@
       { key: "us", labelKey: "filterScopeUs" },
       { key: "advanced", labelKey: "filterScopeAdvanced" },
       { key: "research", labelKey: "filterScopeResearch" }
+    ];
+
+    const styleOptions = [
+      { key: "all", labelKey: "filterStyleAll" },
+      { key: "dividend", labelKey: "filterStyleDividend" },
+      { key: "bond", labelKey: "filterStyleBond" },
+      { key: "reit", labelKey: "filterStyleReit" },
+      { key: "preferred", labelKey: "filterStylePreferred" },
+      { key: "option", labelKey: "filterStyleOption" },
+      { key: "research", labelKey: "filterStyleResearch" }
     ];
 
     const roleOptions = [
@@ -1395,6 +1424,24 @@
       if (/covered call|0DTE|single-stock|期权|单股|高收益平台|高波动/.test(`${item.type?.en || ''} ${typeZh}`)) return "satellite";
       if (/增强|option-income|quality-income|preferred/.test(`${item.type?.en || ''} ${typeZh}`)) return "enhanced";
       return "core";
+    }
+
+    function classifyIncomeStyle(item) {
+      if (!item.symbol) return "research";
+      const tokens = [
+        item.type?.zh || "",
+        item.type?.en || "",
+        item.market?.zh || "",
+        item.market?.en || "",
+        ...(item.tags?.zh || []),
+        ...(item.tags?.en || [])
+      ].join(" ");
+      if (/preferred|优先/.test(tokens)) return "preferred";
+      if (/REIT/i.test(tokens)) return "reit";
+      if (/债|bond|treasury|credit|fixed income|policy bank|corporate|rates/i.test(tokens)) return "bond";
+      if (/option|covered call|0DTE|single-stock|weekly|daily income|期权|单股|周配|高收益平台|quality-income|monthly income|fund of funds|provider/i.test(tokens)) return "option";
+      if (/dividend|红利|股息|yield/i.test(tokens)) return "dividend";
+      return "dividend";
     }
 
     function classLabel(role, lang) {
@@ -1507,7 +1554,9 @@
 
     function matchesFilters(item, sectionKey) {
       if (filterState.scope !== "all" && filterState.scope !== sectionKey) return false;
-      if (sectionKey === "research") return filterState.role === "all";
+      const style = classifyIncomeStyle(item);
+      if (filterState.style !== "all" && filterState.style !== style) return false;
+      if (style === "research") return filterState.role === "all";
       return filterState.role === "all" || classifyIncomeItem(item) === filterState.role;
     }
 
@@ -1516,13 +1565,18 @@
         const active = filterState.scope === option.key ? " active" : "";
         return `<button class="filter-chip${active}" type="button" data-filter-group="scope" data-filter-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
       }).join("");
-      const roleDisabled = filterState.scope === "research";
+      const styleHtml = styleOptions.map((option) => {
+        const active = filterState.style === option.key ? " active" : "";
+        return `<button class="filter-chip${active}" type="button" data-filter-group="style" data-filter-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
+      }).join("");
+      const roleDisabled = filterState.scope === "research" || filterState.style === "research";
       const roleHtml = roleOptions.map((option) => {
         const active = filterState.role === option.key ? " active" : "";
         const disabled = roleDisabled ? " disabled" : "";
         return `<button class="filter-chip${active}" type="button" data-filter-group="role" data-filter-value="${option.key}"${disabled}>${getFilterLabel(lang, option)}</button>`;
       }).join("");
       document.getElementById("scope-filters").innerHTML = scopeHtml;
+      document.getElementById("style-filters").innerHTML = styleHtml;
       document.getElementById("role-filters").innerHTML = roleHtml;
       document.querySelectorAll("[data-filter-group]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -1530,8 +1584,21 @@
           const value = button.getAttribute("data-filter-value");
           if (group === "scope") {
             filterState.scope = value;
-            if (value === "research") filterState.role = "all";
-          } else if (filterState.scope !== "research") {
+            if (value === "research") {
+              filterState.role = "all";
+              if (filterState.style !== "research") filterState.style = "all";
+            } else if (filterState.style === "research") {
+              filterState.style = "all";
+            }
+          } else if (group === "style") {
+            filterState.style = value;
+            if (value === "research") {
+              filterState.scope = "research";
+              filterState.role = "all";
+            } else if (filterState.scope === "research") {
+              filterState.scope = "all";
+            }
+          } else if (!roleDisabled) {
             filterState.role = value;
           }
           renderPage(activeLang);
@@ -1553,7 +1620,8 @@
     function renderFilterMeta(lang, totalMatches) {
       const help = document.getElementById("filter-help");
       const empty = document.getElementById("filter-empty");
-      help.textContent = filterState.scope === "research"
+      const researchMode = filterState.scope === "research" || filterState.style === "research";
+      help.textContent = researchMode
         ? labels[lang].filterHintResearch
         : `${labels[lang].filterHintPrefix} ${totalMatches} ${labels[lang].filterHintSuffix}`;
       empty.textContent = labels[lang].filterEmpty;
