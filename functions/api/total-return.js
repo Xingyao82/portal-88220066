@@ -4,6 +4,8 @@ const DEFAULT_HEADERS = {
 };
 
 const MAX_POINTS = 120;
+const MAX_REASONABLE_RETURN_PCT = 5000;
+const MIN_POINTS = 24;
 
 function isCnFundSymbol(symbol) {
   return /\.(SS|SZ)$/.test(symbol);
@@ -29,6 +31,37 @@ function compactSeries(values) {
   return values.filter((_, index) => index % step === 0 || index === values.length - 1);
 }
 
+function validateSeries(points, symbol) {
+  if (!Array.isArray(points) || points.length < MIN_POINTS) {
+    throw new Error(`Not enough history for ${symbol}`);
+  }
+
+  const first = points[0].value;
+  const last = points[points.length - 1].value;
+  if (!Number.isFinite(first) || !Number.isFinite(last) || first <= 0 || last <= 0) {
+    throw new Error(`Invalid endpoints for ${symbol}`);
+  }
+
+  const totalReturnPct = ((last / first) - 1) * 100;
+  if (!Number.isFinite(totalReturnPct) || Math.abs(totalReturnPct) > MAX_REASONABLE_RETURN_PCT) {
+    throw new Error(`Unreasonable total return for ${symbol}`);
+  }
+
+  for (let index = 1; index < points.length; index += 1) {
+    const prev = points[index - 1].value;
+    const next = points[index].value;
+    if (!Number.isFinite(prev) || !Number.isFinite(next) || prev <= 0 || next <= 0) {
+      throw new Error(`Invalid point inside series for ${symbol}`);
+    }
+    const ratio = next / prev;
+    if (ratio > 5 || ratio < 0.2) {
+      throw new Error(`Suspicious jump inside series for ${symbol}`);
+    }
+  }
+
+  return totalReturnPct;
+}
+
 function normalizeSeries(payload) {
   const timestamps = payload?.timestamp || [];
   const adjusted = payload?.indicators?.adjclose?.[0]?.adjclose || [];
@@ -47,11 +80,12 @@ function normalizeSeries(payload) {
   if (points.length < 2) return null;
 
   const first = points[0].value;
+  const totalReturnPct = validateSeries(points, payload?.meta?.symbol || "unknown");
   const compact = compactSeries(points);
   return {
     firstAdjClose: Number(first.toFixed(4)),
     latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
-    totalReturnPct: Number((((points[points.length - 1].value / first) - 1) * 100).toFixed(2)),
+    totalReturnPct: Number(totalReturnPct.toFixed(2)),
     inceptionTs: points[0].ts,
     latestTs: points[points.length - 1].ts,
     series: compact.map((point) => ({
@@ -127,6 +161,7 @@ async function fetchEastmoneyFund(symbol) {
     .map(([tsMs, value]) => ({ ts: Math.floor(tsMs / 1000), value: Number(value) }));
 
   const first = points[0].value;
+  const totalReturnPct = validateSeries(points, symbol);
   const compact = compactSeries(points);
   return {
     symbol,
@@ -134,7 +169,7 @@ async function fetchEastmoneyFund(symbol) {
     interval: "1d",
     firstAdjClose: Number(first.toFixed(4)),
     latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
-    totalReturnPct: Number((((points[points.length - 1].value / first) - 1) * 100).toFixed(2)),
+    totalReturnPct: Number(totalReturnPct.toFixed(2)),
     inceptionTs: points[0].ts,
     latestTs: points[points.length - 1].ts,
     series: compact.map((point) => ({
