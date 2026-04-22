@@ -488,6 +488,10 @@
           <div class="filter-label" data-i18n="roleFilterTitle">组合定位</div>
           <div class="filter-group" id="role-filters" aria-label="Role filters"></div>
         </div>
+        <div class="filter-row">
+          <div class="filter-label" data-i18n="sortFilterTitle">排序</div>
+          <div class="filter-group" id="sort-filters" aria-label="Sort filters"></div>
+        </div>
         <div class="filter-help" id="filter-help"></div>
       </div>
     </section>
@@ -559,6 +563,7 @@
       scopeTitle: { zh: "范围", en: "Scope" },
       styleFilterTitle: { zh: "结构", en: "Structure" },
       roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
+      sortFilterTitle: { zh: "排序", en: "Sort" },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -625,6 +630,10 @@
         filterStyleOption: "期权 income",
         filterStyleResearch: "研究工具",
         filterRoleAll: "全部定位",
+        filterSortDefault: "默认顺序",
+        filterSortAnnualized: "按年化总回报",
+        filterSortTotalReturn: "按总回报",
+        filterSortTrackRecord: "按成立时长",
         filterHintResearch: "研究工具不参与底仓 / 增强分类，适合先查分红节奏和分配规则，再回到 ETF 卡片看复权后总回报。",
         filterHintPrefix: "当前筛到",
         filterHintSuffix: "个项目。先按结构缩小范围，再看复权后总回报、成立时长和风险提醒。",
@@ -675,6 +684,10 @@
         filterStyleOption: "Option income",
         filterStyleResearch: "Research",
         filterRoleAll: "All roles",
+        filterSortDefault: "Default",
+        filterSortAnnualized: "Annualized return",
+        filterSortTotalReturn: "Total return",
+        filterSortTrackRecord: "Track record",
         filterHintResearch: "Research tools are outside the core/enhanced role model. Use them to check distribution cadence first, then go back to ETF cards for adjusted total return.",
         filterHintPrefix: "Showing",
         filterHintSuffix: "matching entries. Narrow by structure first, then compare adjusted total return, track record, and risk notes.",
@@ -1336,7 +1349,9 @@
     ];
 
     const trendCache = new Map();
-    const filterState = { scope: "all", style: "all", role: "all" };
+    const trendDataCache = new Map();
+    let sortWarmRequestId = 0;
+    const filterState = { scope: "all", style: "all", role: "all", sort: "default" };
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -1370,6 +1385,13 @@
       { key: "enhanced", dynamic: "enhanced" },
       { key: "satellite", dynamic: "satellite" },
       { key: "watch", dynamic: "watch" }
+    ];
+
+    const sortOptions = [
+      { key: "default", labelKey: "filterSortDefault" },
+      { key: "annualized", labelKey: "filterSortAnnualized" },
+      { key: "totalReturn", labelKey: "filterSortTotalReturn" },
+      { key: "trackRecord", labelKey: "filterSortTrackRecord" }
     ];
 
     function formatDate(ts, lang) {
@@ -1496,6 +1518,14 @@
               if (!response.ok) throw new Error(`HTTP ${response.status}`);
               return response.json();
             })
+            .then((trend) => {
+              trendDataCache.set(symbol, trend);
+              return trend;
+            })
+            .catch((error) => {
+              trendDataCache.set(symbol, null);
+              throw error;
+            })
         );
       }
       return trendCache.get(symbol);
@@ -1552,6 +1582,52 @@
       return option.dynamic ? classLabel(option.dynamic, lang) : labels[lang][option.labelKey];
     }
 
+    function isResearchMode() {
+      return filterState.scope === "research" || filterState.style === "research";
+    }
+
+    function getSortMetric(item) {
+      const trend = item.symbol ? trendDataCache.get(item.symbol) : null;
+      if (!trend) return Number.NEGATIVE_INFINITY;
+      if (filterState.sort === "annualized") return Number(trend.annualizedReturnPct ?? Number.NEGATIVE_INFINITY);
+      if (filterState.sort === "totalReturn") return Number(trend.totalReturnPct ?? Number.NEGATIVE_INFINITY);
+      if (filterState.sort === "trackRecord") return Number(trend.yearsSinceInception ?? Number.NEGATIVE_INFINITY);
+      return Number.NEGATIVE_INFINITY;
+    }
+
+    function sortItems(items) {
+      if (filterState.sort === "default") return items;
+      return items
+        .map((item, index) => ({ item, index, metric: getSortMetric(item) }))
+        .sort((left, right) => {
+          if (right.metric !== left.metric) return right.metric - left.metric;
+          return left.index - right.index;
+        })
+        .map((entry) => entry.item);
+    }
+
+    function getVisibleItems(section) {
+      return sortItems(section.items.filter((item) => matchesFilters(item, section.key)));
+    }
+
+    async function warmVisibleTrendData(lang) {
+      if (filterState.sort === "default" || isResearchMode()) return;
+      const symbols = sectionConfigs
+        .flatMap((section) => getVisibleItems(section).map((item) => item.symbol).filter(Boolean));
+      const missing = [...new Set(symbols.filter((symbol) => !trendDataCache.has(symbol)))];
+      if (!missing.length) return;
+      const requestId = ++sortWarmRequestId;
+      await Promise.all(missing.map(async (symbol) => {
+        try {
+          await getTrend(symbol);
+        } catch (error) {
+          return null;
+        }
+      }));
+      if (requestId !== sortWarmRequestId) return;
+      renderPage(lang, { skipWarm: true });
+    }
+
     function matchesFilters(item, sectionKey) {
       if (filterState.scope !== "all" && filterState.scope !== sectionKey) return false;
       const style = classifyIncomeStyle(item);
@@ -1569,15 +1645,22 @@
         const active = filterState.style === option.key ? " active" : "";
         return `<button class="filter-chip${active}" type="button" data-filter-group="style" data-filter-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
       }).join("");
-      const roleDisabled = filterState.scope === "research" || filterState.style === "research";
+      const roleDisabled = isResearchMode();
       const roleHtml = roleOptions.map((option) => {
         const active = filterState.role === option.key ? " active" : "";
         const disabled = roleDisabled ? " disabled" : "";
         return `<button class="filter-chip${active}" type="button" data-filter-group="role" data-filter-value="${option.key}"${disabled}>${getFilterLabel(lang, option)}</button>`;
       }).join("");
+      const sortDisabled = isResearchMode();
+      const sortHtml = sortOptions.map((option) => {
+        const active = filterState.sort === option.key ? " active" : "";
+        const disabled = sortDisabled && option.key !== "default" ? " disabled" : "";
+        return `<button class="filter-chip${active}" type="button" data-filter-group="sort" data-filter-value="${option.key}"${disabled}>${getFilterLabel(lang, option)}</button>`;
+      }).join("");
       document.getElementById("scope-filters").innerHTML = scopeHtml;
       document.getElementById("style-filters").innerHTML = styleHtml;
       document.getElementById("role-filters").innerHTML = roleHtml;
+      document.getElementById("sort-filters").innerHTML = sortHtml;
       document.querySelectorAll("[data-filter-group]").forEach((button) => {
         button.addEventListener("click", () => {
           const group = button.getAttribute("data-filter-group");
@@ -1586,6 +1669,7 @@
             filterState.scope = value;
             if (value === "research") {
               filterState.role = "all";
+              filterState.sort = "default";
               if (filterState.style !== "research") filterState.style = "all";
             } else if (filterState.style === "research") {
               filterState.style = "all";
@@ -1595,9 +1679,12 @@
             if (value === "research") {
               filterState.scope = "research";
               filterState.role = "all";
+              filterState.sort = "default";
             } else if (filterState.scope === "research") {
               filterState.scope = "all";
             }
+          } else if (group === "sort") {
+            if (!sortDisabled || value === "default") filterState.sort = value;
           } else if (!roleDisabled) {
             filterState.role = value;
           }
@@ -1609,7 +1696,7 @@
     function renderSections(lang) {
       let totalMatches = 0;
       sectionConfigs.forEach((section) => {
-        const items = section.items.filter((item) => matchesFilters(item, section.key));
+        const items = getVisibleItems(section);
         totalMatches += items.length;
         document.getElementById(section.gridId).innerHTML = items.map((item) => cardTemplate(item, lang)).join("");
         document.getElementById(section.sectionId).hidden = items.length === 0;
@@ -1620,7 +1707,7 @@
     function renderFilterMeta(lang, totalMatches) {
       const help = document.getElementById("filter-help");
       const empty = document.getElementById("filter-empty");
-      const researchMode = filterState.scope === "research" || filterState.style === "research";
+      const researchMode = isResearchMode();
       help.textContent = researchMode
         ? labels[lang].filterHintResearch
         : `${labels[lang].filterHintPrefix} ${totalMatches} ${labels[lang].filterHintSuffix}`;
@@ -1628,7 +1715,7 @@
       empty.classList.toggle("show", totalMatches === 0);
     }
 
-    function renderPage(lang) {
+    function renderPage(lang, options = {}) {
       activeLang = lang;
       document.getElementById("brand").textContent = labels[lang].brand;
       document.getElementById("stats").innerHTML = labels[lang].stats.map(([label, value]) => `
@@ -1641,6 +1728,7 @@
       const totalMatches = renderSections(lang);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
+      if (!options.skipWarm) warmVisibleTrendData(lang);
     }
 
     window.SiteI18n.bindPage(pageCopy, renderPage);
