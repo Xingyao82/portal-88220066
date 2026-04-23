@@ -1339,8 +1339,17 @@
       return options[group][key][lang];
     }
 
-    function faviconUrl(url) {
-      return `https://www.google.com/s2/favicons?sz=128&domain_url=${encodeURIComponent(url)}`;
+    function faviconUrls(url) {
+      try {
+        const parsed = new URL(url, window.location.href);
+        if (/^https?:$/.test(parsed.protocol)) {
+          return [
+            parsed.origin + '/favicon.ico',
+            'https://www.google.com/s2/favicons?sz=128&domain_url=' + encodeURIComponent(parsed.href)
+          ];
+        }
+      } catch {}
+      return ['https://www.google.com/s2/favicons?sz=128&domain_url=' + encodeURIComponent(url)];
     }
 
     function initials(name) {
@@ -1354,10 +1363,15 @@
 
     function logoMarkup(item, size = "card") {
       const cls = size === "list" ? "list-logo" : "logo-wrap";
+      const imgClass = size === "list" ? "list-logo-img" : "card-logo";
+      const urls = faviconUrls(item.url);
+      const img = urls.length
+        ? '<img src="' + urls[0] + '" alt="' + item.name + ' logo" loading="lazy" class="' + imgClass + '" data-logo-srcs="' + urls.map((url) => url.replace(/"/g, '&quot;')).join('|') + '" data-logo-index="0" onerror="(function(img){var list=(img.dataset.logoSrcs||\'\').split(\'|\').filter(Boolean);var idx=Number(img.dataset.logoIndex||0)+1;if(idx<list.length){img.dataset.logoIndex=String(idx);img.src=list[idx];return;}img.style.display=\'none\';if(img.nextElementSibling)img.nextElementSibling.style.display=\'flex\';})(this)">'
+        : '';
       return `
         <span class="${cls}" style="--tool-accent:${item.accent}">
-          <img src="${faviconUrl(item.url)}" alt="${item.name} logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <span class="logo-fallback">${initials(item.name)}</span>
+          ${img}
+          <span class="logo-fallback" style="display:flex">${initials(item.name)}</span>
         </span>
       `;
     }

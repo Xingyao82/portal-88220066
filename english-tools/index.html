@@ -388,11 +388,22 @@ function renderHeroLogos() {
     const el = document.getElementById('hero-logo-' + key);
     const item = featured[index];
     if (!el || !item) return;
-    const url = logoUrl(item);
-    if (!url) return;
-    el.src = url;
+    const urls = logoUrls(item);
+    if (!urls.length) return;
+    el.src = urls[0];
+    el.dataset.logoSrcs = urls.join('|');
+    el.dataset.logoIndex = '0';
     el.alt = item.name;
-    el.onerror = function () { el.style.display = 'none'; };
+    el.onerror = function () {
+      const list = (el.dataset.logoSrcs || '').split('|').filter(Boolean);
+      const nextIndex = Number(el.dataset.logoIndex || 0) + 1;
+      if (nextIndex < list.length) {
+        el.dataset.logoIndex = String(nextIndex);
+        el.src = list[nextIndex];
+        return;
+      }
+      el.style.display = 'none';
+    };
   });
 }
 
