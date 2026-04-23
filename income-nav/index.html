@@ -903,7 +903,7 @@
     <section class="section" id="compare-section">
       <div class="section-head">
         <div>
-          <h2 data-i18n="compareTitle">Nasdaq Income 对比</h2>
+          <h2 data-i18n="compareTitle">Nasdaq Income 复权对比</h2>
           <p data-i18n="compareCopy">如果你盯的是同一条纳指 income 线，XQQI、GPIQ、QQQI 的定位差别比名字看起来大。</p>
         </div>
         <div class="section-badge" data-i18n="compareBadge">Nasdaq / XQQI + GPIQ + QQQI</div>
@@ -988,7 +988,7 @@
       usTitle: { zh: "美国 Income ETF", en: "U.S. Income ETFs" },
       usCopy: { zh: "美国这块选择更全，适合把 dividend、covered call、REITs 和 bond 放一起比较。", en: "The U.S. side offers more variety across dividend, covered call, REITs, and bond income styles." },
       usBadge: { zh: "美国 / 红利 + 期权增强 + REITs + 债券", en: "U.S. / dividend + options + REITs + bonds" },
-      compareTitle: { zh: "Nasdaq Income 对比", en: "Nasdaq Income Compare" },
+      compareTitle: { zh: "Nasdaq Income 复权对比", en: "Nasdaq Income Adjusted Compare" },
       compareCopy: {
         zh: "如果你盯的是同一条纳指 income 线，XQQI、GPIQ、QQQI 的定位差别比名字看起来大。",
         en: "If you are looking at the same Nasdaq income lane, XQQI, GPIQ, and QQQI are more different than the names first suggest."
@@ -1046,15 +1046,15 @@
         trendTimeliness: "一般会跟到最近一个交易日，免费源偶尔会慢一拍。",
         trendYoungFund: "样本还短，年化参考意义有限。",
         trendRiskHot: "高波动 income，别只看分配率。",
-        compareChartTitle: "从 XQQI 上市日开始",
-        compareChartCopy: "三条线都从 XQQI 上市后的首个交易日归一到 100，只看这段样本里谁更抗跌、谁弹性更大。",
+        compareChartTitle: "从 XQQI 上市日开始的复权后总回报",
+        compareChartCopy: "三条线统一使用复权后口径，从 XQQI 上市后的首个交易日归一到 100，只看这段样本里谁更抗跌、谁弹性更大。",
         compareChartLoading: "正在加载从 XQQI 上市日起的日线对比",
         compareChartError: "暂时没取到 XQQI / GPIQ / QQQI 的对比日线",
-        compareChartBase: "基准",
-        compareChartBaseRule: "各自在 XQQI 上市后首个交易日 = 100",
+        compareChartBase: "口径",
+        compareChartBaseRule: "复权后总回报，各自在 XQQI 上市后首个交易日 = 100",
         compareChartStart: "起点",
         compareChartLatest: "当前",
-        compareChartPeriodReturn: "区间回报",
+        compareChartPeriodReturn: "区间复权回报",
         compareChartShort: "XQQI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
         hubTitle: "平台入口",
         hubCopy: "这张卡不是单只 ETF 的复权走势，而是留作 provider 入口，适合继续点进去看新品、规则和产品线扩展。",
@@ -1129,15 +1129,15 @@
         trendTimeliness: "Usually up to the latest trading day, though free sources can lag a bit.",
         trendYoungFund: "Short track record, so annualized return needs extra caution.",
         trendRiskHot: "High-vol income product. Do not judge it by yield alone.",
-        compareChartTitle: "Since XQQI Inception",
-        compareChartCopy: "All three lines are rebased to 100 from the first trading session after XQQI launched, so this is only about relative behavior in the live sample so far.",
+        compareChartTitle: "Adjusted Total Return Since XQQI Inception",
+        compareChartCopy: "All three lines use an adjusted total-return basis and are rebased to 100 from the first trading session after XQQI launched, so this only compares live relative behavior so far.",
         compareChartLoading: "Loading daily comparison since XQQI inception",
         compareChartError: "Could not load the XQQI / GPIQ / QQQI daily comparison right now",
-        compareChartBase: "Base",
-        compareChartBaseRule: "First trading session after XQQI launch = 100",
+        compareChartBase: "Basis",
+        compareChartBaseRule: "Adjusted total return, first trading session after XQQI launch = 100",
         compareChartStart: "Start",
         compareChartLatest: "Now",
-        compareChartPeriodReturn: "Period return",
+        compareChartPeriodReturn: "Adjusted return",
         compareChartShort: "XQQI still has a very short track record, so use this to read the live sample rather than make a long-term claim.",
         hubTitle: "Provider hub",
         hubCopy: "This card is a provider entry point rather than a single-ETF total-return view, so use it to inspect new launches, structures, and lineup changes.",
@@ -1307,7 +1307,7 @@
         name: "活跃国债ETF",
         symbol: "511020.SS",
         ticker: "511020",
-        accent: "#0ea5e9",
+        accent: "#f97316",
         url: "https://fund.eastmoney.com/a/202506043421663013.html",
         type: { zh: "活跃国债", en: "Active treasury basket" },
         market: { zh: "中国债券", en: "China bonds" },
@@ -1585,7 +1585,7 @@
         name: "GPIQ",
         symbol: "GPIQ",
         ticker: "Goldman Sachs Nasdaq-100 Core Premium Income ETF",
-        accent: "#6366f1",
+        accent: "#22c55e",
         url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIQ_fc.pdf?rd=n&sa=n",
         role: "core",
         style: "option",
@@ -1851,7 +1851,7 @@
       },
       {
         name: "QQQI",
-        accent: "#1d4ed8",
+        accent: "#38bdf8",
         url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
         badge: { zh: "高收入核心", en: "High-income core" },
         summary: {
