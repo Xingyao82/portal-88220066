@@ -2417,8 +2417,8 @@
       return Number(value.toFixed(digits)).toFixed(digits);
     }
 
-    function trendCacheKey(symbol, interval = DEFAULT_TREND_INTERVAL) {
-      return `${symbol}::${interval}`;
+    function trendCacheKey(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0) {
+      return `${symbol}::${interval}::${fromTs || 0}`;
     }
 
     function getCachedTrend(symbol, interval = DEFAULT_TREND_INTERVAL) {
@@ -2749,13 +2749,15 @@
 
       try {
         const compareConfigs = config.cards.map((item) => ({ symbol: item.name, color: item.accent }));
-        const trends = await Promise.all(compareConfigs.map((item) => getTrend(item.symbol, COMPARE_TREND_INTERVAL)));
+        const anchorTrend = await getTrend(config.anchorSymbol, COMPARE_TREND_INTERVAL);
         if (requestId !== compareChartRequestId) return;
 
-        const anchorTrend = trends.find((trend) => trend?.symbol === config.anchorSymbol);
         if (!anchorTrend?.inceptionTs) throw new Error(`Missing ${config.anchorSymbol} inception`);
 
         const anchorTs = anchorTrend.inceptionTs;
+        const trends = await Promise.all(compareConfigs.map((item) => getTrend(item.symbol, COMPARE_TREND_INTERVAL, anchorTs)));
+        if (requestId !== compareChartRequestId) return;
+
         const normalized = compareConfigs
           .map((item) => normalizeCompareTrend(trends.find((trend) => trend?.symbol === item.symbol), anchorTs, item.color))
           .filter(Boolean);
@@ -2809,13 +2811,18 @@
       }
     }
 
-    async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL) {
+    async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0) {
       if (!symbol) return null;
-      const cacheKey = trendCacheKey(symbol, interval);
+      const cacheKey = trendCacheKey(symbol, interval, fromTs);
       if (!trendCache.has(cacheKey)) {
+        const params = new URLSearchParams({
+          symbol,
+          interval
+        });
+        if (fromTs) params.set("from", String(fromTs));
         trendCache.set(
           cacheKey,
-          fetch(`/api/total-return?symbol=${encodeURIComponent(symbol)}&interval=${encodeURIComponent(interval)}`)
+          fetch(`/api/total-return?${params}`)
             .then((response) => {
               if (!response.ok) throw new Error(`HTTP ${response.status}`);
               return response.json();

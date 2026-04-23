@@ -73,13 +73,14 @@ function validateSeries(points, symbol) {
   return totalReturnPct;
 }
 
-function normalizeSeries(payload) {
+function normalizeSeries(payload, fromTs = 0) {
   const timestamps = payload?.timestamp || [];
   const adjusted = payload?.indicators?.adjclose?.[0]?.adjclose || [];
   const closes = payload?.indicators?.quote?.[0]?.close || [];
   const points = [];
 
   for (let index = 0; index < timestamps.length; index += 1) {
+    if (fromTs && timestamps[index] < fromTs) continue;
     const raw = adjusted[index] ?? closes[index];
     if (!Number.isFinite(raw) || raw <= 0) continue;
     points.push({
@@ -109,9 +110,9 @@ function normalizeSeries(payload) {
   };
 }
 
-async function fetchChart(symbol, interval) {
+async function fetchChart(symbol, interval, fromTs = 0) {
   if (isCnFundSymbol(symbol)) {
-    return fetchEastmoneyFund(symbol);
+    return fetchEastmoneyFund(symbol, fromTs);
   }
 
   const response = await fetch(buildYahooUrl(symbol, interval), {
@@ -129,7 +130,7 @@ async function fetchChart(symbol, interval) {
     throw new Error("Missing chart payload");
   }
 
-  const normalized = normalizeSeries(result);
+  const normalized = normalizeSeries(result, fromTs);
   if (!normalized) {
     throw new Error("Not enough adjusted-close data");
   }
@@ -152,7 +153,7 @@ function parseEastmoneyArray(script, key) {
   return JSON.parse(slice.slice(0, end).trim());
 }
 
-async function fetchEastmoneyFund(symbol) {
+async function fetchEastmoneyFund(symbol, fromTs = 0) {
   const code = eastmoneyCode(symbol);
   const url = `https://fund.eastmoney.com/pingzhongdata/${code}.js?v=${Date.now()}`;
   const response = await fetch(url, {
@@ -172,7 +173,12 @@ async function fetchEastmoneyFund(symbol) {
 
   const points = accWorth
     .filter((point) => Array.isArray(point) && Number.isFinite(point[0]) && Number.isFinite(point[1]) && point[1] > 0)
-    .map(([tsMs, value]) => ({ ts: Math.floor(tsMs / 1000), value: Number(value) }));
+    .map(([tsMs, value]) => ({ ts: Math.floor(tsMs / 1000), value: Number(value) }))
+    .filter((point) => !fromTs || point.ts >= fromTs);
+
+  if (points.length < 2) {
+    throw new Error(`Not enough history for ${symbol}`);
+  }
 
   const first = points[0].value;
   const totalReturnPct = validateSeries(points, symbol);
@@ -200,13 +206,14 @@ export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const symbol = (url.searchParams.get("symbol") || "").trim().toUpperCase();
   const interval = (url.searchParams.get("interval") || "1mo").trim();
+  const fromTs = Math.max(0, Number(url.searchParams.get("from") || 0) || 0);
 
   if (!symbol) {
     return Response.json({ error: "Missing symbol" }, { status: 400 });
   }
 
   try {
-    const payload = await fetchChart(symbol, interval);
+    const payload = await fetchChart(symbol, interval, fromTs);
     return Response.json(payload, {
       headers: {
         "Cache-Control": "public, max-age=3600, s-maxage=21600",
