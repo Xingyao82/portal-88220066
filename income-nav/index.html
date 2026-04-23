@@ -165,6 +165,10 @@
       gap: 14px;
     }
 
+    .compare-grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     .compare-card {
       min-height: 100%;
     }
@@ -1006,20 +1010,20 @@
       usBadge: { zh: "美国 / 红利 + 期权增强 + REITs + 债券", en: "U.S. / dividend + options + REITs + bonds" },
       compareTitle: { zh: "Nasdaq Income 复权对比", en: "Nasdaq Income Adjusted Compare" },
       compareCopy: {
-        zh: "如果你盯的是同一条纳指 income 线，XQQI、GPIQ、QQQI 的定位差别比名字看起来大。",
-        en: "If you are looking at the same Nasdaq income lane, XQQI, GPIQ, and QQQI are more different than the names first suggest."
+        zh: "如果你盯的是同一条纳指 income 线，先把 QQQ 放进来当纯指数基准，再看 XQQI、GPIQ、QQQI 的差别。",
+        en: "If you are looking at the same Nasdaq income lane, anchor it against QQQ first, then compare XQQI, GPIQ, and QQQI."
       },
-      compareBadge: { zh: "Nasdaq / XQQI + GPIQ + QQQI", en: "Nasdaq / XQQI + GPIQ + QQQI" },
+      compareBadge: { zh: "Nasdaq / QQQ + XQQI + GPIQ + QQQI", en: "Nasdaq / QQQ + XQQI + GPIQ + QQQI" },
       compareNote: {
         zh: "这组只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
         en: "This block is only for structural comparison. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
       },
       spCompareTitle: { zh: "S&P 500 Income 复权对比", en: "S&P 500 Income Adjusted Compare" },
       spCompareCopy: {
-        zh: "如果你盯的是同一条标普 income 线，XSPI、GPIX、SPYI 的风险档位和实现路径也不是一回事。",
-        en: "If you are looking at the same S&P 500 income lane, XSPI, GPIX, and SPYI also sit in different risk and implementation buckets."
+        zh: "如果你盯的是同一条标普 income 线，先把 SPY 放进来当纯指数基准，再看 XSPI、GPIX、SPYI 的差别。",
+        en: "If you are looking at the same S&P 500 income lane, anchor it against SPY first, then compare XSPI, GPIX, and SPYI."
       },
-      spCompareBadge: { zh: "S&P 500 / XSPI + GPIX + SPYI", en: "S&P 500 / XSPI + GPIX + SPYI" },
+      spCompareBadge: { zh: "S&P 500 / SPY + XSPI + GPIX + SPYI", en: "S&P 500 / SPY + XSPI + GPIX + SPYI" },
       spCompareNote: {
         zh: "这组也只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
         en: "This block is also for structural comparison only. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
@@ -1846,6 +1850,22 @@
 
     const nasdaqCompareCards = [
       {
+        name: "QQQ",
+        meta: { zh: "Nasdaq benchmark", en: "Nasdaq benchmark" },
+        accent: "#94a3b8",
+        url: "https://www.invesco.com/qqq-etf/en/home.html",
+        badge: { zh: "纯指数基准", en: "Pure benchmark" },
+        summary: {
+          zh: "不用 income overlay 的纳指基准，用来判断这些 income 版本到底牺牲了多少上涨、换来了多少现金流。",
+          en: "The non-income Nasdaq benchmark, useful for checking how much upside the income versions give up for cash flow."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "纯指数 / 基准", en: "Pure index / benchmark" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "Nasdaq-100", en: "Nasdaq-100" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "无期权覆盖的原始涨跌", en: "Raw index move without options overwrite" } }
+        ]
+      },
+      {
         name: "XQQI",
         meta: { zh: "Nasdaq income", en: "Nasdaq income" },
         accent: "#f97316",
@@ -1899,6 +1919,7 @@
       {
         label: { zh: "策略定位", en: "Positioning" },
         values: {
+          QQQ: { zh: "纯 Nasdaq-100 基准，不做 income overlay", en: "Pure Nasdaq-100 benchmark with no income overlay" },
           XQQI: { zh: "Boosted 高收入，偏进攻", en: "Boosted high income, more aggressive" },
           GPIQ: { zh: "Core premium income，偏均衡", en: "Core premium income, more balanced" },
           QQQI: { zh: "高收入核心替代，偏 income", en: "High-income core substitute, more income-led" }
@@ -1907,6 +1928,7 @@
       {
         label: { zh: "底层暴露", en: "Base exposure" },
         values: {
+          QQQ: { zh: "Nasdaq-100", en: "Nasdaq-100" },
           XQQI: { zh: "Nasdaq-100 + 更高名义暴露", en: "Nasdaq-100 + higher notional exposure" },
           GPIQ: { zh: "Nasdaq-100 成分股组合", en: "Nasdaq-100 equity basket" },
           QQQI: { zh: "Nasdaq-100 成分股组合", en: "Nasdaq-100 equity basket" }
@@ -1915,6 +1937,7 @@
       {
         label: { zh: "收入框架", en: "Income framework" },
         values: {
+          QQQ: { zh: "无期权覆盖，完整指数 beta", en: "No options overwrite, full index beta" },
           XQQI: { zh: "在 QQQI 路线上再抬高暴露", en: "Builds on the QQQI idea with more exposure" },
           GPIQ: { zh: "动态 overwrite，覆盖区间更明确", en: "Dynamic overwrite with a clearer coverage range" },
           QQQI: { zh: "数据驱动的纳指 options overlay", en: "A data-driven Nasdaq options overlay" }
@@ -1923,6 +1946,7 @@
       {
         label: { zh: "费率", en: "Fee" },
         values: {
+          QQQ: { zh: "0.20%", en: "0.20%" },
           XQQI: { zh: "0.98%", en: "0.98%" },
           GPIQ: { zh: "0.29% 净费率", en: "0.29% net expense ratio" },
           QQQI: { zh: "0.68%", en: "0.68%" }
@@ -1931,6 +1955,7 @@
       {
         label: { zh: "更像什么", en: "Feels closer to" },
         values: {
+          QQQ: { zh: "纯成长指数基准", en: "pure growth-index benchmark" },
           XQQI: { zh: "income + boosted beta", en: "income + boosted beta" },
           GPIQ: { zh: "更像底仓 premium income", en: "a more core-like premium income fund" },
           QQQI: { zh: "高收入纳指替代", en: "a higher-income Nasdaq substitute" }
@@ -1939,6 +1964,7 @@
       {
         label: { zh: "优先观察", en: "Watch first" },
         values: {
+          QQQ: { zh: "原始上涨参与和原始回撤", en: "raw upside participation and raw drawdown" },
           XQQI: { zh: "回撤放大、上行也更猛", en: "amplified drawdowns and amplified upside" },
           GPIQ: { zh: "费率低、覆盖区间更关键", en: "lower fee and overwrite range" },
           QQQI: { zh: "税务效率和上涨保留", en: "tax efficiency and upside retention" }
@@ -1947,6 +1973,22 @@
     ];
 
     const sp500CompareCards = [
+      {
+        name: "SPY",
+        meta: { zh: "S&P 500 benchmark", en: "S&P 500 benchmark" },
+        accent: "#94a3b8",
+        url: "https://www.ssga.com/us/en/intermediary/etfs/funds/spdr-sp-500-etf-trust-spy",
+        badge: { zh: "纯指数基准", en: "Pure benchmark" },
+        summary: {
+          zh: "不用 income overlay 的标普基准，用来判断这些 income 版本到底牺牲了多少上涨、换来了多少现金流。",
+          en: "The non-income S&P 500 benchmark, useful for checking how much upside the income versions give up for cash flow."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "纯指数 / 基准", en: "Pure index / benchmark" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "S&P 500", en: "S&P 500" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "无期权覆盖的原始涨跌", en: "Raw index move without options overwrite" } }
+        ]
+      },
       {
         name: "XSPI",
         meta: { zh: "S&P 500 income", en: "S&P 500 income" },
@@ -2001,6 +2043,7 @@
       {
         label: { zh: "策略定位", en: "Positioning" },
         values: {
+          SPY: { zh: "纯 S&P 500 基准，不做 income overlay", en: "Pure S&P 500 benchmark with no income overlay" },
           XSPI: { zh: "Boosted 高收入，偏进攻", en: "Boosted high income, more aggressive" },
           GPIX: { zh: "Core premium income，偏均衡", en: "Core premium income, more balanced" },
           SPYI: { zh: "高收入核心替代，偏 income", en: "High-income core substitute, more income-led" }
@@ -2009,6 +2052,7 @@
       {
         label: { zh: "底层暴露", en: "Base exposure" },
         values: {
+          SPY: { zh: "S&P 500", en: "S&P 500" },
           XSPI: { zh: "S&P 500 + 更高名义暴露", en: "S&P 500 + higher notional exposure" },
           GPIX: { zh: "S&P 500 成分股组合", en: "S&P 500 equity basket" },
           SPYI: { zh: "S&P 500 成分股组合", en: "S&P 500 equity basket" }
@@ -2017,6 +2061,7 @@
       {
         label: { zh: "收入框架", en: "Income framework" },
         values: {
+          SPY: { zh: "无期权覆盖，完整指数 beta", en: "No options overwrite, full index beta" },
           XSPI: { zh: "在 SPYI 路线上再抬高暴露", en: "Builds on the SPYI idea with more exposure" },
           GPIX: { zh: "动态 overwrite，覆盖区间更明确", en: "Dynamic overwrite with a clearer coverage range" },
           SPYI: { zh: "税务优化的标普 options overlay", en: "A tax-efficient S&P 500 options overlay" }
@@ -2025,6 +2070,7 @@
       {
         label: { zh: "费率", en: "Fee" },
         values: {
+          SPY: { zh: "0.0945%", en: "0.0945%" },
           XSPI: { zh: "0.98%", en: "0.98%" },
           GPIX: { zh: "0.29% 净费率", en: "0.29% net expense ratio" },
           SPYI: { zh: "0.68%", en: "0.68%" }
@@ -2033,6 +2079,7 @@
       {
         label: { zh: "更像什么", en: "Feels closer to" },
         values: {
+          SPY: { zh: "纯大盘指数基准", en: "pure broad-index benchmark" },
           XSPI: { zh: "income + boosted beta", en: "income + boosted beta" },
           GPIX: { zh: "更像底仓 premium income", en: "a more core-like premium income fund" },
           SPYI: { zh: "高收入标普替代", en: "a higher-income S&P 500 substitute" }
@@ -2041,6 +2088,7 @@
       {
         label: { zh: "优先观察", en: "Watch first" },
         values: {
+          SPY: { zh: "原始上涨参与和原始回撤", en: "raw upside participation and raw drawdown" },
           XSPI: { zh: "回撤放大、上行也更猛", en: "amplified drawdowns and amplified upside" },
           GPIX: { zh: "费率低、覆盖区间更关键", en: "lower fee and overwrite range" },
           SPYI: { zh: "税务效率和上涨保留", en: "tax efficiency and upside retention" }
@@ -2566,6 +2614,7 @@
       section.hidden = !visible;
       if (!visible) return false;
       document.getElementById(config.gridId).innerHTML = config.cards.map((item) => compareCardTemplate(item, lang)).join("");
+      document.getElementById(config.gridId).classList.toggle("four", config.cards.length === 4);
       document.getElementById(config.tableId).innerHTML = compareTableTemplate(lang, config);
       return true;
     }
