@@ -159,6 +159,69 @@
       gap: 14px;
     }
 
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .compare-card {
+      min-height: 100%;
+    }
+
+    .compare-card .mini-list strong {
+      text-align: left;
+    }
+
+    .compare-table-wrap {
+      margin-top: 14px;
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .compare-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    .compare-table thead th {
+      color: var(--text);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .compare-table tbody th {
+      width: 18%;
+      color: var(--text);
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .compare-table tr:last-child th,
+    .compare-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .compare-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
     .subgroup {
       display: grid;
       gap: 14px;
@@ -613,6 +676,7 @@
     }
 
     @media (max-width: 1180px) {
+      .compare-grid,
       .summary-grid,
       .grid { grid-template-columns: 1fr 1fr; }
     }
@@ -620,6 +684,7 @@
     @media (max-width: 720px) {
       .shell { width: min(calc(100% - 18px), var(--max)); }
       .nav { flex-direction: column; align-items: flex-start; }
+      .compare-grid,
       .summary-grid,
       .grid { grid-template-columns: 1fr; }
       .section-head { flex-direction: column; align-items: flex-start; }
@@ -700,6 +765,21 @@
       <div class="grid" id="us-grid"></div>
     </section>
 
+    <section class="section" id="compare-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="compareTitle">Nasdaq Income 对比</h2>
+          <p data-i18n="compareCopy">如果你盯的是同一条纳指 income 线，XQQI、GPIQ、QQQI 的定位差别比名字看起来大。</p>
+        </div>
+        <div class="section-badge" data-i18n="compareBadge">Nasdaq / XQQI + GPIQ + QQQI</div>
+      </div>
+      <div class="compare-grid" id="compare-grid"></div>
+      <div class="compare-table-wrap">
+        <table class="compare-table" id="compare-table"></table>
+      </div>
+      <p class="compare-note" id="compare-note" data-i18n="compareNote">这组只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。</p>
+    </section>
+
     <section class="section" id="advanced-section">
       <div class="section-head">
         <div>
@@ -772,6 +852,16 @@
       usTitle: { zh: "美国 Income ETF", en: "U.S. Income ETFs" },
       usCopy: { zh: "美国这块选择更全，适合把 dividend、covered call、REITs 和 bond 放一起比较。", en: "The U.S. side offers more variety across dividend, covered call, REITs, and bond income styles." },
       usBadge: { zh: "美国 / 红利 + 期权增强 + REITs + 债券", en: "U.S. / dividend + options + REITs + bonds" },
+      compareTitle: { zh: "Nasdaq Income 对比", en: "Nasdaq Income Compare" },
+      compareCopy: {
+        zh: "如果你盯的是同一条纳指 income 线，XQQI、GPIQ、QQQI 的定位差别比名字看起来大。",
+        en: "If you are looking at the same Nasdaq income lane, XQQI, GPIQ, and QQQI are more different than the names first suggest."
+      },
+      compareBadge: { zh: "Nasdaq / XQQI + GPIQ + QQQI", en: "Nasdaq / XQQI + GPIQ + QQQI" },
+      compareNote: {
+        zh: "这组只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
+        en: "This block is only for structural comparison. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
+      },
       advancedTitle: { zh: "高收益 / 期权 Income", en: "High-Yield / Options Income" },
       advancedCopy: {
         zh: "这组更偏 weekly、0DTE、single-stock covered call 和 provider 入口，收益看起来更猛，但结构也更复杂。",
@@ -1321,6 +1411,8 @@
         ticker: "NEOS Nasdaq-100 High Income ETF",
         accent: "#1d4ed8",
         url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
+        role: "core",
+        style: "option",
         type: { zh: "纳指高收益", en: "Nasdaq high income" },
         market: { zh: "美国股票", en: "U.S. equity" },
         summary: {
@@ -1331,6 +1423,46 @@
         note: {
           zh: "看纳指波动和 option overlay 成本。",
           en: "Watch Nasdaq volatility and the cost of the options overlay."
+        }
+      },
+      {
+        name: "GPIQ",
+        symbol: "GPIQ",
+        ticker: "Goldman Sachs Nasdaq-100 Core Premium Income ETF",
+        accent: "#6366f1",
+        url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIQ_fc.pdf?rd=n&sa=n",
+        role: "core",
+        style: "option",
+        type: { zh: "纳指核心 premium income", en: "Nasdaq core premium income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "Goldman 这只更像 core premium income 版本，适合拿来和 QQQI、JEPQ 看成本和覆盖度差别。",
+          en: "Goldman's version leans more explicitly into core premium income and is useful to compare against QQQI and JEPQ on cost and overwrite style."
+        },
+        tags: { zh: ["GPIQ", "Goldman Sachs", "Nasdaq"], en: ["GPIQ", "Goldman Sachs", "Nasdaq"] },
+        note: {
+          zh: "看 25%-75% overwrite、净费率和上涨保留。",
+          en: "Watch the 25%-75% overwrite range, the lower net fee, and how much upside it keeps."
+        }
+      },
+      {
+        name: "XQQI",
+        symbol: "XQQI",
+        ticker: "NEOS Boosted Nasdaq-100 High Income ETF",
+        accent: "#0ea5e9",
+        url: "https://neosfunds.com/xqqi/",
+        role: "satellite",
+        style: "option",
+        type: { zh: "Boosted 纳指 income", en: "Boosted Nasdaq income" },
+        market: { zh: "美国股票", en: "U.S. equity" },
+        summary: {
+          zh: "更像在 QQQI 路线上再把 Nasdaq 暴露抬高一档，适合拿来和 GPIQ、QQQI 看进攻性差异。",
+          en: "This pushes the QQQI idea into a more aggressive lane by raising Nasdaq exposure further, making it a useful contrast against GPIQ and QQQI."
+        },
+        tags: { zh: ["XQQI", "boosted", "Nasdaq"], en: ["XQQI", "boosted", "Nasdaq"] },
+        note: {
+          zh: "看更高名义暴露、回撤放大和 distribution target。",
+          en: "Watch the higher notional exposure, amplified drawdowns, and the distribution target framing."
         }
       },
       {
@@ -1526,6 +1658,105 @@
         note: {
           zh: "看名字背后的真实结构和分配来源。",
           en: "Watch the real structure and distribution source behind the product names."
+        }
+      }
+    ];
+
+    const nasdaqCompareCards = [
+      {
+        name: "XQQI",
+        accent: "#0ea5e9",
+        url: "https://neosfunds.com/xqqi/",
+        badge: { zh: "最进攻", en: "Most aggressive" },
+        summary: {
+          zh: "更像 income + boosted beta，适合放在这组三只里单独看弹性和回撤。",
+          en: "Closer to income plus boosted beta, and best viewed as the most elastic and most fragile of the three."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "卫星 / 更进攻", en: "Satellite / more aggressive" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "Nasdaq-100 + 更高名义暴露", en: "Nasdaq-100 + higher notional exposure" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "上行更猛，回撤也放大", en: "Stronger upside, but amplified drawdowns too" } }
+        ]
+      },
+      {
+        name: "GPIQ",
+        accent: "#6366f1",
+        url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIQ_fc.pdf?rd=n&sa=n",
+        badge: { zh: "更像底仓", en: "More core-like" },
+        summary: {
+          zh: "更偏 core premium income，成本更低，适合拿来当这组三只里的成本和覆盖度对照样本。",
+          en: "Leans more clearly into core premium income, with lower cost and a cleaner overwrite comparison point."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "底仓 / 更均衡", en: "Core / more balanced" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "Nasdaq-100 成分股组合", en: "Nasdaq-100 equity basket" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "低费率和 overwrite 区间", en: "Lower fee and overwrite range" } }
+        ]
+      },
+      {
+        name: "QQQI",
+        accent: "#1d4ed8",
+        url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
+        badge: { zh: "高收入核心", en: "High-income core" },
+        summary: {
+          zh: "比 XQQI 收敛一些，但仍是高收入导向，适合放在中间看税务效率和纳指收入表达。",
+          en: "Less aggressive than XQQI but still clearly high-income oriented, making it the middle case for tax-efficient Nasdaq income."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "底仓 / 偏高收入", en: "Core / more income-led" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "Nasdaq-100 成分股组合", en: "Nasdaq-100 equity basket" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "税务结构和上涨参与度", en: "Tax structure and upside participation" } }
+        ]
+      }
+    ];
+
+    const nasdaqCompareRows = [
+      {
+        label: { zh: "策略定位", en: "Positioning" },
+        values: {
+          XQQI: { zh: "Boosted 高收入，偏进攻", en: "Boosted high income, more aggressive" },
+          GPIQ: { zh: "Core premium income，偏均衡", en: "Core premium income, more balanced" },
+          QQQI: { zh: "高收入核心替代，偏 income", en: "High-income core substitute, more income-led" }
+        }
+      },
+      {
+        label: { zh: "底层暴露", en: "Base exposure" },
+        values: {
+          XQQI: { zh: "Nasdaq-100 + 更高名义暴露", en: "Nasdaq-100 + higher notional exposure" },
+          GPIQ: { zh: "Nasdaq-100 成分股组合", en: "Nasdaq-100 equity basket" },
+          QQQI: { zh: "Nasdaq-100 成分股组合", en: "Nasdaq-100 equity basket" }
+        }
+      },
+      {
+        label: { zh: "收入框架", en: "Income framework" },
+        values: {
+          XQQI: { zh: "在 QQQI 路线上再抬高暴露", en: "Builds on the QQQI idea with more exposure" },
+          GPIQ: { zh: "动态 overwrite，覆盖区间更明确", en: "Dynamic overwrite with a clearer coverage range" },
+          QQQI: { zh: "数据驱动的纳指 options overlay", en: "A data-driven Nasdaq options overlay" }
+        }
+      },
+      {
+        label: { zh: "费率", en: "Fee" },
+        values: {
+          XQQI: { zh: "0.98%", en: "0.98%" },
+          GPIQ: { zh: "0.29% 净费率", en: "0.29% net expense ratio" },
+          QQQI: { zh: "0.68%", en: "0.68%" }
+        }
+      },
+      {
+        label: { zh: "更像什么", en: "Feels closer to" },
+        values: {
+          XQQI: { zh: "income + boosted beta", en: "income + boosted beta" },
+          GPIQ: { zh: "更像底仓 premium income", en: "a more core-like premium income fund" },
+          QQQI: { zh: "高收入纳指替代", en: "a higher-income Nasdaq substitute" }
+        }
+      },
+      {
+        label: { zh: "优先观察", en: "Watch first" },
+        values: {
+          XQQI: { zh: "回撤放大、上行也更猛", en: "amplified drawdowns and amplified upside" },
+          GPIQ: { zh: "费率低、覆盖区间更关键", en: "lower fee and overwrite range" },
+          QQQI: { zh: "税务效率和上涨保留", en: "tax efficiency and upside retention" }
         }
       }
     ];
@@ -1809,6 +2040,7 @@
     }
 
     function classifyIncomeItem(item) {
+      if (item.role) return item.role;
       const symbol = item.symbol || "";
       const typeZh = item.type?.zh || "";
       if (/^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol)) return "watch";
@@ -1818,6 +2050,7 @@
     }
 
     function classifyIncomeStyle(item) {
+      if (item.style) return item.style;
       if (!item.symbol) return "research";
       const tokens = [
         item.type?.zh || "",
@@ -1874,6 +2107,64 @@
             <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a>
           </div>
         </article>
+      `;
+    }
+
+    function compareCardTemplate(item, lang) {
+      return `
+        <article class="card compare-card" style="--card-accent:${item.accent}">
+          <div class="card-top">
+            <div>
+              <div class="meta">Nasdaq income</div>
+              <h3>${item.name}</h3>
+            </div>
+            <span class="badge">${item.badge[lang]}</span>
+          </div>
+          <p>${item.summary[lang]}</p>
+          <div class="mini-list">
+            ${item.facts.map((fact) => `
+              <div>
+                <span>${fact.label[lang]}</span>
+                <strong>${fact.value[lang]}</strong>
+              </div>
+            `).join("")}
+          </div>
+          <div class="card-bottom">
+            <span class="meta">${item.name}</span>
+            <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCompareSection(lang) {
+      const section = document.getElementById("compare-section");
+      const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
+      const styleOk = ["all", "option"].includes(filterState.style);
+      const roleOk = ["all", "core", "enhanced", "satellite"].includes(filterState.role);
+      const visible = scopeOk && styleOk && roleOk;
+      section.hidden = !visible;
+      if (!visible) return;
+      document.getElementById("compare-grid").innerHTML = nasdaqCompareCards.map((item) => compareCardTemplate(item, lang)).join("");
+      document.getElementById("compare-table").innerHTML = `
+        <thead>
+          <tr>
+            <th>${lang === "zh" ? "维度" : "Dimension"}</th>
+            <th>XQQI</th>
+            <th>GPIQ</th>
+            <th>QQQI</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${nasdaqCompareRows.map((row) => `
+            <tr>
+              <th scope="row">${row.label[lang]}</th>
+              <td>${row.values.XQQI[lang]}</td>
+              <td>${row.values.GPIQ[lang]}</td>
+              <td>${row.values.QQQI[lang]}</td>
+            </tr>
+          `).join("")}
+        </tbody>
       `;
     }
 
@@ -2222,6 +2513,7 @@
         </div>
       `).join("");
       renderFilterButtons(lang);
+      renderCompareSection(lang);
       const totalMatches = renderSections(lang);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
