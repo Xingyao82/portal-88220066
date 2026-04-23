@@ -5,483 +5,186 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>免费工具 | 88220066.xyz</title>
   <meta name="description" content="集中收录免费可用的网页工具，覆盖 PDF、图片、文本、开发、音视频和图表场景。">
-  <meta name="theme-color" content="#f6f8ff">
-  <script src="../notes/site-i18n.js"></script>
-  <link rel="stylesheet" href="../notes/page-sync.css">
-  <script defer src="../notes/project-nav.js"></script>
+  <meta name="theme-color" content="#0b1222">
+  <script src="/notes/site-i18n.js"></script>
   <style>
-    :root {
-      --bg: #f6f8ff;
-      --panel: rgba(255, 255, 255, 0.88);
-      --line: rgba(15, 23, 42, 0.08);
-      --text: #101828;
-      --muted: #667085;
-      --accent: #2f6fff;
-      --accent-2: #18a0fb;
-      --success: #12b981;
-      --shadow-soft: 0 14px 30px rgba(123, 137, 191, 0.1);
-      --radius-xl: 30px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --max: 1380px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; min-height: 100vh; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", sans-serif; background: radial-gradient(circle at 12% 10%, rgba(47,111,255,0.12), transparent 24%), radial-gradient(circle at 88% 14%, rgba(24,160,251,0.12), transparent 24%), linear-gradient(180deg, #fbfcff 0%, #f6f8ff 40%, #f3f6ff 100%); }
-    a { color: inherit; text-decoration: none; }
-    button, input, select { font: inherit; }
-    .shell { width: min(calc(100% - 28px), var(--max)); margin: 0 auto; padding: 20px 0 56px; }
-    .nav, .hero, .filters, .main-panel, .side-card, .foot-strip { border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(16px); box-shadow: var(--shadow-soft); }
-    .nav { display: flex; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 22px; background: rgba(255, 255, 255, 0.92); position: sticky; top: 12px; z-index: 20; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; white-space: nowrap; }
-    .brand-mark { width: 38px; height: 38px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, white 86%), color-mix(in srgb, var(--accent-2) 18%, white 82%)); box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
-    .brand-mark svg { width: 24px; height: 24px; }
-    .nav-links { display: flex; align-items: center; gap: 22px; margin-left: 12px; flex: 1; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
-    .nav-links a { position: relative; padding: 10px 0; }
-    .nav-links a.active, .nav-links a:hover { color: var(--accent); }
-    .nav-links a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
-    .nav-tools { display: inline-flex; align-items: center; gap: 10px; }
-    .icon-btn { width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.9); color: var(--text); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
-    .hero { margin-top: 20px; border-radius: var(--radius-xl); padding: 34px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); gap: 28px; overflow: hidden; position: relative; background: radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 6%, white 94%), transparent 30%), radial-gradient(circle at 80% 30%, color-mix(in srgb, var(--accent-2) 8%, white 92%), transparent 34%), linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,248,255,.94)); }
-    .hero-copy { position: relative; z-index: 1; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.82rem; }
-    .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 8%, white 92%); }
-    .hero h1 { margin: 18px 0 0; font-size: clamp(3rem, 6vw, 4.9rem); line-height: 0.96; letter-spacing: -0.07em; }
-    .hero h1 span { display: block; margin-top: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2) 68%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero-copy p { margin: 18px 0 0; max-width: 42rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
-    .hero-search { margin-top: 26px; display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 18px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent) 12%, white 88%); background: rgba(255,255,255,.94); box-shadow: inset 0 1px 0 rgba(255,255,255,.86), 0 18px 34px rgba(123, 137, 191, 0.12); }
-    .hero-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--text); outline: none; font-size: 0.98rem; }
-    .hero-search input::placeholder { color: #98a2b3; }
-    .hero-search button { width: 52px; height: 52px; border: 0; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 14px 28px color-mix(in srgb, var(--accent) 30%, transparent); cursor: pointer; }
-    .hero-search button svg { width: 22px; height: 22px; }
-    .hot-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; color: var(--muted); font-size: 0.92rem; }
-    .hot-label { font-weight: 600; color: #475467; }
-    .hot-chips { display: flex; flex-wrap: wrap; gap: 10px; }
-    .hot-chip, .chip-btn, .mini-chip, .sort-select { border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.92); color: #475467; }
-    .hot-chip, .chip-btn, .mini-chip { min-height: 36px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: 160ms ease; }
-    .hot-chip:hover, .chip-btn:hover, .chip-btn.active { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 22%, white 78%); background: color-mix(in srgb, var(--accent) 8%, white 92%); }
-    .hero-art { position: relative; min-height: 360px; }
-    .orbit { position: absolute; inset: 56px 28px 24px 48px; border-radius: 999px; border: 2px solid color-mix(in srgb, var(--accent-2) 18%, white 82%); transform: rotate(-7deg); }
-    .hero-main-card { position: absolute; top: 26px; left: 50%; transform: translateX(-50%) rotate(8deg); width: 220px; height: 268px; border-radius: 32px; background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(244,246,255,.95)); border: 1px solid color-mix(in srgb, var(--accent) 8%, white 92%); box-shadow: 0 34px 60px rgba(123,137,191,.18); display: grid; place-items: center; overflow: hidden; }
-    .hero-main-card::before { content: ""; position: absolute; inset: 22px 20px 72px; border-radius: 24px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, white 94%), color-mix(in srgb, var(--accent-2) 8%, white 92%)); }
-    .hero-main-card strong { position: relative; font-size: 4.6rem; line-height: 1; letter-spacing: -0.08em; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .floating-badge { position: absolute; width: 86px; height: 86px; border-radius: 24px; border: 1px solid color-mix(in srgb, var(--accent) 8%, white 92%); background: rgba(255,255,255,.92); box-shadow: 0 20px 40px rgba(123,137,191,.16); display: grid; place-items: center; }
-    .floating-badge img { width: 42px; height: 42px; border-radius: 12px; object-fit: contain; }
-    .floating-a { top: 48px; left: 18px; }
-    .floating-b { right: 12px; top: 60px; }
-    .floating-c { right: 46px; bottom: 42px; }
-    .filters { margin-top: 18px; padding: 24px 26px; border-radius: var(--radius-xl); }
-    .filter-row { display: flex; gap: 18px; align-items: flex-start; padding: 6px 0; }
-    .filter-label { min-width: 88px; display: inline-flex; align-items: center; gap: 10px; color: #344054; font-weight: 600; padding-top: 6px; }
-    .filter-label svg { width: 18px; height: 18px; color: #667085; }
-    .chips { display: flex; flex-wrap: wrap; gap: 12px; flex: 1; }
-    .content-layout { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start; }
-    .main-panel { border-radius: var(--radius-xl); padding: 24px; }
-    .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-    .panel-head h2 { margin: 0; font-size: 2rem; letter-spacing: -0.05em; }
-    .panel-head p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
-    .panel-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .sort-select { min-height: 40px; padding: 0 16px; outline: none; }
-    .count-badge { min-height: 40px; padding: 0 14px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 8%, white 92%); color: var(--accent); display: inline-flex; align-items: center; font-weight: 600; white-space: nowrap; }
-    .featured-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
-    .list-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin: 8px 0 16px; }
-    .list-head strong { font-size: 1.08rem; letter-spacing: -0.02em; }
-    .list-head span { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .tool-card { position: relative; display: grid; gap: 14px; padding: 20px; border-radius: 24px; border: 1px solid rgba(15,23,42,.08); background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,255,.96)); box-shadow: inset 0 1px 0 rgba(255,255,255,.85); overflow: hidden; min-height: 100%; transition: transform 180ms ease, box-shadow 180ms ease; }
-    .tool-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at top right, color-mix(in srgb, var(--tool-accent) 16%, white 84%), transparent 40%); opacity: .75; pointer-events: none; }
-    .tool-card:hover { transform: translateY(-3px); box-shadow: 0 18px 32px rgba(123,137,191,.14); }
-    .tool-card.featured { min-height: 240px; padding: 22px; }
-    .tool-top { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-    .brand-row { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; min-width: 0; }
-    .logo-wrap { width: 56px; height: 56px; border-radius: 18px; background: rgba(255,255,255,.86); border: 1px solid rgba(15,23,42,.08); display: grid; place-items: center; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
-    .logo-wrap img { width: 34px; height: 34px; object-fit: contain; border-radius: 10px; }
-    .logo-fallback { display: none; width: 34px; height: 34px; border-radius: 10px; align-items: center; justify-content: center; background: color-mix(in srgb, var(--tool-accent) 16%, white 84%); color: color-mix(in srgb, var(--tool-accent) 82%, black 18%); font-weight: 800; font-size: 0.92rem; }
-    .meta { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
-    .tool-title { margin: 2px 0 0; font-size: 1.85rem; line-height: 1.05; letter-spacing: -0.05em; }
-    .tool-card:not(.featured) .tool-title { font-size: 1.42rem; }
-    .company { margin-top: 6px; color: #475467; font-size: 0.96rem; }
-    .status-badge { min-height: 32px; padding: 0 11px; border-radius: 999px; background: rgba(255,255,255,.78); border: 1px solid rgba(15,23,42,.08); color: #475467; font-size: 0.8rem; display: inline-flex; align-items: center; white-space: nowrap; }
-    .tool-card p { position: relative; margin: 0; color: var(--muted); line-height: 1.72; font-size: 0.95rem; }
-    .tag-row { position: relative; display: flex; flex-wrap: wrap; gap: 8px; }
-    .mini-chip { min-height: 30px; padding: 0 12px; font-size: 0.8rem; }
-    .card-bottom { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; flex-wrap: wrap; }
-    .domain { color: #475467; font-size: 0.94rem; font-weight: 500; }
-    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .ghost, .visit { min-height: 38px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; }
-    .ghost { border: 1px solid var(--line); background: rgba(255,255,255,.9); color: #475467; }
-    .visit { border: 0; color: #fff; background: linear-gradient(135deg, color-mix(in srgb, var(--tool-accent) 76%, #ffffff 24%), color-mix(in srgb, var(--tool-accent) 92%, var(--accent-2) 8%)); box-shadow: 0 10px 20px color-mix(in srgb, var(--tool-accent) 28%, transparent); }
-    .sidebar { display: grid; gap: 16px; }
-    .side-card { border-radius: 24px; padding: 20px; background: rgba(255,255,255,.92); }
-    .side-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-    .side-head h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.04em; }
-    .side-link { color: var(--muted); font-size: 0.88rem; }
-    .rank-list, .recommend-list { display: grid; gap: 12px; }
-    .recommend-item, .rank-item { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid rgba(15,23,42,.06); }
-    .recommend-item:first-child, .rank-item:first-child { border-top: 0; padding-top: 0; }
-    .list-logo { width: 42px; height: 42px; border-radius: 14px; border: 1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.9); display: grid; place-items: center; overflow: hidden; }
-    .list-logo img { width: 26px; height: 26px; object-fit: contain; border-radius: 8px; }
-    .list-logo .logo-fallback { display: none; width: 26px; height: 26px; border-radius: 8px; font-size: 0.76rem; }
-    .list-meta strong { display: block; font-size: 1rem; letter-spacing: -0.03em; }
-    .list-meta span { display: block; margin-top: 4px; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
-    .arrow, .trend { color: var(--muted); font-weight: 700; font-size: 0.92rem; }
-    .trend.up { color: var(--success); }
-    .cta-card { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--accent), var(--accent-2) 72%); color: #fff; min-height: 220px; }
-    .cta-card::before { content: ""; position: absolute; inset: auto -30px -40px auto; width: 180px; height: 180px; border-radius: 999px; background: rgba(255,255,255,.12); filter: blur(8px); }
-    .cta-card h3 { position: relative; margin: 0; font-size: 1.5rem; letter-spacing: -0.05em; }
-    .cta-card p { position: relative; margin: 10px 0 0; color: rgba(255,255,255,.84); line-height: 1.7; }
-    .cta-card .visit { position: relative; margin-top: 20px; background: #fff; color: var(--accent); box-shadow: none; }
-    .foot-strip { margin-top: 18px; border-radius: var(--radius-xl); padding: 18px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .foot-item { display: flex; align-items: flex-start; gap: 12px; }
-    .foot-icon { width: 42px; height: 42px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent) 8%, white 92%); color: var(--accent); flex: none; font-size: 0.82rem; font-weight: 700; }
-    .foot-item strong { display: block; font-size: 0.98rem; }
-    .foot-item span { display: block; margin-top: 4px; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
-    .empty { padding: 28px; border-radius: 24px; border: 1px dashed rgba(15,23,42,.12); text-align: center; color: var(--muted); background: rgba(255,255,255,.8); grid-column: 1 / -1; }
-    @media (max-width: 1180px) { .content-layout { grid-template-columns: 1fr; } .sidebar { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .foot-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 980px) { .hero { grid-template-columns: 1fr; } .hero-art { min-height: 280px; } .featured-grid, .grid, .sidebar { grid-template-columns: 1fr; } .panel-head, .side-head, .filter-row { flex-direction: column; align-items: flex-start; } .filter-label { min-width: auto; padding-top: 0; } }
-    @media (max-width: 720px) { .shell { width: min(calc(100% - 18px), var(--max)); } .nav { align-items: flex-start; } .hero, .filters, .main-panel, .side-card, .foot-strip { padding: 18px; } .hero h1 { font-size: clamp(2.4rem, 13vw, 3.4rem); } .foot-strip { grid-template-columns: 1fr; } .nav-links { gap: 14px; } }
+    :root { --text:#edf3ff; --muted:#a9b7d6; --line:rgba(255,255,255,.1); --accent:#4b8dff; --accent-soft:rgba(75,141,255,.14); --max:1220px; --radius-xl:28px; --radius-lg:22px; --radius-md:16px; }
+    * { box-sizing:border-box; } body { margin:0; min-height:100vh; color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; background:radial-gradient(circle at 12% 14%, rgba(75,141,255,.24), transparent 0 24%), radial-gradient(circle at 88% 16%, rgba(52,211,153,.12), transparent 0 20%), radial-gradient(circle at 58% 84%, rgba(251,191,36,.12), transparent 0 22%), linear-gradient(180deg, #09101d 0%, #0b1222 48%, #0b1020 100%); }
+    a { color:inherit; text-decoration:none; } button, input { font:inherit; }
+    .shell { width:min(calc(100% - 28px),var(--max)); margin:0 auto; padding:24px 0 54px; }
+    .nav, .toolbar, .section { border:1px solid var(--line); background:linear-gradient(180deg, rgba(14,21,38,.9), rgba(10,16,30,.95)); backdrop-filter:blur(16px); box-shadow:0 22px 60px rgba(0,0,0,.26); }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-radius:22px; }
+    .brand { font-weight:700; letter-spacing:-.03em; }
+    .nav-links { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); }
+    .nav-links a:hover, .nav-links a.active { color:var(--text); }
+    .toolbar { margin-top:18px; padding:20px; border-radius:24px; }
+    .toolbar-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .toolbar-head h1 { margin:0; font-size:clamp(2rem,4vw,3rem); letter-spacing:-.05em; }
+    .toolbar-head p { margin:10px 0 0; max-width:50rem; color:var(--muted); line-height:1.75; }
+    .count { display:inline-flex; align-items:center; min-height:42px; padding:0 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:var(--accent-soft); color:#f4f7ff; font-size:.95rem; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:18px; }
+    .stat { padding:16px; border-radius:var(--radius-md); border:1px solid var(--line); background:rgba(255,255,255,.04); }
+    .stat-label { color:var(--muted); font-size:.9rem; margin-bottom:8px; }
+    .stat strong { display:block; font-size:1rem; line-height:1.5; }
+    .search { margin-top:18px; }
+    .search input { width:100%; min-height:52px; padding:0 16px; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:var(--text); }
+    .filter-stack { display:grid; gap:12px; margin-top:16px; }
+    .filter-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+    .filter-label { min-width:84px; padding-top:8px; color:var(--muted); font-size:.94rem; }
+    .chips { display:flex; flex-wrap:wrap; gap:10px; flex:1; }
+    .chip-btn { padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:var(--muted); cursor:pointer; transition:160ms ease; }
+    .chip-btn.active, .chip-btn:hover { color:var(--text); border-color:rgba(75,141,255,.42); background:rgba(75,141,255,.14); }
+    .section { margin-top:18px; padding:22px; border-radius:var(--radius-xl); }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .section-head h2 { margin:0; font-size:1.42rem; letter-spacing:-.04em; }
+    .section-head p { margin:8px 0 0; color:var(--muted); line-height:1.7; }
+    .quick-grid, .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .tool-card { position:relative; display:grid; gap:14px; padding:18px; border-radius:var(--radius-lg); border:1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.18)) 58%, rgba(255,255,255,.08)); background:linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03)); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.15)) 18%, transparent); transition:transform 180ms ease, box-shadow 180ms ease; }
+    .tool-card:hover { transform:translateY(-4px); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,.28); }
+    .tool-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .tool-top h3 { margin:4px 0 0; font-size:1.16rem; }
+    .meta, .tool-card p { margin:0; color:var(--muted); line-height:1.72; }
+    .badge, .status-badge { display:inline-flex; align-items:center; justify-content:center; min-height:30px; padding:0 10px; border-radius:999px; font-size:12px; color:#f5f7ff; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%); }
+    .status-badge { background:rgba(255,255,255,.08); }
+    .tag-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { display:inline-flex; padding:7px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); color:var(--muted); font-size:12px; }
+    .mini-list { display:grid; gap:8px; }
+    .mini-list div { display:flex; justify-content:space-between; gap:14px; color:var(--muted); font-size:.95rem; }
+    .mini-list strong { color:var(--text); font-weight:600; text-align:right; }
+    .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; flex-wrap:wrap; }
+    .visit { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 14px; border-radius:999px; color:#08111f; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%); }
+    .empty { padding:20px; border-radius:var(--radius-lg); border:1px dashed rgba(255,255,255,.16); color:var(--muted); text-align:center; }
+    @media (max-width:1180px) { .stats, .quick-grid, .grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:720px) { .shell { width:min(calc(100% - 18px),var(--max)); } .nav { flex-direction:column; align-items:flex-start; } .filter-row { flex-direction:column; gap:10px; } .filter-label { min-width:auto; padding-top:0; } .stats, .quick-grid, .grid { grid-template-columns:1fr; } .section-head { flex-direction:column; align-items:flex-start; } }
   </style>
+<style id="claw-grid-override">
+:root{--text:#0f172a!important;--muted:#64748b!important;--line:rgba(15,23,42,.08)!important;--accent:#c48f5a!important;--accent-soft:rgba(196,143,90,.12)!important}
+html,body{background:#f8fafc!important;color:#0f172a!important}
+.nav,.toolbar,.section,.hero,.controls,.filters,.footnote{background:#fff!important;background-image:none!important;border:1px solid rgba(15,23,42,.08)!important;box-shadow:none!important}
+.shell{padding-top:20px!important;padding-bottom:40px!important}
+.toolbar,.section,.hero,.controls,.filters,.footnote{border-radius:20px!important}
+.nav{border-radius:18px!important}
+.stats,#stats,.hero-actions,#quick-grid,#featured-grid{display:none!important}
+.toolbar-head h1,.hero h1,.hero h2,.section-head h2,.section-count,.stat strong,.summary-card strong,.tool-card h3,.quick-card h3,.tool-top h3,.card h3,.card .model{color:#0f172a!important}
+.toolbar-head p,.hero-copy,.section-head p,.meta,.tool-card p,.quick-card p,.stat-label,.filter-label,.chip,.badge,.status-badge,.summary-card span,.nav-links,.footnote,.empty,.pill,.subtitle,.subcopy,.desc{color:#64748b!important}
+.search input,input[type="search"]{background:#fff!important;border:1px solid rgba(15,23,42,.08)!important;color:#0f172a!important;box-shadow:none!important}
+.chip-btn,.chip,.badge,.status-badge,.pill,.ghost{background:#fff!important;border:1px solid rgba(15,23,42,.08)!important;color:#64748b!important;box-shadow:none!important}
+.chip-btn.active,.chip-btn:hover,.pill.primary{background:#fbf5ef!important;border-color:rgba(196,143,90,.28)!important;color:#8a6238!important}
+.visit,.btn,.btn2,.ghost{background:#f9ecdf!important;border:1px solid rgba(196,143,90,.24)!important;color:#8a6238!important;box-shadow:none!important}
+.count{background:#fbf5ef!important;border:1px solid rgba(196,143,90,.2)!important;color:#8a6238!important}
+.quick-grid,.grid,.cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important}
+.tool-card,.quick-card,.card,.summary-card,.stat,.panel,.panel-card,.hero-card,.ranking-panel,.ranking-hero{background:#fff!important;background-image:none!important;border:1px solid rgba(15,23,42,.08)!important;box-shadow:none!important}
+.tool-card,.quick-card,.card{padding:14px!important;border-radius:16px!important;gap:10px!important}
+.tool-card:hover,.quick-card:hover,.card:hover{transform:translateY(-1px)!important;box-shadow:0 10px 24px rgba(15,23,42,.06)!important}
+.tool-card::before,.quick-card::before,.card::before{opacity:.72!important}
+.mini-logo{width:32px;height:32px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#7a5531;background:var(--logo-bg,#fbf5ef);border:1px solid rgba(196,143,90,.18);flex:none}
+.compact-head{display:grid!important;grid-template-columns:32px 1fr!important;column-gap:10px!important;align-items:start!important}
+.compact-head .compact-copy{min-width:0}
+.card-top,.tool-top{gap:10px!important}
+.card-bottom,.card-foot{margin-top:auto!important}
+@media (max-width:1180px){.quick-grid,.grid,.cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media (max-width:980px){.quick-grid,.grid,.cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media (max-width:720px){.quick-grid,.grid,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nav{flex-direction:column!important;align-items:flex-start!important}.filter-row{flex-direction:column!important;gap:10px!important}.filter-label{min-width:auto!important;padding-top:0!important}}
+@media (max-width:520px){.quick-grid,.grid,.cards{grid-template-columns:1fr!important}}
+</style>
+<link rel="stylesheet" href="/notes/page-sync.css">
+<script defer src="/notes/project-nav.js"></script>
 </head>
 <body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7.2 18.7c-2.5 0-4.4-1.9-4.4-4.4 0-1.8 1-3.2 2.6-3.9L7.7 6c.9-1.7 2.6-2.7 4.6-2.7 2.7 0 4.8 1.8 5.4 4.2l1.3 5.3a4.5 4.5 0 0 1-4.4 5.5c-1.4 0-2.6-.5-3.5-1.4l-1.6-1.6-1.8 2c-.2.3-.5.4-.9.4Z" fill="url(#g)"/><defs><linearGradient id="g" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#5B8CFF"/><stop offset="1" stop-color="#2F6FFF"/></linearGradient></defs></svg>
-        </span>
-        <span id="brand">88220066.xyz / 免费工具</span>
-      </div>
-      <nav class="nav-links" aria-label="Primary"><a href="../index.html">首页</a><a href="../ai-nav/index.html">AI 导航</a><a href="../finance-nav/index.html">金融导航</a><a href="../income-nav/index.html">Income 导航</a><a href="../free-api-nav/index.html">API 导航</a><a href="../tools-nav/index.html" class="active">工具导航</a><a href="../english-tools/index.html">英语导航</a><a href="../skills-nav/index.html">技能</a></nav>
-      <div class="nav-tools"><button class="icon-btn" type="button" aria-label="Search" id="focus-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"></circle><path d="m20 20-4.2-4.2"></path></svg></button></div>
+      <div class="brand" id="brand">88220066.xyz / 免费工具</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/ai-nav/">AI 导航</a>
+        <a href="/finance-nav/">金融导航</a>
+        <a href="/income-nav/">Income 导航</a>
+        <a href="/free-api-nav/">API 导航</a>
+        <a href="/tools-nav/" class="active">工具导航</a>
+        <a href="/english-tools/">英语导航</a>
+        <a href="/skills-nav/">技能</a>
+      </nav>
     </header>
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow" data-i18n="eyebrow">WEB TOOLS</div>
-        <h1 data-i18n-html="heroTitle">打开就能用的<br><span>免费网页工具</span></h1>
-        <p data-i18n="heroCopy">继续保留原来那套 PDF、图片、文本、开发、音视频工具内容，只把视觉统一成更亮、更接近参考图的白色目录页。</p>
-        <label class="hero-search" for="search-input"><input id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="搜索工具名、标签或说明，例如：PDF、图片、Markdown、JSON、流程图"><button id="search-button" type="button" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"></circle><path d="m20 20-4.2-4.2"></path></svg></button></label>
-        <div class="hot-row"><span class="hot-label" data-i18n="hotLabel">常用入口</span><div class="hot-chips" id="hot-chips"></div></div>
+    <section class="toolbar">
+      <div class="toolbar-head">
+        <div><h1 data-i18n="heroTitle">免费工具</h1><p data-i18n="heroCopy">这里只收录打开网页就能直接用的免费工具，优先放官网入口，并把“完全免费”“免费为主”“本地处理”这些差别写清楚。</p></div>
+        <div class="count" id="count">加载中</div>
       </div>
-      <div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="hero-main-card"><strong>WEB</strong></div><div class="floating-badge floating-a"><img id="hero-logo-a" alt=""></div><div class="floating-badge floating-b"><img id="hero-logo-b" alt=""></div><div class="floating-badge floating-c"><img id="hero-logo-c" alt=""></div></div>
+      <div class="stats" id="stats"></div>
+      <label class="search"><input id="search-input" type="search"></label>
+      <div class="filter-stack">
+        <div class="filter-row"><div class="filter-label" data-i18n="filterType">类型</div><div id="type-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterStatus">免费方式</div><div id="status-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterScene">场景</div><div id="scene-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterAccess">登录</div><div id="access-chips" class="chips"></div></div>
+      </div>
     </section>
-    <section class="filters">
-      <div class="filter-row">
-        <div class="filter-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 9h8M8 13h5"/></svg>
-          <span data-i18n="filterType">类型</span>
-        </div>
-        <div id="type-chips" class="chips"></div>
-      </div>
-      <div class="filter-row">
-        <div class="filter-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-          <span data-i18n="filterStatus">免费方式</span>
-        </div>
-        <div id="status-chips" class="chips"></div>
-      </div>
-      <div class="filter-row">
-        <div class="filter-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v10l-7 4-7-4V7l7-4Z"/><path d="M12 12l7-4"/><path d="M12 12v9"/></svg>
-          <span data-i18n="filterScene">场景</span>
-        </div>
-        <div id="scene-chips" class="chips"></div>
-      </div>
-      <div class="filter-row">
-        <div class="filter-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg>
-          <span data-i18n="filterAccess">登录</span>
-        </div>
-        <div id="access-chips" class="chips"></div>
-      </div></section>
-    <main class="content-layout">
-      <section class="main-panel">
-        <div class="panel-head"><div><h2 data-i18n="sectionTitle">工具精选</h2><p data-i18n="sectionCopy">先把稳定、常用、上手快的一组放前面，完整列表仍然保留在下面。</p></div><div class="panel-controls"><select id="sort-select" class="sort-select" aria-label="Sort"><option value="default" data-i18n="sortDefault">默认排序</option><option value="az" data-i18n="sortAZ">名称 A-Z</option><option value="za" data-i18n="sortZA">名称 Z-A</option></select><div class="count-badge" id="count">加载中</div></div></div>
-        <div id="featured-grid" class="featured-grid"></div>
-        <div class="list-head"><strong data-i18n="listTitle">完整列表</strong><span data-i18n="listCopy">所有原有工具都还在，只是改成统一的亮色卡片、Logo 和侧栏结构。</span></div>
-        <div id="grid" class="grid"></div>
-      </section>
-      <aside class="sidebar">
-        <section class="side-card"><div class="side-head"><h3 data-i18n="recommendTitle">先用这几个</h3><span class="side-link" data-i18n="recommendMeta">稳定好用</span></div><div id="recommend-list" class="recommend-list"></div></section>
-        <section class="side-card"><div class="side-head"><h3 data-i18n="trendTitle">高频场景</h3><span class="side-link" data-i18n="trendMeta">按覆盖量</span></div><div id="trend-list" class="rank-list"></div></section>
-        <section class="side-card cta-card"><h3 data-i18n="ctaTitle">先收真正能用的</h3><p data-i18n="ctaCopy">仍然坚持官网优先、免费可用、打开即用这三个标准。界面变了，收录原则没变。</p><a class="visit" href="../index.html" target="_self" rel="noreferrer" data-i18n="ctaButton">返回首页</a></section>
-      </aside>
-    </main>
-    <section class="foot-strip">
-      <div class="foot-item">
-        <span class="foot-icon">PDF</span>
-        <div>
-          <strong data-i18n="foot1Title">PDF</strong>
-          <span data-i18n="foot1Copy">iLovePDF、PDF24 这类高频 PDF 工具继续保留。</span>
-        </div>
-      </div>
-      <div class="foot-item">
-        <span class="foot-icon">IMG</span>
-        <div>
-          <strong data-i18n="foot2Title">图片</strong>
-          <span data-i18n="foot2Copy">Squoosh、Photopea、iLoveIMG 统一进同一套视觉。</span>
-        </div>
-      </div>
-      <div class="foot-item">
-        <span class="foot-icon">DEV</span>
-        <div>
-          <strong data-i18n="foot3Title">开发</strong>
-          <span data-i18n="foot3Copy">JSON Crack、regex101、Mermaid Live 仍按原场景分类。</span>
-        </div>
-      </div>
-      <div class="foot-item">
-        <span class="foot-icon">XFER</span>
-        <div>
-          <strong data-i18n="foot4Title">转换</strong>
-          <span data-i18n="foot4Copy">CloudConvert、Convertio、TinyWow 等入口全部保留。</span>
-        </div>
-      </div></section>
+    <section class="section"><div class="section-head"><div><h2 data-i18n="featuredTitle">先看这几个</h2><p data-i18n="featuredCopy">优先放稳定、常用、上手快的一组免费网页工具。</p></div></div><div id="quick-grid" class="quick-grid"></div></section>
+    <section class="section"><div class="section-head"><div><h2 data-i18n="listTitle">工具列表</h2><p data-i18n="listCopy">后面继续往里补，但只收真正免费可用、打开就能上手的网页工具。</p></div></div><div id="grid" class="grid"></div></section>
   </div>
-  <script>const pageData = {"copy":{"pageTitle":{"zh":"免费工具 | 88220066.xyz","en":"Free Tools | 88220066.xyz"},"pageDescription":{"zh":"集中收录免费可用的网页工具，覆盖 PDF、图片、文本、开发、音视频和图表场景。","en":"A curated list of free web tools for PDFs, images, text, development, diagrams, audio, and video."},"eyebrow":{"zh":"WEB TOOLS","en":"WEB TOOLS"},"heroTitle":{"zh":"打开就能用的\u003cbr>\u003cspan>免费网页工具\u003c/span>","en":"Free Web Tools\u003cbr>\u003cspan>Ready To Use\u003c/span>"},"heroCopy":{"zh":"继续保留原来那套 PDF、图片、文本、开发、音视频工具内容，只把视觉统一成更亮、更接近参考图的白色目录页。","en":"The original PDF, image, text, dev, and media tools stay the same while the UI shifts to a brighter directory style."},"hotLabel":{"zh":"常用入口","en":"Quick Picks"},"filterType":{"zh":"类型","en":"Type"},"filterStatus":{"zh":"免费方式","en":"Free Model"},"filterScene":{"zh":"场景","en":"Use Case"},"filterAccess":{"zh":"登录","en":"Access"},"sectionTitle":{"zh":"工具精选","en":"Featured Tools"},"sectionCopy":{"zh":"先把稳定、常用、上手快的一组放前面，完整列表仍然保留在下面。","en":"A short set of dependable tools comes first, while the full list stays below."},"listTitle":{"zh":"完整列表","en":"Full Directory"},"listCopy":{"zh":"所有原有工具都还在，只是改成统一的亮色卡片、Logo 和侧栏结构。","en":"All original tools remain; only the UI has been unified."},"recommendTitle":{"zh":"先用这几个","en":"Start Here"},"recommendMeta":{"zh":"稳定好用","en":"Reliable picks"},"trendTitle":{"zh":"高频场景","en":"Top Use Cases"},"trendMeta":{"zh":"按覆盖量","en":"By coverage"},"ctaTitle":{"zh":"先收真正能用的","en":"Keep It Useful"},"ctaCopy":{"zh":"仍然坚持官网优先、免费可用、打开即用这三个标准。界面变了，收录原则没变。","en":"The UI changed, but the selection rule is still official, usable, and actually free to start."},"ctaButton":{"zh":"返回首页","en":"Back Home"},"foot1Title":{"zh":"PDF","en":"PDF"},"foot1Copy":{"zh":"iLovePDF、PDF24 这类高频 PDF 工具继续保留。","en":"Core PDF tools remain in place."},"foot2Title":{"zh":"图片","en":"Images"},"foot2Copy":{"zh":"Squoosh、Photopea、iLoveIMG 统一进同一套视觉。","en":"Image tools now use the same visual system."},"foot3Title":{"zh":"开发","en":"Developer"},"foot3Copy":{"zh":"JSON Crack、regex101、Mermaid Live 仍按原场景分类。","en":"Developer tools keep their original categories."},"foot4Title":{"zh":"转换","en":"Conversion"},"foot4Copy":{"zh":"CloudConvert、Convertio、TinyWow 等入口全部保留。","en":"Conversion tools are still all here."},"sortDefault":{"zh":"默认排序","en":"Default"},"sortAZ":{"zh":"名称 A-Z","en":"Name A-Z"},"sortZA":{"zh":"名称 Z-A","en":"Name Z-A"}},"labels":{"zh":{"brand":"88220066.xyz / 免费工具","searchPlaceholder":"搜索工具名、标签或说明，例如：PDF、图片、Markdown、JSON、流程图","allType":"全部类型","allStatus":"全部免费方式","allScene":"全部场景","allAccess":"全部登录方式","showing":"当前显示","items":"个工具","open":"打开","site":"官网","noMatch":"没有找到匹配的工具，换个关键词或筛选试试。","trendUnit":"收录数量"},"en":{"brand":"88220066.xyz / Free Tools","searchPlaceholder":"Search by tool name, tags, or use case: PDF, image, Markdown, JSON, diagram","allType":"All Types","allStatus":"All Free Models","allScene":"All Use Cases","allAccess":"All Access Modes","showing":"Showing","items":"tools","open":"Open","site":"Site","noMatch":"No matching tools found. Try another keyword or filter.","trendUnit":"entries"}},"groups":[{"key":"type","labelKey":"filterType","fallbackLabel":"类型","allLabel":"allType","icon":"type"},{"key":"status","labelKey":"filterStatus","fallbackLabel":"免费方式","allLabel":"allStatus","icon":"status"},{"key":"scene","labelKey":"filterScene","fallbackLabel":"场景","allLabel":"allScene","icon":"scene"},{"key":"access","labelKey":"filterAccess","fallbackLabel":"登录","allLabel":"allAccess","icon":"access"}],"options":{"type":{"pdf":{"zh":"PDF 工具","en":"PDF Tools"},"image":{"zh":"图片工具","en":"Image Tools"},"text":{"zh":"文本工具","en":"Text Tools"},"dev":{"zh":"开发工具","en":"Developer Tools"},"diagram":{"zh":"图表工具","en":"Diagram Tools"},"av":{"zh":"音视频工具","en":"Audio & Video Tools"}},"status":{"full":{"zh":"完全免费","en":"Fully Free"},"mostly":{"zh":"免费为主","en":"Mostly Free"},"local":{"zh":"本地处理","en":"Local-First"}},"scene":{"pdf":{"zh":"PDF 处理","en":"PDF Tasks"},"image":{"zh":"图片处理","en":"Image Editing"},"markdown":{"zh":"Markdown 写作","en":"Markdown Writing"},"json":{"zh":"数据可视化","en":"Data Visualization"},"regex":{"zh":"正则调试","en":"Regex Testing"},"diagram":{"zh":"流程图与图表","en":"Diagrams & Charts"},"video":{"zh":"音频与视频","en":"Audio & Video"},"convert":{"zh":"文件转换","en":"File Conversion"}},"access":{"instant":{"zh":"打开即用","en":"Instant Use"},"login":{"zh":"登录后更方便","en":"Better With Login"}}},"items":[{"name":"iLovePDF","type":"pdf","status":"mostly","scene":"pdf","access":"instant","accent":"#ef4444","url":"https://www.ilovepdf.com/","summary":{"zh":"常用的 PDF 合并、拆分、压缩和格式转换入口。","en":"A practical starting point for merging, splitting, compressing, and converting PDFs."},"tags":{"zh":["PDF","合并","压缩"],"en":["PDF","merge","compress"]}},{"name":"PDF24","type":"pdf","status":"full","scene":"pdf","access":"instant","accent":"#f97316","url":"https://tools.pdf24.org/en/","summary":{"zh":"更偏纯免费路线的 PDF 工具集合，功能覆盖很完整。","en":"A strong PDF suite with a more clearly free-first positioning."},"tags":{"zh":["PDF","完全免费","在线"],"en":["PDF","fully free","web"]}},{"name":"iLoveIMG","type":"image","status":"full","scene":"image","access":"instant","accent":"#f97316","url":"https://www.iloveimg.com/","summary":{"zh":"图片压缩、裁剪、格式转换和批量处理很顺手。","en":"Good for quick image compression, crop, conversion, and batch edits."},"tags":{"zh":["图片","压缩","裁剪"],"en":["image","compress","crop"]}},{"name":"Squoosh","type":"image","status":"local","scene":"image","access":"instant","accent":"#22c55e","url":"https://squoosh.app/","summary":{"zh":"浏览器本地压缩图片，适合敏感素材和网页图片优化。","en":"Compress images locally in the browser, especially useful for private assets and web optimization."},"tags":{"zh":["本地处理","图片","隐私"],"en":["local","image","privacy"]}},{"name":"Photopea","type":"image","status":"local","scene":"image","access":"instant","accent":"#3b82f6","url":"https://www.photopea.com/","summary":{"zh":"浏览器里的强图像编辑器，适合需要更完整编辑能力的时候。","en":"A powerful browser image editor for heavier editing work."},"tags":{"zh":["编辑","PSD","本地处理"],"en":["editing","PSD","local"]}},{"name":"Ezgif","type":"image","status":"full","scene":"video","access":"instant","accent":"#14b8a6","url":"https://ezgif.com/","summary":{"zh":"GIF、短视频、简单剪切和转格式都很方便。","en":"Great for GIF work, quick trimming, and short-form format changes."},"tags":{"zh":["GIF","短视频","转换"],"en":["GIF","short video","convert"]}},{"name":"Excalidraw","type":"diagram","status":"full","scene":"diagram","access":"instant","accent":"#8b5cf6","url":"https://excalidraw.com/","summary":{"zh":"画草图、流程和线框图都很轻快。","en":"Excellent for lightweight sketches, flows, and wireframes."},"tags":{"zh":["白板","草图","流程图"],"en":["whiteboard","sketch","flow"]}},{"name":"diagrams.net","type":"diagram","status":"full","scene":"diagram","access":"instant","accent":"#0ea5e9","url":"https://app.diagrams.net/","summary":{"zh":"正式流程图、UML 和结构图更适合放这里做。","en":"A reliable option for formal diagrams, UML, and system maps."},"tags":{"zh":["流程图","UML","结构图"],"en":["diagram","UML","system map"]}},{"name":"Mermaid Live","type":"diagram","status":"full","scene":"diagram","access":"instant","accent":"#6366f1","url":"https://mermaid.live/","summary":{"zh":"用文本直接生成图表，适合写文档和开发场景。","en":"Build diagrams from text, especially useful in docs and development."},"tags":{"zh":["Mermaid","文档","开发"],"en":["Mermaid","docs","coding"]}},{"name":"StackEdit","type":"text","status":"full","scene":"markdown","access":"instant","accent":"#38bdf8","url":"https://stackedit.io/","summary":{"zh":"在线 Markdown 编辑和预览，适合轻量写作。","en":"A clean web Markdown editor for drafting and previewing."},"tags":{"zh":["Markdown","写作","预览"],"en":["Markdown","writing","preview"]}},{"name":"JSON Crack","type":"dev","status":"full","scene":"json","access":"instant","accent":"#6366f1","url":"https://jsoncrack.com/","summary":{"zh":"把 JSON、YAML、CSV 可视化得更容易看。","en":"Visualize JSON, YAML, and CSV in a much more readable way."},"tags":{"zh":["JSON","YAML","可视化"],"en":["JSON","YAML","visualize"]}},{"name":"regex101","type":"dev","status":"full","scene":"regex","access":"instant","accent":"#ec4899","url":"https://regex101.com/","summary":{"zh":"写正则、调表达式和看解释都很省时间。","en":"A solid place to test, debug, and understand regular expressions."},"tags":{"zh":["正则","调试","开发"],"en":["regex","debug","development"]}},{"name":"123apps","type":"av","status":"mostly","scene":"video","access":"instant","accent":"#0ea5e9","url":"https://123apps.com/","summary":{"zh":"适合偶尔做音频、视频剪切和转换。","en":"Useful for occasional audio and video trimming or conversion."},"tags":{"zh":["音频","视频","转换"],"en":["audio","video","convert"]}},{"name":"CloudConvert","type":"av","status":"mostly","scene":"convert","access":"instant","accent":"#06b6d4","url":"https://cloudconvert.com/","summary":{"zh":"跨格式转换很稳，适合偶尔处理文档或媒体文件。","en":"Reliable for occasional file conversion across many formats."},"tags":{"zh":["转换","文档","多格式"],"en":["conversion","document","multi-format"]}},{"name":"Convertio","type":"av","status":"mostly","scene":"convert","access":"instant","accent":"#f43f5e","url":"https://convertio.co/","summary":{"zh":"中文界面更友好，适合日常零散转换。","en":"A more Chinese-friendly option for everyday file conversion."},"tags":{"zh":["转换","中文友好","多格式"],"en":["conversion","Chinese-friendly","multi-format"]}},{"name":"TinyWow","type":"text","status":"full","scene":"convert","access":"instant","accent":"#f59e0b","url":"https://tinywow.com/","summary":{"zh":"杂项文档、图片和轻转换需求时很实用。","en":"A useful catch-all choice for miscellaneous document and image tasks."},"tags":{"zh":["综合","文档","图片"],"en":["general","document","image"]}}],"featuredNames":["iLovePDF","PDF24","iLoveIMG","Squoosh","Excalidraw","JSON Crack"],"hotNames":["iLovePDF","Squoosh","Photopea","Excalidraw","JSON Crack","CloudConvert"],"badgeGroup":"status","metaGroups":["type","scene"],"trendGroup":"scene","cta":{"url":"../index.html"}};
-
-const state = Object.fromEntries(pageData.groups.map((group) => [group.key, 'all']).concat([['search', ''], ['sort', 'default']]));
-const chipEls = Object.fromEntries(pageData.groups.map((group) => [group.key, document.getElementById(group.key + '-chips')]));
-const featuredGridEl = document.getElementById('featured-grid');
-const gridEl = document.getElementById('grid');
-const recommendListEl = document.getElementById('recommend-list');
-const trendListEl = document.getElementById('trend-list');
-const countEl = document.getElementById('count');
-const brandEl = document.getElementById('brand');
-const searchEl = document.getElementById('search-input');
-const sortEl = document.getElementById('sort-select');
-const hotChipsEl = document.getElementById('hot-chips');
-const focusSearchEl = document.getElementById('focus-search');
-
-function getGroup(groupKey) {
-  return pageData.groups.find((item) => item.key === groupKey);
-}
-
-function getLabel(groupKey, value, lang) {
-  const group = getGroup(groupKey);
-  if (!group) return value;
-  if (value === 'all') return pageData.labels[lang][group.allLabel];
-  return pageData.options[groupKey][value][lang];
-}
-
-function hostLabel(url) {
-  if (!url) return '';
-  try {
-    const parsed = new URL(url, window.location.href);
-    if (parsed.protocol === 'file:') return '88220066.xyz';
-    return parsed.host + (parsed.pathname === '/' ? '' : parsed.pathname);
-  } catch {
-    return url;
-  }
-}
-
-function companyLabel(item) {
-  if (item.company) return item.company;
-  try {
-    const parsed = new URL(item.url, window.location.href);
-    if (parsed.protocol === 'file:') return '88220066.xyz';
-    return parsed.hostname.replace(/^www\./, '');
-  } catch {
-    return 'official';
-  }
-}
-
-function logoTarget(item) {
-  if (item.logo) return item.logo;
-  if (item.logoDomain) return item.logoDomain;
-  if (/^https?:\/\//.test(item.url)) return item.url;
-  return '';
-}
-
-function logoUrl(item) {
-  const target = logoTarget(item);
-  if (!target) return '';
-  return 'https://www.google.com/s2/favicons?sz=128&domain_url=' + encodeURIComponent(target);
-}
-
-function initials(name) {
-  const text = String(name || '').replace(/\s+/g, ' ').trim();
-  if (!text) return 'NA';
-  const ascii = text.replace(/[^A-Za-z0-9]/g, '');
-  if (ascii) return ascii.slice(0, 2).toUpperCase();
-  return text.slice(0, 2).toUpperCase();
-}
-
-function itemText(item, lang) {
-  const groups = {};
-  pageData.groups.forEach((group) => {
-    groups[group.key] = getLabel(group.key, item[group.key], lang);
-  });
-  return {
-    summary: item.summary[lang],
-    tags: item.tags[lang],
-    groups
-  };
-}
-
-function renderChipGroup(groupKey, lang) {
-  const values = ['all'].concat(Object.keys(pageData.options[groupKey]));
-  chipEls[groupKey].innerHTML = values.map((value) => {
-    const active = value === state[groupKey] ? 'active' : '';
-    return '<button class="chip-btn ' + active + '" data-group="' + groupKey + '" data-value="' + value + '" type="button">' + getLabel(groupKey, value, lang) + '</button>';
-  }).join('');
-}
-
-function filteredItems(lang) {
-  let list = pageData.items.filter((item) => {
-    const text = itemText(item, lang);
-    const haystack = [item.name, text.summary].concat(Object.values(text.groups), text.tags).join(' ').toLowerCase();
-    const passes = pageData.groups.every((group) => state[group.key] === 'all' || item[group.key] === state[group.key]);
-    return passes && (!state.search || haystack.includes(state.search));
-  });
-
-  if (state.sort === 'az') list = list.slice().sort((a, b) => a.name.localeCompare(b.name));
-  if (state.sort === 'za') list = list.slice().sort((a, b) => b.name.localeCompare(a.name));
-  if (state.sort === 'default') {
-    const featured = new Set(pageData.featuredNames);
-    list = list.slice().sort((a, b) => Number(featured.has(b.name)) - Number(featured.has(a.name)));
-  }
-  return list;
-}
-
-function cardTemplate(item, lang, featured) {
-  const text = itemText(item, lang);
-  const meta = pageData.metaGroups.map((key) => text.groups[key]).filter(Boolean).join(' / ');
-  const badge = pageData.badgeGroup && item[pageData.badgeGroup] ? text.groups[pageData.badgeGroup] : '';
-  const extraChips = pageData.groups
-    .map((group) => group.key)
-    .filter((key) => pageData.metaGroups.indexOf(key) === -1 && key !== pageData.badgeGroup)
-    .slice(0, 2)
-    .map((key) => '<span class="mini-chip">' + text.groups[key] + '</span>')
-    .join('');
-  const logo = logoUrl(item);
-  const logoHtml = logo
-    ? '<img src="' + logo + '" alt="' + item.name + ' logo" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';"><span class="logo-fallback" style="display:none">' + initials(item.name) + '</span>'
-    : '<span class="logo-fallback" style="display:flex">' + initials(item.name) + '</span>';
-  const target = /^https?:\/\//.test(item.url) ? '_blank' : '_self';
-  return '<article class="tool-card ' + (featured ? 'featured' : '') + '" style="--tool-accent:' + (item.accent || 'var(--accent)') + '">' +
-    '<div class="tool-top">' +
-      '<div class="brand-row">' +
-        '<div class="logo-wrap">' + logoHtml + '</div>' +
-        '<div><div class="meta">' + meta + '</div><h3 class="tool-title">' + item.name + '</h3><div class="company">' + companyLabel(item) + '</div></div>' +
-      '</div>' +
-      (badge ? '<span class="status-badge">' + badge + '</span>' : '') +
-    '</div>' +
-    '<p>' + text.summary + '</p>' +
-    '<div class="tag-row">' + text.tags.map((tag) => '<span class="mini-chip">' + tag + '</span>').join('') + extraChips + '</div>' +
-    '<div class="card-bottom"><span class="domain">' + hostLabel(item.url) + '</span><div class="btn-row"><a class="ghost" href="' + item.url + '" target="' + target + '" rel="noreferrer">' + pageData.labels[lang].site + '</a><a class="visit" href="' + item.url + '" target="' + target + '" rel="noreferrer">' + pageData.labels[lang].open + '</a></div></div>' +
-  '</article>';
-}
-
-function renderHotChips() {
-  hotChipsEl.innerHTML = pageData.hotNames.map((name) => '<button class="hot-chip" type="button" data-hot="' + name + '">' + name + '</button>').join('');
-}
-
-function renderRecommendList(lang) {
-  const featured = pageData.featuredNames
-    .map((name) => pageData.items.find((item) => item.name === name))
-    .filter(Boolean)
-    .slice(0, 4);
-  recommendListEl.innerHTML = featured.map((item) => {
-    const logo = logoUrl(item);
-    const target = /^https?:\/\//.test(item.url) ? '_blank' : '_self';
-    const logoHtml = logo
-      ? '<img src="' + logo + '" alt="' + item.name + ' logo" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';"><span class="logo-fallback" style="display:none">' + initials(item.name) + '</span>'
-      : '<span class="logo-fallback" style="display:flex">' + initials(item.name) + '</span>';
-    return '<a class="recommend-item" href="' + item.url + '" target="' + target + '" rel="noreferrer"><span class="list-logo">' + logoHtml + '</span><span class="list-meta"><strong>' + item.name + '</strong><span>' + itemText(item, lang).groups[pageData.metaGroups[0]] + '</span></span><span class="arrow">-></span></a>';
-  }).join('');
-}
-
-function renderTrendList(lang) {
-  const counts = new Map();
-  pageData.items.forEach((item) => {
-    const key = item[pageData.trendGroup];
-    counts.set(key, (counts.get(key) || 0) + 1);
-  });
-  const ranked = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 4);
-  trendListEl.innerHTML = ranked.map(([key, value]) => '<div class="rank-item"><span class="list-meta"><strong>' + getLabel(pageData.trendGroup, key, lang) + '</strong><span>' + pageData.labels[lang].trendUnit + '</span></span><span class="trend up">' + value + '</span></div>').join('');
-}
-
-function renderHeroLogos() {
-  const featured = pageData.featuredNames
-    .map((name) => pageData.items.find((item) => item.name === name))
-    .filter(Boolean)
-    .slice(0, 3);
-  ['a', 'b', 'c'].forEach((key, index) => {
-    const el = document.getElementById('hero-logo-' + key);
-    const item = featured[index];
-    if (!el || !item) return;
-    const urls = logoUrls(item);
-    if (!urls.length) return;
-    el.src = urls[0];
-    el.dataset.logoSrcs = urls.join('|');
-    el.dataset.logoIndex = '0';
-    el.alt = item.name;
-    el.onerror = function () {
-      const list = (el.dataset.logoSrcs || '').split('|').filter(Boolean);
-      const nextIndex = Number(el.dataset.logoIndex || 0) + 1;
-      if (nextIndex < list.length) {
-        el.dataset.logoIndex = String(nextIndex);
-        el.src = list[nextIndex];
-        return;
-      }
-      el.style.display = 'none';
-    };
-  });
-}
-
-function renderStatic(lang) {
-  brandEl.textContent = pageData.labels[lang].brand;
-  searchEl.placeholder = pageData.labels[lang].searchPlaceholder;
-  sortEl.value = state.sort;
-  renderHotChips();
-  renderRecommendList(lang);
-  renderTrendList(lang);
-  renderHeroLogos();
-  pageData.groups.forEach((group) => renderChipGroup(group.key, lang));
-}
-
-function renderPage(lang) {
-  renderStatic(lang);
-  const items = filteredItems(lang);
-  const featuredSet = new Set(pageData.featuredNames);
-  const featuredItems = pageData.items.filter((item) => featuredSet.has(item.name)).slice(0, 4);
-  featuredGridEl.innerHTML = featuredItems.map((item) => cardTemplate(item, lang, true)).join('');
-  countEl.textContent = pageData.labels[lang].showing + ' ' + items.length + ' / ' + pageData.items.length + ' ' + pageData.labels[lang].items;
-  gridEl.innerHTML = items.length ? items.map((item) => cardTemplate(item, lang, false)).join('') : '<div class="empty">' + pageData.labels[lang].noMatch + '</div>';
-}
-
-document.body.addEventListener('click', (event) => {
-  const groupButton = event.target.closest('[data-group]');
-  if (groupButton) {
-    state[groupButton.dataset.group] = groupButton.dataset.value;
-    renderPage(window.SiteI18n.getLang());
-    return;
-  }
-  const hotButton = event.target.closest('[data-hot]');
-  if (hotButton) {
-    searchEl.value = hotButton.dataset.hot;
-    state.search = hotButton.dataset.hot.trim().toLowerCase();
-    renderPage(window.SiteI18n.getLang());
-  }
-});
-
-searchEl.addEventListener('input', () => {
-  state.search = searchEl.value.trim().toLowerCase();
-  renderPage(window.SiteI18n.getLang());
-});
-
-sortEl.addEventListener('change', () => {
-  state.sort = sortEl.value;
-  renderPage(window.SiteI18n.getLang());
-});
-
-document.getElementById('search-button').addEventListener('click', () => {
-  state.search = searchEl.value.trim().toLowerCase();
-  renderPage(window.SiteI18n.getLang());
-});
-
-focusSearchEl.addEventListener('click', () => searchEl.focus());
-window.SiteI18n.bindPage(pageData.copy, renderPage);
-
+  <script>
+    const pageCopy={pageTitle:{zh:"免费工具 | 88220066.xyz",en:"Free Tools | 88220066.xyz"},pageDescription:{zh:"集中收录免费可用的网页工具，覆盖 PDF、图片、文本、开发、音视频和图表场景。",en:"A curated list of free web tools for PDFs, images, text, development, diagrams, audio, and video."},navHome:{zh:"首页",en:"Home"},navTools:{zh:"免费工具",en:"Free Tools"},navEnglish:{zh:"免费英语",en:"Free English"},navAi:{zh:"AI 导航",en:"AI Nav"},heroTitle:{zh:"免费工具",en:"Free Tools"},heroCopy:{zh:"这里只收录打开网页就能直接用的免费工具，优先放官网入口，并把“完全免费”“免费为主”“本地处理”这些差别写清楚。",en:"This page only keeps free web tools you can use right away. Official links come first, and the free model is labeled clearly."},filterType:{zh:"类型",en:"Type"},filterStatus:{zh:"免费方式",en:"Free Model"},filterScene:{zh:"场景",en:"Use Case"},filterAccess:{zh:"登录",en:"Access"},featuredTitle:{zh:"先看这几个",en:"Start With These"},featuredCopy:{zh:"优先放稳定、常用、上手快的一组免费网页工具。",en:"A quick set of dependable tools that are easy to start with."},listTitle:{zh:"工具列表",en:"Tool Directory"},listCopy:{zh:"后面继续往里补，但只收真正免费可用、打开就能上手的网页工具。",en:"This list will keep growing, but only with genuinely usable free web tools."}};
+    const labels={zh:{brand:"88220066.xyz / 免费工具",searchPlaceholder:"搜索工具名、标签或说明，例如：PDF、图片、Markdown、JSON、流程图",allType:"全部类型",allStatus:"全部免费方式",allScene:"全部场景",allAccess:"全部登录方式",showing:"当前显示",items:"个工具",open:"打开",noMatch:"没有找到匹配的工具，换个关键词或筛选试试。",stats:[["当前收录","16 个免费网页工具"],["覆盖场景","PDF、图片、文本、开发、图表、音视频"],["优先标准","官网可用、免费可用、打开即用"],["标注方式","完全免费 / 免费为主 / 本地处理"]]},en:{brand:"88220066.xyz / Free Tools",searchPlaceholder:"Search by tool name, tags, or use case, for example: PDF, image, Markdown, JSON, diagram",allType:"All Types",allStatus:"All Free Models",allScene:"All Use Cases",allAccess:"All Access Modes",showing:"Showing",items:"tools",open:"Open",noMatch:"No matching tools found. Try another keyword or filter.",stats:[["Current List","16 free web tools"],["Coverage","PDF, image, text, coding, diagrams, audio and video"],["Selection Rule","Official, usable, and actually free to try"],["Labels","Fully free / mostly free / local-first"]]}};
+    const options={type:{pdf:{zh:"PDF 工具",en:"PDF Tools"},image:{zh:"图片工具",en:"Image Tools"},text:{zh:"文本工具",en:"Text Tools"},dev:{zh:"开发工具",en:"Developer Tools"},diagram:{zh:"图表工具",en:"Diagram Tools"},av:{zh:"音视频工具",en:"Audio & Video Tools"}},status:{full:{zh:"完全免费",en:"Fully Free"},mostly:{zh:"免费为主",en:"Mostly Free"},local:{zh:"本地处理",en:"Local-First"}},scene:{pdf:{zh:"PDF 处理",en:"PDF Tasks"},image:{zh:"图片处理",en:"Image Editing"},markdown:{zh:"Markdown 写作",en:"Markdown Writing"},json:{zh:"数据可视化",en:"Data Visualization"},regex:{zh:"正则调试",en:"Regex Testing"},diagram:{zh:"流程图与图表",en:"Diagrams & Charts"},video:{zh:"音频与视频",en:"Audio & Video"},convert:{zh:"文件转换",en:"File Conversion"}},access:{instant:{zh:"打开即用",en:"Instant Use"},login:{zh:"登录后更方便",en:"Better With Login"}}};
+    const tools=[{name:"iLovePDF",type:"pdf",status:"mostly",scene:"pdf",access:"instant",accent:"#ef4444",url:"https://www.ilovepdf.com/",summary:{zh:"常用的 PDF 合并、拆分、压缩和格式转换入口。",en:"A practical starting point for merging, splitting, compressing, and converting PDFs."},tags:{zh:["PDF","合并","压缩"],en:["PDF","merge","compress"]}},{name:"PDF24",type:"pdf",status:"full",scene:"pdf",access:"instant",accent:"#f97316",url:"https://tools.pdf24.org/en/",summary:{zh:"更偏纯免费路线的 PDF 工具集合，功能覆盖很完整。",en:"A strong PDF suite with a more clearly free-first positioning."},tags:{zh:["PDF","完全免费","在线"],en:["PDF","fully free","web"]}},{name:"iLoveIMG",type:"image",status:"full",scene:"image",access:"instant",accent:"#f97316",url:"https://www.iloveimg.com/",summary:{zh:"图片压缩、裁剪、格式转换和批量处理很顺手。",en:"Good for quick image compression, crop, conversion, and batch edits."},tags:{zh:["图片","压缩","裁剪"],en:["image","compress","crop"]}},{name:"Squoosh",type:"image",status:"local",scene:"image",access:"instant",accent:"#22c55e",url:"https://squoosh.app/",summary:{zh:"浏览器本地压缩图片，适合敏感素材和网页图片优化。",en:"Compress images locally in the browser, especially useful for private assets and web optimization."},tags:{zh:["本地处理","图片","隐私"],en:["local","image","privacy"]}},{name:"Photopea",type:"image",status:"local",scene:"image",access:"instant",accent:"#3b82f6",url:"https://www.photopea.com/",summary:{zh:"浏览器里的强图像编辑器，适合需要更完整编辑能力的时候。",en:"A powerful browser image editor for heavier editing work."},tags:{zh:["编辑","PSD","本地处理"],en:["editing","PSD","local"]}},{name:"Ezgif",type:"image",status:"full",scene:"video",access:"instant",accent:"#14b8a6",url:"https://ezgif.com/",summary:{zh:"GIF、短视频、简单剪切和转格式都很方便。",en:"Great for GIF work, quick trimming, and short-form format changes."},tags:{zh:["GIF","短视频","转换"],en:["GIF","short video","convert"]}},{name:"Excalidraw",type:"diagram",status:"full",scene:"diagram",access:"instant",accent:"#8b5cf6",url:"https://excalidraw.com/",summary:{zh:"画草图、流程和线框图都很轻快。",en:"Excellent for lightweight sketches, flows, and wireframes."},tags:{zh:["白板","草图","流程图"],en:["whiteboard","sketch","flow"]}},{name:"diagrams.net",type:"diagram",status:"full",scene:"diagram",access:"instant",accent:"#0ea5e9",url:"https://app.diagrams.net/",summary:{zh:"正式流程图、UML 和结构图更适合放这里做。",en:"A reliable option for formal diagrams, UML, and system maps."},tags:{zh:["流程图","UML","结构图"],en:["diagram","UML","system map"]}},{name:"Mermaid Live",type:"diagram",status:"full",scene:"diagram",access:"instant",accent:"#6366f1",url:"https://mermaid.live/",summary:{zh:"用文本直接生成图表，适合写文档和开发场景。",en:"Build diagrams from text, especially useful in docs and development."},tags:{zh:["Mermaid","文档","开发"],en:["Mermaid","docs","coding"]}},{name:"StackEdit",type:"text",status:"full",scene:"markdown",access:"instant",accent:"#38bdf8",url:"https://stackedit.io/",summary:{zh:"在线 Markdown 编辑和预览，适合轻量写作。",en:"A clean web Markdown editor for drafting and previewing."},tags:{zh:["Markdown","写作","预览"],en:["Markdown","writing","preview"]}},{name:"JSON Crack",type:"dev",status:"full",scene:"json",access:"instant",accent:"#6366f1",url:"https://jsoncrack.com/",summary:{zh:"把 JSON、YAML、CSV 可视化得更容易看。",en:"Visualize JSON, YAML, and CSV in a much more readable way."},tags:{zh:["JSON","YAML","可视化"],en:["JSON","YAML","visualize"]}},{name:"regex101",type:"dev",status:"full",scene:"regex",access:"instant",accent:"#ec4899",url:"https://regex101.com/",summary:{zh:"写正则、调表达式和看解释都很省时间。",en:"A solid place to test, debug, and understand regular expressions."},tags:{zh:["正则","调试","开发"],en:["regex","debug","development"]}},{name:"123apps",type:"av",status:"mostly",scene:"video",access:"instant",accent:"#0ea5e9",url:"https://123apps.com/",summary:{zh:"适合偶尔做音频、视频剪切和转换。",en:"Useful for occasional audio and video trimming or conversion."},tags:{zh:["音频","视频","转换"],en:["audio","video","convert"]}},{name:"CloudConvert",type:"av",status:"mostly",scene:"convert",access:"instant",accent:"#06b6d4",url:"https://cloudconvert.com/",summary:{zh:"跨格式转换很稳，适合偶尔处理文档或媒体文件。",en:"Reliable for occasional file conversion across many formats."},tags:{zh:["转换","文档","多格式"],en:["conversion","document","multi-format"]}},{name:"Convertio",type:"av",status:"mostly",scene:"convert",access:"instant",accent:"#f43f5e",url:"https://convertio.co/",summary:{zh:"中文界面更友好，适合日常零散转换。",en:"A more Chinese-friendly option for everyday file conversion."},tags:{zh:["转换","中文友好","多格式"],en:["conversion","Chinese-friendly","multi-format"]}},{name:"TinyWow",type:"text",status:"full",scene:"convert",access:"instant",accent:"#f59e0b",url:"https://tinywow.com/",summary:{zh:"杂项文档、图片和轻转换需求时很实用。",en:"A useful catch-all choice for miscellaneous document and image tasks."},tags:{zh:["综合","文档","图片"],en:["general","document","image"]}}];
+    const state={type:"all",status:"all",scene:"all",access:"all",search:""}; const quickNames=new Set(["iLovePDF","PDF24","iLoveIMG","Squoosh","Excalidraw","JSON Crack"]);
+    const typeEl=document.getElementById("type-chips"),statusEl=document.getElementById("status-chips"),sceneEl=document.getElementById("scene-chips"),accessEl=document.getElementById("access-chips"),quickGridEl=document.getElementById("quick-grid"),gridEl=document.getElementById("grid"),countEl=document.getElementById("count"),statsEl=document.getElementById("stats"),brandEl=document.getElementById("brand"),searchEl=document.getElementById("search-input");
+    const t=(lang,group,key)=>key==="all"?labels[lang][`all${group}`]:options[group.toLowerCase()][key][lang];
+    const textFor=(tool,lang)=>({summary:tool.summary[lang],tags:tool.tags[lang],type:t(lang,"Type",tool.type),status:t(lang,"Status",tool.status),scene:t(lang,"Scene",tool.scene),access:t(lang,"Access",tool.access)});
+    function renderStats(lang){brandEl.textContent=labels[lang].brand; searchEl.placeholder=labels[lang].searchPlaceholder; statsEl.innerHTML=labels[lang].stats.map(([label,value])=>`<div class="stat"><div class="stat-label">${label}</div><strong>${value}</strong></div>`).join("");}
+    function renderChipGroup(container,values,group,current,lang){container.innerHTML=values.map((value)=>`<button class="chip-btn ${value===current?"active":""}" data-group="${group}" data-value="${value}" type="button">${t(lang,group,value)}</button>`).join("");}
+    function filteredTools(lang){return tools.filter((tool)=>{const text=textFor(tool,lang); const haystack=[tool.name,text.summary,text.type,text.status,text.scene,text.access,...text.tags].join(" ").toLowerCase(); return (state.type==="all"||tool.type===state.type)&&(state.status==="all"||tool.status===state.status)&&(state.scene==="all"||tool.scene===state.scene)&&(state.access==="all"||tool.access===state.access)&&(!state.search||haystack.includes(state.search));});}
+    function hostLabel(url){ try { const parsed=new URL(url); return `${parsed.host}${parsed.pathname === "/" ? "" : parsed.pathname}`; } catch { return url; } }
+    function cardTemplate(tool,lang){const text=textFor(tool,lang); return `<article class="tool-card" style="--tool-accent:${tool.accent}"><div class="tool-top"><div><div class="meta">${text.type} / ${text.scene}</div><h3>${tool.name}</h3></div><div><span class="status-badge">${text.status}</span></div></div><p>${text.summary}</p><div class="tag-row">${text.tags.map((tag)=>`<span class="chip">${tag}</span>`).join("")}<span class="chip">${text.access}</span></div><div class="mini-list"><div><span>${lang==="zh"?"免费方式":"Free Model"}</span><strong>${text.status}</strong></div><div><span>${lang==="zh"?"访问方式":"Access"}</span><strong>${text.access}</strong></div></div><div class="card-bottom"><span class="meta">${hostLabel(tool.url)}</span><a class="visit" href="${tool.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a></div></article>`;}
+    function renderPage(lang){renderStats(lang); renderChipGroup(typeEl,["all",...Object.keys(options.type)],"Type",state.type,lang); renderChipGroup(statusEl,["all",...Object.keys(options.status)],"Status",state.status,lang); renderChipGroup(sceneEl,["all",...Object.keys(options.scene)],"Scene",state.scene,lang); renderChipGroup(accessEl,["all",...Object.keys(options.access)],"Access",state.access,lang); const items=filteredTools(lang); countEl.textContent=`${labels[lang].showing} ${items.length} / ${tools.length} ${labels[lang].items}`; quickGridEl.innerHTML=tools.filter((tool)=>quickNames.has(tool.name)).map((tool)=>cardTemplate(tool,lang)).join(""); gridEl.innerHTML=items.length?items.map((tool)=>cardTemplate(tool,lang)).join(""):`<div class="empty">${labels[lang].noMatch}</div>`;}
+    document.body.addEventListener("click",(event)=>{const button=event.target.closest("[data-group]"); if(!button)return; state[button.dataset.group.toLowerCase()]=button.dataset.value; renderPage(window.SiteI18n.getLang());});
+    searchEl.addEventListener("input",()=>{state.search=searchEl.value.trim().toLowerCase(); renderPage(window.SiteI18n.getLang());});
+    window.SiteI18n.bindPage(pageCopy,renderPage);
   </script>
-</body>
+<script id="claw-grid-script">
+(function(){
+  const hideBlock = (selector) => {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    const section = el.closest('.section') || el.closest('.stats');
+    if (section) section.style.display = 'none';
+    else el.style.display = 'none';
+  };
+  ['#stats','#quick-grid','#featured-grid','.hero-actions'].forEach(hideBlock);
+
+  const initials = (text) => {
+    const clean = (text || '').replace(/\s+/g,' ').trim();
+    if (!clean) return 'AI';
+    if (/^[A-Za-z0-9]/.test(clean)) {
+      const parts = clean.split(/[^A-Za-z0-9]+/).filter(Boolean);
+      return (parts[0] || clean).slice(0,2).toUpperCase();
+    }
+    return clean.slice(0,2);
+  };
+
+  const enhanceCard = (card) => {
+    if (card.querySelector('.mini-logo')) return;
+    const top = card.querySelector('.tool-top') || card.querySelector('.card-top');
+    if (!top) return;
+    const info = top.querySelector('div');
+    if (!info) return;
+    const title = info.querySelector('h3,.model,h4');
+    if (!title) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'compact-head';
+    const logo = document.createElement('span');
+    logo.className = 'mini-logo';
+    logo.textContent = initials(title.textContent);
+    const copy = document.createElement('div');
+    copy.className = 'compact-copy';
+    while (info.firstChild) {
+      copy.appendChild(info.firstChild);
+    }
+    wrap.appendChild(logo);
+    wrap.appendChild(copy);
+    info.appendChild(wrap);
+  };
+
+  document.querySelectorAll('.tool-card,.quick-card,.card').forEach(enhanceCard);
+})();
+</script></body>
 </html>
