@@ -156,11 +156,47 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
     return clean.slice(0,2);
   };
 
+  const logoUrls = (href) => {
+    try {
+      const parsed = new URL(href, window.location.href);
+      if (!/^https?:$/.test(parsed.protocol)) return [];
+      return [
+        parsed.origin + '/favicon.ico',
+        'https://www.google.com/s2/favicons?sz=128&domain_url=' + encodeURIComponent(parsed.href)
+      ];
+    } catch {
+      return [];
+    }
+  };
+
+  const attachLogoImage = (container, href, label) => {
+    const urls = logoUrls(href);
+    if (!urls.length) return;
+    const img = document.createElement('img');
+    img.alt = label + ' logo';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.referrerPolicy = 'no-referrer';
+    let index = 0;
+    const next = () => {
+      if (index >= urls.length) {
+        container.classList.remove('has-image');
+        img.remove();
+        return;
+      }
+      img.src = urls[index++];
+    };
+    img.addEventListener('load', () => container.classList.add('has-image'));
+    img.addEventListener('error', next);
+    container.appendChild(img);
+    next();
+  };
+
   const enhanceCard = (card) => {
     if (card.querySelector('.mini-logo')) return;
     const top = card.querySelector('.tool-top') || card.querySelector('.card-top');
     if (!top) return;
-    const info = top.querySelector('div');
+    const info = top.firstElementChild;
     if (!info) return;
     const title = info.querySelector('h3,.model,h4');
     if (!title) return;
@@ -168,7 +204,12 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
     wrap.className = 'compact-head';
     const logo = document.createElement('span');
     logo.className = 'mini-logo';
-    logo.textContent = initials(title.textContent);
+    const fallback = document.createElement('span');
+    fallback.className = 'mini-logo-fallback';
+    fallback.textContent = initials(title.textContent);
+    logo.appendChild(fallback);
+    const link = card.querySelector('.visit[href]') || card.querySelector('.ghost[href], a[href^="http"]');
+    if (link) attachLogoImage(logo, link.href, title.textContent.trim());
     const copy = document.createElement('div');
     copy.className = 'compact-copy';
     while (info.firstChild) {
@@ -179,7 +220,22 @@ html,body{background:#f8fafc!important;color:#0f172a!important}
     info.appendChild(wrap);
   };
 
-  document.querySelectorAll('.tool-card,.quick-card,.card').forEach(enhanceCard);
+  const enhanceAllCards = () => {
+    document.querySelectorAll('.tool-card,.quick-card,.card').forEach(enhanceCard);
+  };
+
+  let scheduled = false;
+  const scheduleEnhance = () => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      enhanceAllCards();
+    });
+  };
+
+  new MutationObserver(scheduleEnhance).observe(document.body, { childList: true, subtree: true });
+  scheduleEnhance();
 })();
 </script></body>
 </html>

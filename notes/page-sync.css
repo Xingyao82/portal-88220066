@@ -267,9 +267,63 @@ input[type="search"] {
 .mini-logo,
 .card-icon,
 .icon {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(180deg, #ffffff, #f7f9ff) !important;
   color: var(--accent) !important;
   border: 1px solid var(--line) !important;
+}
+
+.mini-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex: none;
+}
+
+.mini-logo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+.mini-logo.has-image img {
+  opacity: 1;
+}
+
+.mini-logo-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-logo.has-image .mini-logo-fallback {
+  display: none;
+}
+
+.compact-head {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  column-gap: 10px;
+  align-items: start;
+}
+
+.compact-copy {
+  min-width: 0;
 }
 
 code {

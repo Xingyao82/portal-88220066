@@ -742,6 +742,100 @@
 
     window.SiteI18n.bindPage(pageCopy, renderPage);
   </script>
+  <script>
+    (function () {
+      const initials = (text) => {
+        const clean = (text || "").replace(/\s+/g, " ").trim();
+        if (!clean) return "FM";
+        if (/^[A-Za-z0-9]/.test(clean)) {
+          const parts = clean.split(/[^A-Za-z0-9]+/).filter(Boolean);
+          return (parts[0] || clean).slice(0, 2).toUpperCase();
+        }
+        return clean.slice(0, 2);
+      };
+
+      const logoUrls = (href) => {
+        try {
+          const parsed = new URL(href, window.location.href);
+          if (!/^https?:$/.test(parsed.protocol)) return [];
+          return [
+            parsed.origin + "/favicon.ico",
+            "https://www.google.com/s2/favicons?sz=128&domain_url=" + encodeURIComponent(parsed.href)
+          ];
+        } catch {
+          return [];
+        }
+      };
+
+      const attachLogoImage = (container, href, label) => {
+        const urls = logoUrls(href);
+        if (!urls.length) return;
+        const img = document.createElement("img");
+        img.alt = label + " logo";
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.referrerPolicy = "no-referrer";
+        let index = 0;
+        const next = () => {
+          if (index >= urls.length) {
+            container.classList.remove("has-image");
+            img.remove();
+            return;
+          }
+          img.src = urls[index++];
+        };
+        img.addEventListener("load", () => container.classList.add("has-image"));
+        img.addEventListener("error", next);
+        container.appendChild(img);
+        next();
+      };
+
+      const enhanceCard = (card) => {
+        if (card.querySelector(".mini-logo")) return;
+        const top = card.querySelector(".tool-top,.card-top");
+        if (!top) return;
+        const info = top.firstElementChild;
+        if (!info) return;
+        const title = info.querySelector("h3,.model,h4");
+        if (!title) return;
+        const wrap = document.createElement("div");
+        wrap.className = "compact-head";
+        const logo = document.createElement("span");
+        logo.className = "mini-logo";
+        const fallback = document.createElement("span");
+        fallback.className = "mini-logo-fallback";
+        fallback.textContent = initials(title.textContent);
+        logo.appendChild(fallback);
+        const link = card.querySelector(".visit[href]") || card.querySelector(".ghost[href], a[href^='http']");
+        if (link) attachLogoImage(logo, link.href, title.textContent.trim());
+        const copy = document.createElement("div");
+        copy.className = "compact-copy";
+        while (info.firstChild) {
+          copy.appendChild(info.firstChild);
+        }
+        wrap.appendChild(logo);
+        wrap.appendChild(copy);
+        info.appendChild(wrap);
+      };
+
+      const enhanceAllCards = () => {
+        document.querySelectorAll(".tool-card,.quick-card,.card").forEach(enhanceCard);
+      };
+
+      let scheduled = false;
+      const scheduleEnhance = () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(() => {
+          scheduled = false;
+          enhanceAllCards();
+        });
+      };
+
+      new MutationObserver(scheduleEnhance).observe(document.body, { childList: true, subtree: true });
+      scheduleEnhance();
+    })();
+  </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"3f7de88d5f7243bca6ad10092abf0161","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
