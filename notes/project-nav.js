@@ -1,28 +1,46 @@
 (function () {
   const NAV_ITEMS = [
-    { key: "ai", href: "/ai-nav/", zh: "AI 导航", en: "AI Nav" },
-    { key: "finance", href: "/finance-nav/", zh: "金融导航", en: "Finance" },
-    { key: "income", href: "/income-nav/", zh: "Income 导航", en: "Income" },
-    { key: "api", href: "/free-api-nav/", zh: "API 导航", en: "API" },
-    { key: "tools", href: "/tools-nav/", zh: "工具导航", en: "Tools" },
-    { key: "english", href: "/english-tools/", zh: "英语导航", en: "English" },
-    { key: "skills", href: "/skills-nav/", zh: "技能", en: "Skills" }
+    { key: "ai", path: "ai-nav", zh: "AI 导航", en: "AI Nav" },
+    { key: "finance", path: "finance-nav", zh: "金融导航", en: "Finance" },
+    { key: "income", path: "income-nav", zh: "Income 导航", en: "Income" },
+    { key: "api", path: "free-api-nav", zh: "API 导航", en: "API" },
+    { key: "tools", path: "tools-nav", zh: "工具导航", en: "Tools" },
+    { key: "english", path: "english-tools", zh: "英语导航", en: "English" },
+    { key: "skills", path: "skills-nav", zh: "技能", en: "Skills" }
   ];
 
+  function normalizedPathname() {
+    return window.location.pathname.replace(/\\/g, "/");
+  }
+
   function currentKey(pathname) {
-    if (pathname.startsWith("/finance-nav/") || pathname.startsWith("/futures-basis/")) return "finance";
-    if (pathname.startsWith("/income-nav/")) return "income";
-    if (pathname.startsWith("/free-api-nav/")) return "api";
-    if (pathname.startsWith("/tools-nav/") || pathname.startsWith("/asterlab-tools/")) return "tools";
-    if (pathname.startsWith("/english-tools/") || pathname.startsWith("/dictation/")) return "english";
-    if (
-      pathname.startsWith("/skills-nav/") ||
-      pathname.startsWith("/kindle/") ||
-      pathname.startsWith("/kindle-upload/")
-    ) {
-      return "skills";
-    }
+    if (/\/(finance-nav|futures-basis)(\/|$)/.test(pathname)) return "finance";
+    if (/\/income-nav(\/|$)/.test(pathname)) return "income";
+    if (/\/free-api-nav(\/|$)/.test(pathname)) return "api";
+    if (/\/(tools-nav|asterlab-tools)(\/|$)/.test(pathname)) return "tools";
+    if (/\/(english-tools|dictation)(\/|$)/.test(pathname)) return "english";
+    if (/\/(skills-nav|kindle|kindle-upload|kindle-share)(\/|$)/.test(pathname)) return "skills";
     return "ai";
+  }
+
+  function portalRootUrl() {
+    const marker = "/portal-88220066/";
+    if (window.location.protocol === "file:") {
+      const href = window.location.href;
+      const index = href.indexOf(marker);
+      if (index !== -1) {
+        return href.slice(0, index + marker.length);
+      }
+    }
+    return null;
+  }
+
+  function hrefFor(item) {
+    const fileRoot = portalRootUrl();
+    if (fileRoot) {
+      return new URL(item.path + "/index.html", fileRoot).href;
+    }
+    return "/" + item.path + "/";
   }
 
   function lang() {
@@ -36,13 +54,13 @@
   function render() {
     const nav = document.querySelector(".nav-links, .links");
     if (!nav) return;
-    const activeKey = currentKey(window.location.pathname);
+    const activeKey = currentKey(normalizedPathname());
     const currentLang = lang();
 
     nav.innerHTML = NAV_ITEMS.map((item) => {
       const activeClass = item.key === activeKey ? ' class="active"' : "";
       const label = currentLang === "en" ? item.en : item.zh;
-      return `<a href="${item.href}"${activeClass}>${label}</a>`;
+      return '<a href="' + hrefFor(item) + '"' + activeClass + '>' + label + '</a>';
     }).join("");
   }
 

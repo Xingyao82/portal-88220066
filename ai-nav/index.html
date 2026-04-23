@@ -5,211 +5,465 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI 导航 | 88220066.xyz</title>
   <meta name="description" content="把常用 AI 工具整理成更好找的导航页，按聊天、代码、设计、搜索、音视频和效率场景快速筛选。">
-  <meta name="theme-color" content="#0c1020">
-  <script src="/notes/site-i18n.js"></script>
+  <meta name="theme-color" content="#f6f8ff">
+  <script src="../notes/site-i18n.js"></script>
+  <link rel="stylesheet" href="../notes/page-sync.css">
+  <script defer src="../notes/project-nav.js"></script>
   <style>
-    :root { --text:#edf2ff; --muted:#a9b3cf; --line:rgba(255,255,255,0.1); --accent:#7c68ff; --max:1220px; --radius-xl:28px; --radius-lg:22px; --radius-md:16px; }
-    * { box-sizing:border-box; } body { margin:0; min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC",sans-serif; color:var(--text); background:radial-gradient(circle at 15% 15%, rgba(124,104,255,.24), transparent 0 26%), radial-gradient(circle at 85% 12%, rgba(37,195,165,.16), transparent 0 24%), radial-gradient(circle at 50% 86%, rgba(255,157,66,.14), transparent 0 22%), linear-gradient(180deg, #09101e 0%, #0d1326 48%, #0b1020 100%); }
-    a { color:inherit; text-decoration:none; } button, input { font:inherit; }
-    .shell { width:min(calc(100% - 28px), var(--max)); margin:0 auto; padding:24px 0 54px; }
-    .nav,.toolbar,.section { border:1px solid var(--line); background:linear-gradient(180deg, rgba(15,22,42,.88), rgba(11,16,31,.92)); backdrop-filter:blur(16px); box-shadow:0 22px 60px rgba(0,0,0,.26); }
-    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-radius:22px; }
-    .brand { font-weight:700; letter-spacing:-.03em; }
-    .nav-links { display:flex; gap:18px; color:var(--muted); flex-wrap:wrap; }
-    .nav-links a:hover,.nav-links a.active { color:var(--text); }
-    .toolbar { margin-top:18px; padding:20px; border-radius:24px; }
-    .toolbar-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-    .toolbar-head h1 { margin:0; font-size:clamp(2rem,4vw,3rem); letter-spacing:-.05em; }
-    .toolbar-head p { margin:10px 0 0; max-width:48rem; color:var(--muted); line-height:1.75; }
-    .count { display:inline-flex; align-items:center; min-height:42px; padding:0 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(124,104,255,.12); color:#f4f6ff; font-size:.94rem; }
-    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:18px; }
-    .stat { padding:16px; border-radius:var(--radius-md); border:1px solid var(--line); background:rgba(255,255,255,.04); }
-    .stat-label { color:var(--muted); font-size:.9rem; margin-bottom:8px; }
-    .stat strong { display:block; font-size:1rem; line-height:1.5; }
-    .search { margin-top:18px; }
-    .search input { width:100%; min-height:52px; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:var(--text); padding:0 16px; }
-    .filter-stack { display:grid; gap:12px; margin-top:16px; }
-    .filter-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
-    .filter-label { min-width:84px; padding-top:8px; color:var(--muted); font-size:.94rem; }
-    .chips { display:flex; flex-wrap:wrap; gap:10px; flex:1; }
-    .chip-btn { padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:var(--muted); cursor:pointer; transition:160ms ease; }
-    .chip-btn.active,.chip-btn:hover { color:var(--text); border-color:rgba(124,104,255,.4); background:rgba(124,104,255,.14); }
-    .section { margin-top:18px; padding:22px; border-radius:var(--radius-xl); }
-    .section-head { display:flex; justify-content:space-between; gap:16px; align-items:end; margin-bottom:18px; }
-    .section-head h2 { margin:0; font-size:1.4rem; letter-spacing:-.04em; }
-    .section-head p { margin:8px 0 0; color:var(--muted); line-height:1.7; }
-    .quick-grid,.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
-    .quick-card,.tool-card { position:relative; display:grid; gap:14px; padding:18px; border-radius:var(--radius-lg); border:1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.16)) 58%, rgba(255,255,255,.08)); background:linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03)); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.15)) 18%, transparent); transition:transform 180ms ease, box-shadow 180ms ease; }
-    .quick-card:hover,.tool-card:hover { transform:translateY(-4px); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0,0,0,.28); }
-    .tool-top { display:flex; align-items:start; justify-content:space-between; gap:12px; }
-    .meta,.quick-card p,.tool-card p { margin:0; line-height:1.7; color:var(--muted); }
-    .quick-card h3,.tool-card h3 { margin:4px 0 0; font-size:1.14rem; }
-    .badge,.status-badge { display:inline-flex; align-items:center; justify-content:center; min-height:30px; padding:0 10px; border-radius:999px; font-size:12px; color:#f5f7ff; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 74%, black 26%); }
-    .status-badge { background:rgba(255,255,255,.08); }
-    .tag-row { display:flex; flex-wrap:wrap; gap:8px; }
-    .chip { display:inline-flex; padding:7px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); font-size:12px; color:var(--muted); }
-    .mini-list { display:grid; gap:8px; }
-    .mini-list div { display:flex; justify-content:space-between; gap:14px; color:var(--muted); font-size:.95rem; }
-    .mini-list strong { color:var(--text); font-weight:600; text-align:right; }
-    .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; flex-wrap:wrap; }
-    .visit { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 14px; border-radius:999px; color:#08111f; background:color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%); }
-    .empty { padding:20px; border-radius:var(--radius-lg); border:1px dashed rgba(255,255,255,.16); color:var(--muted); text-align:center; }
-    @media (max-width:1180px) { .stats,.quick-grid,.grid { grid-template-columns:1fr 1fr; } }
-    @media (max-width:720px) { .shell { width:min(calc(100% - 18px), var(--max)); } .nav { flex-direction:column; align-items:flex-start; } .filter-row { flex-direction:column; gap:10px; } .filter-label { min-width:auto; padding-top:0; } .stats,.quick-grid,.grid { grid-template-columns:1fr; } .section-head { flex-direction:column; align-items:flex-start; } }
+    :root {
+      --bg: #f6f8ff;
+      --panel: rgba(255, 255, 255, 0.88);
+      --line: rgba(15, 23, 42, 0.08);
+      --text: #101828;
+      --muted: #667085;
+      --accent: #5b6cff;
+      --accent-2: #8f6bff;
+      --success: #12b981;
+      --shadow-soft: 0 14px 30px rgba(123, 137, 191, 0.1);
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --max: 1380px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-height: 100vh; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", sans-serif; background: radial-gradient(circle at 12% 10%, rgba(91,108,255,0.12), transparent 24%), radial-gradient(circle at 88% 14%, rgba(143,107,255,0.12), transparent 24%), linear-gradient(180deg, #fbfcff 0%, #f6f8ff 40%, #f3f6ff 100%); }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    .shell { width: min(calc(100% - 28px), var(--max)); margin: 0 auto; padding: 20px 0 56px; }
+    .nav, .hero, .filters, .main-panel, .side-card, .foot-strip { border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(16px); box-shadow: var(--shadow-soft); }
+    .nav { display: flex; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 22px; background: rgba(255, 255, 255, 0.92); position: sticky; top: 12px; z-index: 20; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; white-space: nowrap; }
+    .brand-mark { width: 38px; height: 38px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, white 86%), color-mix(in srgb, var(--accent-2) 18%, white 82%)); box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
+    .brand-mark svg { width: 24px; height: 24px; }
+    .nav-links { display: flex; align-items: center; gap: 22px; margin-left: 12px; flex: 1; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
+    .nav-links a { position: relative; padding: 10px 0; }
+    .nav-links a.active, .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+    .nav-tools { display: inline-flex; align-items: center; gap: 10px; }
+    .icon-btn { width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.9); color: var(--text); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+    .hero { margin-top: 20px; border-radius: var(--radius-xl); padding: 34px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); gap: 28px; overflow: hidden; position: relative; background: radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 6%, white 94%), transparent 30%), radial-gradient(circle at 80% 30%, color-mix(in srgb, var(--accent-2) 8%, white 92%), transparent 34%), linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,248,255,.94)); }
+    .hero-copy { position: relative; z-index: 1; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.82rem; }
+    .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 8%, white 92%); }
+    .hero h1 { margin: 18px 0 0; font-size: clamp(3rem, 6vw, 4.9rem); line-height: 0.96; letter-spacing: -0.07em; }
+    .hero h1 span { display: block; margin-top: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2) 68%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-copy p { margin: 18px 0 0; max-width: 42rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+    .hero-search { margin-top: 26px; display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 18px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent) 12%, white 88%); background: rgba(255,255,255,.94); box-shadow: inset 0 1px 0 rgba(255,255,255,.86), 0 18px 34px rgba(123, 137, 191, 0.12); }
+    .hero-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--text); outline: none; font-size: 0.98rem; }
+    .hero-search input::placeholder { color: #98a2b3; }
+    .hero-search button { width: 52px; height: 52px; border: 0; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 14px 28px color-mix(in srgb, var(--accent) 30%, transparent); cursor: pointer; }
+    .hero-search button svg { width: 22px; height: 22px; }
+    .hot-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; color: var(--muted); font-size: 0.92rem; }
+    .hot-label { font-weight: 600; color: #475467; }
+    .hot-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .hot-chip, .chip-btn, .mini-chip, .sort-select { border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.92); color: #475467; }
+    .hot-chip, .chip-btn, .mini-chip { min-height: 36px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: 160ms ease; }
+    .hot-chip:hover, .chip-btn:hover, .chip-btn.active { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 22%, white 78%); background: color-mix(in srgb, var(--accent) 8%, white 92%); }
+    .hero-art { position: relative; min-height: 360px; }
+    .orbit { position: absolute; inset: 56px 28px 24px 48px; border-radius: 999px; border: 2px solid color-mix(in srgb, var(--accent-2) 18%, white 82%); transform: rotate(-7deg); }
+    .hero-main-card { position: absolute; top: 26px; left: 50%; transform: translateX(-50%) rotate(8deg); width: 220px; height: 268px; border-radius: 32px; background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(244,246,255,.95)); border: 1px solid color-mix(in srgb, var(--accent) 8%, white 92%); box-shadow: 0 34px 60px rgba(123,137,191,.18); display: grid; place-items: center; overflow: hidden; }
+    .hero-main-card::before { content: ""; position: absolute; inset: 22px 20px 72px; border-radius: 24px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, white 94%), color-mix(in srgb, var(--accent-2) 8%, white 92%)); }
+    .hero-main-card strong { position: relative; font-size: 4.6rem; line-height: 1; letter-spacing: -0.08em; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .floating-badge { position: absolute; width: 86px; height: 86px; border-radius: 24px; border: 1px solid color-mix(in srgb, var(--accent) 8%, white 92%); background: rgba(255,255,255,.92); box-shadow: 0 20px 40px rgba(123,137,191,.16); display: grid; place-items: center; }
+    .floating-badge img { width: 42px; height: 42px; border-radius: 12px; object-fit: contain; }
+    .floating-a { top: 48px; left: 18px; }
+    .floating-b { right: 12px; top: 60px; }
+    .floating-c { right: 46px; bottom: 42px; }
+    .filters { margin-top: 18px; padding: 24px 26px; border-radius: var(--radius-xl); }
+    .filter-row { display: flex; gap: 18px; align-items: flex-start; padding: 6px 0; }
+    .filter-label { min-width: 88px; display: inline-flex; align-items: center; gap: 10px; color: #344054; font-weight: 600; padding-top: 6px; }
+    .filter-label svg { width: 18px; height: 18px; color: #667085; }
+    .chips { display: flex; flex-wrap: wrap; gap: 12px; flex: 1; }
+    .content-layout { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start; }
+    .main-panel { border-radius: var(--radius-xl); padding: 24px; }
+    .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .panel-head h2 { margin: 0; font-size: 2rem; letter-spacing: -0.05em; }
+    .panel-head p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+    .panel-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .sort-select { min-height: 40px; padding: 0 16px; outline: none; }
+    .count-badge { min-height: 40px; padding: 0 14px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 8%, white 92%); color: var(--accent); display: inline-flex; align-items: center; font-weight: 600; white-space: nowrap; }
+    .featured-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
+    .list-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin: 8px 0 16px; }
+    .list-head strong { font-size: 1.08rem; letter-spacing: -0.02em; }
+    .list-head span { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .tool-card { position: relative; display: grid; gap: 14px; padding: 20px; border-radius: 24px; border: 1px solid rgba(15,23,42,.08); background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,255,.96)); box-shadow: inset 0 1px 0 rgba(255,255,255,.85); overflow: hidden; min-height: 100%; transition: transform 180ms ease, box-shadow 180ms ease; }
+    .tool-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at top right, color-mix(in srgb, var(--tool-accent) 16%, white 84%), transparent 40%); opacity: .75; pointer-events: none; }
+    .tool-card:hover { transform: translateY(-3px); box-shadow: 0 18px 32px rgba(123,137,191,.14); }
+    .tool-card.featured { min-height: 240px; padding: 22px; }
+    .tool-top { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .brand-row { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; min-width: 0; }
+    .logo-wrap { width: 56px; height: 56px; border-radius: 18px; background: rgba(255,255,255,.86); border: 1px solid rgba(15,23,42,.08); display: grid; place-items: center; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
+    .logo-wrap img { width: 34px; height: 34px; object-fit: contain; border-radius: 10px; }
+    .logo-fallback { display: none; width: 34px; height: 34px; border-radius: 10px; align-items: center; justify-content: center; background: color-mix(in srgb, var(--tool-accent) 16%, white 84%); color: color-mix(in srgb, var(--tool-accent) 82%, black 18%); font-weight: 800; font-size: 0.92rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+    .tool-title { margin: 2px 0 0; font-size: 1.85rem; line-height: 1.05; letter-spacing: -0.05em; }
+    .tool-card:not(.featured) .tool-title { font-size: 1.42rem; }
+    .company { margin-top: 6px; color: #475467; font-size: 0.96rem; }
+    .status-badge { min-height: 32px; padding: 0 11px; border-radius: 999px; background: rgba(255,255,255,.78); border: 1px solid rgba(15,23,42,.08); color: #475467; font-size: 0.8rem; display: inline-flex; align-items: center; white-space: nowrap; }
+    .tool-card p { position: relative; margin: 0; color: var(--muted); line-height: 1.72; font-size: 0.95rem; }
+    .tag-row { position: relative; display: flex; flex-wrap: wrap; gap: 8px; }
+    .mini-chip { min-height: 30px; padding: 0 12px; font-size: 0.8rem; }
+    .card-bottom { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; flex-wrap: wrap; }
+    .domain { color: #475467; font-size: 0.94rem; font-weight: 500; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .ghost, .visit { min-height: 38px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; }
+    .ghost { border: 1px solid var(--line); background: rgba(255,255,255,.9); color: #475467; }
+    .visit { border: 0; color: #fff; background: linear-gradient(135deg, color-mix(in srgb, var(--tool-accent) 76%, #ffffff 24%), color-mix(in srgb, var(--tool-accent) 92%, var(--accent-2) 8%)); box-shadow: 0 10px 20px color-mix(in srgb, var(--tool-accent) 28%, transparent); }
+    .sidebar { display: grid; gap: 16px; }
+    .side-card { border-radius: 24px; padding: 20px; background: rgba(255,255,255,.92); }
+    .side-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .side-head h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.04em; }
+    .side-link { color: var(--muted); font-size: 0.88rem; }
+    .rank-list, .recommend-list { display: grid; gap: 12px; }
+    .recommend-item, .rank-item { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid rgba(15,23,42,.06); }
+    .recommend-item:first-child, .rank-item:first-child { border-top: 0; padding-top: 0; }
+    .list-logo { width: 42px; height: 42px; border-radius: 14px; border: 1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.9); display: grid; place-items: center; overflow: hidden; }
+    .list-logo img { width: 26px; height: 26px; object-fit: contain; border-radius: 8px; }
+    .list-logo .logo-fallback { display: none; width: 26px; height: 26px; border-radius: 8px; font-size: 0.76rem; }
+    .list-meta strong { display: block; font-size: 1rem; letter-spacing: -0.03em; }
+    .list-meta span { display: block; margin-top: 4px; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+    .arrow, .trend { color: var(--muted); font-weight: 700; font-size: 0.92rem; }
+    .trend.up { color: var(--success); }
+    .cta-card { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--accent), var(--accent-2) 72%); color: #fff; min-height: 220px; }
+    .cta-card::before { content: ""; position: absolute; inset: auto -30px -40px auto; width: 180px; height: 180px; border-radius: 999px; background: rgba(255,255,255,.12); filter: blur(8px); }
+    .cta-card h3 { position: relative; margin: 0; font-size: 1.5rem; letter-spacing: -0.05em; }
+    .cta-card p { position: relative; margin: 10px 0 0; color: rgba(255,255,255,.84); line-height: 1.7; }
+    .cta-card .visit { position: relative; margin-top: 20px; background: #fff; color: var(--accent); box-shadow: none; }
+    .foot-strip { margin-top: 18px; border-radius: var(--radius-xl); padding: 18px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .foot-item { display: flex; align-items: flex-start; gap: 12px; }
+    .foot-icon { width: 42px; height: 42px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent) 8%, white 92%); color: var(--accent); flex: none; font-size: 0.82rem; font-weight: 700; }
+    .foot-item strong { display: block; font-size: 0.98rem; }
+    .foot-item span { display: block; margin-top: 4px; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+    .empty { padding: 28px; border-radius: 24px; border: 1px dashed rgba(15,23,42,.12); text-align: center; color: var(--muted); background: rgba(255,255,255,.8); grid-column: 1 / -1; }
+    @media (max-width: 1180px) { .content-layout { grid-template-columns: 1fr; } .sidebar { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .foot-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 980px) { .hero { grid-template-columns: 1fr; } .hero-art { min-height: 280px; } .featured-grid, .grid, .sidebar { grid-template-columns: 1fr; } .panel-head, .side-head, .filter-row { flex-direction: column; align-items: flex-start; } .filter-label { min-width: auto; padding-top: 0; } }
+    @media (max-width: 720px) { .shell { width: min(calc(100% - 18px), var(--max)); } .nav { align-items: flex-start; } .hero, .filters, .main-panel, .side-card, .foot-strip { padding: 18px; } .hero h1 { font-size: clamp(2.4rem, 13vw, 3.4rem); } .foot-strip { grid-template-columns: 1fr; } .nav-links { gap: 14px; } }
   </style>
-<style id="claw-grid-override">
-:root{--text:#0f172a!important;--muted:#64748b!important;--line:rgba(15,23,42,.08)!important;--accent:#c48f5a!important;--accent-soft:rgba(196,143,90,.12)!important}
-html,body{background:#f8fafc!important;color:#0f172a!important}
-.nav,.toolbar,.section,.hero,.controls,.filters,.footnote{background:#fff!important;background-image:none!important;border:1px solid rgba(15,23,42,.08)!important;box-shadow:none!important}
-.shell{padding-top:20px!important;padding-bottom:40px!important}
-.toolbar,.section,.hero,.controls,.filters,.footnote{border-radius:20px!important}
-.nav{border-radius:18px!important}
-.stats,#stats,.hero-actions,#quick-grid,#featured-grid{display:none!important}
-.toolbar-head h1,.hero h1,.hero h2,.section-head h2,.section-count,.stat strong,.summary-card strong,.tool-card h3,.quick-card h3,.tool-top h3,.card h3,.card .model{color:#0f172a!important}
-.toolbar-head p,.hero-copy,.section-head p,.meta,.tool-card p,.quick-card p,.stat-label,.filter-label,.chip,.badge,.status-badge,.summary-card span,.nav-links,.footnote,.empty,.pill,.subtitle,.subcopy,.desc{color:#64748b!important}
-.search input,input[type="search"]{background:#fff!important;border:1px solid rgba(15,23,42,.08)!important;color:#0f172a!important;box-shadow:none!important}
-.chip-btn,.chip,.badge,.status-badge,.pill,.ghost{background:#fff!important;border:1px solid rgba(15,23,42,.08)!important;color:#64748b!important;box-shadow:none!important}
-.chip-btn.active,.chip-btn:hover,.pill.primary{background:#fbf5ef!important;border-color:rgba(196,143,90,.28)!important;color:#8a6238!important}
-.visit,.btn,.btn2,.ghost{background:#f9ecdf!important;border:1px solid rgba(196,143,90,.24)!important;color:#8a6238!important;box-shadow:none!important}
-.count{background:#fbf5ef!important;border:1px solid rgba(196,143,90,.2)!important;color:#8a6238!important}
-.quick-grid,.grid,.cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important}
-.tool-card,.quick-card,.card,.summary-card,.stat,.panel,.panel-card,.hero-card,.ranking-panel,.ranking-hero{background:#fff!important;background-image:none!important;border:1px solid rgba(15,23,42,.08)!important;box-shadow:none!important}
-.tool-card,.quick-card,.card{padding:14px!important;border-radius:16px!important;gap:10px!important}
-.tool-card:hover,.quick-card:hover,.card:hover{transform:translateY(-1px)!important;box-shadow:0 10px 24px rgba(15,23,42,.06)!important}
-.tool-card::before,.quick-card::before,.card::before{opacity:.72!important}
-.mini-logo{width:32px;height:32px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#7a5531;background:var(--logo-bg,#fbf5ef);border:1px solid rgba(196,143,90,.18);flex:none}
-.compact-head{display:grid!important;grid-template-columns:32px 1fr!important;column-gap:10px!important;align-items:start!important}
-.compact-head .compact-copy{min-width:0}
-.card-top,.tool-top{gap:10px!important}
-.card-bottom,.card-foot{margin-top:auto!important}
-@media (max-width:1180px){.quick-grid,.grid,.cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
-@media (max-width:980px){.quick-grid,.grid,.cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-@media (max-width:720px){.quick-grid,.grid,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nav{flex-direction:column!important;align-items:flex-start!important}.filter-row{flex-direction:column!important;gap:10px!important}.filter-label{min-width:auto!important;padding-top:0!important}}
-@media (max-width:520px){.quick-grid,.grid,.cards{grid-template-columns:1fr!important}}
-</style>
-<link rel="stylesheet" href="/notes/page-sync.css">
-<script defer src="/notes/project-nav.js"></script>
 </head>
 <body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand" id="brand">88220066.xyz / AI 导航</div>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="/ai-nav/" class="active">AI 导航</a>
-        <a href="/finance-nav/">金融导航</a>
-        <a href="/income-nav/">Income 导航</a>
-        <a href="/free-api-nav/">API 导航</a>
-        <a href="/tools-nav/">工具导航</a>
-        <a href="/english-tools/">英语导航</a>
-        <a href="/skills-nav/">技能</a>
-      </nav>
-    </header>
-    <section class="toolbar">
-      <div class="toolbar-head"><div><h1 data-i18n="heroTitle">AI 导航</h1><p data-i18n="heroCopy">把常用 AI 产品整理到一页里，按场景、地区和价格快速筛选。</p></div><div class="count" id="count">加载中</div></div>
-      <div class="stats" id="stats"></div>
-      <label class="search"><input id="search-input" type="search"></label>
-      <div class="filter-stack">
-        <div class="filter-row"><div class="filter-label" data-i18n="filterCategory">场景</div><div id="category-chips" class="chips"></div></div>
-        <div class="filter-row"><div class="filter-label" data-i18n="filterRegion">地区</div><div id="region-chips" class="chips"></div></div>
-        <div class="filter-row"><div class="filter-label" data-i18n="filterPrice">价格</div><div id="price-chips" class="chips"></div></div>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7.2 18.7c-2.5 0-4.4-1.9-4.4-4.4 0-1.8 1-3.2 2.6-3.9L7.7 6c.9-1.7 2.6-2.7 4.6-2.7 2.7 0 4.8 1.8 5.4 4.2l1.3 5.3a4.5 4.5 0 0 1-4.4 5.5c-1.4 0-2.6-.5-3.5-1.4l-1.6-1.6-1.8 2c-.2.3-.5.4-.9.4Z" fill="url(#g)"/><defs><linearGradient id="g" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#8F5CFF"/><stop offset="1" stop-color="#5B6CFF"/></linearGradient></defs></svg>
+        </span>
+        <span id="brand">88220066.xyz / AI 导航</span>
       </div>
+      <nav class="nav-links" aria-label="Primary"><a href="../index.html">首页</a><a href="../ai-nav/index.html" class="active">AI 导航</a><a href="../finance-nav/index.html">金融导航</a><a href="../income-nav/index.html">Income 导航</a><a href="../free-api-nav/index.html">API 导航</a><a href="../tools-nav/index.html">工具导航</a><a href="../english-tools/index.html">英语导航</a><a href="../skills-nav/index.html">技能</a></nav>
+      <div class="nav-tools"><button class="icon-btn" type="button" aria-label="Search" id="focus-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"></circle><path d="m20 20-4.2-4.2"></path></svg></button></div>
+    </header>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow" data-i18n="eyebrow">AI DIRECTORY</div>
+        <h1 data-i18n-html="heroTitle">高频 AI 工具<br><span>亮面导航</span></h1>
+        <p data-i18n="heroCopy">把聊天、搜索、代码、设计和本地模型入口放到同一页里，先看热门，再按场景、地区和价格快速收窄。</p>
+        <label class="hero-search" for="search-input"><input id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="搜索工具名、标签或说明，例如：代码、中文、研究、视频、设计"><button id="search-button" type="button" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"></circle><path d="m20 20-4.2-4.2"></path></svg></button></label>
+        <div class="hot-row"><span class="hot-label" data-i18n="hotLabel">热门入口</span><div class="hot-chips" id="hot-chips"></div></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="hero-main-card"><strong>AI</strong></div><div class="floating-badge floating-a"><img id="hero-logo-a" alt=""></div><div class="floating-badge floating-b"><img id="hero-logo-b" alt=""></div><div class="floating-badge floating-c"><img id="hero-logo-c" alt=""></div></div>
     </section>
-    <section class="section"><div class="section-head"><div><h2 data-i18n="quickTitle">快捷入口</h2><p data-i18n="quickCopy">先按目标跳进去，再看完整列表会更快。</p></div></div><div id="quick-grid" class="quick-grid"></div></section>
-    <section class="section"><div class="section-head"><div><h2 data-i18n="featuredTitle">先看这几个</h2><p data-i18n="featuredCopy">把最常用、最容易马上试起来的一组放在前面。</p></div></div><div id="featured-grid" class="quick-grid"></div></section>
-    <section class="section"><div class="section-head"><div><h2 data-i18n="listTitle">AI 工具列表</h2><p data-i18n="listCopy">筛选和搜索会一起生效。</p></div></div><div id="grid" class="grid"></div></section>
+    <section class="filters">
+      <div class="filter-row">
+        <div class="filter-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+          <span data-i18n="filterCategory">场景</span>
+        </div>
+        <div id="category-chips" class="chips"></div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-4.6 7-11a7 7 0 1 0-14 0c0 6.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.8"/></svg>
+          <span data-i18n="filterRegion">地区</span>
+        </div>
+        <div id="region-chips" class="chips"></div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M7.5 7.5h6a3 3 0 0 1 0 6h-3a3 3 0 0 0 0 6h6"/></svg>
+          <span data-i18n="filterPrice">价格</span>
+        </div>
+        <div id="price-chips" class="chips"></div>
+      </div></section>
+    <main class="content-layout">
+      <section class="main-panel">
+        <div class="panel-head"><div><h2 data-i18n="sectionTitle">AI 工具精选</h2><p data-i18n="sectionCopy">优先把最常用、最容易马上试起来的一组放在前面，后面继续保留完整列表。</p></div><div class="panel-controls"><select id="sort-select" class="sort-select" aria-label="Sort"><option value="default" data-i18n="sortDefault">默认排序</option><option value="az" data-i18n="sortAZ">名称 A-Z</option><option value="za" data-i18n="sortZA">名称 Z-A</option></select><div class="count-badge" id="count">加载中</div></div></div>
+        <div id="featured-grid" class="featured-grid"></div>
+        <div class="list-head"><strong data-i18n="listTitle">全部工具</strong><span data-i18n="listCopy">搜索和筛选会一起生效，内容仍然是原来的 AI 工具集合。</span></div>
+        <div id="grid" class="grid"></div>
+      </section>
+      <aside class="sidebar">
+        <section class="side-card"><div class="side-head"><h3 data-i18n="recommendTitle">推荐起点</h3><span class="side-link" data-i18n="recommendMeta">先看这些</span></div><div id="recommend-list" class="recommend-list"></div></section>
+        <section class="side-card"><div class="side-head"><h3 data-i18n="trendTitle">热门方向</h3><span class="side-link" data-i18n="trendMeta">按收录数量</span></div><div id="trend-list" class="rank-list"></div></section>
+        <section class="side-card cta-card"><h3 data-i18n="ctaTitle">从常用入口开始</h3><p data-i18n="ctaCopy">这页只动了 UI，工具内容和筛选维度还保留原来的结构。先从 ChatGPT、Claude、DeepSeek、Perplexity 这组开始最顺手。</p><a class="visit" href="../index.html" target="_self" rel="noreferrer" data-i18n="ctaButton">返回首页</a></section>
+      </aside>
+    </main>
+    <section class="foot-strip">
+      <div class="foot-item">
+        <span class="foot-icon">CHAT</span>
+        <div>
+          <strong data-i18n="foot1Title">聊天入口</strong>
+          <span data-i18n="foot1Copy">ChatGPT、Claude、Gemini、Kimi 等常用入口集中展示。</span>
+        </div>
+      </div>
+      <div class="foot-item">
+        <span class="foot-icon">CODE</span>
+        <div>
+          <strong data-i18n="foot2Title">代码协作</strong>
+          <span data-i18n="foot2Copy">Cursor、Windsurf、Copilot 这类开发工具保留原有筛选。</span>
+        </div>
+      </div>
+      <div class="foot-item">
+        <span class="foot-icon">UI</span>
+        <div>
+          <strong data-i18n="foot3Title">设计与视频</strong>
+          <span data-i18n="foot3Copy">v0、Canva、Runway、Pika 统一进同一套亮色卡片。</span>
+        </div>
+      </div>
+      <div class="foot-item">
+        <span class="foot-icon">LLM</span>
+        <div>
+          <strong data-i18n="foot4Title">本地模型</strong>
+          <span data-i18n="foot4Copy">Ollama、LM Studio、Open WebUI、ComfyUI 仍在原列表里。</span>
+        </div>
+      </div></section>
   </div>
-  <script>
-    const pageCopy={pageTitle:{zh:"AI 导航 | 88220066.xyz",en:"AI Nav | 88220066.xyz"},pageDescription:{zh:"把常用 AI 工具整理成更好找的导航页，按聊天、代码、设计、搜索、音视频和效率场景快速筛选。",en:"A practical AI directory organized by chat, coding, design, search, media, and productivity use cases."},navHome:{zh:"首页",en:"Home"},navTools:{zh:"免费工具",en:"Free Tools"},navEnglish:{zh:"免费英语",en:"Free English"},navAi:{zh:"AI 导航",en:"AI Nav"},heroTitle:{zh:"AI 导航",en:"AI Nav"},heroCopy:{zh:"把常用 AI 产品整理到一页里，按场景、地区和价格快速筛选。",en:"A compact directory of useful AI products with filters for use case, region, and pricing."},filterCategory:{zh:"场景",en:"Category"},filterRegion:{zh:"地区",en:"Region"},filterPrice:{zh:"价格",en:"Pricing"},quickTitle:{zh:"快捷入口",en:"Quick Paths"},quickCopy:{zh:"先按目标跳进去，再看完整列表会更快。",en:"Jump in by your goal first, then scan the full list."},featuredTitle:{zh:"先看这几个",en:"Start Here"},featuredCopy:{zh:"把最常用、最容易马上试起来的一组放在前面。",en:"A short list of the most practical tools to try first."},listTitle:{zh:"AI 工具列表",en:"AI Directory"},listCopy:{zh:"筛选和搜索会一起生效。",en:"Filters and search work together."}};
-    const labels={zh:{brand:"88220066.xyz / AI 导航",searchPlaceholder:"搜索工具名、标签或说明，例如：代码、中文、研究、视频、设计",allCategory:"全部场景",allRegion:"全部地区",allPrice:"全部价格",showing:"当前显示",items:"个工具",open:"打开",noMatch:"没有找到匹配项，换个关键词或筛选试试。",stats:[["已收录工具","20 个常用 AI 产品"],["免费可用","16 个可先免费试用"],["中文优先","7 个中文产品"],["重点方向","聊天、代码、搜索、设计"]],quickBadge:"快速筛选"},en:{brand:"88220066.xyz / AI Nav",searchPlaceholder:"Search by tool, tags, or use case: coding, Chinese, research, video, design",allCategory:"All Categories",allRegion:"All Regions",allPrice:"All Pricing",showing:"Showing",items:"tools",open:"Open",noMatch:"No matching tools found. Try another keyword or filter.",stats:[["Listed Tools","20 commonly used AI products"],["Free to Try","16 products with a free entry point"],["Chinese-First","7 Chinese-friendly products"],["Key Areas","Chat, coding, search, and design"]],quickBadge:"Quick Filter"}};
-    const options={category:{general:{zh:"通用聊天",en:"General Chat"},search:{zh:"搜索知识",en:"Search & Research"},coding:{zh:"代码开发",en:"Coding"},design:{zh:"设计前端",en:"Design & Frontend"},video:{zh:"音视频",en:"Video & Audio"},productivity:{zh:"效率办公",en:"Productivity"},chinese:{zh:"中文工具",en:"Chinese Tools"}},region:{domestic:{zh:"国内",en:"China"},global:{zh:"国外",en:"Global"}},price:{freeMain:{zh:"免费为主",en:"Free-First"},freePartial:{zh:"部分免费",en:"Partially Free"},paidMain:{zh:"付费为主",en:"Paid-First"}}};
-    const tools=[
-      {name:"ChatGPT",category:"general",region:"global",price:"freePartial",accent:"#7c68ff",url:"https://chatgpt.com/",summary:{zh:"通用对话、写作和代码辅助都很稳。",en:"A dependable default for general chat, writing, and coding help."},tags:{zh:["聊天","写作","代码"],en:["chat","writing","coding"]}},
-      {name:"Claude",category:"general",region:"global",price:"freePartial",accent:"#25c3a5",url:"https://claude.ai/",summary:{zh:"长文理解、整理和写作体验很好。",en:"Excellent for long-form reading, synthesis, and writing."},tags:{zh:["长文","写作","整理"],en:["long-form","writing","synthesis"]}},
-      {name:"Gemini",category:"general",region:"global",price:"freePartial",accent:"#4f8cff",url:"https://gemini.google.com/",summary:{zh:"Google 系多模态问答入口。",en:"Google's multimodal assistant for everyday search and Q&A."},tags:{zh:["搜索","多模态","问答"],en:["search","multimodal","Q&A"]}},
-      {name:"Perplexity",category:"search",region:"global",price:"freePartial",accent:"#00b3a4",url:"https://www.perplexity.ai/",summary:{zh:"更像 AI 搜索引擎，适合查资料和快速验证。",en:"An AI search-first experience for research and quick fact finding."},tags:{zh:["搜索","资料","问答"],en:["search","research","answers"]}},
-      {name:"NotebookLM",category:"search",region:"global",price:"freePartial",accent:"#4da3ff",url:"https://notebooklm.google/",summary:{zh:"适合围绕文档和资料包做总结与问答。",en:"Best when you want summaries and Q&A grounded in your own documents."},tags:{zh:["文档","总结","学习"],en:["documents","summary","learning"]}},
-      {name:"Kimi",category:"chinese",region:"domestic",price:"freePartial",accent:"#2ec4b6",url:"https://kimi.moonshot.cn/",summary:{zh:"偏中文长文阅读和资料整理。",en:"Strong for Chinese long-form reading and information synthesis."},tags:{zh:["中文","长文","阅读"],en:["Chinese","long-form","reading"]}},
-      {name:"Doubao",category:"chinese",region:"domestic",price:"freeMain",accent:"#5d8dff",url:"https://www.doubao.com/",summary:{zh:"适合中文问答、写作和日常使用。",en:"A practical Chinese-first assistant for writing and daily use."},tags:{zh:["中文","聊天","写作"],en:["Chinese","chat","writing"]}},
-      {name:"DeepSeek",category:"chinese",region:"domestic",price:"freeMain",accent:"#4466ff",url:"https://chat.deepseek.com/",summary:{zh:"中文体验好，也适合推理和代码场景。",en:"Strong Chinese UX with solid reasoning and coding support."},tags:{zh:["中文","推理","代码"],en:["Chinese","reasoning","coding"]}},
-      {name:"Qwen Chat",category:"chinese",region:"domestic",price:"freePartial",accent:"#ffb347",url:"https://chat.qwen.ai/",summary:{zh:"通义系聊天入口，适合中文日常问答。",en:"Alibaba's conversational entry point for Chinese-first Q&A."},tags:{zh:["中文","对话","问答"],en:["Chinese","chat","Q&A"]}},
-      {name:"Cursor",category:"coding",region:"global",price:"freePartial",accent:"#7c68ff",url:"https://www.cursor.com/",summary:{zh:"AI 原生代码编辑器，适合重构和协作式编程。",en:"An AI-native code editor that works well for refactors and assisted development."},tags:{zh:["编辑器","代码","开发"],en:["editor","coding","development"]}},
-      {name:"Windsurf",category:"coding",region:"global",price:"freePartial",accent:"#62d0ff",url:"https://windsurf.com/",summary:{zh:"更偏完整开发流程和 Agent 式编程体验。",en:"A more agent-style IDE workflow for deeper development sessions."},tags:{zh:["IDE","Agent","编程"],en:["IDE","agent","coding"]}},
-      {name:"GitHub Copilot",category:"coding",region:"global",price:"paidMain",accent:"#ff9d42",url:"https://github.com/features/copilot",summary:{zh:"面向开发者的代码补全和聊天协作。",en:"A popular coding copilot for completions and chat inside development workflows."},tags:{zh:["代码","IDE","开发"],en:["code","IDE","development"]}},
-      {name:"Ollama",category:"coding",region:"global",price:"freeMain",accent:"#111827",url:"https://ollama.com/",summary:{zh:"本地跑大模型最省心的入口，适合写作、总结、问答和代码辅助。",en:"One of the easiest ways to run local models for writing, summarization, Q&A, and coding help."},tags:{zh:["本地模型","写作","问答"],en:["local models","writing","Q&A"]}},
-      {name:"LM Studio",category:"productivity",region:"global",price:"freeMain",accent:"#4f46e5",url:"https://lmstudio.ai/",summary:{zh:"桌面端本地模型工作台，适合聊天、写文章和调试提示词。",en:"A desktop local-model workspace for chat, article drafting, and prompt iteration."},tags:{zh:["本地模型","桌面","文章"],en:["local models","desktop","articles"]}},
-      {name:"Open WebUI",category:"productivity",region:"global",price:"freeMain",accent:"#0f766e",url:"https://openwebui.com/",summary:{zh:"把本地模型接成可用界面，适合知识库、文档问答和团队内网使用。",en:"A practical interface for local models, especially for knowledge bases, document Q&A, and self-hosted teams."},tags:{zh:["本地模型","知识库","文档"],en:["local models","knowledge base","documents"]}},
-      {name:"v0",category:"design",region:"global",price:"freePartial",accent:"#a669ff",url:"https://v0.dev/",summary:{zh:"输入描述即可生成 UI 和前端代码。",en:"Describe an interface and get UI plus front-end code quickly."},tags:{zh:["前端","UI","原型"],en:["frontend","UI","prototype"]}},
-      {name:"Canva AI",category:"design",region:"global",price:"freePartial",accent:"#00c4cc",url:"https://www.canva.com/",summary:{zh:"模板和 AI 能力结合，适合快速出图。",en:"Template-driven design with AI help for quick visuals."},tags:{zh:["设计","海报","模板"],en:["design","poster","templates"]}},
-      {name:"Leonardo AI",category:"design",region:"global",price:"freePartial",accent:"#8a6cff",url:"https://leonardo.ai/",summary:{zh:"偏图像和素材生成。",en:"Focused on image generation and creative asset work."},tags:{zh:["图像","素材","生成"],en:["image","assets","generation"]}},
-      {name:"ComfyUI",category:"design",region:"global",price:"freeMain",accent:"#16a34a",url:"https://www.comfy.org/",summary:{zh:"本地 AI 出图和工作流编排很强，适合图片生成、修图、批处理和节点流程。",en:"A powerful local workflow tool for image generation, editing, batch jobs, and node-based pipelines."},tags:{zh:["本地出图","工作流","图片"],en:["local image","workflow","images"]}},
-      {name:"InvokeAI",category:"design",region:"global",price:"freeMain",accent:"#f97316",url:"https://invoke.ai/",summary:{zh:"更偏稳定本地出图和素材生产，适合海报、产品图和可控生成。",en:"A strong local image setup for controlled generation and production-oriented visuals."},tags:{zh:["本地出图","海报","素材"],en:["local image","posters","assets"]}},
-      {name:"Pika",category:"video",region:"global",price:"freePartial",accent:"#ff7aa2",url:"https://pika.art/",summary:{zh:"适合轻量视频生成和创意演示。",en:"Good for lightweight AI video experiments and visual demos."},tags:{zh:["视频","动画","生成"],en:["video","animation","generation"]}},
-      {name:"Runway",category:"video",region:"global",price:"freePartial",accent:"#7effb2",url:"https://runwayml.com/",summary:{zh:"视频生成和编辑能力都比较成熟。",en:"A mature option for AI video generation and editing."},tags:{zh:["视频","生成","编辑"],en:["video","generation","editing"]}},
-      {name:"ComfyUI Video",category:"video",region:"global",price:"freeMain",accent:"#22c55e",url:"https://www.comfy.org/",summary:{zh:"用本地节点工作流接视频模型，适合文生视频、转绘和批量渲染。",en:"A local node workflow for video models, useful for text-to-video, stylized clips, and batch rendering."},tags:{zh:["本地视频","工作流","渲染"],en:["local video","workflow","rendering"]}},
-      {name:"Gamma",category:"productivity",region:"global",price:"freePartial",accent:"#8e7dff",url:"https://gamma.app/",summary:{zh:"适合快速生成演示和结构化提案。",en:"A fast way to build presentations and structured decks."},tags:{zh:["演示","文稿","结构"],en:["presentation","deck","structure"]}},
-      {name:"Coze",category:"productivity",region:"global",price:"freePartial",accent:"#6d7cff",url:"https://www.coze.com/",summary:{zh:"适合做 AI Bot 和简单工作流。",en:"Useful for AI bots and lightweight workflow building."},tags:{zh:["Bot","工作流","应用"],en:["bot","workflow","apps"]}},
-      {name:"Felo",category:"search",region:"domestic",price:"freeMain",accent:"#2db8ff",url:"https://felo.ai/zh-Hans/search",summary:{zh:"偏中文检索和资料整理。",en:"A Chinese-friendly AI search experience for organized research."},tags:{zh:["中文","搜索","脑图"],en:["Chinese","search","mind map"]}}
-    ];
-    const quickFilters=[{key:"general",accent:"#7c68ff",nameZh:"先从聊天开始",nameEn:"Start With Chat",summaryZh:"通用问答、写作和日常使用优先。",summaryEn:"A quick path to general chat, writing, and everyday help."},{key:"coding",accent:"#ff9d42",nameZh:"代码开发",nameEn:"Coding",summaryZh:"写代码、重构和 IDE 协作。",summaryEn:"For coding, refactoring, and AI-assisted IDE workflows."},{key:"search",accent:"#00b3a4",nameZh:"搜索研究",nameEn:"Research",summaryZh:"找资料、查证和总结。",summaryEn:"For search, verification, and research synthesis."},{key:"design",accent:"#ff4fa3",nameZh:"设计出图",nameEn:"Design",summaryZh:"UI、海报、视觉和素材生成。",summaryEn:"For UI, visuals, posters, and creative assets."},{key:"video",accent:"#7effb2",nameZh:"音视频",nameEn:"Media",summaryZh:"视频生成、编辑和演示。",summaryEn:"For video generation, editing, and creative demos."},{key:"chinese",accent:"#4466ff",nameZh:"中文优先",nameEn:"Chinese-First",summaryZh:"优先看中文体验更好的工具。",summaryEn:"For tools that feel better in Chinese-first workflows."}];
-    const featuredNames=new Set(["ChatGPT","Claude","DeepSeek","Perplexity","ComfyUI","Ollama","LM Studio","Gamma"]); const state={category:"all",region:"all",price:"all",search:""};
-    const categoryEl=document.getElementById("category-chips"),regionEl=document.getElementById("region-chips"),priceEl=document.getElementById("price-chips"),quickGridEl=document.getElementById("quick-grid"),featuredGridEl=document.getElementById("featured-grid"),gridEl=document.getElementById("grid"),countEl=document.getElementById("count"),statsEl=document.getElementById("stats"),brandEl=document.getElementById("brand"),searchEl=document.getElementById("search-input");
-    const optionText=(lang,group,key)=>key==="all"?labels[lang][`all${group}`]:options[group.toLowerCase()][key][lang];
-    const renderChipGroup=(container,values,group,current,lang)=>container.innerHTML=values.map((value)=>`<button class="chip-btn ${value===current?"active":""}" data-group="${group}" data-value="${value}" type="button">${optionText(lang,group,value)}</button>`).join("");
-    function filteredTools(lang){return tools.filter((tool)=>{const haystack=[tool.name,tool.summary[lang],options.category[tool.category][lang],options.region[tool.region][lang],options.price[tool.price][lang],...tool.tags[lang]].join(" ").toLowerCase(); return (state.category==="all"||tool.category===state.category)&&(state.region==="all"||tool.region===state.region)&&(state.price==="all"||tool.price===state.price)&&(!state.search||haystack.includes(state.search));});}
-    function hostLabel(url){ try { const parsed=new URL(url); return `${parsed.host}${parsed.pathname === "/" ? "" : parsed.pathname}`; } catch { return url; } }
-    function cardTemplate(tool,lang){return `<article class="tool-card" style="--tool-accent:${tool.accent}"><div class="tool-top"><div><div class="meta">${options.category[tool.category][lang]} / ${options.region[tool.region][lang]}</div><h3>${tool.name}</h3></div></div><p>${tool.summary[lang]}</p><div class="tag-row">${tool.tags[lang].map((tag)=>`<span class="chip">${tag}</span>`).join("")}<span class="chip">${options.price[tool.price][lang]}</span></div><div class="mini-list"><div><span>${lang==="zh"?"价格":"Pricing"}</span><strong>${options.price[tool.price][lang]}</strong></div></div><div class="card-bottom"><span class="meta">${hostLabel(tool.url)}</span><a class="visit" href="${tool.url}" target="_blank" rel="noreferrer">${labels[lang].open}</a></div></article>`;}
-    function renderStats(lang){brandEl.textContent=labels[lang].brand; searchEl.placeholder=labels[lang].searchPlaceholder; statsEl.innerHTML=labels[lang].stats.map(([label,value])=>`<div class="stat"><div class="stat-label">${label}</div><strong>${value}</strong></div>`).join("");}
-    function renderQuickGrid(lang){quickGridEl.innerHTML=quickFilters.map((item)=>`<article class="quick-card" style="--tool-accent:${item.accent}"><div class="tool-top"><div><div class="meta">${labels[lang].quickBadge}</div><h3>${lang==="zh"?item.nameZh:item.nameEn}</h3></div></div><p>${lang==="zh"?item.summaryZh:item.summaryEn}</p><div class="card-bottom"><span class="meta">${options.category[item.key][lang]}</span><button class="visit" type="button" data-jump="${item.key}">${lang==="zh"?"查看":"View"}</button></div></article>`).join("");}
-    function renderPage(lang){renderStats(lang); renderChipGroup(categoryEl,["all",...Object.keys(options.category)],"Category",state.category,lang); renderChipGroup(regionEl,["all",...Object.keys(options.region)],"Region",state.region,lang); renderChipGroup(priceEl,["all",...Object.keys(options.price)],"Price",state.price,lang); renderQuickGrid(lang); featuredGridEl.innerHTML=tools.filter((tool)=>featuredNames.has(tool.name)).map((tool)=>cardTemplate(tool,lang)).join(""); const items=filteredTools(lang); countEl.textContent=`${labels[lang].showing} ${items.length} / ${tools.length} ${labels[lang].items}`; gridEl.innerHTML=items.length?items.map((tool)=>cardTemplate(tool,lang)).join(""):`<div class="empty">${labels[lang].noMatch}</div>`;}
-    document.body.addEventListener("click",(event)=>{const button=event.target.closest("[data-group]"); if(button){state[button.dataset.group.toLowerCase()]=button.dataset.value; renderPage(window.SiteI18n.getLang()); return;} const jump=event.target.closest("[data-jump]"); if(jump){state.category=jump.dataset.jump; renderPage(window.SiteI18n.getLang());}});
-    searchEl.addEventListener("input",()=>{state.search=searchEl.value.trim().toLowerCase(); renderPage(window.SiteI18n.getLang());});
-    window.SiteI18n.bindPage(pageCopy,renderPage);
+  <script>const pageData = {"copy":{"pageTitle":{"zh":"AI 导航 | 88220066.xyz","en":"AI Nav | 88220066.xyz"},"pageDescription":{"zh":"把常用 AI 工具整理成更好找的导航页，按聊天、代码、设计、搜索、音视频和效率场景快速筛选。","en":"A practical AI directory organized by chat, coding, design, search, media, and productivity use cases."},"eyebrow":{"zh":"AI DIRECTORY","en":"AI DIRECTORY"},"heroTitle":{"zh":"高频 AI 工具\u003cbr>\u003cspan>亮面导航\u003c/span>","en":"Essential AI Tools\u003cbr>\u003cspan>Bright Directory\u003c/span>"},"heroCopy":{"zh":"把聊天、搜索、代码、设计和本地模型入口放到同一页里，先看热门，再按场景、地区和价格快速收窄。","en":"Bring chat, research, coding, design, and local-model tools into one bright directory with fast filters."},"hotLabel":{"zh":"热门入口","en":"Hot Picks"},"filterCategory":{"zh":"场景","en":"Category"},"filterRegion":{"zh":"地区","en":"Region"},"filterPrice":{"zh":"价格","en":"Pricing"},"sectionTitle":{"zh":"AI 工具精选","en":"Featured AI Tools"},"sectionCopy":{"zh":"优先把最常用、最容易马上试起来的一组放在前面，后面继续保留完整列表。","en":"Start with the most practical tools first, while keeping the full list below."},"listTitle":{"zh":"全部工具","en":"All Tools"},"listCopy":{"zh":"搜索和筛选会一起生效，内容仍然是原来的 AI 工具集合。","en":"Search and filters work together while preserving the original directory content."},"recommendTitle":{"zh":"推荐起点","en":"Recommended Start"},"recommendMeta":{"zh":"先看这些","en":"Start here"},"trendTitle":{"zh":"热门方向","en":"Top Categories"},"trendMeta":{"zh":"按收录数量","en":"By coverage"},"ctaTitle":{"zh":"从常用入口开始","en":"Start With What You Use"},"ctaCopy":{"zh":"这页只动了 UI，工具内容和筛选维度还保留原来的结构。先从 ChatGPT、Claude、DeepSeek、Perplexity 这组开始最顺手。","en":"Only the UI changed here. The original tools and filters stay intact."},"ctaButton":{"zh":"返回首页","en":"Back Home"},"foot1Title":{"zh":"聊天入口","en":"Chat"},"foot1Copy":{"zh":"ChatGPT、Claude、Gemini、Kimi 等常用入口集中展示。","en":"Core chat tools are grouped together."},"foot2Title":{"zh":"代码协作","en":"Coding"},"foot2Copy":{"zh":"Cursor、Windsurf、Copilot 这类开发工具保留原有筛选。","en":"Coding tools keep their original filter logic."},"foot3Title":{"zh":"设计与视频","en":"Design & Media"},"foot3Copy":{"zh":"v0、Canva、Runway、Pika 统一进同一套亮色卡片。","en":"Design and media tools now share the same visual system."},"foot4Title":{"zh":"本地模型","en":"Local Models"},"foot4Copy":{"zh":"Ollama、LM Studio、Open WebUI、ComfyUI 仍在原列表里。","en":"Local-model tools stay in the original list."},"sortDefault":{"zh":"默认排序","en":"Default"},"sortAZ":{"zh":"名称 A-Z","en":"Name A-Z"},"sortZA":{"zh":"名称 Z-A","en":"Name Z-A"}},"labels":{"zh":{"brand":"88220066.xyz / AI 导航","searchPlaceholder":"搜索工具名、标签或说明，例如：代码、中文、研究、视频、设计","allCategory":"全部场景","allRegion":"全部地区","allPrice":"全部价格","showing":"当前显示","items":"个工具","open":"打开","site":"官网","noMatch":"没有找到匹配项，换个关键词或筛选试试。","trendUnit":"收录数量"},"en":{"brand":"88220066.xyz / AI Nav","searchPlaceholder":"Search by tool, tag, or use case: coding, Chinese, research, video, design","allCategory":"All Categories","allRegion":"All Regions","allPrice":"All Pricing","showing":"Showing","items":"tools","open":"Open","site":"Site","noMatch":"No matching tools found. Try another keyword or filter.","trendUnit":"entries"}},"groups":[{"key":"category","labelKey":"filterCategory","fallbackLabel":"场景","allLabel":"allCategory","icon":"category"},{"key":"region","labelKey":"filterRegion","fallbackLabel":"地区","allLabel":"allRegion","icon":"region"},{"key":"price","labelKey":"filterPrice","fallbackLabel":"价格","allLabel":"allPrice","icon":"price"}],"options":{"category":{"general":{"zh":"通用聊天","en":"General Chat"},"search":{"zh":"搜索知识","en":"Search & Research"},"coding":{"zh":"代码开发","en":"Coding"},"design":{"zh":"设计前端","en":"Design & Frontend"},"video":{"zh":"音视频","en":"Video & Audio"},"productivity":{"zh":"效率办公","en":"Productivity"},"chinese":{"zh":"中文工具","en":"Chinese Tools"}},"region":{"domestic":{"zh":"国内","en":"China"},"global":{"zh":"国外","en":"Global"}},"price":{"freeMain":{"zh":"免费为主","en":"Free-First"},"freePartial":{"zh":"部分免费","en":"Partially Free"},"paidMain":{"zh":"付费为主","en":"Paid-First"}}},"items":[{"name":"ChatGPT","category":"general","region":"global","price":"freePartial","accent":"#7c68ff","url":"https://chatgpt.com/","summary":{"zh":"通用对话、写作和代码辅助都很稳。","en":"A dependable default for general chat, writing, and coding help."},"tags":{"zh":["聊天","写作","代码"],"en":["chat","writing","coding"]}},{"name":"Claude","category":"general","region":"global","price":"freePartial","accent":"#25c3a5","url":"https://claude.ai/","summary":{"zh":"长文理解、整理和写作体验很好。","en":"Excellent for long-form reading, synthesis, and writing."},"tags":{"zh":["长文","写作","整理"],"en":["long-form","writing","synthesis"]}},{"name":"Gemini","category":"general","region":"global","price":"freePartial","accent":"#4f8cff","url":"https://gemini.google.com/","summary":{"zh":"Google 系多模态问答入口。","en":"Google multimodal assistant for everyday search and Q&A."},"tags":{"zh":["搜索","多模态","问答"],"en":["search","multimodal","Q&A"]}},{"name":"Perplexity","category":"search","region":"global","price":"freePartial","accent":"#00b3a4","url":"https://www.perplexity.ai/","summary":{"zh":"更像 AI 搜索引擎，适合查资料和快速验证。","en":"An AI search-first experience for research and quick fact finding."},"tags":{"zh":["搜索","资料","问答"],"en":["search","research","answers"]}},{"name":"NotebookLM","category":"search","region":"global","price":"freePartial","accent":"#4da3ff","url":"https://notebooklm.google/","summary":{"zh":"适合围绕文档和资料包做总结与问答。","en":"Best when you want summaries and Q&A grounded in your own documents."},"tags":{"zh":["文档","总结","学习"],"en":["documents","summary","learning"]}},{"name":"Kimi","category":"chinese","region":"domestic","price":"freePartial","accent":"#2ec4b6","url":"https://kimi.moonshot.cn/","summary":{"zh":"偏中文长文阅读和资料整理。","en":"Strong for Chinese long-form reading and information synthesis."},"tags":{"zh":["中文","长文","阅读"],"en":["Chinese","long-form","reading"]}},{"name":"Doubao","category":"chinese","region":"domestic","price":"freeMain","accent":"#5d8dff","url":"https://www.doubao.com/","summary":{"zh":"适合中文问答、写作和日常使用。","en":"A practical Chinese-first assistant for writing and daily use."},"tags":{"zh":["中文","聊天","写作"],"en":["Chinese","chat","writing"]}},{"name":"DeepSeek","category":"chinese","region":"domestic","price":"freeMain","accent":"#4466ff","url":"https://chat.deepseek.com/","summary":{"zh":"中文体验好，也适合推理和代码场景。","en":"Strong Chinese UX with solid reasoning and coding support."},"tags":{"zh":["中文","推理","代码"],"en":["Chinese","reasoning","coding"]}},{"name":"Qwen Chat","category":"chinese","region":"domestic","price":"freePartial","accent":"#ffb347","url":"https://chat.qwen.ai/","summary":{"zh":"通义系聊天入口，适合中文日常问答。","en":"A conversational entry point for Chinese-first Q&A."},"tags":{"zh":["中文","对话","问答"],"en":["Chinese","chat","Q&A"]}},{"name":"Cursor","category":"coding","region":"global","price":"freePartial","accent":"#7c68ff","url":"https://www.cursor.com/","summary":{"zh":"AI 原生代码编辑器，适合重构和协作式编程。","en":"An AI-native code editor that works well for refactors and assisted development."},"tags":{"zh":["编辑器","代码","开发"],"en":["editor","coding","development"]}},{"name":"Windsurf","category":"coding","region":"global","price":"freePartial","accent":"#62d0ff","url":"https://windsurf.com/","summary":{"zh":"更偏完整开发流程和 Agent 式编程体验。","en":"A more agent-style IDE workflow for deeper development sessions."},"tags":{"zh":["IDE","Agent","编程"],"en":["IDE","agent","coding"]}},{"name":"GitHub Copilot","category":"coding","region":"global","price":"paidMain","accent":"#ff9d42","url":"https://github.com/features/copilot","summary":{"zh":"面向开发者的代码补全和聊天协作。","en":"A popular coding copilot for completions and chat inside development workflows."},"tags":{"zh":["代码","IDE","开发"],"en":["code","IDE","development"]}},{"name":"Ollama","category":"coding","region":"global","price":"freeMain","accent":"#111827","url":"https://ollama.com/","summary":{"zh":"本地跑大模型最省心的入口，适合写作、总结、问答和代码辅助。","en":"One of the easiest ways to run local models for writing, summarization, Q&A, and coding help."},"tags":{"zh":["本地模型","写作","问答"],"en":["local models","writing","Q&A"]}},{"name":"LM Studio","category":"productivity","region":"global","price":"freeMain","accent":"#4f46e5","url":"https://lmstudio.ai/","summary":{"zh":"桌面端本地模型工作台，适合聊天、写文章和调试提示词。","en":"A desktop local-model workspace for chat, article drafting, and prompt iteration."},"tags":{"zh":["本地模型","桌面","文章"],"en":["local models","desktop","articles"]}},{"name":"Open WebUI","category":"productivity","region":"global","price":"freeMain","accent":"#0f766e","url":"https://openwebui.com/","summary":{"zh":"把本地模型接成可用界面，适合知识库、文档问答和团队内网使用。","en":"A practical interface for local models, especially for knowledge bases and document Q&A."},"tags":{"zh":["本地模型","知识库","文档"],"en":["local models","knowledge base","documents"]}},{"name":"v0","category":"design","region":"global","price":"freePartial","accent":"#a669ff","url":"https://v0.dev/","summary":{"zh":"输入描述即可生成 UI 和前端代码。","en":"Describe an interface and get UI plus front-end code quickly."},"tags":{"zh":["前端","UI","原型"],"en":["frontend","UI","prototype"]}},{"name":"Canva AI","category":"design","region":"global","price":"freePartial","accent":"#00c4cc","url":"https://www.canva.com/","summary":{"zh":"模板和 AI 能力结合，适合快速出图。","en":"Template-driven design with AI help for quick visuals."},"tags":{"zh":["设计","海报","模板"],"en":["design","poster","templates"]}},{"name":"Leonardo AI","category":"design","region":"global","price":"freePartial","accent":"#8a6cff","url":"https://leonardo.ai/","summary":{"zh":"偏图像和素材生成。","en":"Focused on image generation and creative asset work."},"tags":{"zh":["图像","素材","生成"],"en":["image","assets","generation"]}},{"name":"ComfyUI","category":"design","region":"global","price":"freeMain","accent":"#16a34a","url":"https://www.comfy.org/","summary":{"zh":"本地 AI 出图和工作流编排很强，适合图片生成、修图、批处理和节点流程。","en":"A powerful local workflow tool for image generation, editing, batch jobs, and node-based pipelines."},"tags":{"zh":["本地出图","工作流","图片"],"en":["local image","workflow","images"]}},{"name":"InvokeAI","category":"design","region":"global","price":"freeMain","accent":"#f97316","url":"https://invoke.ai/","summary":{"zh":"更偏稳定本地出图和素材生产，适合海报、产品图和可控生成。","en":"A strong local image setup for controlled generation and production-oriented visuals."},"tags":{"zh":["本地出图","海报","素材"],"en":["local image","posters","assets"]}},{"name":"Pika","category":"video","region":"global","price":"freePartial","accent":"#ff7aa2","url":"https://pika.art/","summary":{"zh":"适合轻量视频生成和创意演示。","en":"Good for lightweight AI video experiments and visual demos."},"tags":{"zh":["视频","动画","生成"],"en":["video","animation","generation"]}},{"name":"Runway","category":"video","region":"global","price":"freePartial","accent":"#7effb2","url":"https://runwayml.com/","summary":{"zh":"视频生成和编辑能力都比较成熟。","en":"A mature option for AI video generation and editing."},"tags":{"zh":["视频","生成","编辑"],"en":["video","generation","editing"]}},{"name":"ComfyUI Video","category":"video","region":"global","price":"freeMain","accent":"#22c55e","url":"https://www.comfy.org/","summary":{"zh":"用本地节点工作流接视频模型，适合文生视频、转绘和批量渲染。","en":"A local node workflow for video models, useful for text-to-video and batch rendering."},"tags":{"zh":["本地视频","工作流","渲染"],"en":["local video","workflow","rendering"]}},{"name":"Gamma","category":"productivity","region":"global","price":"freePartial","accent":"#8e7dff","url":"https://gamma.app/","summary":{"zh":"适合快速生成演示和结构化提案。","en":"A fast way to build presentations and structured decks."},"tags":{"zh":["演示","文稿","结构"],"en":["presentation","deck","structure"]}},{"name":"Coze","category":"productivity","region":"global","price":"freePartial","accent":"#6d7cff","url":"https://www.coze.com/","summary":{"zh":"适合做 AI Bot 和简单工作流。","en":"Useful for AI bots and lightweight workflow building."},"tags":{"zh":["Bot","工作流","应用"],"en":["bot","workflow","apps"]}},{"name":"Felo","category":"search","region":"domestic","price":"freeMain","accent":"#2db8ff","url":"https://felo.ai/zh-Hans/search","summary":{"zh":"偏中文检索和资料整理。","en":"A Chinese-friendly AI search experience for organized research."},"tags":{"zh":["中文","搜索","脑图"],"en":["Chinese","search","mind map"]}}],"featuredNames":["ChatGPT","Claude","DeepSeek","Perplexity","ComfyUI","Ollama","LM Studio","Gamma"],"hotNames":["ChatGPT","Claude","DeepSeek","Perplexity","Cursor","ComfyUI"],"badgeGroup":"price","metaGroups":["category","region"],"trendGroup":"category","cta":{"url":"../index.html"}};
+
+const state = Object.fromEntries(pageData.groups.map((group) => [group.key, 'all']).concat([['search', ''], ['sort', 'default']]));
+const chipEls = Object.fromEntries(pageData.groups.map((group) => [group.key, document.getElementById(group.key + '-chips')]));
+const featuredGridEl = document.getElementById('featured-grid');
+const gridEl = document.getElementById('grid');
+const recommendListEl = document.getElementById('recommend-list');
+const trendListEl = document.getElementById('trend-list');
+const countEl = document.getElementById('count');
+const brandEl = document.getElementById('brand');
+const searchEl = document.getElementById('search-input');
+const sortEl = document.getElementById('sort-select');
+const hotChipsEl = document.getElementById('hot-chips');
+const focusSearchEl = document.getElementById('focus-search');
+
+function getGroup(groupKey) {
+  return pageData.groups.find((item) => item.key === groupKey);
+}
+
+function getLabel(groupKey, value, lang) {
+  const group = getGroup(groupKey);
+  if (!group) return value;
+  if (value === 'all') return pageData.labels[lang][group.allLabel];
+  return pageData.options[groupKey][value][lang];
+}
+
+function hostLabel(url) {
+  if (!url) return '';
+  try {
+    const parsed = new URL(url, window.location.href);
+    if (parsed.protocol === 'file:') return '88220066.xyz';
+    return parsed.host + (parsed.pathname === '/' ? '' : parsed.pathname);
+  } catch {
+    return url;
+  }
+}
+
+function companyLabel(item) {
+  if (item.company) return item.company;
+  try {
+    const parsed = new URL(item.url, window.location.href);
+    if (parsed.protocol === 'file:') return '88220066.xyz';
+    return parsed.hostname.replace(/^www\./, '');
+  } catch {
+    return 'official';
+  }
+}
+
+function logoTarget(item) {
+  if (item.logo) return item.logo;
+  if (item.logoDomain) return item.logoDomain;
+  if (/^https?:\/\//.test(item.url)) return item.url;
+  return '';
+}
+
+function logoUrl(item) {
+  const target = logoTarget(item);
+  if (!target) return '';
+  return 'https://www.google.com/s2/favicons?sz=128&domain_url=' + encodeURIComponent(target);
+}
+
+function initials(name) {
+  const text = String(name || '').replace(/\s+/g, ' ').trim();
+  if (!text) return 'NA';
+  const ascii = text.replace(/[^A-Za-z0-9]/g, '');
+  if (ascii) return ascii.slice(0, 2).toUpperCase();
+  return text.slice(0, 2).toUpperCase();
+}
+
+function itemText(item, lang) {
+  const groups = {};
+  pageData.groups.forEach((group) => {
+    groups[group.key] = getLabel(group.key, item[group.key], lang);
+  });
+  return {
+    summary: item.summary[lang],
+    tags: item.tags[lang],
+    groups
+  };
+}
+
+function renderChipGroup(groupKey, lang) {
+  const values = ['all'].concat(Object.keys(pageData.options[groupKey]));
+  chipEls[groupKey].innerHTML = values.map((value) => {
+    const active = value === state[groupKey] ? 'active' : '';
+    return '<button class="chip-btn ' + active + '" data-group="' + groupKey + '" data-value="' + value + '" type="button">' + getLabel(groupKey, value, lang) + '</button>';
+  }).join('');
+}
+
+function filteredItems(lang) {
+  let list = pageData.items.filter((item) => {
+    const text = itemText(item, lang);
+    const haystack = [item.name, text.summary].concat(Object.values(text.groups), text.tags).join(' ').toLowerCase();
+    const passes = pageData.groups.every((group) => state[group.key] === 'all' || item[group.key] === state[group.key]);
+    return passes && (!state.search || haystack.includes(state.search));
+  });
+
+  if (state.sort === 'az') list = list.slice().sort((a, b) => a.name.localeCompare(b.name));
+  if (state.sort === 'za') list = list.slice().sort((a, b) => b.name.localeCompare(a.name));
+  if (state.sort === 'default') {
+    const featured = new Set(pageData.featuredNames);
+    list = list.slice().sort((a, b) => Number(featured.has(b.name)) - Number(featured.has(a.name)));
+  }
+  return list;
+}
+
+function cardTemplate(item, lang, featured) {
+  const text = itemText(item, lang);
+  const meta = pageData.metaGroups.map((key) => text.groups[key]).filter(Boolean).join(' / ');
+  const badge = pageData.badgeGroup && item[pageData.badgeGroup] ? text.groups[pageData.badgeGroup] : '';
+  const extraChips = pageData.groups
+    .map((group) => group.key)
+    .filter((key) => pageData.metaGroups.indexOf(key) === -1 && key !== pageData.badgeGroup)
+    .slice(0, 2)
+    .map((key) => '<span class="mini-chip">' + text.groups[key] + '</span>')
+    .join('');
+  const logo = logoUrl(item);
+  const logoHtml = logo
+    ? '<img src="' + logo + '" alt="' + item.name + ' logo" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';"><span class="logo-fallback" style="display:none">' + initials(item.name) + '</span>'
+    : '<span class="logo-fallback" style="display:flex">' + initials(item.name) + '</span>';
+  const target = /^https?:\/\//.test(item.url) ? '_blank' : '_self';
+  return '<article class="tool-card ' + (featured ? 'featured' : '') + '" style="--tool-accent:' + (item.accent || 'var(--accent)') + '">' +
+    '<div class="tool-top">' +
+      '<div class="brand-row">' +
+        '<div class="logo-wrap">' + logoHtml + '</div>' +
+        '<div><div class="meta">' + meta + '</div><h3 class="tool-title">' + item.name + '</h3><div class="company">' + companyLabel(item) + '</div></div>' +
+      '</div>' +
+      (badge ? '<span class="status-badge">' + badge + '</span>' : '') +
+    '</div>' +
+    '<p>' + text.summary + '</p>' +
+    '<div class="tag-row">' + text.tags.map((tag) => '<span class="mini-chip">' + tag + '</span>').join('') + extraChips + '</div>' +
+    '<div class="card-bottom"><span class="domain">' + hostLabel(item.url) + '</span><div class="btn-row"><a class="ghost" href="' + item.url + '" target="' + target + '" rel="noreferrer">' + pageData.labels[lang].site + '</a><a class="visit" href="' + item.url + '" target="' + target + '" rel="noreferrer">' + pageData.labels[lang].open + '</a></div></div>' +
+  '</article>';
+}
+
+function renderHotChips() {
+  hotChipsEl.innerHTML = pageData.hotNames.map((name) => '<button class="hot-chip" type="button" data-hot="' + name + '">' + name + '</button>').join('');
+}
+
+function renderRecommendList(lang) {
+  const featured = pageData.featuredNames
+    .map((name) => pageData.items.find((item) => item.name === name))
+    .filter(Boolean)
+    .slice(0, 4);
+  recommendListEl.innerHTML = featured.map((item) => {
+    const logo = logoUrl(item);
+    const target = /^https?:\/\//.test(item.url) ? '_blank' : '_self';
+    const logoHtml = logo
+      ? '<img src="' + logo + '" alt="' + item.name + ' logo" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';"><span class="logo-fallback" style="display:none">' + initials(item.name) + '</span>'
+      : '<span class="logo-fallback" style="display:flex">' + initials(item.name) + '</span>';
+    return '<a class="recommend-item" href="' + item.url + '" target="' + target + '" rel="noreferrer"><span class="list-logo">' + logoHtml + '</span><span class="list-meta"><strong>' + item.name + '</strong><span>' + itemText(item, lang).groups[pageData.metaGroups[0]] + '</span></span><span class="arrow">-></span></a>';
+  }).join('');
+}
+
+function renderTrendList(lang) {
+  const counts = new Map();
+  pageData.items.forEach((item) => {
+    const key = item[pageData.trendGroup];
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+  const ranked = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  trendListEl.innerHTML = ranked.map(([key, value]) => '<div class="rank-item"><span class="list-meta"><strong>' + getLabel(pageData.trendGroup, key, lang) + '</strong><span>' + pageData.labels[lang].trendUnit + '</span></span><span class="trend up">' + value + '</span></div>').join('');
+}
+
+function renderHeroLogos() {
+  const featured = pageData.featuredNames
+    .map((name) => pageData.items.find((item) => item.name === name))
+    .filter(Boolean)
+    .slice(0, 3);
+  ['a', 'b', 'c'].forEach((key, index) => {
+    const el = document.getElementById('hero-logo-' + key);
+    const item = featured[index];
+    if (!el || !item) return;
+    const url = logoUrl(item);
+    if (!url) return;
+    el.src = url;
+    el.alt = item.name;
+    el.onerror = function () { el.style.display = 'none'; };
+  });
+}
+
+function renderStatic(lang) {
+  brandEl.textContent = pageData.labels[lang].brand;
+  searchEl.placeholder = pageData.labels[lang].searchPlaceholder;
+  sortEl.value = state.sort;
+  renderHotChips();
+  renderRecommendList(lang);
+  renderTrendList(lang);
+  renderHeroLogos();
+  pageData.groups.forEach((group) => renderChipGroup(group.key, lang));
+}
+
+function renderPage(lang) {
+  renderStatic(lang);
+  const items = filteredItems(lang);
+  const featuredSet = new Set(pageData.featuredNames);
+  const featuredItems = pageData.items.filter((item) => featuredSet.has(item.name)).slice(0, 4);
+  featuredGridEl.innerHTML = featuredItems.map((item) => cardTemplate(item, lang, true)).join('');
+  countEl.textContent = pageData.labels[lang].showing + ' ' + items.length + ' / ' + pageData.items.length + ' ' + pageData.labels[lang].items;
+  gridEl.innerHTML = items.length ? items.map((item) => cardTemplate(item, lang, false)).join('') : '<div class="empty">' + pageData.labels[lang].noMatch + '</div>';
+}
+
+document.body.addEventListener('click', (event) => {
+  const groupButton = event.target.closest('[data-group]');
+  if (groupButton) {
+    state[groupButton.dataset.group] = groupButton.dataset.value;
+    renderPage(window.SiteI18n.getLang());
+    return;
+  }
+  const hotButton = event.target.closest('[data-hot]');
+  if (hotButton) {
+    searchEl.value = hotButton.dataset.hot;
+    state.search = hotButton.dataset.hot.trim().toLowerCase();
+    renderPage(window.SiteI18n.getLang());
+  }
+});
+
+searchEl.addEventListener('input', () => {
+  state.search = searchEl.value.trim().toLowerCase();
+  renderPage(window.SiteI18n.getLang());
+});
+
+sortEl.addEventListener('change', () => {
+  state.sort = sortEl.value;
+  renderPage(window.SiteI18n.getLang());
+});
+
+document.getElementById('search-button').addEventListener('click', () => {
+  state.search = searchEl.value.trim().toLowerCase();
+  renderPage(window.SiteI18n.getLang());
+});
+
+focusSearchEl.addEventListener('click', () => searchEl.focus());
+window.SiteI18n.bindPage(pageData.copy, renderPage);
+
   </script>
-<script id="claw-grid-script">
-(function(){
-  const hideBlock = (selector) => {
-    const el = document.querySelector(selector);
-    if (!el) return;
-    const section = el.closest('.section') || el.closest('.stats');
-    if (section) section.style.display = 'none';
-    else el.style.display = 'none';
-  };
-  ['#stats','#quick-grid','#featured-grid','.hero-actions'].forEach(hideBlock);
-
-  const initials = (text) => {
-    const clean = (text || '').replace(/\s+/g,' ').trim();
-    if (!clean) return 'AI';
-    if (/^[A-Za-z0-9]/.test(clean)) {
-      const parts = clean.split(/[^A-Za-z0-9]+/).filter(Boolean);
-      return (parts[0] || clean).slice(0,2).toUpperCase();
-    }
-    return clean.slice(0,2);
-  };
-
-  const enhanceCard = (card) => {
-    if (card.querySelector('.mini-logo')) return;
-    const top = card.querySelector('.tool-top') || card.querySelector('.card-top');
-    if (!top) return;
-    const info = top.querySelector('div');
-    if (!info) return;
-    const title = info.querySelector('h3,.model,h4');
-    if (!title) return;
-    const wrap = document.createElement('div');
-    wrap.className = 'compact-head';
-    const logo = document.createElement('span');
-    logo.className = 'mini-logo';
-    logo.textContent = initials(title.textContent);
-    const copy = document.createElement('div');
-    copy.className = 'compact-copy';
-    while (info.firstChild) {
-      copy.appendChild(info.firstChild);
-    }
-    wrap.appendChild(logo);
-    wrap.appendChild(copy);
-    info.appendChild(wrap);
-  };
-
-  document.querySelectorAll('.tool-card,.quick-card,.card').forEach(enhanceCard);
-})();
-</script></body>
+</body>
 </html>

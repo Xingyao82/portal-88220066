@@ -1,0 +1,166 @@
+:root{
+  --text:#0f172a!important;
+  --muted:#64748b!important;
+  --line:rgba(15,23,42,.08)!important;
+  --line-strong:rgba(15,23,42,.12)!important;
+  --panel:#ffffff!important;
+  --panel-soft:#f8fbff!important;
+  --accent:#4f6bff!important;
+  --accent-soft:rgba(79,107,255,.1)!important;
+}
+
+html,body{
+  background:
+    radial-gradient(circle at 10% 12%, rgba(143,92,255,.12), transparent 22%),
+    radial-gradient(circle at 88% 10%, rgba(79,107,255,.14), transparent 22%),
+    radial-gradient(circle at 62% 72%, rgba(58,214,181,.08), transparent 20%),
+    linear-gradient(180deg, #fbfcff 0%, #f5f7ff 52%, #eef3ff 100%)!important;
+  color:#0f172a!important;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC",sans-serif!important;
+}
+
+.nav,.panel,.hero,.section,.card,.chunk,.line-card,.rewrite-card,.summary-card,.result-card,.quote-card,.risk-card,.stat,.workspace-meta-card,.tool-panel,.preview-card,.hero-copy,.hero-panel,.gallery,.workspace,.site-footer,.toolbar{
+  background:rgba(255,255,255,.9)!important;
+  background-image:none!important;
+  border:1px solid rgba(15,23,42,.08)!important;
+  box-shadow:0 18px 42px rgba(124,135,185,.12)!important;
+  backdrop-filter:blur(16px)!important;
+}
+
+.nav,.toolbar{border-radius:24px!important}
+.hero,.panel,.section,.gallery,.workspace,.site-footer{border-radius:30px!important}
+.card,.chunk,.line-card,.rewrite-card,.summary-card,.result-card,.quote-card,.risk-card,.stat,.workspace-meta-card,.tool-panel,.preview-card{border-radius:22px!important}
+
+.nav{
+  padding:16px 18px!important;
+}
+
+.panel,.hero,.section,.gallery,.workspace,.site-footer{
+  padding:24px!important;
+}
+
+.brand,h1,h2,h3,h4,strong,.word,.quote-name,.hero-kicker,.section-kicker,.panel-label,.footer-brand,.label,.phonetic,.logo,.eyebrow,.chunk-index,.line-index,.level,.count,.premium-kicker{
+  color:#0f172a!important;
+}
+
+h1{
+  margin:0!important;
+  font-size:clamp(2rem,4vw,3rem)!important;
+  line-height:1.02!important;
+  letter-spacing:-.05em!important;
+}
+
+h2{
+  margin:0 0 12px!important;
+  font-size:1.22rem!important;
+  line-height:1.15!important;
+  letter-spacing:-.04em!important;
+}
+
+p,.hint,.meta,.meta-summary,.meta-small,.nav-links,.links,.tool-card p,.quick-card p,.summary-card span,.result-card span,.stat span,.stat-label,.chip,.tag,.phrase,.line-note,.hero-copy,.subtitle,.subcopy,.desc,.foot,.footnote,.empty,.empty-state,.label,.quote-meta,.tiny,.field-label,.field-note,.note,.tips,.steps,.premium-subtle,.premium-copy,.section-label,.footer-copy{
+  color:#64748b!important;
+  line-height:1.7!important;
+}
+
+.hero-copy,.premium-copy,.meta-summary{
+  max-width:56rem!important;
+}
+
+.stats{
+  gap:14px!important;
+}
+
+.stat{
+  padding:16px!important;
+}
+
+textarea,input,select,.search input,.pickup-input,.file-input,.field,.select,.setting-select{
+  min-height:48px!important;
+  background:#fff!important;
+  color:#0f172a!important;
+  border:1px solid rgba(15,23,42,.08)!important;
+  box-shadow:none!important;
+  border-radius:16px!important;
+}
+
+textarea{
+  padding:14px 16px!important;
+}
+
+input,select{
+  padding:0 14px!important;
+}
+
+textarea::placeholder,input::placeholder{color:#94a3b8!important}
+
+.btn-primary,.primary-btn,.visit,.action-btn,.download-btn,.speaker-button{
+  background:linear-gradient(135deg,#8f5cff,#4f6bff)!important;
+  border:0!important;
+  color:#fff!important;
+  box-shadow:0 12px 24px rgba(95,96,255,.18)!important;
+}
+
+.btn,.btn-secondary,.ghost,.secondary-btn,.ghost-btn,.link-btn,.tool-action-btn,.mini-btn,.action-pill{
+  background:#fff!important;
+  border:1px solid rgba(15,23,42,.08)!important;
+  color:#475569!important;
+  box-shadow:none!important;
+}
+
+.pickup-form > .btn[type="submit"],
+.upload-form .btn[type="submit"],
+.btn-row > a.btn[href="/kindle-upload/"]{
+  background:linear-gradient(135deg,#8f5cff,#4f6bff)!important;
+  border:0!important;
+  color:#fff!important;
+  box-shadow:0 12px 24px rgba(95,96,255,.18)!important;
+}
+
+.chip,.pill,.tag,.badge,.premium-badge,.premium-count,.level,.chunk-index,.line-index,.logo,.count,.status-badge{
+  background:rgba(79,107,255,.08)!important;
+  border:1px solid rgba(79,107,255,.16)!important;
+  color:#4057d6!important;
+}
+
+.chip.active,.pill.active,.pill.primary,.chip-btn.active,.chip-btn:hover,.toggle-chip input:checked + span{
+  background:rgba(79,107,255,.1)!important;
+  border-color:rgba(79,107,255,.22)!important;
+  color:#4057d6!important;
+}
+
+.phrase,.quote-stat,.contract-row,.formula,.metric-card,.session-stat,.listening-stage,.result-score{
+  background:#f8fbff!important;
+  border:1px solid rgba(15,23,42,.08)!important;
+}
+
+.line-card.active,.quote-card:hover,.card:hover,.tool-card:hover,.quick-card:hover{
+  box-shadow:0 16px 34px rgba(124,135,185,.16)!important;
+}
+
+.hero-actions,.btn-row,.actions,.workspace-actions,.hero-row,.badge-row,.chips,.tag-row,.row{
+  gap:10px!important;
+}
+
+.btn,.btn-primary,.btn-secondary,.primary-btn,.secondary-btn,.ghost-btn,.link-btn,.action-btn,.visit,.download-btn{
+  min-height:42px!important;
+  padding:0 16px!important;
+  border-radius:999px!important;
+}
+
+.empty,.empty-state{
+  border:1px dashed rgba(15,23,42,.14)!important;
+  background:rgba(255,255,255,.6)!important;
+}
+
+.hero-kicker,.section-kicker,.panel-label,.meta-label,.footer-brand,.eyebrow,.premium-kicker,.section-label{
+  letter-spacing:.16em!important;
+}
+
+@media (max-width:720px){
+  .nav{flex-direction:column!important;align-items:flex-start!important}
+  .panel,.hero,.section,.gallery,.workspace,.site-footer{padding:18px!important}
+  h1{font-size:clamp(1.8rem,8vw,2.35rem)!important}
+}
