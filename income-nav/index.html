@@ -916,6 +916,22 @@
       <p class="compare-note" id="compare-note" data-i18n="compareNote">这组只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。</p>
     </section>
 
+    <section class="section" id="sp500-compare-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="spCompareTitle">S&P 500 Income 复权对比</h2>
+          <p data-i18n="spCompareCopy">如果你盯的是同一条标普 income 线，XSPI、GPIX、SPYI 的风险档位和实现路径也不是一回事。</p>
+        </div>
+        <div class="section-badge" data-i18n="spCompareBadge">S&P 500 / XSPI + GPIX + SPYI</div>
+      </div>
+      <div class="compare-grid" id="sp500-compare-grid"></div>
+      <div class="compare-visual" id="sp500-compare-visual"></div>
+      <div class="compare-table-wrap">
+        <table class="compare-table" id="sp500-compare-table"></table>
+      </div>
+      <p class="compare-note" id="sp500-compare-note" data-i18n="spCompareNote">这组也只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。</p>
+    </section>
+
     <section class="section" id="advanced-section">
       <div class="section-head">
         <div>
@@ -997,6 +1013,16 @@
       compareNote: {
         zh: "这组只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
         en: "This block is only for structural comparison. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
+      },
+      spCompareTitle: { zh: "S&P 500 Income 复权对比", en: "S&P 500 Income Adjusted Compare" },
+      spCompareCopy: {
+        zh: "如果你盯的是同一条标普 income 线，XSPI、GPIX、SPYI 的风险档位和实现路径也不是一回事。",
+        en: "If you are looking at the same S&P 500 income lane, XSPI, GPIX, and SPYI also sit in different risk and implementation buckets."
+      },
+      spCompareBadge: { zh: "S&P 500 / XSPI + GPIX + SPYI", en: "S&P 500 / XSPI + GPIX + SPYI" },
+      spCompareNote: {
+        zh: "这组也只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
+        en: "This block is also for structural comparison only. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
       },
       advancedTitle: { zh: "高收益 / 期权 Income", en: "High-Yield / Options Income" },
       advancedCopy: {
@@ -1821,6 +1847,7 @@
     const nasdaqCompareCards = [
       {
         name: "XQQI",
+        meta: { zh: "Nasdaq income", en: "Nasdaq income" },
         accent: "#f97316",
         url: "https://neosfunds.com/xqqi/",
         badge: { zh: "最进攻", en: "Most aggressive" },
@@ -1836,6 +1863,7 @@
       },
       {
         name: "GPIQ",
+        meta: { zh: "Nasdaq income", en: "Nasdaq income" },
         accent: "#22c55e",
         url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIQ_fc.pdf?rd=n&sa=n",
         badge: { zh: "更像底仓", en: "More core-like" },
@@ -1851,6 +1879,7 @@
       },
       {
         name: "QQQI",
+        meta: { zh: "Nasdaq income", en: "Nasdaq income" },
         accent: "#38bdf8",
         url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
         badge: { zh: "高收入核心", en: "High-income core" },
@@ -1913,6 +1942,177 @@
           XQQI: { zh: "回撤放大、上行也更猛", en: "amplified drawdowns and amplified upside" },
           GPIQ: { zh: "费率低、覆盖区间更关键", en: "lower fee and overwrite range" },
           QQQI: { zh: "税务效率和上涨保留", en: "tax efficiency and upside retention" }
+        }
+      }
+    ];
+
+    const sp500CompareCards = [
+      {
+        name: "XSPI",
+        meta: { zh: "S&P 500 income", en: "S&P 500 income" },
+        accent: "#f97316",
+        url: "https://neosfunds.com/xspi/",
+        badge: { zh: "最进攻", en: "Most aggressive" },
+        summary: {
+          zh: "更像在 SPYI 路线上再把标普暴露抬高一档，适合单独看弹性和回撤放大。",
+          en: "Closer to a boosted version of the SPYI idea, and best viewed separately for upside torque and amplified drawdowns."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "卫星 / 更进攻", en: "Satellite / more aggressive" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "S&P 500 + 更高名义暴露", en: "S&P 500 + higher notional exposure" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "上行更猛，回撤也放大", en: "Stronger upside, but amplified drawdowns too" } }
+        ]
+      },
+      {
+        name: "GPIX",
+        meta: { zh: "S&P 500 income", en: "S&P 500 income" },
+        accent: "#22c55e",
+        url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIX_fc.pdf?rd=n&sa=n",
+        badge: { zh: "更像底仓", en: "More core-like" },
+        summary: {
+          zh: "更偏 core premium income，适合拿来和 SPYI、XSPI 看费率、覆盖区间和底仓感。",
+          en: "Leans more clearly into core premium income and works well as the cost and overwrite comparison point versus SPYI and XSPI."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "底仓 / 更均衡", en: "Core / more balanced" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "S&P 500 成分股组合", en: "S&P 500 equity basket" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "低费率和 overwrite 区间", en: "Lower fee and overwrite range" } }
+        ]
+      },
+      {
+        name: "SPYI",
+        meta: { zh: "S&P 500 income", en: "S&P 500 income" },
+        accent: "#2563eb",
+        url: "https://neosfunds.com/spyi/",
+        badge: { zh: "高收入核心", en: "High-income core" },
+        summary: {
+          zh: "更像 broad-market high income 的核心样本，适合放在中间看税务结构和上涨参与度。",
+          en: "Feels like the core broad-market high-income baseline, making it the middle case for tax structure and upside participation."
+        },
+        facts: [
+          { label: { zh: "定位", en: "Role" }, value: { zh: "底仓 / 偏高收入", en: "Core / more income-led" } },
+          { label: { zh: "底层暴露", en: "Exposure" }, value: { zh: "S&P 500 成分股组合", en: "S&P 500 equity basket" } },
+          { label: { zh: "优先看点", en: "Watch first" }, value: { zh: "税务结构和上涨参与度", en: "Tax structure and upside participation" } }
+        ]
+      }
+    ];
+
+    const sp500CompareRows = [
+      {
+        label: { zh: "策略定位", en: "Positioning" },
+        values: {
+          XSPI: { zh: "Boosted 高收入，偏进攻", en: "Boosted high income, more aggressive" },
+          GPIX: { zh: "Core premium income，偏均衡", en: "Core premium income, more balanced" },
+          SPYI: { zh: "高收入核心替代，偏 income", en: "High-income core substitute, more income-led" }
+        }
+      },
+      {
+        label: { zh: "底层暴露", en: "Base exposure" },
+        values: {
+          XSPI: { zh: "S&P 500 + 更高名义暴露", en: "S&P 500 + higher notional exposure" },
+          GPIX: { zh: "S&P 500 成分股组合", en: "S&P 500 equity basket" },
+          SPYI: { zh: "S&P 500 成分股组合", en: "S&P 500 equity basket" }
+        }
+      },
+      {
+        label: { zh: "收入框架", en: "Income framework" },
+        values: {
+          XSPI: { zh: "在 SPYI 路线上再抬高暴露", en: "Builds on the SPYI idea with more exposure" },
+          GPIX: { zh: "动态 overwrite，覆盖区间更明确", en: "Dynamic overwrite with a clearer coverage range" },
+          SPYI: { zh: "税务优化的标普 options overlay", en: "A tax-efficient S&P 500 options overlay" }
+        }
+      },
+      {
+        label: { zh: "费率", en: "Fee" },
+        values: {
+          XSPI: { zh: "0.98%", en: "0.98%" },
+          GPIX: { zh: "0.29% 净费率", en: "0.29% net expense ratio" },
+          SPYI: { zh: "0.68%", en: "0.68%" }
+        }
+      },
+      {
+        label: { zh: "更像什么", en: "Feels closer to" },
+        values: {
+          XSPI: { zh: "income + boosted beta", en: "income + boosted beta" },
+          GPIX: { zh: "更像底仓 premium income", en: "a more core-like premium income fund" },
+          SPYI: { zh: "高收入标普替代", en: "a higher-income S&P 500 substitute" }
+        }
+      },
+      {
+        label: { zh: "优先观察", en: "Watch first" },
+        values: {
+          XSPI: { zh: "回撤放大、上行也更猛", en: "amplified drawdowns and amplified upside" },
+          GPIX: { zh: "费率低、覆盖区间更关键", en: "lower fee and overwrite range" },
+          SPYI: { zh: "税务效率和上涨保留", en: "tax efficiency and upside retention" }
+        }
+      }
+    ];
+
+    const compareBlocks = [
+      {
+        sectionId: "compare-section",
+        gridId: "compare-grid",
+        visualId: "compare-visual",
+        tableId: "compare-table",
+        anchorSymbol: "XQQI",
+        cards: nasdaqCompareCards,
+        rows: nasdaqCompareRows,
+        chartTitle: {
+          zh: "从 XQQI 上市日开始的复权后总回报",
+          en: "Adjusted Total Return Since XQQI Inception"
+        },
+        chartCopy: {
+          zh: "三条线统一使用复权后口径，从 XQQI 上市后的首个交易日归一到 100，只看这段样本里谁更抗跌、谁弹性更大。",
+          en: "All three lines use an adjusted total-return basis and are rebased to 100 from the first trading session after XQQI launched, so this only compares live relative behavior so far."
+        },
+        chartLoading: {
+          zh: "正在加载从 XQQI 上市日起的日线对比",
+          en: "Loading daily comparison since XQQI inception"
+        },
+        chartError: {
+          zh: "暂时没取到 XQQI / GPIQ / QQQI 的对比日线",
+          en: "Could not load the XQQI / GPIQ / QQQI daily comparison right now"
+        },
+        chartBaseRule: {
+          zh: "复权后总回报，各自在 XQQI 上市后首个交易日 = 100",
+          en: "Adjusted total return, first trading session after XQQI launch = 100"
+        },
+        chartShort: {
+          zh: "XQQI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
+          en: "XQQI still has a very short track record, so use this to read the live sample rather than make a long-term claim."
+        }
+      },
+      {
+        sectionId: "sp500-compare-section",
+        gridId: "sp500-compare-grid",
+        visualId: "sp500-compare-visual",
+        tableId: "sp500-compare-table",
+        anchorSymbol: "XSPI",
+        cards: sp500CompareCards,
+        rows: sp500CompareRows,
+        chartTitle: {
+          zh: "从 XSPI 上市日开始的复权后总回报",
+          en: "Adjusted Total Return Since XSPI Inception"
+        },
+        chartCopy: {
+          zh: "三条线统一使用复权后口径，从 XSPI 上市后的首个交易日归一到 100，只看这段样本里谁更抗跌、谁弹性更大。",
+          en: "All three lines use an adjusted total-return basis and are rebased to 100 from the first trading session after XSPI launched, so this only compares live relative behavior so far."
+        },
+        chartLoading: {
+          zh: "正在加载从 XSPI 上市日起的日线对比",
+          en: "Loading daily comparison since XSPI inception"
+        },
+        chartError: {
+          zh: "暂时没取到 XSPI / GPIX / SPYI 的对比日线",
+          en: "Could not load the XSPI / GPIX / SPYI daily comparison right now"
+        },
+        chartBaseRule: {
+          zh: "复权后总回报，各自在 XSPI 上市后首个交易日 = 100",
+          en: "Adjusted total return, first trading session after XSPI launch = 100"
+        },
+        chartShort: {
+          zh: "XSPI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
+          en: "XSPI still has a very short track record, so use this to read the live sample rather than make a long-term claim."
         }
       }
     ];
@@ -2311,7 +2511,7 @@
         <article class="card compare-card" style="--card-accent:${item.accent}">
           <div class="card-top">
             <div>
-              <div class="meta">Nasdaq income</div>
+              <div class="meta">${item.meta?.[lang] || "Index income"}</div>
               <h3>${item.name}</h3>
             </div>
             <span class="badge">${item.badge[lang]}</span>
@@ -2333,35 +2533,41 @@
       `;
     }
 
-    function renderCompareSection(lang) {
-      const section = document.getElementById("compare-section");
+    function compareSectionVisible() {
       const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
       const styleOk = ["all", "option"].includes(filterState.style);
       const roleOk = ["all", "core", "enhanced", "satellite"].includes(filterState.role);
-      const visible = scopeOk && styleOk && roleOk;
-      section.hidden = !visible;
-      if (!visible) return;
-      document.getElementById("compare-grid").innerHTML = nasdaqCompareCards.map((item) => compareCardTemplate(item, lang)).join("");
-      document.getElementById("compare-table").innerHTML = `
+      return scopeOk && styleOk && roleOk;
+    }
+
+    function compareTableTemplate(lang, config) {
+      return `
         <thead>
           <tr>
             <th>${lang === "zh" ? "维度" : "Dimension"}</th>
-            <th>XQQI</th>
-            <th>GPIQ</th>
-            <th>QQQI</th>
+            ${config.cards.map((item) => `<th>${item.name}</th>`).join("")}
           </tr>
         </thead>
         <tbody>
-          ${nasdaqCompareRows.map((row) => `
+          ${config.rows.map((row) => `
             <tr>
               <th scope="row">${row.label[lang]}</th>
-              <td>${row.values.XQQI[lang]}</td>
-              <td>${row.values.GPIQ[lang]}</td>
-              <td>${row.values.QQQI[lang]}</td>
+              ${config.cards.map((item) => `<td>${row.values[item.name][lang]}</td>`).join("")}
             </tr>
           `).join("")}
         </tbody>
       `;
+    }
+
+    function renderCompareSection(lang, config) {
+      const section = document.getElementById(config.sectionId);
+      if (!section) return false;
+      const visible = compareSectionVisible();
+      section.hidden = !visible;
+      if (!visible) return false;
+      document.getElementById(config.gridId).innerHTML = config.cards.map((item) => compareCardTemplate(item, lang)).join("");
+      document.getElementById(config.tableId).innerHTML = compareTableTemplate(lang, config);
+      return true;
     }
 
     function normalizeCompareTrend(trend, anchorTs, color) {
@@ -2441,49 +2647,48 @@
       `;
     }
 
-    function compareChartPlaceholder(lang) {
+    function compareChartPlaceholder(lang, config) {
       return `
         <div class="trend-block compare-chart-panel">
           <div class="trend-head">
-            <span class="trend-label">${labels[lang].compareChartTitle}</span>
+            <span class="trend-label">${config.chartTitle[lang]}</span>
           </div>
-          <div class="trend-loading">${labels[lang].compareChartLoading}</div>
+          <div class="trend-loading">${config.chartLoading[lang]}</div>
         </div>
       `;
     }
 
-    function compareChartError(lang) {
+    function compareChartError(lang, config) {
       return `
         <div class="trend-block compare-chart-panel">
           <div class="trend-head">
-            <span class="trend-label">${labels[lang].compareChartTitle}</span>
+            <span class="trend-label">${config.chartTitle[lang]}</span>
             <strong class="trend-return">--</strong>
           </div>
-          <div class="trend-error">${labels[lang].compareChartError}</div>
+          <div class="trend-error">${config.chartError[lang]}</div>
         </div>
       `;
     }
 
-    async function renderCompareChart(lang) {
-      const section = document.getElementById("compare-section");
-      const mount = document.getElementById("compare-visual");
+    async function renderCompareChart(lang, config, requestId) {
+      const section = document.getElementById(config.sectionId);
+      const mount = document.getElementById(config.visualId);
       if (!section || !mount || section.hidden) {
         if (mount) mount.innerHTML = "";
         return;
       }
 
-      const requestId = ++compareChartRequestId;
-      mount.innerHTML = compareChartPlaceholder(lang);
+      mount.innerHTML = compareChartPlaceholder(lang, config);
 
       try {
-        const compareConfigs = nasdaqCompareCards.map((item) => ({ symbol: item.name, color: item.accent }));
+        const compareConfigs = config.cards.map((item) => ({ symbol: item.name, color: item.accent }));
         const trends = await Promise.all(compareConfigs.map((item) => getTrend(item.symbol, COMPARE_TREND_INTERVAL)));
         if (requestId !== compareChartRequestId) return;
 
-        const xqqiTrend = trends.find((trend) => trend?.symbol === "XQQI");
-        if (!xqqiTrend?.inceptionTs) throw new Error("Missing XQQI inception");
+        const anchorTrend = trends.find((trend) => trend?.symbol === config.anchorSymbol);
+        if (!anchorTrend?.inceptionTs) throw new Error(`Missing ${config.anchorSymbol} inception`);
 
-        const anchorTs = xqqiTrend.inceptionTs;
+        const anchorTs = anchorTrend.inceptionTs;
         const normalized = compareConfigs
           .map((item) => normalizeCompareTrend(trends.find((trend) => trend?.symbol === item.symbol), anchorTs, item.color))
           .filter(Boolean);
@@ -2495,11 +2700,11 @@
           <div class="trend-block compare-chart-panel">
             <div class="compare-chart-head">
               <div>
-                <span class="trend-label">${labels[lang].compareChartTitle}</span>
-                <p class="compare-chart-copy">${labels[lang].compareChartCopy}</p>
+                <span class="trend-label">${config.chartTitle[lang]}</span>
+                <p class="compare-chart-copy">${config.chartCopy[lang]}</p>
               </div>
               <div class="compare-chart-meta">
-                <span class="trend-source">${labels[lang].compareChartBase}: ${labels[lang].compareChartBaseRule}</span>
+                <span class="trend-source">${labels[lang].compareChartBase}: ${config.chartBaseRule[lang]}</span>
                 <span class="trend-source">${labels[lang].compareChartStart}: ${formatDayDate(anchorTs, lang)}</span>
                 <span class="trend-source">${labels[lang].compareChartLatest}: ${formatDayDate(latestTs, lang)}</span>
               </div>
@@ -2528,12 +2733,12 @@
                 </div>
               `).join("")}
             </div>
-            <div class="trend-source warn">${labels[lang].compareChartShort}</div>
+            <div class="trend-source warn">${config.chartShort[lang]}</div>
           </div>
         `;
       } catch (error) {
         if (requestId !== compareChartRequestId) return;
-        mount.innerHTML = compareChartError(lang);
+        mount.innerHTML = compareChartError(lang, config);
       }
     }
 
@@ -2883,8 +3088,11 @@
         </div>
       `).join("");
       renderFilterButtons(lang);
-      renderCompareSection(lang);
-      renderCompareChart(lang);
+      const compareRequestId = ++compareChartRequestId;
+      compareBlocks.forEach((config) => {
+        renderCompareSection(lang, config);
+        renderCompareChart(lang, config, compareRequestId);
+      });
       const totalMatches = renderSections(lang);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
