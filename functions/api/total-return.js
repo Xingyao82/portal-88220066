@@ -15,13 +15,18 @@ function eastmoneyCode(symbol) {
   return symbol.replace(/\.(SS|SZ)$/i, "");
 }
 
-function buildYahooUrl(symbol, interval) {
+function buildYahooUrl(symbol, interval, fromTs = 0) {
   const params = new URLSearchParams({
     interval,
-    range: "max",
     includeAdjustedClose: "true",
     events: "div,splits"
   });
+  if (fromTs) {
+    params.set("period1", String(Math.floor(fromTs)));
+    params.set("period2", String(Math.floor(Date.now() / 1000) + 86400));
+  } else {
+    params.set("range", "max");
+  }
   return `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?${params}`;
 }
 
@@ -115,7 +120,7 @@ async function fetchChart(symbol, interval, fromTs = 0) {
     return fetchEastmoneyFund(symbol, fromTs);
   }
 
-  const response = await fetch(buildYahooUrl(symbol, interval), {
+  const response = await fetch(buildYahooUrl(symbol, interval, fromTs), {
     headers: DEFAULT_HEADERS,
     cf: { cacheTtl: 21600, cacheEverything: true }
   });
