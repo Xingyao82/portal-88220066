@@ -173,6 +173,136 @@
       text-align: left;
     }
 
+    .compare-visual {
+      margin-top: 14px;
+    }
+
+    .compare-chart-panel {
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .compare-chart-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .compare-chart-copy {
+      margin: 6px 0 0;
+      max-width: 46rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .compare-chart-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .compare-chart-board {
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+    }
+
+    .compare-chart-svg {
+      width: 100%;
+      height: 260px;
+      display: block;
+    }
+
+    .compare-chart-grid-line {
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 1;
+    }
+
+    .compare-chart-tick-line {
+      stroke: rgba(255, 255, 255, 0.22);
+      stroke-width: 1;
+    }
+
+    .compare-chart-baseline {
+      stroke: rgba(255, 255, 255, 0.26);
+      stroke-width: 1;
+      stroke-dasharray: 5 5;
+    }
+
+    .compare-chart-axis-label {
+      fill: rgba(159, 176, 212, 0.86);
+      font-size: 12px;
+    }
+
+    .compare-chart-line {
+      fill: none;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .compare-chart-dot {
+      stroke: rgba(15, 23, 42, 0.96);
+      stroke-width: 2;
+    }
+
+    .compare-chart-legend {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .compare-chart-item {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .compare-chart-item-top,
+    .compare-chart-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .compare-chart-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .compare-chart-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--line-color, var(--accent));
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--line-color, var(--accent)) 18%, transparent);
+    }
+
+    .compare-chart-item strong {
+      color: var(--text);
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .compare-chart-stat span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
     .compare-table-wrap {
       margin-top: 14px;
       overflow-x: auto;
@@ -676,6 +806,7 @@
     }
 
     @media (max-width: 1180px) {
+      .compare-chart-legend,
       .compare-grid,
       .summary-grid,
       .grid { grid-template-columns: 1fr 1fr; }
@@ -684,9 +815,13 @@
     @media (max-width: 720px) {
       .shell { width: min(calc(100% - 18px), var(--max)); }
       .nav { flex-direction: column; align-items: flex-start; }
+      .compare-chart-legend,
       .compare-grid,
       .summary-grid,
       .grid { grid-template-columns: 1fr; }
+      .compare-chart-meta {
+        justify-content: flex-start;
+      }
       .section-head { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -774,6 +909,7 @@
         <div class="section-badge" data-i18n="compareBadge">Nasdaq / XQQI + GPIQ + QQQI</div>
       </div>
       <div class="compare-grid" id="compare-grid"></div>
+      <div class="compare-visual" id="compare-visual"></div>
       <div class="compare-table-wrap">
         <table class="compare-table" id="compare-table"></table>
       </div>
@@ -910,6 +1046,16 @@
         trendTimeliness: "一般会跟到最近一个交易日，免费源偶尔会慢一拍。",
         trendYoungFund: "样本还短，年化参考意义有限。",
         trendRiskHot: "高波动 income，别只看分配率。",
+        compareChartTitle: "从 XQQI 上市日开始",
+        compareChartCopy: "三条线都从 XQQI 上市后的首个交易日归一到 100，只看这段样本里谁更抗跌、谁弹性更大。",
+        compareChartLoading: "正在加载从 XQQI 上市日起的日线对比",
+        compareChartError: "暂时没取到 XQQI / GPIQ / QQQI 的对比日线",
+        compareChartBase: "基准",
+        compareChartBaseRule: "各自在 XQQI 上市后首个交易日 = 100",
+        compareChartStart: "起点",
+        compareChartLatest: "当前",
+        compareChartPeriodReturn: "区间回报",
+        compareChartShort: "XQQI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
         hubTitle: "平台入口",
         hubCopy: "这张卡不是单只 ETF 的复权走势，而是留作 provider 入口，适合继续点进去看新品、规则和产品线扩展。",
         hubFocus: "适合用来追踪新产品和发行方向。",
@@ -983,6 +1129,16 @@
         trendTimeliness: "Usually up to the latest trading day, though free sources can lag a bit.",
         trendYoungFund: "Short track record, so annualized return needs extra caution.",
         trendRiskHot: "High-vol income product. Do not judge it by yield alone.",
+        compareChartTitle: "Since XQQI Inception",
+        compareChartCopy: "All three lines are rebased to 100 from the first trading session after XQQI launched, so this is only about relative behavior in the live sample so far.",
+        compareChartLoading: "Loading daily comparison since XQQI inception",
+        compareChartError: "Could not load the XQQI / GPIQ / QQQI daily comparison right now",
+        compareChartBase: "Base",
+        compareChartBaseRule: "First trading session after XQQI launch = 100",
+        compareChartStart: "Start",
+        compareChartLatest: "Now",
+        compareChartPeriodReturn: "Period return",
+        compareChartShort: "XQQI still has a very short track record, so use this to read the live sample rather than make a long-term claim.",
         hubTitle: "Provider hub",
         hubCopy: "This card is a provider entry point rather than a single-ETF total-return view, so use it to inspect new launches, structures, and lineup changes.",
         hubFocus: "Useful for tracking new launches and product direction.",
@@ -1832,9 +1988,12 @@
       }
     ];
 
+    const DEFAULT_TREND_INTERVAL = "1mo";
+    const COMPARE_TREND_INTERVAL = "1d";
     const trendCache = new Map();
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
+    let compareChartRequestId = 0;
     let copyStatusTimer = null;
     const filterState = { scope: "all", style: "all", role: "all", sort: "default", preset: "default" };
     let activeLang = "zh";
@@ -1962,6 +2121,43 @@
         year: "numeric",
         month: "short"
       }).format(date);
+    }
+
+    function formatDayDate(ts, lang) {
+      const date = new Date(ts * 1000);
+      return new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function formatShortDate(ts, lang) {
+      const date = new Date(ts * 1000);
+      return new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en-US", {
+        month: "short",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function formatSignedPct(value, digits = 2) {
+      if (!Number.isFinite(value)) return "--";
+      const rounded = Number(value.toFixed(digits));
+      return `${rounded > 0 ? "+" : ""}${rounded}%`;
+    }
+
+    function formatIndexValue(value, digits = 1) {
+      if (!Number.isFinite(value)) return "--";
+      return Number(value.toFixed(digits)).toFixed(digits);
+    }
+
+    function trendCacheKey(symbol, interval = DEFAULT_TREND_INTERVAL) {
+      return `${symbol}::${interval}`;
+    }
+
+    function getCachedTrend(symbol, interval = DEFAULT_TREND_INTERVAL) {
+      if (!symbol) return null;
+      return trendDataCache.get(trendCacheKey(symbol, interval)) || null;
     }
 
     function buildSparkline(series) {
@@ -2168,27 +2364,201 @@
       `;
     }
 
-    async function getTrend(symbol) {
+    function normalizeCompareTrend(trend, anchorTs, color) {
+      const points = trend?.series?.filter((point) => point.ts >= anchorTs) || [];
+      if (points.length < 2) return null;
+      const baseValue = points[0].value;
+      if (!Number.isFinite(baseValue) || baseValue <= 0) return null;
+      const normalizedPoints = points.map((point) => ({
+        ts: point.ts,
+        value: Number(((point.value / baseValue) * 100).toFixed(2))
+      }));
+      const latestPoint = normalizedPoints[normalizedPoints.length - 1];
+      return {
+        symbol: trend.symbol,
+        color,
+        startTs: points[0].ts,
+        latestTs: points[points.length - 1].ts,
+        normalizedLatest: latestPoint.value,
+        periodReturnPct: Number((((points[points.length - 1].value / baseValue) - 1) * 100).toFixed(2)),
+        points: normalizedPoints
+      };
+    }
+
+    function buildCompareLinePath(points, scaleX, scaleY) {
+      return points
+        .map((point, index) => `${index === 0 ? "M" : "L"} ${Number(scaleX(point.ts).toFixed(2))} ${Number(scaleY(point.value).toFixed(2))}`)
+        .join(" ");
+    }
+
+    function buildCompareChartSvg(seriesSet, lang) {
+      const width = 920;
+      const height = 260;
+      const pad = { top: 18, right: 18, bottom: 34, left: 52 };
+      const allPoints = seriesSet.flatMap((series) => series.points);
+      const values = allPoints.map((point) => point.value);
+      const startTs = Math.min(...allPoints.map((point) => point.ts));
+      const endTs = Math.max(...allPoints.map((point) => point.ts));
+      const minValue = Math.min(...values, 100);
+      const maxValue = Math.max(...values, 100);
+      const span = maxValue - minValue || 1;
+      const buffer = Math.max(span * 0.14, 2);
+      const domainMin = Math.max(0, minValue - buffer);
+      const domainMax = maxValue + buffer;
+      const xSpan = Math.max(endTs - startTs, 1);
+      const ySpan = Math.max(domainMax - domainMin, 1);
+      const scaleX = (ts) => pad.left + ((ts - startTs) / xSpan) * (width - pad.left - pad.right);
+      const scaleY = (value) => height - pad.bottom - ((value - domainMin) / ySpan) * (height - pad.top - pad.bottom);
+      const yTicks = Array.from({ length: 4 }, (_, index) => Number((domainMax - (index / 3) * ySpan).toFixed(1)));
+      const xTicks = [startTs, startTs + xSpan / 2, endTs];
+      const baselineVisible = domainMin < 100 && domainMax > 100;
+
+      return `
+        <svg class="compare-chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+          ${yTicks.map((value) => `
+            <g>
+              <line class="compare-chart-grid-line" x1="${pad.left}" y1="${Number(scaleY(value).toFixed(2))}" x2="${width - pad.right}" y2="${Number(scaleY(value).toFixed(2))}"></line>
+              <text class="compare-chart-axis-label" x="${pad.left - 10}" y="${Number((scaleY(value) + 4).toFixed(2))}" text-anchor="end">${formatIndexValue(value, 1)}</text>
+            </g>
+          `).join("")}
+          ${baselineVisible ? `<line class="compare-chart-baseline" x1="${pad.left}" y1="${Number(scaleY(100).toFixed(2))}" x2="${width - pad.right}" y2="${Number(scaleY(100).toFixed(2))}"></line>` : ""}
+          ${seriesSet.map((series) => `<path class="compare-chart-line" d="${buildCompareLinePath(series.points, scaleX, scaleY)}" stroke="${series.color}"></path>`).join("")}
+          ${seriesSet.map((series) => {
+            const lastPoint = series.points[series.points.length - 1];
+            return `<circle class="compare-chart-dot" cx="${Number(scaleX(lastPoint.ts).toFixed(2))}" cy="${Number(scaleY(lastPoint.value).toFixed(2))}" r="4.2" fill="${series.color}"></circle>`;
+          }).join("")}
+          ${xTicks.map((ts, index) => {
+            const x = Number(scaleX(ts).toFixed(2));
+            const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+            return `
+              <g>
+                <line class="compare-chart-tick-line" x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 6}"></line>
+                <text class="compare-chart-axis-label" x="${x}" y="${height - 10}" text-anchor="${anchor}">${formatShortDate(ts, lang)}</text>
+              </g>
+            `;
+          }).join("")}
+        </svg>
+      `;
+    }
+
+    function compareChartPlaceholder(lang) {
+      return `
+        <div class="trend-block compare-chart-panel">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].compareChartTitle}</span>
+          </div>
+          <div class="trend-loading">${labels[lang].compareChartLoading}</div>
+        </div>
+      `;
+    }
+
+    function compareChartError(lang) {
+      return `
+        <div class="trend-block compare-chart-panel">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].compareChartTitle}</span>
+            <strong class="trend-return">--</strong>
+          </div>
+          <div class="trend-error">${labels[lang].compareChartError}</div>
+        </div>
+      `;
+    }
+
+    async function renderCompareChart(lang) {
+      const section = document.getElementById("compare-section");
+      const mount = document.getElementById("compare-visual");
+      if (!section || !mount || section.hidden) {
+        if (mount) mount.innerHTML = "";
+        return;
+      }
+
+      const requestId = ++compareChartRequestId;
+      mount.innerHTML = compareChartPlaceholder(lang);
+
+      try {
+        const compareConfigs = nasdaqCompareCards.map((item) => ({ symbol: item.name, color: item.accent }));
+        const trends = await Promise.all(compareConfigs.map((item) => getTrend(item.symbol, COMPARE_TREND_INTERVAL)));
+        if (requestId !== compareChartRequestId) return;
+
+        const xqqiTrend = trends.find((trend) => trend?.symbol === "XQQI");
+        if (!xqqiTrend?.inceptionTs) throw new Error("Missing XQQI inception");
+
+        const anchorTs = xqqiTrend.inceptionTs;
+        const normalized = compareConfigs
+          .map((item) => normalizeCompareTrend(trends.find((trend) => trend?.symbol === item.symbol), anchorTs, item.color))
+          .filter(Boolean);
+
+        if (normalized.length !== compareConfigs.length) throw new Error("Missing comparison series");
+
+        const latestTs = Math.max(...normalized.map((series) => series.latestTs));
+        mount.innerHTML = `
+          <div class="trend-block compare-chart-panel">
+            <div class="compare-chart-head">
+              <div>
+                <span class="trend-label">${labels[lang].compareChartTitle}</span>
+                <p class="compare-chart-copy">${labels[lang].compareChartCopy}</p>
+              </div>
+              <div class="compare-chart-meta">
+                <span class="trend-source">${labels[lang].compareChartBase}: ${labels[lang].compareChartBaseRule}</span>
+                <span class="trend-source">${labels[lang].compareChartStart}: ${formatDayDate(anchorTs, lang)}</span>
+                <span class="trend-source">${labels[lang].compareChartLatest}: ${formatDayDate(latestTs, lang)}</span>
+              </div>
+            </div>
+            <div class="compare-chart-board">
+              ${buildCompareChartSvg(normalized, lang)}
+            </div>
+            <div class="compare-chart-legend">
+              ${normalized.map((series) => `
+                <div class="compare-chart-item" style="--line-color:${series.color}">
+                  <div class="compare-chart-item-top">
+                    <span class="compare-chart-name">
+                      <span class="compare-chart-swatch"></span>
+                      ${series.symbol}
+                    </span>
+                    <strong>${formatIndexValue(series.normalizedLatest, 1)}</strong>
+                  </div>
+                  <div class="compare-chart-stat">
+                    <span>${labels[lang].compareChartPeriodReturn}</span>
+                    <strong>${formatSignedPct(series.periodReturnPct)}</strong>
+                  </div>
+                  <div class="compare-chart-stat">
+                    <span>${labels[lang].compareChartStart}</span>
+                    <strong>${formatDayDate(series.startTs, lang)}</strong>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+            <div class="trend-source warn">${labels[lang].compareChartShort}</div>
+          </div>
+        `;
+      } catch (error) {
+        if (requestId !== compareChartRequestId) return;
+        mount.innerHTML = compareChartError(lang);
+      }
+    }
+
+    async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL) {
       if (!symbol) return null;
-      if (!trendCache.has(symbol)) {
+      const cacheKey = trendCacheKey(symbol, interval);
+      if (!trendCache.has(cacheKey)) {
         trendCache.set(
-          symbol,
-          fetch(`/api/total-return?symbol=${encodeURIComponent(symbol)}`)
+          cacheKey,
+          fetch(`/api/total-return?symbol=${encodeURIComponent(symbol)}&interval=${encodeURIComponent(interval)}`)
             .then((response) => {
               if (!response.ok) throw new Error(`HTTP ${response.status}`);
               return response.json();
             })
             .then((trend) => {
-              trendDataCache.set(symbol, trend);
+              trendDataCache.set(cacheKey, trend);
               return trend;
             })
             .catch((error) => {
-              trendDataCache.set(symbol, null);
+              trendDataCache.set(cacheKey, null);
               throw error;
             })
         );
       }
-      return trendCache.get(symbol);
+      return trendCache.get(cacheKey);
     }
 
     async function hydrateTrendBlocks(lang) {
@@ -2357,7 +2727,7 @@
     }
 
     function getSortMetric(item) {
-      const trend = item.symbol ? trendDataCache.get(item.symbol) : null;
+      const trend = item.symbol ? getCachedTrend(item.symbol, DEFAULT_TREND_INTERVAL) : null;
       if (!trend) return Number.NEGATIVE_INFINITY;
       if (filterState.sort === "annualized") return Number(trend.annualizedReturnPct ?? Number.NEGATIVE_INFINITY);
       if (filterState.sort === "totalReturn") return Number(trend.totalReturnPct ?? Number.NEGATIVE_INFINITY);
@@ -2384,12 +2754,12 @@
       if (filterState.sort === "default" || isResearchMode()) return;
       const symbols = sectionConfigs
         .flatMap((section) => getVisibleItems(section).map((item) => item.symbol).filter(Boolean));
-      const missing = [...new Set(symbols.filter((symbol) => !trendDataCache.has(symbol)))];
+      const missing = [...new Set(symbols.filter((symbol) => !trendDataCache.has(trendCacheKey(symbol, DEFAULT_TREND_INTERVAL))))];
       if (!missing.length) return;
       const requestId = ++sortWarmRequestId;
       await Promise.all(missing.map(async (symbol) => {
         try {
-          await getTrend(symbol);
+          await getTrend(symbol, DEFAULT_TREND_INTERVAL);
         } catch (error) {
           return null;
         }
@@ -2514,6 +2884,7 @@
       `).join("");
       renderFilterButtons(lang);
       renderCompareSection(lang);
+      renderCompareChart(lang);
       const totalMatches = renderSections(lang);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
