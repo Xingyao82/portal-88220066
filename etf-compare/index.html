@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ETF 对比 | 88220066.xyz</title>
-  <meta name="description" content="复权后对比美股 ETF 和 A 股场内 ETF，支持分享当前组合。">
+  <meta name="description" content="对比美股 ETF 和中国 ETF，支持直接输入 6 位中国 ETF 代码并分享当前组合。">
   <meta name="theme-color" content="#0f172a">
   <script src="../notes/site-i18n.js"></script>
   <style>
@@ -502,7 +502,7 @@
     <section class="hero">
       <div class="eyebrow" data-i18n="eyebrow">ETF COMPARE</div>
       <h1 data-i18n="heroTitle">ETF 对比</h1>
-      <p class="hero-copy" data-i18n="heroCopy">把美股 ETF 和 A 股场内 ETF 放到同一张复权图里看。比较起点统一取当前组合里最晚上市的那只基金，默认先放 6 只做第一屏。</p>
+      <p class="hero-copy" data-i18n="heroCopy">把美股 ETF 和中国 ETF 放到同一张图里看。中国 ETF 可以直接输 6 位代码，比较起点统一取当前组合里最晚上市的那只基金。</p>
       <div class="summary-grid" id="summary-grid"></div>
       <div class="hero-actions">
         <a class="hero-button" href="#compare-form" data-i18n="jumpButton">开始对比</a>
@@ -515,7 +515,7 @@
       <div class="section-head">
         <div>
           <h2 data-i18n="formTitle">输入组合</h2>
-          <p class="section-copy" data-i18n="formCopy">最少 2 只，最多 6 只。自动去空格、转大写、去重。A 股场内 ETF 请输入带后缀代码，例如 510880.SS 或 159915.SZ。</p>
+          <p class="section-copy" data-i18n="formCopy">最少 2 只，最多 6 只。自动去空格、转大写、去重。中国 ETF 可以直接输入 510880 或 159915，也兼容旧的 .SS / .SZ 写法。</p>
         </div>
         <div class="section-pill" id="slot-count-pill">6 slots</div>
       </div>
@@ -578,21 +578,21 @@
     const pageCopy = {
       pageTitle: { zh: "ETF 对比 | 88220066.xyz", en: "ETF Compare | 88220066.xyz" },
       pageDescription: {
-        zh: "复权后对比美股 ETF 和 A 股场内 ETF，支持分享当前组合。",
-        en: "Compare adjusted total-return across U.S. ETFs and China-listed ETFs, with shareable symbol sets."
+        zh: "对比美股 ETF 和中国 ETF，支持直接输入 6 位中国 ETF 代码并分享当前组合。",
+        en: "Compare U.S. ETFs and China ETFs, with direct 6-digit China ETF input and shareable symbol sets."
       },
       eyebrow: { zh: "ETF COMPARE", en: "ETF COMPARE" },
       heroTitle: { zh: "ETF 对比", en: "ETF Compare" },
       heroCopy: {
-        zh: "把美股 ETF 和 A 股场内 ETF 放到同一张复权图里看。比较起点统一取当前组合里最晚上市的那只基金，默认先放 6 只做第一屏。",
-        en: "Compare U.S. ETFs and China-listed ETFs on one adjusted total-return chart. The shared start date is the latest inception date inside the current basket, with six defaults loaded first."
+        zh: "把美股 ETF 和中国 ETF 放到同一张图里看。中国 ETF 可以直接输 6 位代码，比较起点统一取当前组合里最晚上市的那只基金。",
+        en: "Compare U.S. ETFs and China ETFs on one chart. China ETFs can be entered directly as 6-digit codes, and the shared start date is the latest inception date inside the current basket."
       },
       jumpButton: { zh: "开始对比", en: "Start comparing" },
       copyButton: { zh: "复制分享链接", en: "Copy share link" },
       formTitle: { zh: "输入组合", en: "Build the basket" },
       formCopy: {
-        zh: "最少 2 只，最多 6 只。自动去空格、转大写、去重。A 股场内 ETF 请输入带后缀代码，例如 510880.SS 或 159915.SZ。",
-        en: "Use 2 to 6 symbols. Inputs are trimmed, uppercased, and deduped automatically. China-listed ETFs must include the suffix, such as 510880.SS or 159915.SZ."
+        zh: "最少 2 只，最多 6 只。自动去空格、转大写、去重。中国 ETF 可以直接输入 510880 或 159915，也兼容旧的 .SS / .SZ 写法。",
+        en: "Use 2 to 6 symbols. Inputs are trimmed, uppercased, and deduped automatically. China ETFs can be entered directly as 510880 or 159915, while old .SS / .SZ links still work."
       },
       compareButton: { zh: "更新对比", en: "Refresh comparison" },
       resetButton: { zh: "恢复默认 6 只", en: "Reset to defaults" },
@@ -641,7 +641,7 @@
         basisPriceHint: "按原始价格/单位净值",
         summaryLoadedValue: "QQQ / XQQI / GPIQ / QQQI / SPY / SPYI",
         summaryRangeValue: "最晚成立 ETF = 起点",
-        summaryRulesValue: "2 到 6 只，A 股需 .SS / .SZ",
+        summaryRulesValue: "2 到 6 只，中国 ETF 直接输 6 位代码",
         summaryShareValue: "URL 写入当前 symbols + 口径",
         chartWaiting: "输入至少 2 只可用 ETF 后，这里会显示对比图。",
         chartNeedTwo: "至少需要 2 只可用 ETF 才能画图。",
@@ -697,7 +697,7 @@
         basisPriceHint: "Raw price / unit NAV",
         summaryLoadedValue: "QQQ / XQQI / GPIQ / QQQI / SPY / SPYI",
         summaryRangeValue: "Latest inception ETF = anchor",
-        summaryRulesValue: "2 to 6 funds, China ETFs need .SS / .SZ",
+        summaryRulesValue: "2 to 6 funds, China ETFs use plain 6-digit codes",
         summaryShareValue: "URL stores symbols + basis",
         chartWaiting: "Add at least two valid ETFs to render the comparison chart here.",
         chartNeedTwo: "At least two valid ETFs are required to draw the chart.",
@@ -790,6 +790,21 @@
       return (value || "").trim().toUpperCase().replace(/\s+/g, "");
     }
 
+    function resolveCompareSymbol(value) {
+      const normalized = sanitizeSymbol(value);
+      if (!normalized) return "";
+      if (/^\d{6}\.(SS|SZ)$/.test(normalized)) return normalized;
+      if (/^5\d{5}$/.test(normalized)) return `${normalized}.SS`;
+      if (/^1\d{5}$/.test(normalized)) return `${normalized}.SZ`;
+      return normalized;
+    }
+
+    function displayCompareSymbol(value) {
+      const normalized = sanitizeSymbol(value);
+      if (/^\d{6}\.(SS|SZ)$/.test(normalized)) return normalized.slice(0, 6);
+      return normalized;
+    }
+
     function basisLabelPart(key) {
       return state.basis === "price" ? text(`${key}Price`) : text(`${key}Adjusted`);
     }
@@ -830,7 +845,7 @@
             <span class="slot-label">${text("slotLabel")} ${index + 1}</span>
             <button class="slot-action" type="button" data-clear-slot="${index}">${text("clear")}</button>
           </div>
-          <input class="symbol-input" id="symbol-input-${index}" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="QQQ / 510880.SS">
+          <input class="symbol-input" id="symbol-input-${index}" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="QQQ / 510880">
           <div class="inline-error" id="slot-error-${index}" aria-live="polite"></div>
         </article>
       `).join("");
@@ -851,7 +866,7 @@
       const next = Array.from({ length: MAX_SYMBOLS }, (_, index) => symbols[index] || "");
       next.forEach((value, index) => {
         const input = document.getElementById(`symbol-input-${index}`);
-        if (input) input.value = value;
+        if (input) input.value = displayCompareSymbol(value);
       });
     }
 
@@ -866,19 +881,24 @@
       const rawValues = getRawInputValues();
       rawValues.forEach((value, index) => {
         const input = document.getElementById(`symbol-input-${index}`);
-        if (input) input.value = value;
+        if (input) input.value = displayCompareSymbol(value);
       });
 
       const slotMap = new Map();
+      const displayMap = new Map();
       rawValues.forEach((value, index) => {
-        if (!value || slotMap.has(value)) return;
-        slotMap.set(value, index);
+        const resolved = resolveCompareSymbol(value);
+        if (!resolved || slotMap.has(resolved)) return;
+        slotMap.set(resolved, index);
+        displayMap.set(resolved, displayCompareSymbol(value || resolved));
       });
 
       return {
         rawValues,
         symbols: [...slotMap.keys()],
-        slotMap
+        shareSymbols: [...displayMap.values()],
+        slotMap,
+        displayMap
       };
     }
 
@@ -1141,7 +1161,7 @@
       metricsGrid.innerHTML = state.fullResults.map((item) => `
         <article class="metric-card" style="--line-color:${item.color}">
           <div class="metric-top">
-            <span class="metric-title"><span class="swatch"></span>${item.symbol}</span>
+            <span class="metric-title"><span class="swatch"></span>${item.displaySymbol || item.symbol}</span>
             <strong>${item.currency || "--"}</strong>
           </div>
           <div class="metric-values">
@@ -1176,7 +1196,7 @@
 
     async function loadComparison() {
       const currentRequestId = ++state.requestId;
-      const { rawValues, symbols, slotMap } = normalizeInputValues();
+      const { rawValues, symbols, shareSymbols, slotMap, displayMap } = normalizeInputValues();
       clearSlotErrors();
       setShareStatus("");
 
@@ -1231,6 +1251,7 @@
           fullResults.push({
             ...result.value,
             symbol,
+            displaySymbol: displayMap.get(symbol) || displayCompareSymbol(symbol),
             color
           });
           return;
@@ -1296,7 +1317,7 @@
           const compare = compareBySymbol.get(item.symbol);
           if (!compare) return null;
           return {
-            symbol: item.symbol,
+            symbol: item.displaySymbol || item.symbol,
             color: item.color,
             latestTs: compare.latestTs,
             normalizedLatest: compare.normalizedLatest,
@@ -1306,8 +1327,8 @@
         })
         .filter(Boolean);
 
-      state.lastSymbols = symbols;
-      writeSymbolsToUrl(symbols);
+      state.lastSymbols = shareSymbols;
+      writeSymbolsToUrl(shareSymbols);
       state.loading = false;
       runCompareButton.disabled = false;
 
@@ -1350,7 +1371,7 @@
       inputGrid.addEventListener("blur", (event) => {
         const input = event.target.closest(".symbol-input");
         if (!input) return;
-        input.value = sanitizeSymbol(input.value);
+        input.value = displayCompareSymbol(input.value);
       }, true);
 
       inputGrid.addEventListener("keydown", (event) => {

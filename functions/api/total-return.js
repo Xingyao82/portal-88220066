@@ -8,12 +8,26 @@ const MAX_REASONABLE_RETURN_PCT = 5000;
 const MIN_POINTS = 24;
 const DEFAULT_BASIS = "adjusted";
 
+function inferCnExchangeSuffix(symbol) {
+  if (!/^\d{6}$/.test(symbol)) return "";
+  if (symbol.startsWith("5")) return ".SS";
+  if (symbol.startsWith("1")) return ".SZ";
+  return "";
+}
+
+function normalizeCnFundSymbol(symbol) {
+  const upper = (symbol || "").trim().toUpperCase();
+  if (/\.(SS|SZ)$/.test(upper)) return upper;
+  const suffix = inferCnExchangeSuffix(upper);
+  return suffix ? `${upper}${suffix}` : upper;
+}
+
 function isCnFundSymbol(symbol) {
-  return /\.(SS|SZ)$/.test(symbol);
+  return /^\d{6}\.(SS|SZ)$/.test(normalizeCnFundSymbol(symbol));
 }
 
 function eastmoneyCode(symbol) {
-  return symbol.replace(/\.(SS|SZ)$/i, "");
+  return normalizeCnFundSymbol(symbol).replace(/\.(SS|SZ)$/i, "");
 }
 
 function buildYahooUrl(symbol, interval, fromTs = 0) {
@@ -120,11 +134,13 @@ function normalizeSeries(payload, fromTs = 0, basis = DEFAULT_BASIS) {
 }
 
 async function fetchChart(symbol, interval, fromTs = 0, basis = DEFAULT_BASIS) {
-  if (isCnFundSymbol(symbol)) {
-    return fetchEastmoneyFund(symbol, fromTs, basis);
+  const normalizedSymbol = normalizeCnFundSymbol(symbol);
+
+  if (isCnFundSymbol(normalizedSymbol)) {
+    return fetchEastmoneyFund(normalizedSymbol, fromTs, basis);
   }
 
-  const response = await fetch(buildYahooUrl(symbol, interval, fromTs), {
+  const response = await fetch(buildYahooUrl(normalizedSymbol, interval, fromTs), {
     headers: DEFAULT_HEADERS,
     cf: { cacheTtl: 21600, cacheEverything: true }
   });
@@ -145,7 +161,7 @@ async function fetchChart(symbol, interval, fromTs = 0, basis = DEFAULT_BASIS) {
   }
 
   return {
-    symbol,
+    symbol: normalizedSymbol,
     currency: result.meta?.currency || "",
     interval,
     basis,
