@@ -1,0 +1,1437 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income ETF 数据库 | 88220066.xyz</title>
+  <meta name="description" content="独立的 Income ETF 数据库页面，集中筛选美股和中国市场里偏 income 的 ETF，并联动 ETF 对比页。">
+  <meta name="theme-color" content="#0f172a">
+  <script src="../notes/site-i18n.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #edf2ff;
+      --muted: #9fb0d4;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --accent-3: #f59e0b;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(96, 165, 250, 0.18), transparent 22%),
+        radial-gradient(circle at 88% 12%, rgba(52, 211, 153, 0.12), transparent 18%),
+        radial-gradient(circle at 52% 82%, rgba(245, 158, 11, 0.08), transparent 20%),
+        linear-gradient(180deg, #0f172a 0%, #111827 56%, #0b1220 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: 22px 0 54px; }
+    .nav, .hero, .filters, .section {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.94), rgba(15, 23, 42, 0.98));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 24px;
+    }
+
+    .brand { font-weight: 700; letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .hero,
+    .filters,
+    .section {
+      margin-top: 18px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 56rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .summary-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .search::placeholder { color: #90a6d1; }
+    .filter-stack { display: grid; gap: 12px; margin-top: 16px; }
+    .filter-row { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+    .filter-label { min-width: 84px; padding-top: 8px; color: var(--muted); font-size: 0.94rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; }
+    .chip-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .chip-btn.active,
+    .chip-btn:hover {
+      color: var(--text);
+      border-color: rgba(96, 165, 250, 0.42);
+      background: rgba(96, 165, 250, 0.16);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 { margin: 0; font-size: 1.42rem; letter-spacing: -0.04em; }
+    .section-head p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+    .count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+    }
+
+    .bundle-grid,
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tool-card,
+    .bundle-card {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      min-height: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.18)) 58%, rgba(255,255,255,.08));
+      background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.04)) 10%, rgba(255,255,255,.04)), rgba(255,255,255,.03));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, rgba(255,255,255,.15)) 18%, transparent);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .tool-card:hover,
+    .bundle-card:hover {
+      transform: translateY(-4px);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tool-accent, var(--accent)) 28%, transparent), 0 18px 46px rgba(0, 0, 0, 0.28);
+    }
+
+    .tool-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .tool-top h3 { margin: 4px 0 0; font-size: 1.14rem; }
+    .meta,
+    .tool-card p,
+    .bundle-card p { margin: 0; color: var(--muted); line-height: 1.72; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #f5fffd;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .symbol-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .symbol-chip {
+      display: inline-flex;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      align-items: center;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric-grid { display: grid; gap: 8px; }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .metric-row strong {
+      color: var(--text);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .metric-foot {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+      flex-wrap: wrap;
+    }
+
+    .visit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #0f172a;
+      background: color-mix(in srgb, var(--tool-accent, var(--accent)) 82%, white 18%);
+    }
+
+    .ghost-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .empty {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 1180px) {
+      .summary-grid,
+      .bundle-grid,
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .filter-row { flex-direction: column; gap: 10px; }
+      .filter-label { min-width: auto; padding-top: 0; }
+      .summary-grid,
+      .bundle-grid,
+      .grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+  <link rel="stylesheet" href="../notes/page-sync.css">
+  <script defer src="../notes/project-nav.js"></script>
+</head>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
+  <div class="shell">
+    <header class="nav">
+      <div class="brand" id="brand">88220066.xyz / Income ETF 数据库</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/ai-nav/">AI 导航</a>
+        <a href="/finance-nav/">金融导航</a>
+        <a href="/income-nav/">Income 导航</a>
+        <a href="/income-db/" class="active">Income 数据库</a>
+        <a href="/etf-compare/">ETF 对比</a>
+        <a href="/free-api-nav/">API 导航</a>
+        <a href="/tools-nav/">工具导航</a>
+        <a href="/english-tools/">英语导航</a>
+        <a href="/skills-nav/">技能</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">INCOME ETF DATABASE</div>
+      <h1 data-i18n="heroTitle">Income ETF 数据库</h1>
+      <p class="hero-copy" data-i18n="heroCopy">先把常看的 dividend、covered call、bond、REITs 和 preferred ETF 放进一个独立库里。这里负责筛选和初步判断，再去 ETF 对比页做更细的走势比较。</p>
+      <div class="summary-grid" id="stats"></div>
+    </section>
+
+    <section class="filters">
+      <input class="search" id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="按代码、名称、提供方或标签搜索">
+      <div class="filter-stack">
+        <div class="filter-row"><div class="filter-label" data-i18n="filterMarket">市场</div><div id="market-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterStyle">结构</div><div id="style-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterRole">定位</div><div id="role-chips" class="chips"></div></div>
+        <div class="filter-row"><div class="filter-label" data-i18n="filterSort">排序</div><div id="sort-chips" class="chips"></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="bundleTitle">快捷组合</h2>
+          <p data-i18n="bundleCopy">先从高频组合跳进 ETF 对比页，等于把数据库和图表页连起来用。</p>
+        </div>
+      </div>
+      <div id="bundle-grid" class="bundle-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="listTitle">数据库</h2>
+          <p data-i18n="listCopy">卡片里的三项核心指标默认走复权后总回报口径，用来先筛一遍方向，再决定要不要单独展开看。</p>
+        </div>
+        <div class="count" id="count">Loading</div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+  </div>
+
+  <script>
+    const pageCopy = {
+      pageTitle: { zh: "Income ETF 数据库 | 88220066.xyz", en: "Income ETF Database | 88220066.xyz" },
+      pageDescription: {
+        zh: "独立的 Income ETF 数据库页面，集中筛选美股和中国市场里偏 income 的 ETF，并联动 ETF 对比页。",
+        en: "A standalone income ETF database for screening U.S. and China income-focused ETFs and jumping into the compare page."
+      },
+      eyebrow: { zh: "INCOME ETF DATABASE", en: "INCOME ETF DATABASE" },
+      heroTitle: { zh: "Income ETF 数据库", en: "Income ETF Database" },
+      heroCopy: {
+        zh: "先把常看的 dividend、covered call、bond、REITs 和 preferred ETF 放进一个独立库里。这里负责筛选和初步判断，再去 ETF 对比页做更细的走势比较。",
+        en: "Put the most-used dividend, covered call, bond, REIT, and preferred ETFs into one standalone library first. Use this page to screen and narrow down, then jump to the compare page for chart work."
+      },
+      filterMarket: { zh: "市场", en: "Market" },
+      filterStyle: { zh: "结构", en: "Structure" },
+      filterRole: { zh: "定位", en: "Role" },
+      filterSort: { zh: "排序", en: "Sort" },
+      bundleTitle: { zh: "快捷组合", en: "Quick Bundles" },
+      bundleCopy: {
+        zh: "先从高频组合跳进 ETF 对比页，等于把数据库和图表页连起来用。",
+        en: "Jump into the compare page from the common bundles first so the database and chart pages work together."
+      },
+      listTitle: { zh: "数据库", en: "Database" },
+      listCopy: {
+        zh: "卡片里的三项核心指标默认走复权后总回报口径，用来先筛一遍方向，再决定要不要单独展开看。",
+        en: "The three core metrics on each card default to adjusted total return, which is enough to narrow things down before deeper work."
+      },
+      searchPlaceholder: { zh: "按代码、名称、提供方或标签搜索", en: "Search by symbol, name, provider, or tag" }
+    };
+
+    const labels = {
+      zh: {
+        brand: "88220066.xyz / Income ETF 数据库",
+        statTotal: "收录 ETF",
+        statChina: "中国市场",
+        statUs: "美国市场",
+        statBasis: "指标口径",
+        statBasisValue: "复权后总回报",
+        allMarket: "全部市场",
+        marketUs: "美国",
+        marketChina: "中国",
+        allStyle: "全部结构",
+        styleDividend: "Dividend",
+        styleOption: "Option income",
+        styleBond: "Bond",
+        styleReit: "REITs",
+        stylePreferred: "Preferred",
+        allRole: "全部定位",
+        roleCore: "底仓",
+        roleEnhanced: "增强",
+        roleSatellite: "卫星",
+        roleWatch: "观察",
+        sortDefault: "默认顺序",
+        sortAnnualized: "成立以来年化",
+        sortTotalReturn: "成立以来总回报",
+        sortTrackRecord: "成立时长",
+        showing: "显示",
+        items: "只 ETF",
+        noMatch: "当前筛选下没有匹配结果，换一个结构或市场试试看。",
+        bundleOpen: "打开组合",
+        bundleIntoCompare: "去 ETF 对比",
+        bundleBadge: "快捷组合",
+        metricsPending: "正在读取复权指标…",
+        metricsError: "公开源暂时没返回这只 ETF 的复权指标。",
+        metricReturn: "成立以来总回报",
+        metricAnnualized: "成立以来年化",
+        metricYears: "成立时长",
+        metricUpdated: "最新更新",
+        open: "官网",
+        compare: "对比",
+        providerLabel: "提供方",
+        metricStatus: (ready, total, failed) => failed ? `指标已就绪 ${ready} / ${total}，失败 ${failed}` : `指标已就绪 ${ready} / ${total}`,
+        yearsSuffix: "年",
+        loadingCount: "正在读取"
+      },
+      en: {
+        brand: "88220066.xyz / Income ETF Database",
+        statTotal: "Funds tracked",
+        statChina: "China",
+        statUs: "U.S.",
+        statBasis: "Metric basis",
+        statBasisValue: "Adjusted total return",
+        allMarket: "All markets",
+        marketUs: "U.S.",
+        marketChina: "China",
+        allStyle: "All structures",
+        styleDividend: "Dividend",
+        styleOption: "Option income",
+        styleBond: "Bond",
+        styleReit: "REITs",
+        stylePreferred: "Preferred",
+        allRole: "All roles",
+        roleCore: "Core",
+        roleEnhanced: "Enhanced",
+        roleSatellite: "Satellite",
+        roleWatch: "Watch",
+        sortDefault: "Default order",
+        sortAnnualized: "Since-inception CAGR",
+        sortTotalReturn: "Since-inception return",
+        sortTrackRecord: "Track record",
+        showing: "Showing",
+        items: "ETFs",
+        noMatch: "No ETFs match this filter set right now. Try another market or structure.",
+        bundleOpen: "Open bundle",
+        bundleIntoCompare: "Go to compare",
+        bundleBadge: "Quick bundle",
+        metricsPending: "Loading adjusted metrics…",
+        metricsError: "The public source did not return adjusted metrics for this ETF right now.",
+        metricReturn: "Since-inception return",
+        metricAnnualized: "Since-inception CAGR",
+        metricYears: "Track record",
+        metricUpdated: "Latest update",
+        open: "Open",
+        compare: "Compare",
+        providerLabel: "Provider",
+        metricStatus: (ready, total, failed) => failed ? `Metrics ready ${ready} / ${total}, failed ${failed}` : `Metrics ready ${ready} / ${total}`,
+        yearsSuffix: "y",
+        loadingCount: "Loading"
+      }
+    };
+
+    const options = {
+      market: ["all", "us", "china"],
+      style: ["all", "dividend", "option", "bond", "reit", "preferred"],
+      role: ["all", "core", "enhanced", "satellite", "watch"],
+      sort: ["default", "annualized", "totalReturn", "trackRecord"]
+    };
+
+    const records = [
+      {
+        order: 1,
+        symbol: "510880",
+        name: { zh: "红利ETF华泰柏瑞", en: "Huatai Dividend ETF" },
+        provider: "华泰柏瑞",
+        market: "china",
+        style: "dividend",
+        role: "core",
+        accent: "#60a5fa",
+        url: "https://fundf10.eastmoney.com/510880.html",
+        summary: {
+          zh: "国内红利主线里最常被拿来当基准样本的一只，适合先看中国 dividend income 的底色。",
+          en: "One of the cleanest baseline China dividend ETFs and a good first reference for domestic equity income."
+        },
+        tags: { zh: ["红利", "股息", "A股"], en: ["dividend", "yield", "A-shares"] }
+      },
+      {
+        order: 2,
+        symbol: "512890",
+        name: { zh: "红利低波ETF华泰柏瑞", en: "Huatai Dividend Low Vol ETF" },
+        provider: "华泰柏瑞",
+        market: "china",
+        style: "dividend",
+        role: "core",
+        accent: "#34d399",
+        url: "https://fundf10.eastmoney.com/srfx_512890.html",
+        summary: {
+          zh: "在传统红利之外再加低波筛选，更接近很多人想要的中国防守型 income 仓位。",
+          en: "Adds a lower-volatility tilt on top of dividends and fits the more defensive side of a China income basket."
+        },
+        tags: { zh: ["低波", "红利", "防守"], en: ["low vol", "dividend", "defensive"] }
+      },
+      {
+        order: 3,
+        symbol: "512040",
+        name: { zh: "价值100ETF富国", en: "Fullgoal Value 100 ETF" },
+        provider: "富国",
+        market: "china",
+        style: "dividend",
+        role: "core",
+        accent: "#14b8a6",
+        url: "https://fundf10.eastmoney.com/512040.html",
+        summary: {
+          zh: "价值和低估值权重更重，适合放进中国红利组里做风格对照。",
+          en: "Leans harder into value and lower-valuation exposure, which makes it useful beside plain dividend funds."
+        },
+        tags: { zh: ["价值100", "红利", "低估值"], en: ["value", "dividend", "valuation"] }
+      },
+      {
+        order: 4,
+        symbol: "515180",
+        name: { zh: "红利ETF易方达", en: "E Fund Dividend ETF" },
+        provider: "易方达",
+        market: "china",
+        style: "dividend",
+        role: "enhanced",
+        accent: "#22c55e",
+        url: "https://fundf10.eastmoney.com/515180.html",
+        summary: {
+          zh: "和 510880 一起看时更容易分清不同红利指数口径带来的差异。",
+          en: "A useful second China dividend sample when you want to separate index methodology from the headline yield story."
+        },
+        tags: { zh: ["红利", "对照样本", "A股"], en: ["dividend", "comparison", "A-shares"] }
+      },
+      {
+        order: 5,
+        symbol: "511520",
+        name: { zh: "政金债ETF富国", en: "Fullgoal Policy Bank Bond ETF" },
+        provider: "富国",
+        market: "china",
+        style: "bond",
+        role: "core",
+        accent: "#f59e0b",
+        url: "https://fund.eastmoney.com/511520.html",
+        summary: {
+          zh: "更偏利率债和政策性金融债，是中国 income 组合里债券腿的典型样本。",
+          en: "A policy-bank bond ETF that works as the rates-heavy bond leg in a China income basket."
+        },
+        tags: { zh: ["政金债", "利率债", "债券"], en: ["policy bank", "rates", "bond"] }
+      },
+      {
+        order: 6,
+        symbol: "511030",
+        name: { zh: "公司债ETF", en: "Corporate Bond ETF" },
+        provider: "海富通",
+        market: "china",
+        style: "bond",
+        role: "enhanced",
+        accent: "#c084fc",
+        url: "https://fund.eastmoney.com/511030.html",
+        summary: {
+          zh: "比政金债多一层信用利差逻辑，适合补充中国固收 income 的另一面。",
+          en: "Adds credit-spread exposure beyond policy-bank bonds and rounds out the fixed-income side of the China set."
+        },
+        tags: { zh: ["公司债", "信用债", "债券ETF"], en: ["credit", "corporate bond", "bond ETF"] }
+      },
+      {
+        order: 7,
+        symbol: "511010",
+        name: { zh: "国债ETF国泰", en: "Cathay Treasury ETF" },
+        provider: "国泰",
+        market: "china",
+        style: "bond",
+        role: "core",
+        accent: "#38bdf8",
+        url: "https://fund.eastmoney.com/511010.html",
+        summary: {
+          zh: "更像中国固收底仓样本，适合看低波债券腿的回报和稳定性。",
+          en: "A cleaner lower-volatility China treasury ETF and a good core sample for the bond side."
+        },
+        tags: { zh: ["国债", "低波", "固收"], en: ["treasury", "low vol", "fixed income"] }
+      },
+      {
+        order: 8,
+        symbol: "159651",
+        name: { zh: "国开债ETF", en: "CDB Bond ETF" },
+        provider: "富国",
+        market: "china",
+        style: "bond",
+        role: "core",
+        accent: "#f97316",
+        url: "https://fund.eastmoney.com/159651.html",
+        summary: {
+          zh: "偏国开债和短端政策性金融债，更适合放在更稳的中国 bond income 一组里。",
+          en: "A shorter-end policy-bank bond ETF that belongs on the steadier side of a China bond-income screen."
+        },
+        tags: { zh: ["国开债", "政策性金融债", "短久期"], en: ["CDB", "policy bank", "short duration"] }
+      },
+      {
+        order: 9,
+        symbol: "SCHD",
+        name: { zh: "Schwab U.S. Dividend Equity ETF", en: "Schwab U.S. Dividend Equity ETF" },
+        provider: "Schwab",
+        market: "us",
+        style: "dividend",
+        role: "core",
+        accent: "#60a5fa",
+        url: "https://www.schwabassetmanagement.com/products/schd",
+        summary: {
+          zh: "很多人做长期美股 income 观察都会先看它，属于质量股息路线里的核心样本。",
+          en: "A core quality-dividend sample and one of the first stops for long-term U.S. equity income."
+        },
+        tags: { zh: ["SCHD", "股息", "质量"], en: ["SCHD", "dividend", "quality"] }
+      },
+      {
+        order: 10,
+        symbol: "VYM",
+        name: { zh: "Vanguard High Dividend Yield ETF", en: "Vanguard High Dividend Yield ETF" },
+        provider: "Vanguard",
+        market: "us",
+        style: "dividend",
+        role: "core",
+        accent: "#34d399",
+        url: "https://investor.vanguard.com/investment-products/etfs/profile/vym",
+        summary: {
+          zh: "更偏 broad high dividend，适合拿来和 SCHD 分清质量股息与高股息广谱暴露的差别。",
+          en: "A broader high-dividend ETF that is useful when separating pure yield exposure from the SCHD style."
+        },
+        tags: { zh: ["VYM", "高股息", "broad"], en: ["VYM", "yield", "broad"] }
+      },
+      {
+        order: 11,
+        symbol: "HDV",
+        name: { zh: "iShares Core High Dividend ETF", en: "iShares Core High Dividend ETF" },
+        provider: "iShares",
+        market: "us",
+        style: "dividend",
+        role: "core",
+        accent: "#22c55e",
+        url: "https://www.ishares.com/us/products/239563/ishares-core-high-dividend-etf",
+        summary: {
+          zh: "比 SCHD 更偏直接的高股息表达，适合拿来看收益率导向会不会换来更重的集中度。",
+          en: "A more direct high-yield expression than SCHD and a useful check on concentration versus yield."
+        },
+        tags: { zh: ["HDV", "高股息", "集中度"], en: ["HDV", "high yield", "concentration"] }
+      },
+      {
+        order: 12,
+        symbol: "DGRO",
+        name: { zh: "iShares Core Dividend Growth ETF", en: "iShares Core Dividend Growth ETF" },
+        provider: "iShares",
+        market: "us",
+        style: "dividend",
+        role: "core",
+        accent: "#06b6d4",
+        url: "https://www.ishares.com/us/products/264623/ishares-core-dividend-growth-etf",
+        summary: {
+          zh: "如果你更在意 dividend growth，而不是当前最高息，DGRO 是很稳的对照项。",
+          en: "A solid contrast case when dividend growth matters more than chasing the highest current yield."
+        },
+        tags: { zh: ["DGRO", "股息增长", "质量"], en: ["DGRO", "dividend growth", "quality"] }
+      },
+      {
+        order: 13,
+        symbol: "VNQ",
+        name: { zh: "Vanguard Real Estate ETF", en: "Vanguard Real Estate ETF" },
+        provider: "Vanguard",
+        market: "us",
+        style: "reit",
+        role: "core",
+        accent: "#fb7185",
+        url: "https://investor.vanguard.com/investment-products/etfs/profile/vnq",
+        summary: {
+          zh: "如果你希望把租金和不动产现金流也算进 income 框架，VNQ 是常用起点。",
+          en: "A common first stop when you want REIT-style real-estate income inside the broader income frame."
+        },
+        tags: { zh: ["VNQ", "REIT", "不动产"], en: ["VNQ", "REIT", "real estate"] }
+      },
+      {
+        order: 14,
+        symbol: "BND",
+        name: { zh: "Vanguard Total Bond Market ETF", en: "Vanguard Total Bond Market ETF" },
+        provider: "Vanguard",
+        market: "us",
+        style: "bond",
+        role: "core",
+        accent: "#38bdf8",
+        url: "https://investor.vanguard.com/investment-products/etfs/profile/bnd",
+        summary: {
+          zh: "更像美国 income 组合里的核心债券底仓，用来和股息及期权 income 对照很方便。",
+          en: "A clean core bond holding and a useful ballast when comparing dividend and option-income ETFs."
+        },
+        tags: { zh: ["BND", "债券", "底仓"], en: ["BND", "bond", "core"] }
+      },
+      {
+        order: 15,
+        symbol: "PFF",
+        name: { zh: "iShares Preferred and Income Securities ETF", en: "iShares Preferred and Income Securities ETF" },
+        provider: "iShares",
+        market: "us",
+        style: "preferred",
+        role: "satellite",
+        accent: "#f97316",
+        url: "https://www.ishares.com/us/products/239826/ishares-preferred-and-income-securities-etf",
+        summary: {
+          zh: "preferred income 这一支和普通股息 ETF 风险结构完全不同，适合单独列出来看。",
+          en: "Preferred income behaves very differently from ordinary dividend ETFs, so it deserves its own bucket."
+        },
+        tags: { zh: ["PFF", "preferred", "收入"], en: ["PFF", "preferred", "income"] }
+      },
+      {
+        order: 16,
+        symbol: "JEPI",
+        name: { zh: "JPMorgan Equity Premium Income ETF", en: "JPMorgan Equity Premium Income ETF" },
+        provider: "JPMorgan",
+        market: "us",
+        style: "option",
+        role: "enhanced",
+        accent: "#f59e0b",
+        url: "https://am.jpmorgan.com/us/en/asset-management/adv/products/jpmorgan-equity-premium-income-etf-etf-shares-46641q332",
+        summary: {
+          zh: "典型的 broad-market option-income 样本，很多人先拿它当核心 equity income 的起点。",
+          en: "A classic broad-market option-income ETF and a common starting point for equity income screens."
+        },
+        tags: { zh: ["JEPI", "covered call", "broad"], en: ["JEPI", "option income", "broad"] }
+      },
+      {
+        order: 17,
+        symbol: "JEPQ",
+        name: { zh: "JPMorgan Nasdaq Equity Premium Income ETF", en: "JPMorgan Nasdaq Equity Premium Income ETF" },
+        provider: "JPMorgan",
+        market: "us",
+        style: "option",
+        role: "enhanced",
+        accent: "#c084fc",
+        url: "https://am.jpmorgan.com/us/en/asset-management/adv/products/jpmorgan-nasdaq-equity-premium-income-etf-etf-shares-46654q203",
+        summary: {
+          zh: "纳指科技暴露更重，适合和 GPIQ、QQQI 一起看上涨参与度和回撤代价。",
+          en: "Carries a heavier Nasdaq-growth load and is a natural comparison point for GPIQ and QQQI."
+        },
+        tags: { zh: ["JEPQ", "Nasdaq", "期权"], en: ["JEPQ", "Nasdaq", "option"] }
+      },
+      {
+        order: 18,
+        symbol: "DIVO",
+        name: { zh: "Amplify CWP Enhanced Dividend Income ETF", en: "Amplify CWP Enhanced Dividend Income ETF" },
+        provider: "Amplify",
+        market: "us",
+        style: "option",
+        role: "enhanced",
+        accent: "#8b5cf6",
+        url: "https://amplifyetfs.com/divo",
+        summary: {
+          zh: "介于纯 dividend 和重 overwrite 之间，适合拿来判断“更均衡的 equity income”到底长什么样。",
+          en: "Sits between plain dividends and heavier overwrite funds, which makes it useful as a balanced equity-income reference."
+        },
+        tags: { zh: ["DIVO", "增强", "股息"], en: ["DIVO", "enhanced", "dividend"] }
+      },
+      {
+        order: 19,
+        symbol: "QYLD",
+        name: { zh: "Global X Nasdaq 100 Covered Call ETF", en: "Global X Nasdaq 100 Covered Call ETF" },
+        provider: "Global X",
+        market: "us",
+        style: "option",
+        role: "watch",
+        accent: "#fb7185",
+        url: "https://www.globalxetfs.com/funds/qyld/",
+        summary: {
+          zh: "收益率叙事很直观，但长期总回报折损也常被拿来举例，所以更适合放观察组。",
+          en: "The headline yield is easy to understand, but the long-run total-return tradeoff is exactly why it belongs in the watch bucket."
+        },
+        tags: { zh: ["QYLD", "covered call", "观察"], en: ["QYLD", "covered call", "watch"] }
+      },
+      {
+        order: 20,
+        symbol: "SPYI",
+        name: { zh: "NEOS S&P 500 High Income ETF", en: "NEOS S&P 500 High Income ETF" },
+        provider: "NEOS",
+        market: "us",
+        style: "option",
+        role: "enhanced",
+        accent: "#2563eb",
+        url: "https://neosfunds.com/spyi/",
+        summary: {
+          zh: "NEOS 这条线里最常被当成 broad-market income 样本的一只，适合对照 SPY 基准和 Goldman 版本。",
+          en: "One of the most commonly referenced NEOS broad-market income funds and a good anchor versus SPY and Goldman versions."
+        },
+        tags: { zh: ["SPYI", "NEOS", "S&P 500"], en: ["SPYI", "NEOS", "S&P 500"] }
+      },
+      {
+        order: 21,
+        symbol: "QQQI",
+        name: { zh: "NEOS Nasdaq-100 High Income ETF", en: "NEOS Nasdaq-100 High Income ETF" },
+        provider: "NEOS",
+        market: "us",
+        style: "option",
+        role: "enhanced",
+        accent: "#1d4ed8",
+        url: "https://neosfunds.com/qqqi/",
+        summary: {
+          zh: "NEOS 的纳指高收入版本，适合和 GPIQ、JEPQ 一起读税务结构和上涨保留。",
+          en: "The NEOS Nasdaq high-income version and a natural read-across to GPIQ and JEPQ on tax structure and upside capture."
+        },
+        tags: { zh: ["QQQI", "Nasdaq", "高收入"], en: ["QQQI", "Nasdaq", "high income"] }
+      },
+      {
+        order: 22,
+        symbol: "GPIQ",
+        name: { zh: "Goldman Sachs Nasdaq-100 Core Premium Income ETF", en: "Goldman Sachs Nasdaq-100 Core Premium Income ETF" },
+        provider: "Goldman Sachs",
+        market: "us",
+        style: "option",
+        role: "core",
+        accent: "#22c55e",
+        url: "https://www.gsam.com/content/gsam/us/en/advisors/fund-center/etf-fund-finder/goldman-sachs-nasdaq-100-core-premium-income-etf.html",
+        summary: {
+          zh: "更像 core premium income 版本，费率和 overwrite 区间都很适合单独观察。",
+          en: "Feels more like a core premium-income fund, with fee and overwrite design that deserve separate attention."
+        },
+        tags: { zh: ["GPIQ", "Goldman", "Nasdaq"], en: ["GPIQ", "Goldman", "Nasdaq"] }
+      },
+      {
+        order: 23,
+        symbol: "XQQI",
+        name: { zh: "NEOS Boosted Nasdaq-100 High Income ETF", en: "NEOS Boosted Nasdaq-100 High Income ETF" },
+        provider: "NEOS",
+        market: "us",
+        style: "option",
+        role: "satellite",
+        accent: "#0ea5e9",
+        url: "https://neosfunds.com/xqqi/",
+        summary: {
+          zh: "更像 boosted beta 版本的 Nasdaq income，适合和 GPIQ、QQQI 看进攻性差异。",
+          en: "A more aggressive boosted-beta flavor of Nasdaq income and a good contrast against GPIQ and QQQI."
+        },
+        tags: { zh: ["XQQI", "boosted", "Nasdaq"], en: ["XQQI", "boosted", "Nasdaq"] }
+      },
+      {
+        order: 24,
+        symbol: "XSPI",
+        name: { zh: "NEOS Boosted S&P 500 High Income ETF", en: "NEOS Boosted S&P 500 High Income ETF" },
+        provider: "NEOS",
+        market: "us",
+        style: "option",
+        role: "satellite",
+        accent: "#f97316",
+        url: "https://neosfunds.com/xspi/",
+        summary: {
+          zh: "S&P 500 这边更进攻的一只，适合和 GPIX、SPYI 分开看弹性和净值路径。",
+          en: "The more aggressive S&P 500 income variant and a useful contrast to GPIX and SPYI."
+        },
+        tags: { zh: ["XSPI", "boosted", "S&P 500"], en: ["XSPI", "boosted", "S&P 500"] }
+      },
+      {
+        order: 25,
+        symbol: "GPIX",
+        name: { zh: "Goldman Sachs S&P 500 Core Premium Income ETF", en: "Goldman Sachs S&P 500 Core Premium Income ETF" },
+        provider: "Goldman Sachs",
+        market: "us",
+        style: "option",
+        role: "core",
+        accent: "#10b981",
+        url: "https://www.gsam.com/content/gsam/us/en/advisors/fund-center/etf-fund-finder/goldman-sachs-s-p-500-core-premium-income-etf.html",
+        summary: {
+          zh: "S&P 500 这条线里更像底仓 premium income 的版本，适合和 SPYI 放在一起读费率和覆盖度。",
+          en: "A more core-like premium-income version on the S&P 500 side, useful next to SPYI on fee and overwrite design."
+        },
+        tags: { zh: ["GPIX", "Goldman", "S&P 500"], en: ["GPIX", "Goldman", "S&P 500"] }
+      },
+      {
+        order: 26,
+        symbol: "ISPY",
+        name: { zh: "ProShares S&P 500 High Income ETF", en: "ProShares S&P 500 High Income ETF" },
+        provider: "ProShares",
+        market: "us",
+        style: "option",
+        role: "enhanced",
+        accent: "#0f766e",
+        url: "https://www.proshares.com/our-etfs/strategic/ispy",
+        summary: {
+          zh: "ProShares 版本的 broad-market income，对照 SPYI 和 JEPI 时很方便看实现路径差异。",
+          en: "A ProShares take on broad-market income and a useful implementation contrast against SPYI and JEPI."
+        },
+        tags: { zh: ["ISPY", "ProShares", "broad"], en: ["ISPY", "ProShares", "broad"] }
+      }
+    ];
+
+    const bundles = [
+      {
+        key: "nasdaq",
+        accent: "#2563eb",
+        title: { zh: "Nasdaq Income 四件套", en: "Nasdaq Income Quartet" },
+        copy: {
+          zh: "QQQ 基准加上 XQQI、GPIQ、QQQI，适合先把纳指 income 线的层级关系跑一遍。",
+          en: "QQQ plus XQQI, GPIQ, and QQQI for the core Nasdaq income comparison set."
+        },
+        symbols: ["QQQ", "XQQI", "GPIQ", "QQQI"]
+      },
+      {
+        key: "sp500",
+        accent: "#0ea5e9",
+        title: { zh: "S&P Income 四件套", en: "S&P Income Quartet" },
+        copy: {
+          zh: "SPY 基准加上 XSPI、GPIX、SPYI，适合先把标普 income 线跑顺。",
+          en: "SPY plus XSPI, GPIX, and SPYI for the main S&P 500 income bundle."
+        },
+        symbols: ["SPY", "XSPI", "GPIX", "SPYI"]
+      },
+      {
+        key: "chinaDividend",
+        accent: "#22c55e",
+        title: { zh: "中国红利四件套", en: "China Dividend Four" },
+        copy: {
+          zh: "510880、512890、512040、515180 一起看，更容易分清红利、低波和值风格的差异。",
+          en: "Compare 510880, 512890, 512040, and 515180 side by side to separate dividend, low-vol, and value tilts."
+        },
+        symbols: ["510880", "512890", "512040", "515180"]
+      },
+      {
+        key: "defensive",
+        accent: "#f59e0b",
+        title: { zh: "防守型 Income 组合", en: "Defensive Income Mix" },
+        copy: {
+          zh: "SCHD、DGRO、BND、511010 放一起，适合先看更稳一侧的 income 组合长什么样。",
+          en: "SCHD, DGRO, BND, and 511010 together for a steadier income mix."
+        },
+        symbols: ["SCHD", "DGRO", "BND", "511010"]
+      }
+    ];
+
+    const nasdaqIncomeSet = ["QQQ", "XQQI", "GPIQ", "QQQI"];
+    const spIncomeSet = ["SPY", "XSPI", "GPIX", "SPYI"];
+    const chinaDividendSet = ["510880", "512890", "512040", "515180"];
+    const chinaBondSet = ["511520", "511030", "511010", "159651"];
+    const usDividendSet = ["SCHD", "VYM", "HDV", "DGRO"];
+    const reitPreferredSet = ["VNQ", "PFF", "BND", "SCHD"];
+
+    const state = { market: "all", style: "all", role: "all", sort: "default", search: "" };
+    const metricCache = new Map();
+    const metricInflight = new Map();
+    let activeLang = "zh";
+    let renderScheduled = false;
+
+    const brandEl = document.getElementById("brand");
+    const statsEl = document.getElementById("stats");
+    const bundleGridEl = document.getElementById("bundle-grid");
+    const marketEl = document.getElementById("market-chips");
+    const styleEl = document.getElementById("style-chips");
+    const roleEl = document.getElementById("role-chips");
+    const sortEl = document.getElementById("sort-chips");
+    const countEl = document.getElementById("count");
+    const gridEl = document.getElementById("grid");
+    const searchEl = document.getElementById("search-input");
+
+    function lang() {
+      return window.SiteI18n.getLang() === "en" ? "en" : "zh";
+    }
+
+    function locale() {
+      return lang() === "en" ? "en-US" : "zh-CN";
+    }
+
+    function formatPct(value, digits = 2) {
+      if (!Number.isFinite(value)) return "--";
+      const sign = value > 0 ? "+" : "";
+      return `${sign}${new Intl.NumberFormat(locale(), {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      }).format(value)}%`;
+    }
+
+    function formatYears(value) {
+      if (!Number.isFinite(value)) return "--";
+      return `${new Intl.NumberFormat(locale(), {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+      }).format(value)} ${labels[lang()].yearsSuffix}`;
+    }
+
+    function formatDate(ts) {
+      if (!Number.isFinite(ts)) return "--";
+      return new Intl.DateTimeFormat(locale(), {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }).format(new Date(ts * 1000));
+    }
+
+    function hostLabel(url) {
+      try {
+        const parsed = new URL(url);
+        return `${parsed.host}${parsed.pathname === "/" ? "" : parsed.pathname}`;
+      } catch {
+        return url;
+      }
+    }
+
+    function compareUrl(record) {
+      const symbol = record.symbol;
+      let symbols = [];
+
+      if (nasdaqIncomeSet.includes(symbol) || symbol === "JEPQ") {
+        symbols = nasdaqIncomeSet;
+      } else if (spIncomeSet.includes(symbol) || symbol === "JEPI" || symbol === "ISPY") {
+        symbols = spIncomeSet;
+      } else if (chinaDividendSet.includes(symbol)) {
+        symbols = chinaDividendSet;
+      } else if (chinaBondSet.includes(symbol)) {
+        symbols = chinaBondSet;
+      } else if (usDividendSet.includes(symbol)) {
+        symbols = usDividendSet;
+      } else if (["VNQ", "PFF", "BND"].includes(symbol)) {
+        symbols = reitPreferredSet;
+      } else {
+        symbols = [symbol, "SCHD", "SPYI", "BND"];
+      }
+
+      const params = new URLSearchParams({ symbols: symbols.join(",") });
+      return `/etf-compare/?${params.toString()}`;
+    }
+
+    function chipLabel(group, key, currentLang) {
+      return {
+        market: {
+          all: labels[currentLang].allMarket,
+          us: labels[currentLang].marketUs,
+          china: labels[currentLang].marketChina
+        },
+        style: {
+          all: labels[currentLang].allStyle,
+          dividend: labels[currentLang].styleDividend,
+          option: labels[currentLang].styleOption,
+          bond: labels[currentLang].styleBond,
+          reit: labels[currentLang].styleReit,
+          preferred: labels[currentLang].stylePreferred
+        },
+        role: {
+          all: labels[currentLang].allRole,
+          core: labels[currentLang].roleCore,
+          enhanced: labels[currentLang].roleEnhanced,
+          satellite: labels[currentLang].roleSatellite,
+          watch: labels[currentLang].roleWatch
+        },
+        sort: {
+          default: labels[currentLang].sortDefault,
+          annualized: labels[currentLang].sortAnnualized,
+          totalReturn: labels[currentLang].sortTotalReturn,
+          trackRecord: labels[currentLang].sortTrackRecord
+        }
+      }[group][key];
+    }
+
+    function renderChips(container, group, currentValue, currentLang) {
+      container.innerHTML = options[group].map((value) => `
+        <button class="chip-btn ${value === currentValue ? "active" : ""}" data-group="${group}" data-value="${value}" type="button">
+          ${chipLabel(group, value, currentLang)}
+        </button>
+      `).join("");
+    }
+
+    function renderStats(currentLang) {
+      const chinaCount = records.filter((item) => item.market === "china").length;
+      const usCount = records.filter((item) => item.market === "us").length;
+      const cards = [
+        [labels[currentLang].statTotal, String(records.length)],
+        [labels[currentLang].statChina, String(chinaCount)],
+        [labels[currentLang].statUs, String(usCount)],
+        [labels[currentLang].statBasis, labels[currentLang].statBasisValue]
+      ];
+      statsEl.innerHTML = cards.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+    }
+
+    function bundleUrl(bundle) {
+      const params = new URLSearchParams({ symbols: bundle.symbols.join(",") });
+      return `/etf-compare/?${params.toString()}`;
+    }
+
+    function renderBundles(currentLang) {
+      bundleGridEl.innerHTML = bundles.map((bundle) => `
+        <article class="bundle-card" style="--tool-accent:${bundle.accent}">
+          <div class="tool-top">
+            <div>
+              <div class="meta">${labels[currentLang].bundleBadge}</div>
+              <h3>${bundle.title[currentLang]}</h3>
+            </div>
+            <span class="status-badge">${bundle.symbols.length} ETF</span>
+          </div>
+          <p>${bundle.copy[currentLang]}</p>
+          <div class="pill-row">${bundle.symbols.map((symbol) => `<span class="pill">${symbol}</span>`).join("")}</div>
+          <div class="card-bottom">
+            <span class="meta">${labels[currentLang].bundleOpen}</span>
+            <a class="visit" href="${bundleUrl(bundle)}">${labels[currentLang].bundleIntoCompare}</a>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function metricFor(symbol) {
+      return metricCache.get(symbol) || null;
+    }
+
+    function metricValue(symbol, key) {
+      const metric = metricFor(symbol);
+      if (!metric || metric.status !== "ready" || !Number.isFinite(metric[key])) return Number.NEGATIVE_INFINITY;
+      return metric[key];
+    }
+
+    function recordMatches(record) {
+      const currentLang = lang();
+      const haystack = [
+        record.symbol,
+        record.provider,
+        record.name.zh,
+        record.name.en,
+        record.summary.zh,
+        record.summary.en,
+        ...record.tags.zh,
+        ...record.tags.en
+      ].join(" ").toLowerCase();
+
+      return (state.market === "all" || record.market === state.market) &&
+        (state.style === "all" || record.style === state.style) &&
+        (state.role === "all" || record.role === state.role) &&
+        (!state.search || haystack.includes(state.search)) &&
+        (currentLang === "zh" || currentLang === "en");
+    }
+
+    function compareRecords(left, right) {
+      if (state.sort === "default") return left.order - right.order;
+
+      const key = state.sort === "annualized"
+        ? "annualizedReturnPct"
+        : state.sort === "totalReturn"
+          ? "totalReturnPct"
+          : "yearsSinceInception";
+      const diff = metricValue(right.symbol, key) - metricValue(left.symbol, key);
+      if (Number.isFinite(diff) && Math.abs(diff) > 1e-9) return diff;
+      return left.order - right.order;
+    }
+
+    function filteredRecords() {
+      return records.filter(recordMatches).sort(compareRecords);
+    }
+
+    function metricSummary(currentLang) {
+      const ready = [...metricCache.values()].filter((item) => item.status === "ready").length;
+      const failed = [...metricCache.values()].filter((item) => item.status === "error").length;
+      return labels[currentLang].metricStatus(ready, records.length, failed);
+    }
+
+    function metricTemplate(record, currentLang) {
+      const metric = metricFor(record.symbol);
+
+      if (!metric || metric.status === "loading") {
+        return `
+          <div class="metric-grid">
+            <div class="metric-row"><span>${labels[currentLang].metricReturn}</span><strong>--</strong></div>
+            <div class="metric-row"><span>${labels[currentLang].metricAnnualized}</span><strong>--</strong></div>
+            <div class="metric-row"><span>${labels[currentLang].metricYears}</span><strong>--</strong></div>
+          </div>
+          <div class="metric-foot">${labels[currentLang].metricsPending}</div>
+        `;
+      }
+
+      if (metric.status === "error") {
+        return `
+          <div class="metric-grid">
+            <div class="metric-row"><span>${labels[currentLang].metricReturn}</span><strong>--</strong></div>
+            <div class="metric-row"><span>${labels[currentLang].metricAnnualized}</span><strong>--</strong></div>
+            <div class="metric-row"><span>${labels[currentLang].metricYears}</span><strong>--</strong></div>
+          </div>
+          <div class="metric-foot">${labels[currentLang].metricsError}</div>
+        `;
+      }
+
+      return `
+        <div class="metric-grid">
+          <div class="metric-row"><span>${labels[currentLang].metricReturn}</span><strong>${formatPct(metric.totalReturnPct, 2)}</strong></div>
+          <div class="metric-row"><span>${labels[currentLang].metricAnnualized}</span><strong>${formatPct(metric.annualizedReturnPct, 2)}</strong></div>
+          <div class="metric-row"><span>${labels[currentLang].metricYears}</span><strong>${formatYears(metric.yearsSinceInception)}</strong></div>
+        </div>
+        <div class="metric-foot">${labels[currentLang].metricUpdated} · ${formatDate(metric.latestTs)}</div>
+      `;
+    }
+
+    function cardTemplate(record, currentLang) {
+      return `
+        <article class="tool-card" style="--tool-accent:${record.accent}">
+          <div class="tool-top">
+            <div>
+              <div class="meta">${chipLabel("market", record.market, currentLang)} / ${chipLabel("style", record.style, currentLang)}</div>
+              <div class="symbol-line">
+                <h3>${record.symbol}</h3>
+                <span class="symbol-chip">${record.name[currentLang]}</span>
+              </div>
+            </div>
+            <span class="status-badge">${chipLabel("role", record.role, currentLang)}</span>
+          </div>
+          <p>${record.summary[currentLang]}</p>
+          <div class="pill-row">
+            <span class="pill">${labels[currentLang].providerLabel}: ${record.provider}</span>
+            ${record.tags[currentLang].map((tag) => `<span class="pill">${tag}</span>`).join("")}
+          </div>
+          ${metricTemplate(record, currentLang)}
+          <div class="card-bottom">
+            <span class="meta">${hostLabel(record.url)}</span>
+            <div class="action-row">
+              <a class="ghost-link" href="${compareUrl(record)}" target="_blank" rel="noreferrer">${labels[currentLang].compare}</a>
+              <a class="visit" href="${record.url}" target="_blank" rel="noreferrer">${labels[currentLang].open}</a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function queueRender() {
+      if (renderScheduled) return;
+      renderScheduled = true;
+      requestAnimationFrame(() => {
+        renderScheduled = false;
+        renderPage(activeLang);
+      });
+    }
+
+    function warmMetrics() {
+      let touched = false;
+      records.forEach((record) => {
+        if (metricCache.has(record.symbol) || metricInflight.has(record.symbol)) return;
+        touched = true;
+        metricCache.set(record.symbol, { status: "loading" });
+        const request = fetch(`/api/total-return?symbol=${encodeURIComponent(record.symbol)}&interval=1d`)
+          .then((response) => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+          })
+          .then((payload) => {
+            metricCache.set(record.symbol, {
+              status: "ready",
+              totalReturnPct: payload.totalReturnPct,
+              annualizedReturnPct: payload.annualizedReturnPct,
+              yearsSinceInception: payload.yearsSinceInception,
+              latestTs: payload.latestTs
+            });
+          })
+          .catch(() => {
+            metricCache.set(record.symbol, { status: "error" });
+          })
+          .finally(() => {
+            metricInflight.delete(record.symbol);
+            queueRender();
+          });
+        metricInflight.set(record.symbol, request);
+      });
+      if (touched) queueRender();
+    }
+
+    function renderPage(currentLang) {
+      activeLang = currentLang;
+      brandEl.textContent = labels[currentLang].brand;
+      renderStats(currentLang);
+      renderBundles(currentLang);
+      renderChips(marketEl, "market", state.market, currentLang);
+      renderChips(styleEl, "style", state.style, currentLang);
+      renderChips(roleEl, "role", state.role, currentLang);
+      renderChips(sortEl, "sort", state.sort, currentLang);
+
+      const items = filteredRecords();
+      countEl.textContent = `${labels[currentLang].showing} ${items.length} / ${records.length} ${labels[currentLang].items} · ${metricSummary(currentLang)}`;
+      gridEl.innerHTML = items.length ? items.map((record) => cardTemplate(record, currentLang)).join("") : `<div class="empty">${labels[currentLang].noMatch}</div>`;
+    }
+
+    document.body.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-group]");
+      if (!button) return;
+      state[button.dataset.group] = button.dataset.value;
+      renderPage(lang());
+    });
+
+    searchEl.addEventListener("input", () => {
+      state.search = searchEl.value.trim().toLowerCase();
+      renderPage(lang());
+    });
+
+    window.SiteI18n.bindPage(pageCopy, (currentLang) => {
+      renderPage(currentLang);
+      warmMetrics();
+    });
+  </script>
+  <script>
+    (function () {
+      const initials = (text) => {
+        const clean = (text || "").replace(/\s+/g, " ").trim();
+        if (!clean) return "IN";
+        if (/^[A-Za-z0-9]/.test(clean)) {
+          const parts = clean.split(/[^A-Za-z0-9]+/).filter(Boolean);
+          return (parts[0] || clean).slice(0, 2).toUpperCase();
+        }
+        return clean.slice(0, 2);
+      };
+
+      const logoUrls = (href) => {
+        try {
+          const parsed = new URL(href, window.location.href);
+          if (!/^https?:$/.test(parsed.protocol)) return [];
+          return [
+            parsed.origin + "/favicon.ico",
+            "https://www.google.com/s2/favicons?sz=128&domain_url=" + encodeURIComponent(parsed.href)
+          ];
+        } catch {
+          return [];
+        }
+      };
+
+      const attachLogoImage = (container, href, label) => {
+        const urls = logoUrls(href);
+        if (!urls.length) return;
+        const img = document.createElement("img");
+        img.alt = label + " logo";
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.referrerPolicy = "no-referrer";
+        let index = 0;
+        const next = () => {
+          if (index >= urls.length) {
+            container.classList.remove("has-image");
+            img.remove();
+            return;
+          }
+          img.src = urls[index++];
+        };
+        img.addEventListener("load", () => container.classList.add("has-image"));
+        img.addEventListener("error", next);
+        container.appendChild(img);
+        next();
+      };
+
+      const enhanceCard = (card) => {
+        if (card.querySelector(".mini-logo")) return;
+        const top = card.querySelector(".tool-top");
+        if (!top) return;
+        const info = top.firstElementChild;
+        if (!info) return;
+        const title = info.querySelector("h3");
+        if (!title) return;
+        const wrap = document.createElement("div");
+        wrap.className = "compact-head";
+        const logo = document.createElement("span");
+        logo.className = "mini-logo";
+        const fallback = document.createElement("span");
+        fallback.className = "mini-logo-fallback";
+        fallback.textContent = initials(title.textContent);
+        logo.appendChild(fallback);
+        const link = card.querySelector(".visit[href]");
+        if (link) attachLogoImage(logo, link.href, title.textContent.trim());
+        const copy = document.createElement("div");
+        copy.className = "compact-copy";
+        while (info.firstChild) {
+          copy.appendChild(info.firstChild);
+        }
+        wrap.appendChild(logo);
+        wrap.appendChild(copy);
+        info.appendChild(wrap);
+      };
+
+      const enhanceAllCards = () => {
+        document.querySelectorAll(".tool-card,.bundle-card").forEach(enhanceCard);
+      };
+
+      let scheduled = false;
+      const scheduleEnhance = () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(() => {
+          scheduled = false;
+          enhanceAllCards();
+        });
+      };
+
+      new MutationObserver(scheduleEnhance).observe(document.body, { childList: true, subtree: true });
+      scheduleEnhance();
+    })();
+  </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"3f7de88d5f7243bca6ad10092abf0161","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
