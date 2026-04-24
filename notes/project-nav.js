@@ -3,6 +3,7 @@
     { key: "ai", href: "/ai-nav/", zh: "AI 导航", en: "AI Nav" },
     { key: "finance", href: "/finance-nav/", zh: "金融导航", en: "Finance" },
     { key: "income", href: "/income-nav/", zh: "Income 导航", en: "Income" },
+    { key: "etfCompare", href: "/etf-compare/", zh: "ETF 对比", en: "ETF Compare" },
     { key: "api", href: "/free-api-nav/", zh: "API 导航", en: "API" },
     { key: "tools", href: "/tools-nav/", zh: "工具导航", en: "Tools" },
     { key: "english", href: "/english-tools/", zh: "英语导航", en: "English" },
@@ -12,6 +13,7 @@
   function currentKey(pathname) {
     if (pathname.startsWith("/finance-nav/") || pathname.startsWith("/futures-basis/")) return "finance";
     if (pathname.startsWith("/income-nav/")) return "income";
+    if (pathname.startsWith("/etf-compare/")) return "etfCompare";
     if (pathname.startsWith("/free-api-nav/")) return "api";
     if (pathname.startsWith("/tools-nav/") || pathname.startsWith("/asterlab-tools/")) return "tools";
     if (pathname.startsWith("/english-tools/") || pathname.startsWith("/dictation/")) return "english";
@@ -38,8 +40,12 @@
     if (!nav) return;
     const activeKey = currentKey(window.location.pathname);
     const currentLang = lang();
+    const items = NAV_ITEMS.filter((item) => {
+      if (item.key !== "etfCompare") return true;
+      return activeKey === "finance" || activeKey === "income" || activeKey === "etfCompare";
+    });
 
-    nav.innerHTML = NAV_ITEMS.map((item) => {
+    nav.innerHTML = items.map((item) => {
       const activeClass = item.key === activeKey ? ' class="active"' : "";
       const label = currentLang === "en" ? item.en : item.zh;
       return `<a href="${item.href}"${activeClass}>${label}</a>`;

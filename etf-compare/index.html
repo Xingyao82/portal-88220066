@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETF 对比 | 88220066.xyz</title>
+  <meta name="description" content="复权后对比美股 ETF 和 A 股场内 ETF，支持分享当前组合。">
+  <meta name="theme-color" content="#0f172a">
+  <script src="../notes/site-i18n.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #edf2ff;
+      --muted: #9fb0d4;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --accent-3: #f59e0b;
+      --danger: #fb7185;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(96, 165, 250, 0.18), transparent 22%),
+        radial-gradient(circle at 88% 12%, rgba(52, 211, 153, 0.12), transparent 18%),
+        radial-gradient(circle at 52% 82%, rgba(245, 158, 11, 0.08), transparent 20%),
+        linear-gradient(180deg, #0f172a 0%, #111827 56%, #0b1220 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .shell {
+      width: min(calc(100% - 24px), var(--max));
+      margin: 0 auto;
+      padding: 22px 0 54px;
+    }
+
+    .nav, .hero, .section {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.94), rgba(15, 23, 42, 0.98));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 24px;
+    }
+
+    .brand { font-weight: 700; letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .hero,
+    .section {
+      margin-top: 18px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy,
+    .section-copy,
+    .support-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .hero-copy { max-width: 56rem; }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .hero-button,
+    .ghost-button,
+    .slot-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .hero-button {
+      color: #0f172a;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, white));
+    }
+
+    .ghost-button,
+    .slot-action {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .hero-button:hover,
+    .ghost-button:hover,
+    .slot-action:hover {
+      transform: translateY(-1px);
+    }
+
+    .summary-grid,
+    .input-grid,
+    .metrics-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .summary-card,
+    .input-card,
+    .metric-card,
+    .note-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .summary-card span,
+    .metric-label,
+    .slot-label,
+    .status-text,
+    .share-status,
+    .note-card p,
+    .legend-item span,
+    .axis-note {
+      color: var(--muted);
+    }
+
+    .summary-card span,
+    .metric-label,
+    .slot-label {
+      display: block;
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong,
+    .metric-value {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.42rem;
+      letter-spacing: -0.04em;
+    }
+
+    .section-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+    }
+
+    .input-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .input-card {
+      display: grid;
+      gap: 10px;
+      min-height: 100%;
+    }
+
+    .slot-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .slot-action {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: 0.88rem;
+    }
+
+    .symbol-input {
+      width: 100%;
+      min-height: 50px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      text-transform: uppercase;
+    }
+
+    .symbol-input::placeholder { color: #90a6d1; }
+
+    .inline-error {
+      min-height: 20px;
+      font-size: 0.88rem;
+      color: var(--danger);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .toolbar .hero-button,
+    .toolbar .ghost-button {
+      min-height: 46px;
+    }
+
+    .status-text,
+    .share-status {
+      min-height: 22px;
+      font-size: 0.94rem;
+    }
+
+    .share-status.ready { color: var(--accent-2); }
+    .share-status.error { color: var(--danger); }
+
+    .chart-wrap {
+      display: grid;
+      gap: 16px;
+    }
+
+    .chart-board {
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 320px;
+      display: block;
+    }
+
+    .chart-grid-line {
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 1;
+    }
+
+    .chart-tick-line {
+      stroke: rgba(255, 255, 255, 0.22);
+      stroke-width: 1;
+    }
+
+    .chart-baseline {
+      stroke: rgba(255, 255, 255, 0.26);
+      stroke-width: 1;
+      stroke-dasharray: 5 5;
+    }
+
+    .chart-axis-label {
+      fill: rgba(159, 176, 212, 0.86);
+      font-size: 12px;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-dot {
+      stroke: rgba(15, 23, 42, 0.96);
+      stroke-width: 2;
+    }
+
+    .legend-grid,
+    .metrics-grid,
+    .notes-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .legend-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .legend-item,
+    .metric-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    .legend-item-top,
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .legend-name,
+    .metric-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--line-color, var(--accent));
+      flex: none;
+    }
+
+    .legend-item strong,
+    .metric-top strong {
+      font-size: 1rem;
+    }
+
+    .legend-meta,
+    .metric-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .metrics-grid {
+      display: grid;
+    }
+
+    .metric-values {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric-value {
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+
+    .metric-muted {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .empty-state {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .notes-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .note-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .note-card p { margin: 0; line-height: 1.75; }
+
+    @media (max-width: 960px) {
+      .summary-grid,
+      .input-grid,
+      .legend-grid,
+      .metrics-grid,
+      .notes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .summary-grid,
+      .input-grid,
+      .legend-grid,
+      .metrics-grid,
+      .notes-grid,
+      .metric-values {
+        grid-template-columns: 1fr;
+      }
+      .toolbar,
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .chart-svg { height: 280px; }
+    }
+  </style>
+  <link rel="stylesheet" href="../notes/page-sync.css">
+  <script defer src="../notes/project-nav.js"></script>
+</head>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
+  <div class="shell">
+    <header class="nav">
+      <div class="brand" id="brand">88220066.xyz / ETF 对比</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/ai-nav/">AI 导航</a>
+        <a href="/finance-nav/">金融导航</a>
+        <a href="/income-nav/">Income 导航</a>
+        <a href="/etf-compare/" class="active">ETF 对比</a>
+        <a href="/free-api-nav/">API 导航</a>
+        <a href="/tools-nav/">工具导航</a>
+        <a href="/english-tools/">英语导航</a>
+        <a href="/skills-nav/">技能</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">ETF COMPARE</div>
+      <h1 data-i18n="heroTitle">ETF 对比</h1>
+      <p class="hero-copy" data-i18n="heroCopy">把美股 ETF 和 A 股场内 ETF 放到同一张复权图里看。比较起点统一取当前组合里最晚上市的那只基金，默认先放 6 只做第一屏。</p>
+      <div class="summary-grid" id="summary-grid"></div>
+      <div class="hero-actions">
+        <a class="hero-button" href="#compare-form" data-i18n="jumpButton">开始对比</a>
+        <button class="ghost-button" id="copy-share-link" type="button" data-i18n="copyButton">复制分享链接</button>
+        <span class="share-status" id="share-status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section class="section" id="compare-form">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="formTitle">输入组合</h2>
+          <p class="section-copy" data-i18n="formCopy">最少 2 只，最多 6 只。自动去空格、转大写、去重。A 股场内 ETF 请输入带后缀代码，例如 510880.SS 或 159915.SZ。</p>
+        </div>
+        <div class="section-pill" id="slot-count-pill">6 slots</div>
+      </div>
+      <div class="input-grid" id="input-grid"></div>
+      <div class="toolbar">
+        <button class="hero-button" id="run-compare" type="button" data-i18n="compareButton">更新对比</button>
+        <button class="ghost-button" id="reset-defaults" type="button" data-i18n="resetButton">恢复默认 6 只</button>
+        <span class="status-text" id="load-status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section class="section" id="chart-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="chartTitle">复权走势对比</h2>
+          <p class="section-copy" id="chart-copy"></p>
+        </div>
+        <div class="section-pill" id="common-start-pill">--</div>
+      </div>
+      <div class="chart-wrap" id="chart-wrap"></div>
+    </section>
+
+    <section class="section" id="metrics-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="metricsTitle">回报核心指标</h2>
+          <p class="section-copy" data-i18n="metricsCopy">区间回报和当前归一值按共同起点口径展示，成立以来总回报和年化按各自完整历史计算。</p>
+        </div>
+        <div class="section-pill" id="metrics-pill">--</div>
+      </div>
+      <div class="metrics-grid" id="metrics-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="notesTitle">说明</h2>
+          <p class="section-copy" data-i18n="notesCopy">这一版只做复权走势和核心回报指标，不扩展到费率、持仓或分配细节。</p>
+        </div>
+      </div>
+      <div class="notes-grid">
+        <article class="note-card">
+          <h3 data-i18n="note1Title">共同起点</h3>
+          <p data-i18n="note1Copy">图表统一从当前有效 ETF 里最晚成立的那只开始，所有线都归一到 100，方便直接看同一时间窗内的表现差异。</p>
+        </article>
+        <article class="note-card">
+          <h3 data-i18n="note2Title">数据口径</h3>
+          <p data-i18n="note2Copy">页面复用站内 total-return 接口，默认按复权后总回报口径计算，美股和 A 股 ETF 走同一套前端聚合逻辑。</p>
+        </article>
+        <article class="note-card">
+          <h3 data-i18n="note3Title">分享方式</h3>
+          <p data-i18n="note3Copy">分享链接只写当前 symbols 参数，语言继续跟着站点自己的切换逻辑走，不额外做本地持久化。</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const pageCopy = {
+      pageTitle: { zh: "ETF 对比 | 88220066.xyz", en: "ETF Compare | 88220066.xyz" },
+      pageDescription: {
+        zh: "复权后对比美股 ETF 和 A 股场内 ETF，支持分享当前组合。",
+        en: "Compare adjusted total-return across U.S. ETFs and China-listed ETFs, with shareable symbol sets."
+      },
+      eyebrow: { zh: "ETF COMPARE", en: "ETF COMPARE" },
+      heroTitle: { zh: "ETF 对比", en: "ETF Compare" },
+      heroCopy: {
+        zh: "把美股 ETF 和 A 股场内 ETF 放到同一张复权图里看。比较起点统一取当前组合里最晚上市的那只基金，默认先放 6 只做第一屏。",
+        en: "Compare U.S. ETFs and China-listed ETFs on one adjusted total-return chart. The shared start date is the latest inception date inside the current basket, with six defaults loaded first."
+      },
+      jumpButton: { zh: "开始对比", en: "Start comparing" },
+      copyButton: { zh: "复制分享链接", en: "Copy share link" },
+      formTitle: { zh: "输入组合", en: "Build the basket" },
+      formCopy: {
+        zh: "最少 2 只，最多 6 只。自动去空格、转大写、去重。A 股场内 ETF 请输入带后缀代码，例如 510880.SS 或 159915.SZ。",
+        en: "Use 2 to 6 symbols. Inputs are trimmed, uppercased, and deduped automatically. China-listed ETFs must include the suffix, such as 510880.SS or 159915.SZ."
+      },
+      compareButton: { zh: "更新对比", en: "Refresh comparison" },
+      resetButton: { zh: "恢复默认 6 只", en: "Reset to defaults" },
+      chartTitle: { zh: "复权走势对比", en: "Adjusted total-return chart" },
+      metricsTitle: { zh: "回报核心指标", en: "Core return metrics" },
+      metricsCopy: {
+        zh: "区间回报和当前归一值按共同起点口径展示，成立以来总回报和年化按各自完整历史计算。",
+        en: "Period return and normalized value use the shared start date, while since-inception return and CAGR use each fund's full history."
+      },
+      notesTitle: { zh: "说明", en: "Notes" },
+      notesCopy: {
+        zh: "这一版只做复权走势和核心回报指标，不扩展到费率、持仓或分配细节。",
+        en: "This first version focuses on adjusted price comparison and core return metrics, without fees, holdings, or distribution details."
+      },
+      note1Title: { zh: "共同起点", en: "Shared start date" },
+      note1Copy: {
+        zh: "图表统一从当前有效 ETF 里最晚成立的那只开始，所有线都归一到 100，方便直接看同一时间窗内的表现差异。",
+        en: "The chart starts from the latest inception date among valid ETFs, and every line is rebased to 100 so the same window stays comparable."
+      },
+      note2Title: { zh: "数据口径", en: "Data basis" },
+      note2Copy: {
+        zh: "页面复用站内 total-return 接口，默认按复权后总回报口径计算，美股和 A 股 ETF 走同一套前端聚合逻辑。",
+        en: "This page reuses the site's total-return API and compares adjusted total return for both U.S. ETFs and China-listed ETFs through the same front-end flow."
+      },
+      note3Title: { zh: "分享方式", en: "Sharing" },
+      note3Copy: {
+        zh: "分享链接只写当前 symbols 参数，语言继续跟着站点自己的切换逻辑走，不额外做本地持久化。",
+        en: "Share links only encode the current symbols. Language keeps following the site's existing switch, with no extra local persistence."
+      }
+    };
+
+    const labels = {
+      zh: {
+        brand: "88220066.xyz / ETF 对比",
+        slots: "6 个输入位",
+        slotLabel: "ETF",
+        clear: "清空",
+        summaryLoaded: "默认组合",
+        summaryRange: "共同起点",
+        summaryRules: "输入规则",
+        summaryShare: "分享",
+        summaryLoadedValue: "QQQ / XQQI / GPIQ / QQQI / SPY / SPYI",
+        summaryRangeValue: "最晚成立 ETF = 起点",
+        summaryRulesValue: "2 到 6 只，A 股需 .SS / .SZ",
+        summaryShareValue: "URL 写入当前 symbols",
+        chartWaiting: "输入至少 2 只可用 ETF 后，这里会显示复权对比图。",
+        chartNeedTwo: "至少需要 2 只可用 ETF 才能画图。",
+        chartLoading: "正在拉取复权后总回报数据…",
+        chartCopy: (dateText) => `共同起点：${dateText}。所有线都从 100 开始。`,
+        chartCompareWindow: "共同区间",
+        chartBaseRule: "复权后总回报 / 起点 = 100",
+        metricsCount: (count) => `${count} 只有效 ETF`,
+        shareReady: "分享链接已复制。",
+        shareError: "复制失败，请直接复制地址栏。",
+        resetDone: "已恢复默认组合。",
+        loadStart: "正在更新对比…",
+        loadDone: (count) => `已加载 ${count} 只有效 ETF。`,
+        loadPartial: (count) => `已加载 ${count} 只有效 ETF，部分代码未返回成功。`,
+        needTwoInput: "至少输入 2 只不同的 ETF。",
+        tooMany: "最多支持 6 只 ETF。",
+        duplicateHint: "重复代码已自动去重。",
+        invalidSlot: "请输入代码",
+        commonStart: "共同起点",
+        latestUpdate: "最新更新",
+        inceptionDate: "成立日期",
+        periodReturn: "区间复权回报",
+        normalizedValue: "当前归一值",
+        sinceInceptionReturn: "成立以来总回报",
+        cagr: "成立以来年化",
+        unavailable: "暂不可用",
+        noMetrics: "还没有可展示的 ETF 指标。",
+        slotErrorPrefix: "加载失败",
+        shareLabel: "分享链接",
+        axisDate: "日期",
+        axisValue: "归一值",
+        emptyTip: "当前组合里成功返回的数据还不够，先修正报错代码再试。"
+      },
+      en: {
+        brand: "88220066.xyz / ETF Compare",
+        slots: "6 slots",
+        slotLabel: "ETF",
+        clear: "Clear",
+        summaryLoaded: "Default basket",
+        summaryRange: "Shared start",
+        summaryRules: "Input rules",
+        summaryShare: "Sharing",
+        summaryLoadedValue: "QQQ / XQQI / GPIQ / QQQI / SPY / SPYI",
+        summaryRangeValue: "Latest inception ETF = anchor",
+        summaryRulesValue: "2 to 6 funds, China ETFs need .SS / .SZ",
+        summaryShareValue: "URL stores current symbols",
+        chartWaiting: "Add at least two valid ETFs to render the adjusted comparison chart here.",
+        chartNeedTwo: "At least two valid ETFs are required to draw the chart.",
+        chartLoading: "Loading adjusted total-return data…",
+        chartCopy: (dateText) => `Shared start date: ${dateText}. Every line is rebased to 100.`,
+        chartCompareWindow: "Shared window",
+        chartBaseRule: "Adjusted total return / start = 100",
+        metricsCount: (count) => `${count} valid ETFs`,
+        shareReady: "Share link copied.",
+        shareError: "Copy failed. Please copy the address bar manually.",
+        resetDone: "Default basket restored.",
+        loadStart: "Refreshing comparison…",
+        loadDone: (count) => `Loaded ${count} valid ETFs.`,
+        loadPartial: (count) => `Loaded ${count} valid ETFs, with some symbols failing.`,
+        needTwoInput: "Enter at least two different ETFs.",
+        tooMany: "The page supports up to 6 ETFs.",
+        duplicateHint: "Duplicate symbols were removed automatically.",
+        invalidSlot: "Enter a symbol",
+        commonStart: "Shared start",
+        latestUpdate: "Latest update",
+        inceptionDate: "Inception date",
+        periodReturn: "Period total return",
+        normalizedValue: "Normalized value",
+        sinceInceptionReturn: "Since-inception return",
+        cagr: "Since-inception CAGR",
+        unavailable: "Unavailable",
+        noMetrics: "No ETF metrics are ready yet.",
+        slotErrorPrefix: "Load failed",
+        shareLabel: "Share URL",
+        axisDate: "Date",
+        axisValue: "Normalized value",
+        emptyTip: "Not enough symbols returned successfully yet. Fix the failed ones and try again."
+      }
+    };
+
+    const DEFAULT_SYMBOLS = ["QQQ", "XQQI", "GPIQ", "QQQI", "SPY", "SPYI"];
+    const MAX_SYMBOLS = 6;
+    const MIN_SYMBOLS = 2;
+    const PALETTE = ["#60a5fa", "#34d399", "#f59e0b", "#f97316", "#a78bfa", "#fb7185"];
+
+    const state = {
+      requestId: 0,
+      loading: false,
+      lastSymbols: [],
+      statusKind: "idle",
+      statusCount: 0,
+      slotErrors: Array(MAX_SYMBOLS).fill(""),
+      fullResults: [],
+      compareResults: [],
+      commonStartTs: null
+    };
+
+    const inputGrid = document.getElementById("input-grid");
+    const summaryGrid = document.getElementById("summary-grid");
+    const chartWrap = document.getElementById("chart-wrap");
+    const metricsGrid = document.getElementById("metrics-grid");
+    const chartCopyEl = document.getElementById("chart-copy");
+    const commonStartPill = document.getElementById("common-start-pill");
+    const metricsPill = document.getElementById("metrics-pill");
+    const slotCountPill = document.getElementById("slot-count-pill");
+    const loadStatus = document.getElementById("load-status");
+    const shareStatus = document.getElementById("share-status");
+    const copyShareButton = document.getElementById("copy-share-link");
+    const runCompareButton = document.getElementById("run-compare");
+    const resetDefaultsButton = document.getElementById("reset-defaults");
+
+    function lang() {
+      return window.SiteI18n.getLang() === "en" ? "en" : "zh";
+    }
+
+    function locale() {
+      return lang() === "en" ? "en-US" : "zh-CN";
+    }
+
+    function text(key, ...args) {
+      const value = labels[lang()][key];
+      return typeof value === "function" ? value(...args) : value;
+    }
+
+    function sanitizeSymbol(value) {
+      return (value || "").trim().toUpperCase().replace(/\s+/g, "");
+    }
+
+    function readUrlSymbols() {
+      const params = new URLSearchParams(window.location.search);
+      const raw = params.get("symbols");
+      if (!raw) return [];
+      return raw.split(",").map(sanitizeSymbol).filter(Boolean).slice(0, MAX_SYMBOLS);
+    }
+
+    function setShareStatus(kind) {
+      shareStatus.textContent = kind === "ready" ? text("shareReady") : kind === "error" ? text("shareError") : "";
+      shareStatus.classList.toggle("ready", kind === "ready");
+      shareStatus.classList.toggle("error", kind === "error");
+    }
+
+    function buildSummaryCards() {
+      const current = labels[lang()];
+      const items = [
+        [current.summaryLoaded, current.summaryLoadedValue],
+        [current.summaryRange, current.summaryRangeValue],
+        [current.summaryRules, current.summaryRulesValue],
+        [current.summaryShare, current.summaryShareValue]
+      ];
+      summaryGrid.innerHTML = items.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+    }
+
+    function buildInputSlots() {
+      inputGrid.innerHTML = Array.from({ length: MAX_SYMBOLS }, (_, index) => `
+        <article class="input-card">
+          <div class="slot-top">
+            <span class="slot-label">${text("slotLabel")} ${index + 1}</span>
+            <button class="slot-action" type="button" data-clear-slot="${index}">${text("clear")}</button>
+          </div>
+          <input class="symbol-input" id="symbol-input-${index}" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="QQQ / 510880.SS">
+          <div class="inline-error" id="slot-error-${index}" aria-live="polite"></div>
+        </article>
+      `).join("");
+      slotCountPill.textContent = text("slots");
+      applySlotErrors();
+    }
+
+    function setInputValues(symbols) {
+      const next = Array.from({ length: MAX_SYMBOLS }, (_, index) => symbols[index] || "");
+      next.forEach((value, index) => {
+        const input = document.getElementById(`symbol-input-${index}`);
+        if (input) input.value = value;
+      });
+    }
+
+    function getRawInputValues() {
+      return Array.from({ length: MAX_SYMBOLS }, (_, index) => {
+        const input = document.getElementById(`symbol-input-${index}`);
+        return sanitizeSymbol(input?.value || "");
+      });
+    }
+
+    function normalizeInputValues() {
+      const rawValues = getRawInputValues();
+      rawValues.forEach((value, index) => {
+        const input = document.getElementById(`symbol-input-${index}`);
+        if (input) input.value = value;
+      });
+
+      const slotMap = new Map();
+      rawValues.forEach((value, index) => {
+        if (!value || slotMap.has(value)) return;
+        slotMap.set(value, index);
+      });
+
+      return {
+        rawValues,
+        symbols: [...slotMap.keys()],
+        slotMap
+      };
+    }
+
+    function applySlotErrors() {
+      state.slotErrors.forEach((message, index) => {
+        const node = document.getElementById(`slot-error-${index}`);
+        if (node) node.textContent = message || "";
+      });
+    }
+
+    function clearSlotErrors() {
+      state.slotErrors = Array(MAX_SYMBOLS).fill("");
+      applySlotErrors();
+    }
+
+    function setLoadStatus(message) {
+      loadStatus.textContent = message || "";
+    }
+
+    function syncLoadStatus() {
+      if (state.statusKind === "loading") {
+        setLoadStatus(text("loadStart"));
+        return;
+      }
+      if (state.statusKind === "done") {
+        setLoadStatus(text("loadDone", state.statusCount));
+        return;
+      }
+      if (state.statusKind === "partial") {
+        setLoadStatus(text("loadPartial", state.statusCount));
+        return;
+      }
+      if (state.statusKind === "reset") {
+        setLoadStatus(text("resetDone"));
+        return;
+      }
+      if (state.statusKind === "needTwo") {
+        setLoadStatus(text("needTwoInput"));
+        return;
+      }
+      if (state.statusKind === "tooMany") {
+        setLoadStatus(text("tooMany"));
+        return;
+      }
+      if (state.statusKind === "duplicate") {
+        setLoadStatus(text("duplicateHint"));
+        return;
+      }
+      setLoadStatus("");
+    }
+
+    function writeSymbolsToUrl(symbols) {
+      const params = new URLSearchParams(window.location.search);
+      if (symbols.length) {
+        params.set("symbols", symbols.join(","));
+      } else {
+        params.delete("symbols");
+      }
+      const query = params.toString();
+      const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+      window.history.replaceState(null, "", nextUrl);
+    }
+
+    function currentShareUrl() {
+      return window.location.href;
+    }
+
+    async function copyShareUrl() {
+      try {
+        await navigator.clipboard.writeText(currentShareUrl());
+        setShareStatus("ready");
+      } catch (error) {
+        setShareStatus("error");
+      }
+    }
+
+    function formatDate(ts) {
+      if (!Number.isFinite(ts)) return "--";
+      return new Intl.DateTimeFormat(locale(), {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }).format(new Date(ts * 1000));
+    }
+
+    function formatShortDate(ts) {
+      if (!Number.isFinite(ts)) return "--";
+      return new Intl.DateTimeFormat(locale(), {
+        year: "2-digit",
+        month: "short"
+      }).format(new Date(ts * 1000));
+    }
+
+    function formatPct(value, digits = 2) {
+      if (!Number.isFinite(value)) return text("unavailable");
+      const formatter = new Intl.NumberFormat(locale(), {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      });
+      const sign = value > 0 ? "+" : "";
+      return `${sign}${formatter.format(value)}%`;
+    }
+
+    function formatNumber(value, digits = 1) {
+      if (!Number.isFinite(value)) return text("unavailable");
+      return new Intl.NumberFormat(locale(), {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      }).format(value);
+    }
+
+    function buildCompareSeries(payload, color) {
+      const points = Array.isArray(payload?.series) ? payload.series.filter((point) => Number.isFinite(point?.value) && point.value > 0) : [];
+      if (points.length < 2) throw new Error("Not enough comparison points");
+      const first = points[0].value;
+      const normalizedPoints = points.map((point) => ({
+        ts: point.ts,
+        value: Number(((point.value / first) * 100).toFixed(3))
+      }));
+      const latestPoint = normalizedPoints[normalizedPoints.length - 1];
+      return {
+        color,
+        points: normalizedPoints,
+        normalizedLatest: latestPoint.value,
+        periodReturnPct: Number((((latestPoint.value / 100) - 1) * 100).toFixed(2)),
+        firstTs: normalizedPoints[0].ts,
+        latestTs: latestPoint.ts
+      };
+    }
+
+    async function fetchTotalReturn(symbol, fromTs = 0) {
+      const params = new URLSearchParams({
+        symbol,
+        interval: "1d"
+      });
+      if (fromTs) params.set("from", String(fromTs));
+      const response = await fetch(`/api/total-return?${params.toString()}`);
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload?.error || `HTTP ${response.status}`);
+      }
+      return payload;
+    }
+
+    function chartTicks(minValue, maxValue) {
+      const span = maxValue - minValue || 1;
+      return Array.from({ length: 5 }, (_, index) => Number((maxValue - (span * index) / 4).toFixed(2)));
+    }
+
+    function buildLinePath(points, scaleX, scaleY) {
+      return points.map((point, index) => `${index === 0 ? "M" : "L"} ${scaleX(point.ts).toFixed(2)} ${scaleY(point.value).toFixed(2)}`).join(" ");
+    }
+
+    function buildChartSvg(seriesSet) {
+      const width = 1040;
+      const height = 320;
+      const pad = { top: 18, right: 20, bottom: 42, left: 54 };
+      const allPoints = seriesSet.flatMap((series) => series.points);
+      const minTs = Math.min(...allPoints.map((point) => point.ts));
+      const maxTs = Math.max(...allPoints.map((point) => point.ts));
+      const minValue = Math.min(100, ...allPoints.map((point) => point.value));
+      const maxValue = Math.max(100, ...allPoints.map((point) => point.value));
+      const yPad = Math.max((maxValue - minValue) * 0.12, 3);
+      const chartMin = minValue - yPad;
+      const chartMax = maxValue + yPad;
+      const rangeTs = Math.max(maxTs - minTs, 1);
+      const rangeValue = Math.max(chartMax - chartMin, 1);
+      const scaleX = (ts) => pad.left + ((ts - minTs) / rangeTs) * (width - pad.left - pad.right);
+      const scaleY = (value) => height - pad.bottom - ((value - chartMin) / rangeValue) * (height - pad.top - pad.bottom);
+      const yTicks = chartTicks(chartMin, chartMax);
+      const xTicks = Array.from({ length: Math.min(5, allPoints.length) }, (_, index) => {
+        if (index === 0) return minTs;
+        if (index === 4 || index === allPoints.length - 1) return maxTs;
+        return Math.round(minTs + (rangeTs * index) / 4);
+      });
+      const baselineVisible = chartMin <= 100 && chartMax >= 100;
+
+      return `
+        <svg class="chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+          <g>
+            ${yTicks.map((value) => `
+              <line class="chart-grid-line" x1="${pad.left}" y1="${scaleY(value).toFixed(2)}" x2="${width - pad.right}" y2="${scaleY(value).toFixed(2)}"></line>
+              <text class="chart-axis-label" x="${pad.left - 10}" y="${(scaleY(value) + 4).toFixed(2)}" text-anchor="end">${formatNumber(value, 1)}</text>
+            `).join("")}
+            ${baselineVisible ? `<line class="chart-baseline" x1="${pad.left}" y1="${scaleY(100).toFixed(2)}" x2="${width - pad.right}" y2="${scaleY(100).toFixed(2)}"></line>` : ""}
+            ${seriesSet.map((series) => `<path class="chart-line" d="${buildLinePath(series.points, scaleX, scaleY)}" stroke="${series.color}"></path>`).join("")}
+            ${seriesSet.map((series) => {
+              const lastPoint = series.points[series.points.length - 1];
+              return `<circle class="chart-dot" cx="${scaleX(lastPoint.ts).toFixed(2)}" cy="${scaleY(lastPoint.value).toFixed(2)}" r="4.2" fill="${series.color}"></circle>`;
+            }).join("")}
+            ${xTicks.map((ts, index) => {
+              const x = scaleX(ts).toFixed(2);
+              const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+              return `
+                <line class="chart-tick-line" x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 6}"></line>
+                <text class="chart-axis-label" x="${x}" y="${height - 10}" text-anchor="${anchor}">${formatShortDate(ts)}</text>
+              `;
+            }).join("")}
+          </g>
+        </svg>
+      `;
+    }
+
+    function renderChart() {
+      const compareResults = state.compareResults;
+      if (state.loading) {
+        chartCopyEl.textContent = text("chartLoading");
+        commonStartPill.textContent = "--";
+        chartWrap.innerHTML = `<div class="empty-state">${text("chartLoading")}</div>`;
+        return;
+      }
+
+      if (compareResults.length < 2) {
+        chartCopyEl.textContent = text("chartNeedTwo");
+        commonStartPill.textContent = "--";
+        chartWrap.innerHTML = `<div class="empty-state">${text("chartNeedTwo")} ${text("emptyTip")}</div>`;
+        return;
+      }
+
+      const commonStartText = formatDate(state.commonStartTs);
+      chartCopyEl.textContent = text("chartCopy", commonStartText);
+      commonStartPill.textContent = `${text("commonStart")}: ${commonStartText}`;
+      chartWrap.innerHTML = `
+        <div class="chart-board">${buildChartSvg(compareResults)}</div>
+        <div class="legend-grid">
+          ${compareResults.map((item) => `
+            <article class="summary-card legend-item" style="--line-color:${item.color}">
+              <div class="legend-item-top">
+                <span class="legend-name"><span class="swatch"></span>${item.symbol}</span>
+                <strong>${formatNumber(item.normalizedLatest, 1)}</strong>
+              </div>
+              <div class="legend-meta">
+                <span>${text("periodReturn")}</span>
+                <strong>${formatPct(item.periodReturnPct, 2)}</strong>
+              </div>
+              <div class="legend-meta">
+                <span>${text("latestUpdate")}</span>
+                <strong>${formatDate(item.latestTs)}</strong>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+        <div class="axis-note">${text("chartCompareWindow")} · ${text("axisDate")} / ${text("axisValue")} · ${text("chartBaseRule")}</div>
+      `;
+    }
+
+    function renderMetrics() {
+      metricsPill.textContent = state.fullResults.length ? text("metricsCount", state.fullResults.length) : "--";
+      if (!state.fullResults.length) {
+        metricsGrid.innerHTML = `<div class="empty-state">${text("noMetrics")}</div>`;
+        return;
+      }
+
+      metricsGrid.innerHTML = state.fullResults.map((item) => `
+        <article class="metric-card" style="--line-color:${item.color}">
+          <div class="metric-top">
+            <span class="metric-title"><span class="swatch"></span>${item.symbol}</span>
+            <strong>${item.currency || "--"}</strong>
+          </div>
+          <div class="metric-values">
+            <div>
+              <span class="metric-label">${text("periodReturn")}</span>
+              <span class="metric-value">${Number.isFinite(item.periodReturnPct) ? formatPct(item.periodReturnPct, 2) : `<span class="metric-muted">${text("unavailable")}</span>`}</span>
+            </div>
+            <div>
+              <span class="metric-label">${text("normalizedValue")}</span>
+              <span class="metric-value">${Number.isFinite(item.normalizedLatest) ? formatNumber(item.normalizedLatest, 1) : `<span class="metric-muted">${text("unavailable")}</span>`}</span>
+            </div>
+            <div>
+              <span class="metric-label">${text("sinceInceptionReturn")}</span>
+              <span class="metric-value">${formatPct(item.totalReturnPct, 2)}</span>
+            </div>
+            <div>
+              <span class="metric-label">${text("cagr")}</span>
+              <span class="metric-value">${formatPct(item.annualizedReturnPct, 2)}</span>
+            </div>
+            <div>
+              <span class="metric-label">${text("inceptionDate")}</span>
+              <span class="metric-value">${formatDate(item.inceptionTs)}</span>
+            </div>
+            <div>
+              <span class="metric-label">${text("latestUpdate")}</span>
+              <span class="metric-value">${formatDate(item.latestTs)}</span>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    async function loadComparison() {
+      const currentRequestId = ++state.requestId;
+      const { rawValues, symbols, slotMap } = normalizeInputValues();
+      clearSlotErrors();
+      setShareStatus("");
+
+      if (symbols.length > MAX_SYMBOLS) {
+        state.statusKind = "tooMany";
+        syncLoadStatus();
+        return;
+      }
+
+      if (symbols.length < MIN_SYMBOLS) {
+        const firstEmpty = rawValues.findIndex((value) => !value);
+        if (firstEmpty >= 0) state.slotErrors[firstEmpty] = text("invalidSlot");
+        applySlotErrors();
+        setLoadStatus(text("needTwoInput"));
+        state.fullResults = [];
+        state.compareResults = [];
+        state.commonStartTs = null;
+        state.statusKind = "needTwo";
+        renderChart();
+        renderMetrics();
+        syncLoadStatus();
+        return;
+      }
+
+      if (symbols.length !== rawValues.filter(Boolean).length) {
+        state.statusKind = "duplicate";
+        syncLoadStatus();
+      }
+
+      state.loading = true;
+      state.statusKind = "loading";
+      state.fullResults = [];
+      state.compareResults = [];
+      state.commonStartTs = null;
+      renderChart();
+      renderMetrics();
+      syncLoadStatus();
+      runCompareButton.disabled = true;
+
+      const fullSettled = await Promise.allSettled(
+        symbols.map((symbol) => fetchTotalReturn(symbol))
+      );
+
+      if (currentRequestId !== state.requestId) return;
+
+      const fullResults = [];
+      fullSettled.forEach((result, index) => {
+        const symbol = symbols[index];
+        const slotIndex = slotMap.get(symbol);
+        const color = PALETTE[index % PALETTE.length];
+        if (result.status === "fulfilled") {
+          fullResults.push({
+            ...result.value,
+            symbol,
+            color
+          });
+          return;
+        }
+        if (Number.isInteger(slotIndex)) {
+          state.slotErrors[slotIndex] = `${text("slotErrorPrefix")}: ${result.reason?.message || "Unknown error"}`;
+        }
+      });
+
+      applySlotErrors();
+
+      if (!fullResults.length) {
+        state.loading = false;
+        state.statusKind = "needTwo";
+        runCompareButton.disabled = false;
+        syncLoadStatus();
+        renderChart();
+        renderMetrics();
+        return;
+      }
+
+      const commonStartTs = Math.max(...fullResults.map((item) => item.inceptionTs));
+      state.commonStartTs = commonStartTs;
+
+      const compareSettled = await Promise.allSettled(
+        fullResults.map((item) => fetchTotalReturn(item.symbol, commonStartTs))
+      );
+
+      if (currentRequestId !== state.requestId) return;
+
+      const compareBySymbol = new Map();
+      compareSettled.forEach((result, index) => {
+        const item = fullResults[index];
+        const slotIndex = slotMap.get(item.symbol);
+        if (result.status === "fulfilled") {
+          try {
+            compareBySymbol.set(item.symbol, buildCompareSeries(result.value, item.color));
+          } catch (error) {
+            if (Number.isInteger(slotIndex)) {
+              state.slotErrors[slotIndex] = `${text("slotErrorPrefix")}: ${error instanceof Error ? error.message : "Unknown error"}`;
+            }
+          }
+          return;
+        }
+        if (Number.isInteger(slotIndex)) {
+          state.slotErrors[slotIndex] = `${text("slotErrorPrefix")}: ${result.reason?.message || "Unknown error"}`;
+        }
+      });
+
+      applySlotErrors();
+
+      state.fullResults = fullResults.map((item) => {
+        const compare = compareBySymbol.get(item.symbol);
+        return {
+          ...item,
+          periodReturnPct: compare?.periodReturnPct ?? null,
+          normalizedLatest: compare?.normalizedLatest ?? null
+        };
+      });
+
+      state.compareResults = fullResults
+        .map((item) => {
+          const compare = compareBySymbol.get(item.symbol);
+          if (!compare) return null;
+          return {
+            symbol: item.symbol,
+            color: item.color,
+            latestTs: compare.latestTs,
+            normalizedLatest: compare.normalizedLatest,
+            periodReturnPct: compare.periodReturnPct,
+            points: compare.points
+          };
+        })
+        .filter(Boolean);
+
+      state.lastSymbols = symbols;
+      writeSymbolsToUrl(symbols);
+      state.loading = false;
+      runCompareButton.disabled = false;
+
+      if (state.compareResults.length < MIN_SYMBOLS) {
+        state.statusKind = "needTwo";
+        state.statusCount = state.compareResults.length;
+      } else if (state.compareResults.length === symbols.length) {
+        state.statusKind = "done";
+        state.statusCount = state.compareResults.length;
+      } else {
+        state.statusKind = "partial";
+        state.statusCount = state.compareResults.length;
+      }
+
+      syncLoadStatus();
+      renderChart();
+      renderMetrics();
+    }
+
+    function resetDefaults() {
+      setInputValues(DEFAULT_SYMBOLS);
+      clearSlotErrors();
+      state.statusKind = "reset";
+      syncLoadStatus();
+      setShareStatus("");
+      loadComparison();
+    }
+
+    function bindEvents() {
+      inputGrid.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-clear-slot]");
+        if (!button) return;
+        const index = Number(button.dataset.clearSlot);
+        const input = document.getElementById(`symbol-input-${index}`);
+        if (input) input.value = "";
+        state.slotErrors[index] = "";
+        applySlotErrors();
+      });
+
+      inputGrid.addEventListener("blur", (event) => {
+        const input = event.target.closest(".symbol-input");
+        if (!input) return;
+        input.value = sanitizeSymbol(input.value);
+      }, true);
+
+      inputGrid.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          loadComparison();
+        }
+      });
+
+      copyShareButton.addEventListener("click", copyShareUrl);
+      runCompareButton.addEventListener("click", loadComparison);
+      resetDefaultsButton.addEventListener("click", resetDefaults);
+    }
+
+    function renderStatic() {
+      document.getElementById("brand").textContent = labels[lang()].brand;
+      buildSummaryCards();
+      buildInputSlots();
+      renderChart();
+      renderMetrics();
+    }
+
+    function init() {
+      renderStatic();
+      bindEvents();
+      const symbols = readUrlSymbols();
+      setInputValues(symbols.length ? symbols : DEFAULT_SYMBOLS);
+      loadComparison();
+    }
+
+    window.SiteI18n.bindPage(pageCopy, () => {
+      const currentValues = getRawInputValues();
+      renderStatic();
+      setInputValues(currentValues);
+      applySlotErrors();
+      syncLoadStatus();
+      renderChart();
+      renderMetrics();
+    });
+
+    init();
+  </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"3f7de88d5f7243bca6ad10092abf0161","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
