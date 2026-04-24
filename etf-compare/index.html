@@ -261,6 +261,34 @@
       margin-top: 18px;
     }
 
+    .mode-toggle {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mode-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .mode-button.active,
+    .mode-button:hover {
+      color: var(--text);
+      border-color: rgba(96, 165, 250, 0.36);
+      background: rgba(96, 165, 250, 0.14);
+    }
+
     .toolbar .hero-button,
     .toolbar .ghost-button {
       min-height: 46px;
@@ -493,6 +521,7 @@
       </div>
       <div class="input-grid" id="input-grid"></div>
       <div class="toolbar">
+        <div class="mode-toggle" id="basis-toggle" aria-label="Compare basis"></div>
         <button class="hero-button" id="run-compare" type="button" data-i18n="compareButton">更新对比</button>
         <button class="ghost-button" id="reset-defaults" type="button" data-i18n="resetButton">恢复默认 6 只</button>
         <span class="status-text" id="load-status" aria-live="polite"></span>
@@ -605,16 +634,24 @@
         summaryRange: "共同起点",
         summaryRules: "输入规则",
         summaryShare: "分享",
+        basisLabel: "对比口径",
+        basisAdjusted: "复权",
+        basisPrice: "不复权",
+        basisAdjustedHint: "分红拆分计入",
+        basisPriceHint: "按原始价格/单位净值",
         summaryLoadedValue: "QQQ / XQQI / GPIQ / QQQI / SPY / SPYI",
         summaryRangeValue: "最晚成立 ETF = 起点",
         summaryRulesValue: "2 到 6 只，A 股需 .SS / .SZ",
-        summaryShareValue: "URL 写入当前 symbols",
-        chartWaiting: "输入至少 2 只可用 ETF 后，这里会显示复权对比图。",
+        summaryShareValue: "URL 写入当前 symbols + 口径",
+        chartWaiting: "输入至少 2 只可用 ETF 后，这里会显示对比图。",
         chartNeedTwo: "至少需要 2 只可用 ETF 才能画图。",
-        chartLoading: "正在拉取复权后总回报数据…",
-        chartCopy: (dateText) => `共同起点：${dateText}。所有线都从 100 开始。`,
+        chartLoadingAdjusted: "正在拉取复权后总回报数据…",
+        chartLoadingPrice: "正在拉取不复权价格数据…",
+        chartCopyAdjusted: (dateText) => `共同起点：${dateText}。所有线都从 100 开始，口径是复权后总回报。`,
+        chartCopyPrice: (dateText) => `共同起点：${dateText}。所有线都从 100 开始，口径是不复权价格。`,
         chartCompareWindow: "共同区间",
-        chartBaseRule: "复权后总回报 / 起点 = 100",
+        chartBaseRuleAdjusted: "复权后总回报 / 起点 = 100",
+        chartBaseRulePrice: "不复权价格 / 起点 = 100",
         metricsCount: (count) => `${count} 只有效 ETF`,
         shareReady: "分享链接已复制。",
         shareError: "复制失败，请直接复制地址栏。",
@@ -629,10 +666,13 @@
         commonStart: "共同起点",
         latestUpdate: "最新更新",
         inceptionDate: "成立日期",
-        periodReturn: "区间复权回报",
+        periodReturnAdjusted: "区间复权回报",
+        periodReturnPrice: "区间价格涨跌",
         normalizedValue: "当前归一值",
-        sinceInceptionReturn: "成立以来总回报",
-        cagr: "成立以来年化",
+        sinceInceptionReturnAdjusted: "成立以来总回报",
+        sinceInceptionReturnPrice: "成立以来价格涨跌",
+        cagrAdjusted: "成立以来年化",
+        cagrPrice: "成立以来价格年化",
         unavailable: "暂不可用",
         noMetrics: "还没有可展示的 ETF 指标。",
         slotErrorPrefix: "加载失败",
@@ -650,16 +690,24 @@
         summaryRange: "Shared start",
         summaryRules: "Input rules",
         summaryShare: "Sharing",
+        basisLabel: "Compare basis",
+        basisAdjusted: "Adjusted",
+        basisPrice: "Unadjusted",
+        basisAdjustedHint: "Includes dividends and splits",
+        basisPriceHint: "Raw price / unit NAV",
         summaryLoadedValue: "QQQ / XQQI / GPIQ / QQQI / SPY / SPYI",
         summaryRangeValue: "Latest inception ETF = anchor",
         summaryRulesValue: "2 to 6 funds, China ETFs need .SS / .SZ",
-        summaryShareValue: "URL stores current symbols",
-        chartWaiting: "Add at least two valid ETFs to render the adjusted comparison chart here.",
+        summaryShareValue: "URL stores symbols + basis",
+        chartWaiting: "Add at least two valid ETFs to render the comparison chart here.",
         chartNeedTwo: "At least two valid ETFs are required to draw the chart.",
-        chartLoading: "Loading adjusted total-return data…",
-        chartCopy: (dateText) => `Shared start date: ${dateText}. Every line is rebased to 100.`,
+        chartLoadingAdjusted: "Loading adjusted total-return data…",
+        chartLoadingPrice: "Loading unadjusted price data…",
+        chartCopyAdjusted: (dateText) => `Shared start date: ${dateText}. Every line is rebased to 100 on an adjusted total-return basis.`,
+        chartCopyPrice: (dateText) => `Shared start date: ${dateText}. Every line is rebased to 100 on an unadjusted price basis.`,
         chartCompareWindow: "Shared window",
-        chartBaseRule: "Adjusted total return / start = 100",
+        chartBaseRuleAdjusted: "Adjusted total return / start = 100",
+        chartBaseRulePrice: "Unadjusted price / start = 100",
         metricsCount: (count) => `${count} valid ETFs`,
         shareReady: "Share link copied.",
         shareError: "Copy failed. Please copy the address bar manually.",
@@ -674,10 +722,13 @@
         commonStart: "Shared start",
         latestUpdate: "Latest update",
         inceptionDate: "Inception date",
-        periodReturn: "Period total return",
+        periodReturnAdjusted: "Period total return",
+        periodReturnPrice: "Period price return",
         normalizedValue: "Normalized value",
-        sinceInceptionReturn: "Since-inception return",
-        cagr: "Since-inception CAGR",
+        sinceInceptionReturnAdjusted: "Since-inception return",
+        sinceInceptionReturnPrice: "Since-inception price return",
+        cagrAdjusted: "Since-inception CAGR",
+        cagrPrice: "Since-inception price CAGR",
         unavailable: "Unavailable",
         noMetrics: "No ETF metrics are ready yet.",
         slotErrorPrefix: "Load failed",
@@ -692,10 +743,12 @@
     const MAX_SYMBOLS = 6;
     const MIN_SYMBOLS = 2;
     const PALETTE = ["#60a5fa", "#34d399", "#f59e0b", "#f97316", "#a78bfa", "#fb7185"];
+    const BASIS_OPTIONS = ["adjusted", "price"];
 
     const state = {
       requestId: 0,
       loading: false,
+      basis: "adjusted",
       lastSymbols: [],
       statusKind: "idle",
       statusCount: 0,
@@ -715,6 +768,7 @@
     const slotCountPill = document.getElementById("slot-count-pill");
     const loadStatus = document.getElementById("load-status");
     const shareStatus = document.getElementById("share-status");
+    const basisToggle = document.getElementById("basis-toggle");
     const copyShareButton = document.getElementById("copy-share-link");
     const runCompareButton = document.getElementById("run-compare");
     const resetDefaultsButton = document.getElementById("reset-defaults");
@@ -736,11 +790,20 @@
       return (value || "").trim().toUpperCase().replace(/\s+/g, "");
     }
 
+    function basisLabelPart(key) {
+      return state.basis === "price" ? text(`${key}Price`) : text(`${key}Adjusted`);
+    }
+
     function readUrlSymbols() {
       const params = new URLSearchParams(window.location.search);
       const raw = params.get("symbols");
       if (!raw) return [];
       return raw.split(",").map(sanitizeSymbol).filter(Boolean).slice(0, MAX_SYMBOLS);
+    }
+
+    function readUrlBasis() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("basis") === "price" ? "price" : "adjusted";
     }
 
     function setShareStatus(kind) {
@@ -773,6 +836,15 @@
       `).join("");
       slotCountPill.textContent = text("slots");
       applySlotErrors();
+    }
+
+    function renderBasisToggle() {
+      basisToggle.innerHTML = BASIS_OPTIONS.map((basis) => `
+        <button class="mode-button ${basis === state.basis ? "active" : ""}" type="button" data-basis="${basis}">
+          ${basis === "price" ? text("basisPrice") : text("basisAdjusted")}
+        </button>
+      `).join("");
+      basisToggle.setAttribute("aria-label", text("basisLabel"));
     }
 
     function setInputValues(symbols) {
@@ -865,6 +937,11 @@
       } else {
         params.delete("symbols");
       }
+      if (state.basis === "price") {
+        params.set("basis", "price");
+      } else {
+        params.delete("basis");
+      }
       const query = params.toString();
       const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
       window.history.replaceState(null, "", nextUrl);
@@ -940,7 +1017,8 @@
     async function fetchTotalReturn(symbol, fromTs = 0) {
       const params = new URLSearchParams({
         symbol,
-        interval: "1d"
+        interval: "1d",
+        basis: state.basis
       });
       if (fromTs) params.set("from", String(fromTs));
       const response = await fetch(`/api/total-return?${params.toString()}`);
@@ -1013,9 +1091,9 @@
     function renderChart() {
       const compareResults = state.compareResults;
       if (state.loading) {
-        chartCopyEl.textContent = text("chartLoading");
+        chartCopyEl.textContent = state.basis === "price" ? text("chartLoadingPrice") : text("chartLoadingAdjusted");
         commonStartPill.textContent = "--";
-        chartWrap.innerHTML = `<div class="empty-state">${text("chartLoading")}</div>`;
+        chartWrap.innerHTML = `<div class="empty-state">${state.basis === "price" ? text("chartLoadingPrice") : text("chartLoadingAdjusted")}</div>`;
         return;
       }
 
@@ -1027,7 +1105,7 @@
       }
 
       const commonStartText = formatDate(state.commonStartTs);
-      chartCopyEl.textContent = text("chartCopy", commonStartText);
+      chartCopyEl.textContent = state.basis === "price" ? text("chartCopyPrice", commonStartText) : text("chartCopyAdjusted", commonStartText);
       commonStartPill.textContent = `${text("commonStart")}: ${commonStartText}`;
       chartWrap.innerHTML = `
         <div class="chart-board">${buildChartSvg(compareResults)}</div>
@@ -1039,7 +1117,7 @@
                 <strong>${formatNumber(item.normalizedLatest, 1)}</strong>
               </div>
               <div class="legend-meta">
-                <span>${text("periodReturn")}</span>
+                <span>${basisLabelPart("periodReturn")}</span>
                 <strong>${formatPct(item.periodReturnPct, 2)}</strong>
               </div>
               <div class="legend-meta">
@@ -1049,7 +1127,7 @@
             </article>
           `).join("")}
         </div>
-        <div class="axis-note">${text("chartCompareWindow")} · ${text("axisDate")} / ${text("axisValue")} · ${text("chartBaseRule")}</div>
+        <div class="axis-note">${text("chartCompareWindow")} · ${text("axisDate")} / ${text("axisValue")} · ${state.basis === "price" ? text("chartBaseRulePrice") : text("chartBaseRuleAdjusted")}</div>
       `;
     }
 
@@ -1068,7 +1146,7 @@
           </div>
           <div class="metric-values">
             <div>
-              <span class="metric-label">${text("periodReturn")}</span>
+              <span class="metric-label">${basisLabelPart("periodReturn")}</span>
               <span class="metric-value">${Number.isFinite(item.periodReturnPct) ? formatPct(item.periodReturnPct, 2) : `<span class="metric-muted">${text("unavailable")}</span>`}</span>
             </div>
             <div>
@@ -1076,11 +1154,11 @@
               <span class="metric-value">${Number.isFinite(item.normalizedLatest) ? formatNumber(item.normalizedLatest, 1) : `<span class="metric-muted">${text("unavailable")}</span>`}</span>
             </div>
             <div>
-              <span class="metric-label">${text("sinceInceptionReturn")}</span>
+              <span class="metric-label">${basisLabelPart("sinceInceptionReturn")}</span>
               <span class="metric-value">${formatPct(item.totalReturnPct, 2)}</span>
             </div>
             <div>
-              <span class="metric-label">${text("cagr")}</span>
+              <span class="metric-label">${basisLabelPart("cagr")}</span>
               <span class="metric-value">${formatPct(item.annualizedReturnPct, 2)}</span>
             </div>
             <div>
@@ -1282,6 +1360,16 @@
         }
       });
 
+      basisToggle.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-basis]");
+        if (!button) return;
+        const nextBasis = button.getAttribute("data-basis") === "price" ? "price" : "adjusted";
+        if (nextBasis === state.basis) return;
+        state.basis = nextBasis;
+        renderBasisToggle();
+        loadComparison();
+      });
+
       copyShareButton.addEventListener("click", copyShareUrl);
       runCompareButton.addEventListener("click", loadComparison);
       resetDefaultsButton.addEventListener("click", resetDefaults);
@@ -1291,11 +1379,13 @@
       document.getElementById("brand").textContent = labels[lang()].brand;
       buildSummaryCards();
       buildInputSlots();
+      renderBasisToggle();
       renderChart();
       renderMetrics();
     }
 
     function init() {
+      state.basis = readUrlBasis();
       renderStatic();
       bindEvents();
       const symbols = readUrlSymbols();

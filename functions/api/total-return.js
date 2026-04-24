@@ -6,6 +6,7 @@ const DEFAULT_HEADERS = {
 const MAX_POINTS = 120;
 const MAX_REASONABLE_RETURN_PCT = 5000;
 const MIN_POINTS = 24;
+const DEFAULT_BASIS = "adjusted";
 
 function isCnFundSymbol(symbol) {
   return /\.(SS|SZ)$/.test(symbol);
@@ -78,7 +79,7 @@ function validateSeries(points, symbol) {
   return totalReturnPct;
 }
 
-function normalizeSeries(payload, fromTs = 0) {
+function normalizeSeries(payload, fromTs = 0, basis = DEFAULT_BASIS) {
   const timestamps = payload?.timestamp || [];
   const adjusted = payload?.indicators?.adjclose?.[0]?.adjclose || [];
   const closes = payload?.indicators?.quote?.[0]?.close || [];
@@ -86,7 +87,7 @@ function normalizeSeries(payload, fromTs = 0) {
 
   for (let index = 0; index < timestamps.length; index += 1) {
     if (fromTs && timestamps[index] < fromTs) continue;
-    const raw = adjusted[index] ?? closes[index];
+    const raw = basis === "price" ? closes[index] : adjusted[index] ?? closes[index];
     if (!Number.isFinite(raw) || raw <= 0) continue;
     points.push({
       ts: timestamps[index],
@@ -101,6 +102,9 @@ function normalizeSeries(payload, fromTs = 0) {
   const metrics = enrichMetrics(first, points[points.length - 1].value, points[0].ts, points[points.length - 1].ts);
   const compact = compactSeries(points);
   return {
+    basis,
+    firstValue: Number(first.toFixed(4)),
+    latestValue: Number(points[points.length - 1].value.toFixed(4)),
     firstAdjClose: Number(first.toFixed(4)),
     latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
     totalReturnPct: Number(totalReturnPct.toFixed(2)),
@@ -115,9 +119,9 @@ function normalizeSeries(payload, fromTs = 0) {
   };
 }
 
-async function fetchChart(symbol, interval, fromTs = 0) {
+async function fetchChart(symbol, interval, fromTs = 0, basis = DEFAULT_BASIS) {
   if (isCnFundSymbol(symbol)) {
-    return fetchEastmoneyFund(symbol, fromTs);
+    return fetchEastmoneyFund(symbol, fromTs, basis);
   }
 
   const response = await fetch(buildYahooUrl(symbol, interval, fromTs), {
@@ -135,15 +139,16 @@ async function fetchChart(symbol, interval, fromTs = 0) {
     throw new Error("Missing chart payload");
   }
 
-  const normalized = normalizeSeries(result, fromTs);
+  const normalized = normalizeSeries(result, fromTs, basis);
   if (!normalized) {
-    throw new Error("Not enough adjusted-close data");
+    throw new Error(`Not enough ${basis === "price" ? "close" : "adjusted-close"} data`);
   }
 
   return {
     symbol,
     currency: result.meta?.currency || "",
     interval,
+    basis,
     ...normalized
   };
 }
@@ -158,7 +163,7 @@ function parseEastmoneyArray(script, key) {
   return JSON.parse(slice.slice(0, end).trim());
 }
 
-async function fetchEastmoneyFund(symbol, fromTs = 0) {
+async function fetchEastmoneyFund(symbol, fromTs = 0, basis = DEFAULT_BASIS) {
   const code = eastmoneyCode(symbol);
   const url = `https://fund.eastmoney.com/pingzhongdata/${code}.js?v=${Date.now()}`;
   const response = await fetch(url, {
@@ -171,15 +176,27 @@ async function fetchEastmoneyFund(symbol, fromTs = 0) {
   }
 
   const script = await response.text();
-  const accWorth = parseEastmoneyArray(script, "Data_ACWorthTrend");
-  if (!Array.isArray(accWorth) || accWorth.length < 2) {
-    throw new Error("Eastmoney adjusted-worth series missing");
-  }
+  let points = [];
 
-  const points = accWorth
-    .filter((point) => Array.isArray(point) && Number.isFinite(point[0]) && Number.isFinite(point[1]) && point[1] > 0)
-    .map(([tsMs, value]) => ({ ts: Math.floor(tsMs / 1000), value: Number(value) }))
-    .filter((point) => !fromTs || point.ts >= fromTs);
+  if (basis === "price") {
+    const netWorth = parseEastmoneyArray(script, "Data_netWorthTrend");
+    if (!Array.isArray(netWorth) || netWorth.length < 2) {
+      throw new Error("Eastmoney net-worth series missing");
+    }
+    points = netWorth
+      .filter((point) => point && Number.isFinite(point.x) && Number.isFinite(point.y) && point.y > 0)
+      .map((point) => ({ ts: Math.floor(point.x / 1000), value: Number(point.y) }))
+      .filter((point) => !fromTs || point.ts >= fromTs);
+  } else {
+    const accWorth = parseEastmoneyArray(script, "Data_ACWorthTrend");
+    if (!Array.isArray(accWorth) || accWorth.length < 2) {
+      throw new Error("Eastmoney adjusted-worth series missing");
+    }
+    points = accWorth
+      .filter((point) => Array.isArray(point) && Number.isFinite(point[0]) && Number.isFinite(point[1]) && point[1] > 0)
+      .map(([tsMs, value]) => ({ ts: Math.floor(tsMs / 1000), value: Number(value) }))
+      .filter((point) => !fromTs || point.ts >= fromTs);
+  }
 
   if (points.length < 2) {
     throw new Error(`Not enough history for ${symbol}`);
@@ -193,6 +210,9 @@ async function fetchEastmoneyFund(symbol, fromTs = 0) {
     symbol,
     currency: "CNY",
     interval: "1d",
+    basis,
+    firstValue: Number(first.toFixed(4)),
+    latestValue: Number(points[points.length - 1].value.toFixed(4)),
     firstAdjClose: Number(first.toFixed(4)),
     latestAdjClose: Number(points[points.length - 1].value.toFixed(4)),
     totalReturnPct: Number(totalReturnPct.toFixed(2)),
@@ -212,13 +232,14 @@ export async function onRequestGet(context) {
   const symbol = (url.searchParams.get("symbol") || "").trim().toUpperCase();
   const interval = (url.searchParams.get("interval") || "1mo").trim();
   const fromTs = Math.max(0, Number(url.searchParams.get("from") || 0) || 0);
+  const basis = (url.searchParams.get("basis") || DEFAULT_BASIS).trim().toLowerCase() === "price" ? "price" : DEFAULT_BASIS;
 
   if (!symbol) {
     return Response.json({ error: "Missing symbol" }, { status: 400 });
   }
 
   try {
-    const payload = await fetchChart(symbol, interval, fromTs);
+    const payload = await fetchChart(symbol, interval, fromTs, basis);
     return Response.json(payload, {
       headers: {
         "Cache-Control": "public, max-age=3600, s-maxage=21600",
