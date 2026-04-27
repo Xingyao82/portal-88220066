@@ -590,6 +590,73 @@
       text-align: right;
     }
 
+    .quality-radar {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .quality-radar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .quality-radar-title {
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .quality-radar-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .quality-radar-item {
+      display: grid;
+      gap: 4px;
+      min-height: 58px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .quality-radar-item span {
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.4;
+    }
+
+    .quality-radar-item strong {
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .quality-radar-item.risk-high strong,
+    .quality-radar-item.risk-very-high strong,
+    .quality-radar-item.flag-watch strong {
+      color: #fecdd3;
+    }
+
+    .quality-radar-item.risk-medium strong {
+      color: #fde68a;
+    }
+
+    .quality-radar-item.risk-low strong,
+    .quality-radar-item.flag-ok strong {
+      color: #bbf7d0;
+    }
+
     .card-bottom {
       display: flex;
       align-items: center;
@@ -891,6 +958,7 @@
         justify-content: flex-start;
       }
       .section-head { flex-direction: column; align-items: flex-start; }
+      .quality-radar-grid { grid-template-columns: 1fr; }
     }
   </style>
   <link rel="stylesheet" href="../notes/page-sync.css">
@@ -1163,6 +1231,30 @@
         classSatellite: "卫星配置",
         classWatch: "高波动观察",
         classProvider: "平台入口",
+        radarTitle: "质量雷达",
+        radarMethod: "定性排雷",
+        radarPayoutSource: "分配来源",
+        radarNavRisk: "净值侵蚀风险",
+        radarHistory: "成立年限",
+        radarFee: "费用率",
+        radarTrap: "排雷提示",
+        radarSourceDividend: "股息 / 红利",
+        radarSourceBond: "债息 / 利息",
+        radarSourceReit: "REITs 租金",
+        radarSourcePreferred: "优先股收益",
+        radarSourceOption: "期权 premium",
+        radarSourceProvider: "发行人入口",
+        radarSourceResearch: "研究工具",
+        radarRiskLow: "偏低",
+        radarRiskMedium: "中等",
+        radarRiskHigh: "偏高",
+        radarRiskVeryHigh: "很高",
+        radarHistoryLoading: "看复权数据",
+        radarYearsUnit: "年",
+        radarFeeCheck: "官网核对",
+        radarTrapOk: "常规观察",
+        radarTrapWatch: "高收益排雷",
+        radarTrapShort: "样本偏短",
         filterScopeAll: "全部",
         filterScopeChina: "中国",
         filterScopeUs: "美国",
@@ -1258,6 +1350,30 @@
         classSatellite: "Satellite",
         classWatch: "High-vol watch",
         classProvider: "Provider hub",
+        radarTitle: "Quality radar",
+        radarMethod: "Qualitative check",
+        radarPayoutSource: "Distribution source",
+        radarNavRisk: "NAV erosion risk",
+        radarHistory: "Track record",
+        radarFee: "Expense ratio",
+        radarTrap: "Trap check",
+        radarSourceDividend: "Dividends",
+        radarSourceBond: "Bond interest",
+        radarSourceReit: "REIT income",
+        radarSourcePreferred: "Preferred income",
+        radarSourceOption: "Option premium",
+        radarSourceProvider: "Provider hub",
+        radarSourceResearch: "Research tool",
+        radarRiskLow: "Lower",
+        radarRiskMedium: "Medium",
+        radarRiskHigh: "Higher",
+        radarRiskVeryHigh: "Very high",
+        radarHistoryLoading: "Use return data",
+        radarYearsUnit: "yrs",
+        radarFeeCheck: "Check issuer",
+        radarTrapOk: "Regular watch",
+        radarTrapWatch: "High-yield check",
+        radarTrapShort: "Short sample",
         filterScopeAll: "All",
         filterScopeChina: "China",
         filterScopeUs: "U.S.",
@@ -2633,6 +2749,104 @@
       }[role] || labels[lang].classCore;
     }
 
+    function payoutSourceLabel(item, lang) {
+      const style = classifyIncomeStyle(item);
+      const tokens = [
+        item.name || "",
+        item.type?.zh || "",
+        item.type?.en || "",
+        ...(item.tags?.zh || []),
+        ...(item.tags?.en || [])
+      ].join(" ");
+      if (!item.symbol && /provider|平台|发行|YieldMax|REX|Defiance/i.test(tokens)) return labels[lang].radarSourceProvider;
+      if (style === "research") return labels[lang].radarSourceResearch;
+      if (style === "bond") return labels[lang].radarSourceBond;
+      if (style === "reit") return labels[lang].radarSourceReit;
+      if (style === "preferred") return labels[lang].radarSourcePreferred;
+      if (style === "option") return labels[lang].radarSourceOption;
+      return labels[lang].radarSourceDividend;
+    }
+
+    function navRiskLevel(item) {
+      if (!item.symbol) return "medium";
+      const role = classifyIncomeItem(item);
+      const style = classifyIncomeStyle(item);
+      if (role === "watch") return "very-high";
+      if (role === "satellite") return "high";
+      if (style === "option" || style === "preferred" || style === "reit") return "medium";
+      if (style === "bond" || role === "core") return "low";
+      return "medium";
+    }
+
+    function navRiskLabel(level, lang) {
+      return {
+        low: labels[lang].radarRiskLow,
+        medium: labels[lang].radarRiskMedium,
+        high: labels[lang].radarRiskHigh,
+        "very-high": labels[lang].radarRiskVeryHigh
+      }[level] || labels[lang].radarRiskMedium;
+    }
+
+    function trapLabel(item, lang) {
+      if (!item.symbol) return labels[lang].radarTrapOk;
+      const role = classifyIncomeItem(item);
+      const symbol = item.symbol || "";
+      if (role === "watch" || /^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol)) return labels[lang].radarTrapWatch;
+      if (/^(XQQI|GPIQ|QQQI|XSPI|GPIX|QUSA)$/i.test(symbol)) return labels[lang].radarTrapShort;
+      return labels[lang].radarTrapOk;
+    }
+
+    function trapClass(item) {
+      if (!item.symbol) return "flag-ok";
+      const role = classifyIncomeItem(item);
+      const symbol = item.symbol || "";
+      if (role === "watch" || /^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol)) return "flag-watch";
+      if (/^(XQQI|GPIQ|QQQI|XSPI|GPIX|QUSA)$/i.test(symbol)) return "risk-medium";
+      return "flag-ok";
+    }
+
+    function updateRadarHistory(symbol, trend, lang) {
+      if (!symbol || !trend) return;
+      document.querySelectorAll(`[data-radar-history="${symbol}"]`).forEach((node) => {
+        node.textContent = `${trend.yearsSinceInception} ${labels[lang].radarYearsUnit}`;
+      });
+    }
+
+    function qualityRadar(item, lang) {
+      const riskLevel = navRiskLevel(item);
+      const historyAttr = item.symbol ? ` data-radar-history="${item.symbol}"` : "";
+      return `
+        <div class="quality-radar">
+          <div class="quality-radar-head">
+            <span class="quality-radar-title">${labels[lang].radarTitle}</span>
+            <span class="trend-source">${labels[lang].radarMethod}</span>
+          </div>
+          <div class="quality-radar-grid">
+            <div class="quality-radar-item">
+              <span>${labels[lang].radarPayoutSource}</span>
+              <strong>${payoutSourceLabel(item, lang)}</strong>
+            </div>
+            <div class="quality-radar-item risk-${riskLevel}">
+              <span>${labels[lang].radarNavRisk}</span>
+              <strong>${navRiskLabel(riskLevel, lang)}</strong>
+            </div>
+            <div class="quality-radar-item">
+              <span>${labels[lang].radarHistory}</span>
+              <strong${historyAttr}>${item.symbol ? labels[lang].radarHistoryLoading : "--"}</strong>
+            </div>
+            <div class="quality-radar-item">
+              <span>${labels[lang].radarFee}</span>
+              <strong>${labels[lang].radarFeeCheck}</strong>
+            </div>
+            <div class="quality-radar-item ${trapClass(item)}">
+              <span>${labels[lang].radarTrap}</span>
+              <strong>${trapLabel(item, lang)}</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     function cardTemplate(item, lang) {
       const role = item.symbol ? classifyIncomeItem(item) : "provider";
       const roleBlock = `<div class="card-class ${role}">${labels[lang].classLabel}: ${classLabel(role, lang)}</div>`;
@@ -2656,6 +2870,7 @@
             <div><span>${labels[lang].marketLabel}</span><strong>${item.market[lang]}</strong></div>
             <div><span>${labels[lang].noteLabel}</span><strong>${item.note[lang]}</strong></div>
           </div>
+          ${qualityRadar(item, lang)}
           ${trendPlaceholder(item, lang)}
           <div class="card-bottom">
             <span class="meta">${item.ticker}</span>
@@ -2945,6 +3160,7 @@
             const sourceLabel = isCnFund ? labels[lang].trendSourceCn : labels[lang].trendSourceUs;
             const isYoung = trend.yearsSinceInception < 3;
             const isHotRisk = /^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol || "");
+            updateRadarHistory(symbol, trend, lang);
             block.innerHTML = `
               <div class="trend-head">
                 <span class="trend-label">${labels[lang].trendTitle}</span>
