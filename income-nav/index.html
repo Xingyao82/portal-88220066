@@ -350,6 +350,70 @@
       border-bottom: 0;
     }
 
+    .income-table-section {
+      display: none;
+    }
+
+    .income-table-section.show {
+      display: block;
+    }
+
+    .income-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .income-table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+    }
+
+    .income-table th,
+    .income-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .income-table thead th {
+      color: var(--text);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+    }
+
+    .income-table tbody tr:last-child th,
+    .income-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .income-table-name {
+      display: grid;
+      gap: 4px;
+      min-width: 170px;
+      color: var(--text);
+    }
+
+    .income-table-name span,
+    .income-table-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .income-table-metric {
+      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .compare-note {
       margin: 14px 0 0;
       color: var(--muted);
@@ -877,11 +941,31 @@
           <div class="filter-label" data-i18n="sortFilterTitle">排序</div>
           <div class="filter-group" id="sort-filters" aria-label="Sort filters"></div>
         </div>
+        <div class="filter-row">
+          <div class="filter-label" data-i18n="displayModeTitle">显示</div>
+          <div class="filter-group" id="display-filters" aria-label="Display filters"></div>
+        </div>
         <div class="filter-help" id="filter-help"></div>
       </div>
     </section>
 
     <div class="empty-state" id="filter-empty"></div>
+
+    <section class="section income-table-section" id="income-table-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="incomeTableTitle">Income 对比表</h2>
+          <p data-i18n="incomeTableCopy">把当前筛选结果压成表格，先扫结构、定位、总回报、年化和成立时长。</p>
+        </div>
+        <div class="section-badge" id="income-table-count"></div>
+      </div>
+      <div class="income-table-wrap">
+        <table class="income-table">
+          <thead id="income-table-head"></thead>
+          <tbody id="income-table-body"></tbody>
+        </table>
+      </div>
+    </section>
 
     <section class="section" id="china-section">
       <div class="section-head">
@@ -966,11 +1050,17 @@
       styleFilterTitle: { zh: "结构", en: "Structure" },
       roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
       sortFilterTitle: { zh: "排序", en: "Sort" },
+      displayModeTitle: { zh: "显示", en: "Display" },
       viewPresetTitle: { zh: "视图", en: "Views" },
       presetNoteTitle: { zh: "当前视图", en: "Current view" },
       activeSummaryTitle: { zh: "当前筛选", en: "Active filters" },
       copyLinkButton: { zh: "复制当前视图链接", en: "Copy current view link" },
       resetViewButton: { zh: "重置筛选", en: "Reset filters" },
+      incomeTableTitle: { zh: "Income 对比表", en: "Income Compare Table" },
+      incomeTableCopy: {
+        zh: "把当前筛选结果压成表格，先扫结构、定位、总回报、年化和成立时长。",
+        en: "A compact table of the current filter result for structure, role, total return, annualized return, and track record."
+      },
       chinaTitle: { zh: "中国 Income ETF", en: "China Income ETFs" },
       chinaCopy: { zh: "更偏防守型 income，先看红利和债券 ETF。", en: "A more defensive income set built around dividend and bond ETFs." },
       chinaBadge: { zh: "中国 / 红利 + 债券", en: "China / dividend + bonds" },
@@ -1090,6 +1180,18 @@
         filterSortAnnualized: "按年化总回报",
         filterSortTotalReturn: "按总回报",
         filterSortTrackRecord: "按成立时长",
+        filterDisplayCards: "卡片视图",
+        filterDisplayTable: "表格视图",
+        incomeTableCount: "个项目",
+        incomeTableName: "名称",
+        incomeTableScope: "范围",
+        incomeTableStructure: "结构",
+        incomeTableRole: "定位",
+        incomeTableTotal: "总回报",
+        incomeTableAnnualized: "年化",
+        incomeTableYears: "成立时长",
+        incomeTableNote: "观察点",
+        incomeTableOpen: "入口",
         activeSummaryAll: "全范围 / 全结构 / 全定位 / 默认顺序",
         activeSummaryJoin: " / ",
         copyLinkReady: "当前链接已复制。",
@@ -1173,6 +1275,18 @@
         filterSortAnnualized: "Annualized return",
         filterSortTotalReturn: "Total return",
         filterSortTrackRecord: "Track record",
+        filterDisplayCards: "Cards",
+        filterDisplayTable: "Table",
+        incomeTableCount: "entries",
+        incomeTableName: "Name",
+        incomeTableScope: "Scope",
+        incomeTableStructure: "Structure",
+        incomeTableRole: "Role",
+        incomeTableTotal: "Total return",
+        incomeTableAnnualized: "Annualized",
+        incomeTableYears: "Track record",
+        incomeTableNote: "Watch",
+        incomeTableOpen: "Open",
         activeSummaryAll: "All scopes / All structures / All roles / Default order",
         activeSummaryJoin: " / ",
         copyLinkReady: "Current view link copied.",
@@ -2229,8 +2343,9 @@
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
     let compareChartRequestId = 0;
+    let tableHydrateRequestId = 0;
     let copyStatusTimer = null;
-    const filterState = { scope: "all", style: "all", role: "all", sort: "default", preset: "default" };
+    const filterState = { scope: "all", style: "all", role: "all", sort: "default", display: "cards", preset: "default" };
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -2273,6 +2388,11 @@
       { key: "trackRecord", labelKey: "filterSortTrackRecord" }
     ];
 
+    const displayOptions = [
+      { key: "cards", labelKey: "filterDisplayCards" },
+      { key: "table", labelKey: "filterDisplayTable" }
+    ];
+
     const presetOptions = [
       { key: "default", labelKey: "viewPresetDefault" },
       { key: "compare", labelKey: "viewPresetCompare" },
@@ -2288,6 +2408,7 @@
       if (styleOptions.some((option) => option.key === params.get("style"))) next.style = params.get("style");
       if (roleOptions.some((option) => option.key === params.get("role"))) next.role = params.get("role");
       if (sortOptions.some((option) => option.key === params.get("sort"))) next.sort = params.get("sort");
+      if (displayOptions.some((option) => option.key === params.get("display"))) next.display = params.get("display");
       return next;
     }
 
@@ -2300,6 +2421,7 @@
       if (next.style) filterState.style = next.style;
       if (next.role) filterState.role = next.role;
       if (next.sort) filterState.sort = next.sort;
+      if (next.display) filterState.display = next.display;
       syncPresetFromFilters();
     }
 
@@ -2335,6 +2457,7 @@
 
     function resetCurrentView() {
       applyPreset("default");
+      filterState.display = "cards";
       setCopyStatus(activeLang || "zh", null);
     }
 
@@ -2345,6 +2468,7 @@
       if (filterState.style !== "all") params.set("style", filterState.style);
       if (filterState.role !== "all") params.set("role", filterState.role);
       if (filterState.sort !== "default") params.set("sort", filterState.sort);
+      if (filterState.display !== "cards") params.set("display", filterState.display);
       const query = params.toString();
       const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
       window.history.replaceState(null, "", nextUrl);
@@ -2866,6 +2990,102 @@
       return option.dynamic ? classLabel(option.dynamic, lang) : labels[lang][option.labelKey];
     }
 
+    function scopeLabel(sectionKey, lang) {
+      const option = scopeOptions.find((item) => item.key === sectionKey);
+      return option ? getFilterLabel(lang, option) : sectionKey;
+    }
+
+    function styleLabel(item, lang) {
+      const style = classifyIncomeStyle(item);
+      const option = styleOptions.find((entry) => entry.key === style);
+      return option ? getFilterLabel(lang, option) : style;
+    }
+
+    function tableMetric(symbol, key, lang) {
+      if (!symbol) return "--";
+      const cacheKey = trendCacheKey(symbol, DEFAULT_TREND_INTERVAL);
+      if (!trendDataCache.has(cacheKey)) return labels[lang].trendMetricPending;
+      const trend = trendDataCache.get(cacheKey);
+      if (!trend) return labels[lang].trendMetricMissing;
+      if (key === "total") return formatSignedPct(Number(trend.totalReturnPct));
+      if (key === "annualized") return formatSignedPct(Number(trend.annualizedReturnPct));
+      if (key === "years") return String(trend.yearsSinceInception ?? "--");
+      return "--";
+    }
+
+    function collectVisibleRows() {
+      return sectionConfigs.flatMap((section) => (
+        getVisibleItems(section).map((item) => ({ item, sectionKey: section.key }))
+      ));
+    }
+
+    function incomeTableRowTemplate(row, lang) {
+      const { item, sectionKey } = row;
+      const role = item.symbol ? classifyIncomeItem(item) : sectionKey === "research" ? "provider" : "provider";
+      const roleText = sectionKey === "research" ? labels[lang].filterScopeResearch : classLabel(role, lang);
+      return `
+        <tr>
+          <th scope="row">
+            <a class="income-table-name" href="${item.url}" target="_blank" rel="noreferrer">
+              ${item.name}
+              <span>${item.ticker}</span>
+            </a>
+          </th>
+          <td>${scopeLabel(sectionKey, lang)}</td>
+          <td>${styleLabel(item, lang)}</td>
+          <td><span class="card-class ${role}">${roleText}</span></td>
+          <td class="income-table-metric">${tableMetric(item.symbol, "total", lang)}</td>
+          <td class="income-table-metric">${tableMetric(item.symbol, "annualized", lang)}</td>
+          <td class="income-table-metric">${tableMetric(item.symbol, "years", lang)}</td>
+          <td class="income-table-note">${item.note?.[lang] || item.summary?.[lang] || "--"}</td>
+          <td><a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].incomeTableOpen}</a></td>
+        </tr>
+      `;
+    }
+
+    function renderIncomeTable(lang, rows) {
+      const section = document.getElementById("income-table-section");
+      section.classList.toggle("show", filterState.display === "table" && rows.length > 0);
+      section.hidden = filterState.display !== "table" || rows.length === 0;
+      if (filterState.display !== "table") return;
+      document.getElementById("income-table-count").textContent = `${rows.length} ${labels[lang].incomeTableCount}`;
+      document.getElementById("income-table-head").innerHTML = `
+        <tr>
+          <th>${labels[lang].incomeTableName}</th>
+          <th>${labels[lang].incomeTableScope}</th>
+          <th>${labels[lang].incomeTableStructure}</th>
+          <th>${labels[lang].incomeTableRole}</th>
+          <th>${labels[lang].incomeTableTotal}</th>
+          <th>${labels[lang].incomeTableAnnualized}</th>
+          <th>${labels[lang].incomeTableYears}</th>
+          <th>${labels[lang].incomeTableNote}</th>
+          <th>${labels[lang].incomeTableOpen}</th>
+        </tr>
+      `;
+      document.getElementById("income-table-body").innerHTML = rows.map((row) => incomeTableRowTemplate(row, lang)).join("");
+    }
+
+    async function hydrateIncomeTableRows(lang) {
+      if (filterState.display !== "table") return;
+      const rows = collectVisibleRows();
+      const symbols = [...new Set(rows.map(({ item }) => item.symbol).filter(Boolean))];
+      const missing = symbols.filter((symbol) => !trendDataCache.has(trendCacheKey(symbol, DEFAULT_TREND_INTERVAL)));
+      if (!missing.length) {
+        renderIncomeTable(lang, rows);
+        return;
+      }
+      const requestId = ++tableHydrateRequestId;
+      await Promise.all(missing.map(async (symbol) => {
+        try {
+          await getTrend(symbol, DEFAULT_TREND_INTERVAL);
+        } catch (error) {
+          return null;
+        }
+      }));
+      if (requestId !== tableHydrateRequestId || filterState.display !== "table") return;
+      renderIncomeTable(lang, collectVisibleRows());
+    }
+
     function applyPreset(presetKey) {
       filterState.preset = presetKey;
       if (presetKey === "default") {
@@ -2940,6 +3160,10 @@
       }
       const sortOption = sortOptions.find((item) => item.key === filterState.sort);
       if (sortOption) parts.push(getFilterLabel(lang, sortOption));
+      if (filterState.display !== "cards") {
+        const displayOption = displayOptions.find((item) => item.key === filterState.display);
+        if (displayOption) parts.push(getFilterLabel(lang, displayOption));
+      }
       if (!parts.length || (parts.length === 1 && filterState.sort === "default")) return labels[lang].activeSummaryAll;
       return parts.join(labels[lang].activeSummaryJoin);
     }
@@ -3047,10 +3271,15 @@
         const disabled = sortDisabled && option.key !== "default" ? " disabled" : "";
         return `<button class="filter-chip${active}" type="button" data-filter-group="sort" data-filter-value="${option.key}"${disabled}>${getFilterLabel(lang, option)}</button>`;
       }).join("");
+      const displayHtml = displayOptions.map((option) => {
+        const active = filterState.display === option.key ? " active" : "";
+        return `<button class="filter-chip${active}" type="button" data-filter-group="display" data-filter-value="${option.key}">${getFilterLabel(lang, option)}</button>`;
+      }).join("");
       document.getElementById("scope-filters").innerHTML = scopeHtml;
       document.getElementById("style-filters").innerHTML = styleHtml;
       document.getElementById("role-filters").innerHTML = roleHtml;
       document.getElementById("sort-filters").innerHTML = sortHtml;
+      document.getElementById("display-filters").innerHTML = displayHtml;
       document.querySelectorAll("[data-filter-group]").forEach((button) => {
         button.addEventListener("click", () => {
           const group = button.getAttribute("data-filter-group");
@@ -3075,6 +3304,8 @@
             }
           } else if (group === "sort") {
             if (!sortDisabled || value === "default") filterState.sort = value;
+          } else if (group === "display") {
+            filterState.display = value;
           } else if (!roleDisabled) {
             filterState.role = value;
           }
@@ -3086,8 +3317,16 @@
 
     function renderSections(lang) {
       let totalMatches = 0;
+      const tableRows = collectVisibleRows();
+      const tableMode = filterState.display === "table";
+      renderIncomeTable(lang, tableRows);
       sectionConfigs.forEach((section) => {
         const items = getVisibleItems(section);
+        if (tableMode) {
+          document.getElementById(section.sectionId).hidden = true;
+          totalMatches += items.length;
+          return;
+        }
         if (section.key === "advanced") {
           const providerItems = items.filter((item) => !item.symbol);
           const watchItems = items.filter((item) => item.symbol && classifyIncomeItem(item) === "watch");
@@ -3139,6 +3378,7 @@
       const totalMatches = renderSections(lang);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
+      hydrateIncomeTableRows(lang);
       writeUrlState();
       if (!options.skipWarm) warmVisibleTrendData(lang);
     }
