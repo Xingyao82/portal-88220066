@@ -3,7 +3,6 @@
     { key: "ai", href: "/ai-nav/", zh: "AI 导航", en: "AI Nav" },
     { key: "finance", href: "/finance-nav/", zh: "金融导航", en: "Finance" },
     { key: "income", href: "/income-nav/", zh: "Income 导航", en: "Income" },
-    { key: "incomeCalendar", href: "/income-calendar/", zh: "Income 日历", en: "Income Calendar" },
     { key: "etfCompare", href: "/etf-compare/", zh: "ETF 对比", en: "ETF Compare" },
     { key: "api", href: "/free-api-nav/", zh: "API 导航", en: "API" },
     { key: "tools", href: "/tools-nav/", zh: "工具导航", en: "Tools" },
@@ -14,7 +13,6 @@
   function currentKey(pathname) {
     if (pathname.startsWith("/finance-nav/") || pathname.startsWith("/futures-basis/")) return "finance";
     if (pathname.startsWith("/income-nav/")) return "income";
-    if (pathname.startsWith("/income-calendar/")) return "incomeCalendar";
     if (pathname.startsWith("/etf-compare/")) return "etfCompare";
     if (pathname.startsWith("/free-api-nav/")) return "api";
     if (pathname.startsWith("/tools-nav/") || pathname.startsWith("/asterlab-tools/")) return "tools";
@@ -43,8 +41,8 @@
     const activeKey = currentKey(window.location.pathname);
     const currentLang = lang();
     const items = NAV_ITEMS.filter((item) => {
-      if (!["etfCompare", "incomeCalendar"].includes(item.key)) return true;
-      return ["finance", "income", "incomeCalendar", "etfCompare"].includes(activeKey);
+      if (item.key !== "etfCompare") return true;
+      return ["finance", "income", "etfCompare"].includes(activeKey);
     });
 
     nav.innerHTML = items.map((item) => {
