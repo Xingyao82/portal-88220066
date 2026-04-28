@@ -1187,6 +1187,20 @@
       </details>
     </section>
 
+    <section class="section" id="income-lab-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="incomeLabTitle">期权 Income 对比台</h2>
+          <p data-i18n="incomeLabCopy">JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 这些产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。</p>
+        </div>
+        <div class="section-badge" data-i18n="incomeLabBadge">Options income / ETF vs benchmark</div>
+      </div>
+      <div class="rex-panel">
+        <div class="rex-selector" id="income-lab-selector" aria-label="Options income ETF selector"></div>
+        <div class="rex-content" id="income-lab-content"></div>
+      </div>
+    </section>
+
     <section class="section" id="rex-section">
       <div class="section-head">
         <div>
@@ -1267,6 +1281,15 @@
         zh: "这组也只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
         en: "This block is also for structural comparison only. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
       },
+      incomeLabTitle: { zh: "期权 Income 对比台", en: "Options Income Compare Desk" },
+      incomeLabCopy: {
+        zh: "JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 这些产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。",
+        en: "JEPI, JEPQ, QYLD, DIVO, SPYI, QQQI, GPIQ, GPIX, XQQI, ISPY, XDTE, TSPY, MSFY, TSLY, and related products are grouped into one selector for ETF-vs-benchmark comparison."
+      },
+      incomeLabBadge: {
+        zh: "期权 income / ETF vs 基准",
+        en: "Options income / ETF vs benchmark"
+      },
       rexTitle: { zh: "REX Growth & Income", en: "REX Growth & Income" },
       rexCopy: {
         zh: "把 REX 官网这组 weekly growth & income ETF 放在一个项目里，切换 ETF 后直接和它自己的标的做复权对比。",
@@ -1334,6 +1357,18 @@
         compareChartLatest: "当前",
         compareChartPeriodReturn: "区间复权回报",
         compareChartShort: "XQQI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
+        incomeLabCurrent: "当前产品",
+        incomeLabUnderlying: "对照基准",
+        incomeLabStructure: "结构",
+        incomeLabWatch: "优先观察",
+        incomeLabOfficialFund: "打开产品官网",
+        incomeLabCompareTitle: "ETF vs 对照基准",
+        incomeLabCompareLoading: "正在加载 ETF 和对照基准的复权日线",
+        incomeLabCompareError: "暂时没取到这组 ETF / 基准对比日线",
+        incomeLabCompareBase: "复权后总回报，ETF 上市后的首个共同交易日 = 100",
+        incomeLabCompareShort: "先看真实净值路径，不把短期分配率当长期收益。",
+        incomeLabNoCompareTitle: "这个产品没有单一可比基准",
+        incomeLabNoCompareCopy: "它更像打包型 income 产品，不能硬塞成单一股票或单一指数对比。先看官网结构和成立后复权走势。",
         rexCurrent: "当前 ETF",
         rexUnderlying: "对比标的",
         rexStructure: "结构",
@@ -1466,6 +1501,18 @@
         compareChartLatest: "Now",
         compareChartPeriodReturn: "Adjusted return",
         compareChartShort: "XQQI still has a very short track record, so use this to read the live sample rather than make a long-term claim.",
+        incomeLabCurrent: "Current product",
+        incomeLabUnderlying: "Benchmark",
+        incomeLabStructure: "Structure",
+        incomeLabWatch: "Watch first",
+        incomeLabOfficialFund: "Open product page",
+        incomeLabCompareTitle: "ETF vs Benchmark",
+        incomeLabCompareLoading: "Loading adjusted daily data for the ETF and benchmark",
+        incomeLabCompareError: "Could not load this ETF / benchmark comparison right now",
+        incomeLabCompareBase: "Adjusted total return, first shared trading day after ETF launch = 100",
+        incomeLabCompareShort: "Read the realized NAV path first; do not treat short-term distribution rate as long-term return.",
+        incomeLabNoCompareTitle: "No single clean benchmark",
+        incomeLabNoCompareCopy: "This is a packaged income product, so forcing it against one stock or index would be misleading. Start with structure and live adjusted return.",
         rexCurrent: "Current ETF",
         rexUnderlying: "Underlying",
         rexStructure: "Structure",
@@ -2529,6 +2576,196 @@
       }
     ];
 
+    const optionsIncomeCompareEtfs = [
+      {
+        symbol: "JEPI",
+        name: "JPMorgan Equity Premium Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#f59e0b",
+        benchmarkAccent: "#94a3b8",
+        url: "https://am.jpmorgan.com/us/en/asset-management/adv/investment-strategies/etf-investing/investment-ideas/why-invest-in-equity-premium-income-etf-jepi/",
+        structure: { zh: "防守型美股组合 + ELN / option premium，偏月配 income。", en: "Defensive U.S. equity portfolio plus ELN / option premium, built for monthly income." },
+        watch: { zh: "和 SPY 比，上涨少拿了多少，回撤有没有真正变轻。", en: "Versus SPY, watch upside give-up and whether drawdowns are actually softer." }
+      },
+      {
+        symbol: "JEPQ",
+        name: "JPMorgan Nasdaq Equity Premium Income ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#c084fc",
+        benchmarkAccent: "#94a3b8",
+        url: "https://am.jpmorgan.com/content/dam/jpm-am-aem/americas/us/en/literature/fact-sheet/etfs/FS-JEPQ.PDF",
+        structure: { zh: "纳指风格股票组合 + ELN / option premium，月配 income。", en: "Nasdaq-style equity portfolio plus ELN / option premium for monthly income." },
+        watch: { zh: "和 QQQ 比，科技趋势段被收入策略削掉多少。", en: "Versus QQQ, watch how much tech upside the income overlay gives up." }
+      },
+      {
+        symbol: "QYLD",
+        name: "Global X Nasdaq 100 Covered Call ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#fb7185",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.globalxetfs.com/funds/qyld/",
+        structure: { zh: "纳指 100 covered call，更直接把波动换成月度分配。", en: "Nasdaq-100 covered call, directly converting volatility into monthly distributions." },
+        watch: { zh: "牛市里和 QQQ 的长期总回报折损最关键。", en: "The key check is long-run total-return drag versus QQQ in bull markets." }
+      },
+      {
+        symbol: "DIVO",
+        name: "Amplify CWP Enhanced Dividend Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#a78bfa",
+        benchmarkAccent: "#94a3b8",
+        url: "https://amplifyetfs.com/divo",
+        structure: { zh: "股息蓝筹 + 选择性 covered call，比纯 QYLD 路线更轻。", en: "Dividend blue chips plus selective covered calls, lighter than a full overwrite strategy." },
+        watch: { zh: "和 SPY 比，是否保留了足够上涨参与。", en: "Versus SPY, watch whether enough upside participation is preserved." }
+      },
+      {
+        symbol: "SPYI",
+        name: "NEOS S&P 500 High Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#2563eb",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/spyi/",
+        structure: { zh: "S&P 500 暴露 + 税务优化 options overlay，偏高月配。", en: "S&P 500 exposure plus tax-aware options overlay, built for higher monthly income." },
+        watch: { zh: "和 SPY 比，上涨保留、税务结构和分配来源。", en: "Versus SPY, watch upside retention, tax structure, and distribution source." }
+      },
+      {
+        symbol: "GPIX",
+        name: "Goldman Sachs S&P 500 Core Premium Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#22c55e",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIX_fc.pdf?rd=n&sa=n",
+        structure: { zh: "S&P 500 core premium income，覆盖比例更像可调区间。", en: "S&P 500 core premium income with a more flexible overwrite range." },
+        watch: { zh: "看低费率和上涨参与度能不能打过同类。", en: "Watch whether lower cost and upside retention beat peers." }
+      },
+      {
+        symbol: "XSPI",
+        name: "NEOS Boosted S&P 500 High Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#f97316",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/xspi/",
+        structure: { zh: "Boosted S&P 500 income，比 SPYI 更进攻。", en: "Boosted S&P 500 income, more aggressive than SPYI." },
+        watch: { zh: "看更高名义暴露带来的上行和回撤放大。", en: "Watch amplified upside and drawdowns from higher notional exposure." }
+      },
+      {
+        symbol: "QQQI",
+        name: "NEOS Nasdaq-100 High Income ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#1d4ed8",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/wp-content/uploads/QQQI-Fact-Sheet.pdf",
+        structure: { zh: "Nasdaq-100 暴露 + 税务优化 options overlay。", en: "Nasdaq-100 exposure plus tax-aware options overlay." },
+        watch: { zh: "和 QQQ 比，收益现金流换掉了多少上涨弹性。", en: "Versus QQQ, watch how much upside elasticity is exchanged for cash flow." }
+      },
+      {
+        symbol: "GPIQ",
+        name: "Goldman Sachs Nasdaq-100 Core Premium Income ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#22c55e",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.gsam.com/content/dam/gsam/pdfs/us/en/fund-literature/monthly-fact-card/GPIQ_fc.pdf?rd=n&sa=n",
+        structure: { zh: "Nasdaq-100 core premium income，偏成本和覆盖区间对照样本。", en: "Nasdaq-100 core premium income, useful as a cost and overwrite-range comparison." },
+        watch: { zh: "看低费率、覆盖区间和 QQQ 上涨保留。", en: "Watch cost, overwrite range, and QQQ upside retention." }
+      },
+      {
+        symbol: "XQQI",
+        name: "NEOS Boosted Nasdaq-100 High Income ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#0ea5e9",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/xqqi/",
+        structure: { zh: "Boosted Nasdaq income，比 QQQI 更进攻。", en: "Boosted Nasdaq income, more aggressive than QQQI." },
+        watch: { zh: "看回撤放大和上行放大是否值得。", en: "Watch whether amplified upside is worth amplified drawdowns." }
+      },
+      {
+        symbol: "ISPY",
+        name: "ProShares S&P 500 High Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#0f766e",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.proshares.com/our-etfs/strategic/ispy",
+        structure: { zh: "S&P 500 high income，偏主动管理 options income 表达。", en: "S&P 500 high income with an actively managed options-income expression." },
+        watch: { zh: "看和 SPYI / GPIX 的净值路径差异。", en: "Watch NAV-path differences versus SPYI and GPIX." }
+      },
+      {
+        symbol: "XDTE",
+        name: "Roundhill S&P 500 0DTE Covered Call Strategy ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#7c3aed",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.roundhillinvestments.com/etf/xdte/",
+        structure: { zh: "S&P 500 0DTE covered call，偏周配和高频波动货币化。", en: "S&P 500 0DTE covered call, built around weekly income and high-frequency volatility harvesting." },
+        watch: { zh: "看 0DTE 收入是否真的抵消净值磨损。", en: "Watch whether 0DTE income really offsets NAV decay." }
+      },
+      {
+        symbol: "TSPY",
+        name: "TappAlpha SPY Growth & Daily Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#64748b",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.tappalphafunds.com/etfs/tspy",
+        structure: { zh: "SPY growth + daily income，偏日频分配叙事。", en: "SPY growth plus daily income, built around a daily-distribution framing." },
+        watch: { zh: "看日频分配后还能不能跟住 SPY。", en: "Watch whether it can still track SPY after daily distributions." }
+      },
+      {
+        symbol: "MSFY",
+        name: "Kurv Yield Premium Strategy Microsoft ETF",
+        benchmark: "MSFT",
+        benchmarkName: { zh: "Microsoft", en: "Microsoft" },
+        accent: "#10b981",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.kurvinvest.com/etf/msfy",
+        structure: { zh: "MSFT 单股 option income，不是分散型底仓。", en: "MSFT single-stock option income, not a diversified core holding." },
+        watch: { zh: "和 MSFT 比，单股上涨被覆盖掉多少。", en: "Versus MSFT, watch how much single-stock upside is overwritten." }
+      },
+      {
+        symbol: "TSLY",
+        name: "YieldMax TSLA Option Income Strategy ETF",
+        benchmark: "TSLA",
+        benchmarkName: { zh: "Tesla", en: "Tesla" },
+        accent: "#f97316",
+        benchmarkAccent: "#94a3b8",
+        url: "https://yieldmaxetfs.com/our-etfs/tsly/",
+        structure: { zh: "TSLA 单股高收益 option income，波动和净值侵蚀都更直接。", en: "TSLA single-stock high-yield option income with direct volatility and NAV-erosion risk." },
+        watch: { zh: "和 TSLA 比，长期总回报差距比分配率更重要。", en: "Versus TSLA, long-run total-return gap matters more than distribution rate." }
+      },
+      {
+        symbol: "MSTY",
+        name: "YieldMax MSTR Option Income Strategy ETF",
+        benchmark: "MSTR",
+        benchmarkName: { zh: "MicroStrategy", en: "MicroStrategy" },
+        accent: "#fb7185",
+        benchmarkAccent: "#94a3b8",
+        url: "https://www.sec.gov/Archives/edgar/data/1924868/000183988225000683/yieldmax-497_010625.htm",
+        structure: { zh: "MSTR 单股高波动 option income，本质是把极高波动现金流化。", en: "MSTR single-stock high-volatility option income, monetizing very high underlying volatility." },
+        watch: { zh: "看 MSTR 大涨段是否被显著截断。", en: "Watch whether MSTR rallies are heavily capped." }
+      },
+      {
+        symbol: "YMAX",
+        name: "YieldMax Universe Fund of Option Income ETFs",
+        benchmark: "",
+        benchmarkName: { zh: "无单一基准", en: "No single benchmark" },
+        accent: "#f59e0b",
+        benchmarkAccent: "#94a3b8",
+        url: "https://yieldmaxetfs.com/our-etfs/ymax/",
+        structure: { zh: "YieldMax 单股 income ETF 打包，不是单一股票或单一指数。", en: "A bundle of YieldMax single-stock income ETFs rather than one stock or one index." },
+        watch: { zh: "先看组合打包后有没有真正降低净值侵蚀。", en: "Watch whether bundling actually reduces NAV erosion." }
+      }
+    ];
+
     const rexGrowthIncomeEtfs = [
       {
         symbol: "GIF",
@@ -2775,15 +3012,19 @@
 
     const DEFAULT_TREND_INTERVAL = "1mo";
     const COMPARE_TREND_INTERVAL = "1d";
+    const DEFAULT_INCOME_LAB_SYMBOL = "JEPI";
     const DEFAULT_REX_SYMBOL = "NVII";
+    const OPTIONS_COMPARE_SYMBOLS = new Set(optionsIncomeCompareEtfs.map((item) => item.symbol));
     const trendCache = new Map();
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
     let compareChartRequestId = 0;
+    let incomeLabChartRequestId = 0;
     let rexChartRequestId = 0;
     let tableHydrateRequestId = 0;
     let copyStatusTimer = null;
     const filterState = { scope: "all", style: "all", role: "all", sort: "default", display: "cards", preset: "default" };
+    let selectedIncomeLabSymbol = DEFAULT_INCOME_LAB_SYMBOL;
     let selectedRexSymbol = DEFAULT_REX_SYMBOL;
     let activeLang = "zh";
 
@@ -2848,6 +3089,8 @@
       if (roleOptions.some((option) => option.key === params.get("role"))) next.role = params.get("role");
       if (sortOptions.some((option) => option.key === params.get("sort"))) next.sort = params.get("sort");
       if (displayOptions.some((option) => option.key === params.get("display"))) next.display = params.get("display");
+      const focus = (params.get("focus") || "").trim().toUpperCase();
+      if (optionsIncomeCompareEtfs.some((item) => item.symbol === focus)) next.focus = focus;
       const rex = (params.get("rex") || "").trim().toUpperCase();
       if (rexGrowthIncomeEtfs.some((item) => item.symbol === rex)) next.rex = rex;
       return next;
@@ -2863,6 +3106,7 @@
       if (next.role) filterState.role = next.role;
       if (next.sort) filterState.sort = next.sort;
       if (next.display) filterState.display = next.display;
+      if (next.focus) selectedIncomeLabSymbol = next.focus;
       if (next.rex) selectedRexSymbol = next.rex;
       syncPresetFromFilters();
     }
@@ -2911,6 +3155,7 @@
       if (filterState.role !== "all") params.set("role", filterState.role);
       if (filterState.sort !== "default") params.set("sort", filterState.sort);
       if (filterState.display !== "cards") params.set("display", filterState.display);
+      if (selectedIncomeLabSymbol !== DEFAULT_INCOME_LAB_SYMBOL) params.set("focus", selectedIncomeLabSymbol);
       if (selectedRexSymbol !== DEFAULT_REX_SYMBOL) params.set("rex", selectedRexSymbol);
       const query = params.toString();
       const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
@@ -3442,6 +3687,204 @@
       }
     }
 
+    function selectedIncomeLabEtf() {
+      return optionsIncomeCompareEtfs.find((item) => item.symbol === selectedIncomeLabSymbol) || optionsIncomeCompareEtfs.find((item) => item.symbol === DEFAULT_INCOME_LAB_SYMBOL) || optionsIncomeCompareEtfs[0];
+    }
+
+    function incomeLabSectionVisible() {
+      if (filterState.display === "table" || isResearchMode()) return false;
+      const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
+      const styleOk = ["all", "option"].includes(filterState.style);
+      return scopeOk && styleOk;
+    }
+
+    function renderIncomeLabSelector(lang) {
+      const mount = document.getElementById("income-lab-selector");
+      if (!mount) return;
+      mount.innerHTML = optionsIncomeCompareEtfs.map((item) => {
+        const active = item.symbol === selectedIncomeLabSymbol ? " active" : "";
+        return `<button class="filter-chip${active}" type="button" data-income-lab-symbol="${item.symbol}" title="${item.name}">${item.symbol}</button>`;
+      }).join("");
+      mount.querySelectorAll("[data-income-lab-symbol]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedIncomeLabSymbol = button.getAttribute("data-income-lab-symbol") || DEFAULT_INCOME_LAB_SYMBOL;
+          renderPage(lang);
+        });
+      });
+    }
+
+    function incomeLabOverviewTemplate(item, lang) {
+      const benchmarkText = item.benchmark
+        ? `${item.benchmark} / ${item.benchmarkName[lang]}`
+        : item.benchmarkName[lang];
+      return `
+        <article class="rex-overview" style="--card-accent:${item.accent}">
+          <div>
+            <div class="meta">${labels[lang].incomeLabCurrent}</div>
+            <h3>${item.symbol}<span>${item.name}</span></h3>
+          </div>
+          <div class="rex-fact-grid">
+            <div class="rex-fact">
+              <span>${labels[lang].incomeLabUnderlying}</span>
+              <strong>${benchmarkText}</strong>
+            </div>
+            <div class="rex-fact">
+              <span>${labels[lang].incomeLabStructure}</span>
+              <strong>${item.structure[lang]}</strong>
+            </div>
+            <div class="rex-fact">
+              <span>${labels[lang].incomeLabWatch}</span>
+              <strong>${item.watch[lang]}</strong>
+            </div>
+          </div>
+          <div class="rex-links">
+            <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].incomeLabOfficialFund}</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function incomeLabChartPlaceholder(lang) {
+      return `
+        <div class="trend-block compare-chart-panel rex-empty">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].incomeLabCompareTitle}</span>
+          </div>
+          <div class="trend-loading">${labels[lang].incomeLabCompareLoading}</div>
+        </div>
+      `;
+    }
+
+    function incomeLabChartError(lang) {
+      return `
+        <div class="trend-block compare-chart-panel rex-empty">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].incomeLabCompareTitle}</span>
+            <strong class="trend-return">--</strong>
+          </div>
+          <div class="trend-error">${labels[lang].incomeLabCompareError}</div>
+        </div>
+      `;
+    }
+
+    function incomeLabNoComparison(lang) {
+      return `
+        <div class="trend-block compare-chart-panel rex-empty">
+          <div class="compare-chart-head">
+            <div>
+              <span class="trend-label">${labels[lang].incomeLabNoCompareTitle}</span>
+              <p class="compare-chart-copy">${labels[lang].incomeLabNoCompareCopy}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function renderIncomeLabChart(lang, item, requestId) {
+      const mount = document.getElementById("income-lab-chart");
+      if (!mount) return;
+      if (!item.benchmark) {
+        mount.innerHTML = incomeLabNoComparison(lang);
+        return;
+      }
+
+      mount.innerHTML = incomeLabChartPlaceholder(lang);
+
+      try {
+        const fundTrend = await getTrend(item.symbol, COMPARE_TREND_INTERVAL);
+        if (requestId !== incomeLabChartRequestId) return;
+        if (!fundTrend?.inceptionTs) throw new Error(`Missing ${item.symbol} inception`);
+
+        const anchorTs = fundTrend.inceptionTs;
+        const compareConfigs = [
+          { symbol: item.symbol, color: item.accent },
+          { symbol: item.benchmark, color: item.benchmarkAccent }
+        ];
+        const trends = await Promise.all(compareConfigs.map((config) => getTrend(config.symbol, COMPARE_TREND_INTERVAL, anchorTs)));
+        if (requestId !== incomeLabChartRequestId) return;
+
+        const normalized = compareConfigs
+          .map((config, index) => {
+            const series = normalizeCompareTrend(trends[index], anchorTs, config.color);
+            return series ? { ...series, symbol: config.symbol } : null;
+          })
+          .filter(Boolean);
+
+        if (normalized.length !== compareConfigs.length) throw new Error("Missing income-lab comparison series");
+
+        const latestTs = Math.max(...normalized.map((series) => series.latestTs));
+        const compareCopy = lang === "zh"
+          ? `${item.symbol} 和 ${item.benchmark} 都按复权后总回报归一到 100，起点取 ${item.symbol} 上市后的首个共同交易日。`
+          : `${item.symbol} and ${item.benchmark} are rebased to 100 on an adjusted total-return basis from the first shared trading day after ${item.symbol} launched.`;
+
+        mount.innerHTML = `
+          <div class="trend-block compare-chart-panel">
+            <div class="compare-chart-head">
+              <div>
+                <span class="trend-label">${labels[lang].incomeLabCompareTitle}</span>
+                <p class="compare-chart-copy">${compareCopy}</p>
+              </div>
+              <div class="compare-chart-meta">
+                <span class="trend-source">${labels[lang].compareChartBase}: ${labels[lang].incomeLabCompareBase}</span>
+                <span class="trend-source">${labels[lang].compareChartStart}: ${formatDayDate(anchorTs, lang)}</span>
+                <span class="trend-source">${labels[lang].compareChartLatest}: ${formatDayDate(latestTs, lang)}</span>
+              </div>
+            </div>
+            <div class="compare-chart-board">
+              ${buildCompareChartSvg(normalized, lang)}
+            </div>
+            <div class="compare-chart-legend">
+              ${normalized.map((series) => `
+                <div class="compare-chart-item" style="--line-color:${series.color}">
+                  <div class="compare-chart-item-top">
+                    <span class="compare-chart-name">
+                      <span class="compare-chart-swatch"></span>
+                      ${series.symbol}
+                    </span>
+                    <strong>${formatIndexValue(series.normalizedLatest, 1)}</strong>
+                  </div>
+                  <div class="compare-chart-stat">
+                    <span>${labels[lang].compareChartPeriodReturn}</span>
+                    <strong>${formatSignedPct(series.periodReturnPct)}</strong>
+                  </div>
+                  <div class="compare-chart-stat">
+                    <span>${labels[lang].compareChartStart}</span>
+                    <strong>${formatDayDate(series.startTs, lang)}</strong>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+            <div class="trend-source warn">${labels[lang].incomeLabCompareShort}</div>
+            <div class="trend-meta">${labels[lang].trendTimeliness}</div>
+          </div>
+        `;
+      } catch (error) {
+        if (requestId !== incomeLabChartRequestId) return;
+        mount.innerHTML = incomeLabChartError(lang);
+      }
+    }
+
+    function renderIncomeLabSection(lang, requestId) {
+      const section = document.getElementById("income-lab-section");
+      const content = document.getElementById("income-lab-content");
+      if (!section || !content) return false;
+      const visible = incomeLabSectionVisible();
+      section.hidden = !visible;
+      if (!visible) {
+        content.innerHTML = "";
+        return false;
+      }
+      const item = selectedIncomeLabEtf();
+      selectedIncomeLabSymbol = item.symbol;
+      renderIncomeLabSelector(lang);
+      content.innerHTML = `
+        ${incomeLabOverviewTemplate(item, lang)}
+        <div class="rex-chart" id="income-lab-chart"></div>
+      `;
+      renderIncomeLabChart(lang, item, requestId);
+      return true;
+    }
+
     function selectedRexEtf() {
       return rexGrowthIncomeEtfs.find((item) => item.symbol === selectedRexSymbol) || rexGrowthIncomeEtfs.find((item) => item.symbol === DEFAULT_REX_SYMBOL) || rexGrowthIncomeEtfs[0];
     }
@@ -3959,7 +4402,7 @@
     }
 
     function getVisibleItems(section) {
-      return sortItems(section.items.filter((item) => matchesFilters(item, section.key)));
+      return sortItems(section.items.filter((item) => matchesFilters(item, section.key) && !OPTIONS_COMPARE_SYMBOLS.has(item.symbol)));
     }
 
     async function warmVisibleTrendData(lang) {
@@ -4115,9 +4558,11 @@
         renderCompareSection(lang, config);
         renderCompareChart(lang, config, compareRequestId);
       });
+      const incomeLabRequestId = ++incomeLabChartRequestId;
+      const incomeLabVisible = renderIncomeLabSection(lang, incomeLabRequestId);
       const rexRequestId = ++rexChartRequestId;
       const rexVisible = renderRexSection(lang, rexRequestId);
-      const totalMatches = renderSections(lang) + (rexVisible ? 1 : 0);
+      const totalMatches = renderSections(lang) + (incomeLabVisible ? 1 : 0) + (rexVisible ? 1 : 0);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
       hydrateIncomeTableRows(lang);
