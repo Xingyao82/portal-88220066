@@ -1174,44 +1174,19 @@
         </div>
         <div class="grid" id="watch-grid"></div>
       </div>
-      <details class="subgroup" id="provider-subgroup" hidden>
-        <summary class="subgroup-toggle">
-          <div class="subgroup-head">
-            <div>
-              <h3 id="provider-group-title" data-i18n="providerGroupTitle">Provider / 平台入口</h3>
-              <p data-i18n="providerGroupCopy">这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。</p>
-            </div>
-          </div>
-        </summary>
-        <div class="grid" id="provider-grid"></div>
-      </details>
     </section>
 
     <section class="section" id="income-lab-section">
       <div class="section-head">
         <div>
           <h2 data-i18n="incomeLabTitle">期权 Income 对比台</h2>
-          <p data-i18n="incomeLabCopy">JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 这些产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。</p>
+          <p data-i18n="incomeLabCopy">JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 和 REX 这组产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。</p>
         </div>
         <div class="section-badge" data-i18n="incomeLabBadge">Options income / ETF vs benchmark</div>
       </div>
       <div class="rex-panel">
         <div class="rex-selector" id="income-lab-selector" aria-label="Options income ETF selector"></div>
         <div class="rex-content" id="income-lab-content"></div>
-      </div>
-    </section>
-
-    <section class="section" id="rex-section">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="rexTitle">REX Growth & Income</h2>
-          <p data-i18n="rexCopy">把 REX 官网这组 weekly growth & income ETF 放在一个项目里，切换 ETF 后直接和它自己的标的做复权对比。</p>
-        </div>
-        <div class="section-badge" data-i18n="rexBadge">REX / weekly + single-stock income</div>
-      </div>
-      <div class="rex-panel">
-        <div class="rex-selector" id="rex-selector" aria-label="REX Growth & Income ETF selector"></div>
-        <div class="rex-content" id="rex-content"></div>
       </div>
     </section>
 
@@ -1283,21 +1258,12 @@
       },
       incomeLabTitle: { zh: "期权 Income 对比台", en: "Options Income Compare Desk" },
       incomeLabCopy: {
-        zh: "JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 这些产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。",
-        en: "JEPI, JEPQ, QYLD, DIVO, SPYI, QQQI, GPIQ, GPIX, XQQI, ISPY, XDTE, TSPY, MSFY, TSLY, and related products are grouped into one selector for ETF-vs-benchmark comparison."
+        zh: "JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 和 REX 这组产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。",
+        en: "JEPI, JEPQ, QYLD, DIVO, SPYI, QQQI, GPIQ, GPIX, XQQI, ISPY, XDTE, TSPY, MSFY, TSLY, REX, and related products are grouped into one selector for ETF-vs-benchmark comparison."
       },
       incomeLabBadge: {
         zh: "期权 income / ETF vs 基准",
         en: "Options income / ETF vs benchmark"
-      },
-      rexTitle: { zh: "REX Growth & Income", en: "REX Growth & Income" },
-      rexCopy: {
-        zh: "把 REX 官网这组 weekly growth & income ETF 放在一个项目里，切换 ETF 后直接和它自己的标的做复权对比。",
-        en: "A single workspace for the REX weekly growth-and-income lineup. Switch ETFs and compare the fund against its own underlying."
-      },
-      rexBadge: {
-        zh: "REX / 周配 + 单股 income",
-        en: "REX / weekly + single-stock income"
       },
       advancedTitle: { zh: "高收益 / 期权 Income", en: "High-Yield / Options Income" },
       advancedCopy: {
@@ -1312,12 +1278,6 @@
         en: "These products push the income story harder, but volatility and NAV damage are also more direct, so they are better viewed separately."
       },
       watchRiskBadge: { zh: "高波动 / 高回撤风险", en: "High vol / drawdown risk" },
-      providerGroupTitle: { zh: "Provider / 平台入口", en: "Provider hubs" },
-      providerGroupCount: { zh: "个入口", en: "hubs" },
-      providerGroupCopy: {
-        zh: "这组是产品线入口，不是单只 ETF 本体，适合继续点进去看新品、结构和发行方向。",
-        en: "These are lineup entry points rather than single-ETF positions, useful for tracking launches, structures, and provider direction."
-      },
       researchTitle: { zh: "Income 研究与筛选", en: "Income Research & Screening" },
       researchCopy: {
         zh: "这组不是直接买的 ETF，而是拿来查分红节奏、收益率筛选、周配月配和 provider 动态的工具入口。",
@@ -1369,21 +1329,6 @@
         incomeLabCompareShort: "先看真实净值路径，不把短期分配率当长期收益。",
         incomeLabNoCompareTitle: "这个产品没有单一可比基准",
         incomeLabNoCompareCopy: "它更像打包型 income 产品，不能硬塞成单一股票或单一指数对比。先看官网结构和成立后复权走势。",
-        rexCurrent: "当前 ETF",
-        rexUnderlying: "对比标的",
-        rexStructure: "结构",
-        rexWatch: "优先观察",
-        rexOfficialFund: "打开 ETF 官网",
-        rexOfficialLineup: "打开 REX 全列表",
-        rexSource: "官网口径",
-        rexSourceRule: "周配；单股产品目标 1.05x-1.50x 日度标的暴露，约一半组合写 call",
-        rexCompareTitle: "ETF vs 本身标的",
-        rexCompareLoading: "正在加载 ETF 和标的的复权日线",
-        rexCompareError: "暂时没取到这组 ETF / 标的对比日线",
-        rexCompareBase: "复权后总回报，ETF 上市后的首个共同交易日 = 100",
-        rexCompareShort: "这组产品样本很短，先看已经跑出来的净值路径，不把分配率当长期收益。",
-        rexNoCompareTitle: "GIF 没有单一股票标的",
-        rexNoCompareCopy: "GIF 是 REX Growth & Income Universe ETF，不是单股产品。要看“ETF vs 本身标的”，切到 NVII、TSII、MSII 这些单股 ETF。",
         hubTitle: "平台入口",
         hubCopy: "这张卡不是单只 ETF 的复权走势，而是留作 provider 入口，适合继续点进去看新品、规则和产品线扩展。",
         hubFocus: "适合用来追踪新产品和发行方向。",
@@ -1513,21 +1458,6 @@
         incomeLabCompareShort: "Read the realized NAV path first; do not treat short-term distribution rate as long-term return.",
         incomeLabNoCompareTitle: "No single clean benchmark",
         incomeLabNoCompareCopy: "This is a packaged income product, so forcing it against one stock or index would be misleading. Start with structure and live adjusted return.",
-        rexCurrent: "Current ETF",
-        rexUnderlying: "Underlying",
-        rexStructure: "Structure",
-        rexWatch: "Watch first",
-        rexOfficialFund: "Open ETF page",
-        rexOfficialLineup: "Open REX lineup",
-        rexSource: "Official framing",
-        rexSourceRule: "Weekly distributions; single-stock funds target 1.05x-1.50x daily exposure and write calls on about half the portfolio",
-        rexCompareTitle: "ETF vs Underlying",
-        rexCompareLoading: "Loading adjusted daily data for the ETF and underlying",
-        rexCompareError: "Could not load this ETF / underlying comparison right now",
-        rexCompareBase: "Adjusted total return, first shared trading day after ETF launch = 100",
-        rexCompareShort: "These products have short live histories, so read the realized NAV path rather than treating distribution rate as long-term return.",
-        rexNoCompareTitle: "GIF has no single-stock underlying",
-        rexNoCompareCopy: "GIF is the REX Growth & Income Universe ETF rather than a single-stock product. For ETF vs underlying, switch to NVII, TSII, MSII, or another single-name ETF.",
         hubTitle: "Provider hub",
         hubCopy: "This card is a provider entry point rather than a single-ETF total-return view, so use it to inspect new launches, structures, and lineup changes.",
         hubFocus: "Useful for tracking new launches and product direction.",
@@ -2135,41 +2065,6 @@
         }
       },
       {
-        name: "QUSA",
-        symbol: "QUSA",
-        ticker: "VistaShares Target 15 USA Quality Income ETF",
-        accent: "#8b5cf6",
-        url: "https://www.vistashares.com/qusa-bringing-monthly-income-to-quality-factor-investing/",
-        type: { zh: "质量股 income", en: "Quality-income equity" },
-        market: { zh: "美国股票", en: "U.S. equity" },
-        summary: {
-          zh: "更像把 quality factor 和 monthly income 拼在一起的路线，适合和 JEPI、DIVO 做风格对照。",
-          en: "A quality-factor plus monthly-income angle that is useful to compare against JEPI and DIVO."
-        },
-        tags: { zh: ["QUSA", "quality", "monthly"], en: ["QUSA", "quality", "monthly"] },
-        note: {
-          zh: "看 quality 暴露和 income 目标是否真的兼容。",
-          en: "Watch whether the quality tilt and the income target really align."
-        }
-      },
-      {
-        name: "YieldMax",
-        ticker: "Option Income ETF Hub",
-        accent: "#f59e0b",
-        url: "https://yieldmaxetfs.com/",
-        type: { zh: "单股高收益平台", en: "Single-stock income platform" },
-        market: { zh: "美国股票", en: "U.S. equity" },
-        summary: {
-          zh: "如果你想看 TSLY、MSTY 这类更猛的产品，YieldMax 这一站最直接。",
-          en: "The quickest hub for the more aggressive single-name products like TSLY and MSTY."
-        },
-        tags: { zh: ["YieldMax", "TSLY", "MSTY"], en: ["YieldMax", "TSLY", "MSTY"] },
-        note: {
-          zh: "看分配率的同时，一定要盯总回报和净值路径。",
-          en: "Watch total return and NAV path, not just the yield headline."
-        }
-      },
-      {
         name: "TSLY",
         symbol: "TSLY",
         ticker: "YieldMax TSLA Option Income Strategy ETF",
@@ -2221,40 +2116,6 @@
         note: {
           zh: "看打包后是不是只是把风险分散了一点，而不是本质变稳。",
           en: "Watch whether bundling only diversifies risk a bit rather than truly de-risking it."
-        }
-      },
-      {
-        name: "REX Shares",
-        ticker: "Growth & Income ETF Hub",
-        accent: "#4f46e5",
-        url: "https://www.rexshares.com/rex-growth-and-income-etfs/",
-        type: { zh: "成长股 income 平台", en: "Growth-income platform" },
-        market: { zh: "美国股票", en: "U.S. equity" },
-        summary: {
-          zh: "REX 也在做增长股 + income 这条线，适合当 provider 入口留着看新产品。",
-          en: "A good provider hub to track newer growth-plus-income ETF structures."
-        },
-        tags: { zh: ["REX", "provider", "growth income"], en: ["REX", "provider", "growth income"] },
-        note: {
-          zh: "看新品种的底层规则，不要只看名字像不像。",
-          en: "Watch the underlying mechanics of new launches rather than the branding."
-        }
-      },
-      {
-        name: "Defiance Income ETFs",
-        ticker: "Income ETF Hub",
-        accent: "#ef4444",
-        url: "https://www.defianceetfs.com/explore-our-etfs/",
-        type: { zh: "高收益平台", en: "High-yield platform" },
-        market: { zh: "美国股票", en: "U.S. equity" },
-        summary: {
-          zh: "Defiance 这条线的新 income ETF 也很多，适合当 provider 入口做扩展观察。",
-          en: "Defiance has become another active provider hub for newer high-yield income ETF launches."
-        },
-        tags: { zh: ["Defiance", "income", "provider"], en: ["Defiance", "income", "provider"] },
-        note: {
-          zh: "看名字背后的真实结构和分配来源。",
-          en: "Watch the real structure and distribution source behind the product names."
         }
       }
     ];
@@ -2939,6 +2800,18 @@
       }
     ];
 
+    optionsIncomeCompareEtfs.push(...rexGrowthIncomeEtfs.map((item) => ({
+      symbol: item.symbol,
+      name: item.name,
+      benchmark: item.underlying,
+      benchmarkName: item.underlyingName,
+      accent: item.accent,
+      benchmarkAccent: item.underlyingAccent,
+      url: item.url,
+      structure: item.structure,
+      watch: item.watch
+    })));
+
     const incomeResearch = [
       {
         name: "Lazy Portfolio ETF",
@@ -3013,19 +2886,16 @@
     const DEFAULT_TREND_INTERVAL = "1mo";
     const COMPARE_TREND_INTERVAL = "1d";
     const DEFAULT_INCOME_LAB_SYMBOL = "JEPI";
-    const DEFAULT_REX_SYMBOL = "NVII";
     const OPTIONS_COMPARE_SYMBOLS = new Set(optionsIncomeCompareEtfs.map((item) => item.symbol));
     const trendCache = new Map();
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
     let compareChartRequestId = 0;
     let incomeLabChartRequestId = 0;
-    let rexChartRequestId = 0;
     let tableHydrateRequestId = 0;
     let copyStatusTimer = null;
     const filterState = { scope: "all", style: "all", role: "all", sort: "default", display: "cards", preset: "default" };
     let selectedIncomeLabSymbol = DEFAULT_INCOME_LAB_SYMBOL;
-    let selectedRexSymbol = DEFAULT_REX_SYMBOL;
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -3091,8 +2961,6 @@
       if (displayOptions.some((option) => option.key === params.get("display"))) next.display = params.get("display");
       const focus = (params.get("focus") || "").trim().toUpperCase();
       if (optionsIncomeCompareEtfs.some((item) => item.symbol === focus)) next.focus = focus;
-      const rex = (params.get("rex") || "").trim().toUpperCase();
-      if (rexGrowthIncomeEtfs.some((item) => item.symbol === rex)) next.rex = rex;
       return next;
     }
 
@@ -3107,7 +2975,6 @@
       if (next.sort) filterState.sort = next.sort;
       if (next.display) filterState.display = next.display;
       if (next.focus) selectedIncomeLabSymbol = next.focus;
-      if (next.rex) selectedRexSymbol = next.rex;
       syncPresetFromFilters();
     }
 
@@ -3156,7 +3023,6 @@
       if (filterState.sort !== "default") params.set("sort", filterState.sort);
       if (filterState.display !== "cards") params.set("display", filterState.display);
       if (selectedIncomeLabSymbol !== DEFAULT_INCOME_LAB_SYMBOL) params.set("focus", selectedIncomeLabSymbol);
-      if (selectedRexSymbol !== DEFAULT_REX_SYMBOL) params.set("rex", selectedRexSymbol);
       const query = params.toString();
       const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
       window.history.replaceState(null, "", nextUrl);
@@ -3364,7 +3230,7 @@
       const role = classifyIncomeItem(item);
       const symbol = item.symbol || "";
       if (role === "watch" || /^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol)) return labels[lang].radarTrapWatch;
-      if (/^(XQQI|GPIQ|QQQI|XSPI|GPIX|QUSA)$/i.test(symbol)) return labels[lang].radarTrapShort;
+      if (/^(XQQI|GPIQ|QQQI|XSPI|GPIX)$/i.test(symbol)) return labels[lang].radarTrapShort;
       return labels[lang].radarTrapOk;
     }
 
@@ -3373,7 +3239,7 @@
       const role = classifyIncomeItem(item);
       const symbol = item.symbol || "";
       if (role === "watch" || /^(TSLY|MSTY|YMAX|MSFY|XDTE|TSPY)$/i.test(symbol)) return "flag-watch";
-      if (/^(XQQI|GPIQ|QQQI|XSPI|GPIX|QUSA)$/i.test(symbol)) return "risk-medium";
+      if (/^(XQQI|GPIQ|QQQI|XSPI|GPIX)$/i.test(symbol)) return "risk-medium";
       return "flag-ok";
     }
 
@@ -3885,207 +3751,6 @@
       return true;
     }
 
-    function selectedRexEtf() {
-      return rexGrowthIncomeEtfs.find((item) => item.symbol === selectedRexSymbol) || rexGrowthIncomeEtfs.find((item) => item.symbol === DEFAULT_REX_SYMBOL) || rexGrowthIncomeEtfs[0];
-    }
-
-    function rexSectionVisible() {
-      if (filterState.display === "table" || isResearchMode()) return false;
-      const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
-      const styleOk = ["all", "option"].includes(filterState.style);
-      const roleOk = ["all", "satellite", "watch"].includes(filterState.role);
-      return scopeOk && styleOk && roleOk;
-    }
-
-    function renderRexSelector(lang) {
-      const mount = document.getElementById("rex-selector");
-      if (!mount) return;
-      mount.innerHTML = rexGrowthIncomeEtfs.map((item) => {
-        const active = item.symbol === selectedRexSymbol ? " active" : "";
-        return `<button class="filter-chip${active}" type="button" data-rex-symbol="${item.symbol}" title="${item.name}">${item.symbol}</button>`;
-      }).join("");
-      mount.querySelectorAll("[data-rex-symbol]").forEach((button) => {
-        button.addEventListener("click", () => {
-          selectedRexSymbol = button.getAttribute("data-rex-symbol") || DEFAULT_REX_SYMBOL;
-          renderPage(lang);
-        });
-      });
-    }
-
-    function rexOverviewTemplate(item, lang) {
-      const underlyingText = item.underlying
-        ? `${item.underlying} / ${item.underlyingName[lang]}`
-        : item.underlyingName[lang];
-      return `
-        <article class="rex-overview" style="--card-accent:${item.accent}">
-          <div>
-            <div class="meta">${labels[lang].rexCurrent}</div>
-            <h3>${item.symbol}<span>${item.name}</span></h3>
-          </div>
-          <div class="rex-fact-grid">
-            <div class="rex-fact">
-              <span>${labels[lang].rexUnderlying}</span>
-              <strong>${underlyingText}</strong>
-            </div>
-            <div class="rex-fact">
-              <span>${labels[lang].rexStructure}</span>
-              <strong>${item.structure[lang]}</strong>
-            </div>
-            <div class="rex-fact">
-              <span>${labels[lang].rexWatch}</span>
-              <strong>${item.watch[lang]}</strong>
-            </div>
-          </div>
-          <span class="trend-source">${labels[lang].rexSource}: ${labels[lang].rexSourceRule}</span>
-          <div class="rex-links">
-            <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].rexOfficialFund}</a>
-            <a class="visit" href="https://www.rexshares.com/rex-growth-and-income-etfs/" target="_blank" rel="noreferrer">${labels[lang].rexOfficialLineup}</a>
-          </div>
-        </article>
-      `;
-    }
-
-    function rexChartPlaceholder(lang) {
-      return `
-        <div class="trend-block compare-chart-panel rex-empty">
-          <div class="trend-head">
-            <span class="trend-label">${labels[lang].rexCompareTitle}</span>
-          </div>
-          <div class="trend-loading">${labels[lang].rexCompareLoading}</div>
-        </div>
-      `;
-    }
-
-    function rexChartError(lang) {
-      return `
-        <div class="trend-block compare-chart-panel rex-empty">
-          <div class="trend-head">
-            <span class="trend-label">${labels[lang].rexCompareTitle}</span>
-            <strong class="trend-return">--</strong>
-          </div>
-          <div class="trend-error">${labels[lang].rexCompareError}</div>
-        </div>
-      `;
-    }
-
-    function rexNoComparison(lang) {
-      return `
-        <div class="trend-block compare-chart-panel rex-empty">
-          <div class="compare-chart-head">
-            <div>
-              <span class="trend-label">${labels[lang].rexNoCompareTitle}</span>
-              <p class="compare-chart-copy">${labels[lang].rexNoCompareCopy}</p>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    async function renderRexChart(lang, item, requestId) {
-      const mount = document.getElementById("rex-chart");
-      if (!mount) return;
-      if (!item.underlying) {
-        mount.innerHTML = rexNoComparison(lang);
-        return;
-      }
-
-      mount.innerHTML = rexChartPlaceholder(lang);
-
-      try {
-        const fundTrend = await getTrend(item.symbol, COMPARE_TREND_INTERVAL);
-        if (requestId !== rexChartRequestId) return;
-        if (!fundTrend?.inceptionTs) throw new Error(`Missing ${item.symbol} inception`);
-
-        const anchorTs = fundTrend.inceptionTs;
-        const compareConfigs = [
-          { symbol: item.symbol, color: item.accent },
-          { symbol: item.underlying, color: item.underlyingAccent }
-        ];
-        const trends = await Promise.all(compareConfigs.map((config) => getTrend(config.symbol, COMPARE_TREND_INTERVAL, anchorTs)));
-        if (requestId !== rexChartRequestId) return;
-
-        const normalized = compareConfigs
-          .map((config, index) => {
-            const series = normalizeCompareTrend(trends[index], anchorTs, config.color);
-            return series ? { ...series, symbol: config.symbol } : null;
-          })
-          .filter(Boolean);
-
-        if (normalized.length !== compareConfigs.length) throw new Error("Missing REX comparison series");
-
-        const latestTs = Math.max(...normalized.map((series) => series.latestTs));
-        const compareCopy = lang === "zh"
-          ? `${item.symbol} 和 ${item.underlying} 都按复权后总回报归一到 100，起点取 ${item.symbol} 上市后的首个共同交易日。`
-          : `${item.symbol} and ${item.underlying} are rebased to 100 on an adjusted total-return basis from the first shared trading day after ${item.symbol} launched.`;
-
-        mount.innerHTML = `
-          <div class="trend-block compare-chart-panel">
-            <div class="compare-chart-head">
-              <div>
-                <span class="trend-label">${labels[lang].rexCompareTitle}</span>
-                <p class="compare-chart-copy">${compareCopy}</p>
-              </div>
-              <div class="compare-chart-meta">
-                <span class="trend-source">${labels[lang].compareChartBase}: ${labels[lang].rexCompareBase}</span>
-                <span class="trend-source">${labels[lang].compareChartStart}: ${formatDayDate(anchorTs, lang)}</span>
-                <span class="trend-source">${labels[lang].compareChartLatest}: ${formatDayDate(latestTs, lang)}</span>
-              </div>
-            </div>
-            <div class="compare-chart-board">
-              ${buildCompareChartSvg(normalized, lang)}
-            </div>
-            <div class="compare-chart-legend">
-              ${normalized.map((series) => `
-                <div class="compare-chart-item" style="--line-color:${series.color}">
-                  <div class="compare-chart-item-top">
-                    <span class="compare-chart-name">
-                      <span class="compare-chart-swatch"></span>
-                      ${series.symbol}
-                    </span>
-                    <strong>${formatIndexValue(series.normalizedLatest, 1)}</strong>
-                  </div>
-                  <div class="compare-chart-stat">
-                    <span>${labels[lang].compareChartPeriodReturn}</span>
-                    <strong>${formatSignedPct(series.periodReturnPct)}</strong>
-                  </div>
-                  <div class="compare-chart-stat">
-                    <span>${labels[lang].compareChartStart}</span>
-                    <strong>${formatDayDate(series.startTs, lang)}</strong>
-                  </div>
-                </div>
-              `).join("")}
-            </div>
-            <div class="trend-source warn">${labels[lang].rexCompareShort}</div>
-            <div class="trend-meta">${labels[lang].trendTimeliness}</div>
-          </div>
-        `;
-      } catch (error) {
-        if (requestId !== rexChartRequestId) return;
-        mount.innerHTML = rexChartError(lang);
-      }
-    }
-
-    function renderRexSection(lang, requestId) {
-      const section = document.getElementById("rex-section");
-      const content = document.getElementById("rex-content");
-      if (!section || !content) return false;
-      const visible = rexSectionVisible();
-      section.hidden = !visible;
-      if (!visible) {
-        content.innerHTML = "";
-        return false;
-      }
-      const item = selectedRexEtf();
-      selectedRexSymbol = item.symbol;
-      renderRexSelector(lang);
-      content.innerHTML = `
-        ${rexOverviewTemplate(item, lang)}
-        <div class="rex-chart" id="rex-chart"></div>
-      `;
-      renderRexChart(lang, item, requestId);
-      return true;
-    }
-
     async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0) {
       if (!symbol) return null;
       const cacheKey = trendCacheKey(symbol, interval, fromTs);
@@ -4511,18 +4176,14 @@
           return;
         }
         if (section.key === "advanced") {
-          const providerItems = items.filter((item) => !item.symbol);
           const watchItems = items.filter((item) => item.symbol && classifyIncomeItem(item) === "watch");
           const etfItems = items.filter((item) => item.symbol && classifyIncomeItem(item) !== "watch");
-          totalMatches += providerItems.length + watchItems.length + etfItems.length;
+          totalMatches += watchItems.length + etfItems.length;
           document.getElementById(section.gridId).innerHTML = etfItems.map((item) => cardTemplate(item, lang)).join("");
           document.getElementById("watch-grid").innerHTML = watchItems.map((item) => cardTemplate(item, lang)).join("");
           document.getElementById("watch-group-title").textContent = `${pageCopy.watchGroupTitle[lang]} (${watchItems.length} ${pageCopy.watchGroupCount[lang]})`;
           document.getElementById("watch-subgroup").hidden = watchItems.length === 0;
-          document.getElementById("provider-grid").innerHTML = providerItems.map((item) => cardTemplate(item, lang)).join("");
-          document.getElementById("provider-group-title").textContent = `${pageCopy.providerGroupTitle[lang]} (${providerItems.length} ${pageCopy.providerGroupCount[lang]})`;
-          document.getElementById("provider-subgroup").hidden = providerItems.length === 0;
-          document.getElementById(section.sectionId).hidden = providerItems.length + watchItems.length + etfItems.length === 0;
+          document.getElementById(section.sectionId).hidden = watchItems.length + etfItems.length === 0;
           return;
         }
         totalMatches += items.length;
@@ -4560,9 +4221,7 @@
       });
       const incomeLabRequestId = ++incomeLabChartRequestId;
       const incomeLabVisible = renderIncomeLabSection(lang, incomeLabRequestId);
-      const rexRequestId = ++rexChartRequestId;
-      const rexVisible = renderRexSection(lang, rexRequestId);
-      const totalMatches = renderSections(lang) + (incomeLabVisible ? 1 : 0) + (rexVisible ? 1 : 0);
+      const totalMatches = renderSections(lang) + (incomeLabVisible ? 1 : 0);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
       hydrateIncomeTableRows(lang);
