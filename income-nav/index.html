@@ -1180,7 +1180,7 @@
       <div class="section-head">
         <div>
           <h2 data-i18n="incomeLabTitle">期权 Income 对比台</h2>
-          <p data-i18n="incomeLabCopy">JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 和 REX 这组产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。</p>
+          <p data-i18n="incomeLabCopy">把 equity high income、boosted high income、alternative income、hedged equity income 和 REX 单股 income 集中到一个选择器里，直接看 ETF 和它该对照的底层基准。</p>
         </div>
         <div class="section-badge" data-i18n="incomeLabBadge">Options income / ETF vs benchmark</div>
       </div>
@@ -1258,8 +1258,8 @@
       },
       incomeLabTitle: { zh: "期权 Income 对比台", en: "Options Income Compare Desk" },
       incomeLabCopy: {
-        zh: "JEPI、JEPQ、QYLD、DIVO、SPYI、QQQI、GPIQ、GPIX、XQQI、ISPY、XDTE、TSPY、MSFY、TSLY 和 REX 这组产品集中到一个选择器里，直接看 ETF 和它该对照的底层基准。",
-        en: "JEPI, JEPQ, QYLD, DIVO, SPYI, QQQI, GPIQ, GPIX, XQQI, ISPY, XDTE, TSPY, MSFY, TSLY, REX, and related products are grouped into one selector for ETF-vs-benchmark comparison."
+        zh: "把 equity high income、boosted high income、alternative income、hedged equity income 和 REX 单股 income 集中到一个选择器里，直接看 ETF 和它该对照的底层基准。",
+        en: "Equity high income, boosted high income, alternative income, hedged equity income, and REX single-stock income are grouped into one selector for ETF-vs-benchmark comparison."
       },
       incomeLabBadge: {
         zh: "期权 income / ETF vs 基准",
@@ -2516,6 +2516,39 @@
         watch: { zh: "看更高名义暴露带来的上行和回撤放大。", en: "Watch amplified upside and drawdowns from higher notional exposure." }
       },
       {
+        symbol: "IWMI",
+        name: "NEOS Russell 2000 High Income ETF",
+        benchmark: "IWM",
+        benchmarkName: { zh: "Russell 2000 基准", en: "Russell 2000 benchmark" },
+        accent: "#38bdf8",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/iwmi/",
+        structure: { zh: "Russell 2000 小盘股暴露 + high income options overlay。", en: "Russell 2000 small-cap exposure plus a high-income options overlay." },
+        watch: { zh: "和 IWM 比，小盘波动被收入策略削掉多少弹性。", en: "Versus IWM, watch how much small-cap volatility and upside are converted into income." }
+      },
+      {
+        symbol: "NIHI",
+        name: "NEOS MSCI EAFE High Income ETF",
+        benchmark: "EFA",
+        benchmarkName: { zh: "MSCI EAFE 基准", en: "MSCI EAFE benchmark" },
+        accent: "#0f766e",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/nihi/",
+        structure: { zh: "国际发达市场股票暴露 + high income options overlay。", en: "Developed ex-U.S. equity exposure plus a high-income options overlay." },
+        watch: { zh: "和 EFA 比，汇率、海外市场 beta 和分配后的净值路径。", en: "Versus EFA, watch currency exposure, international beta, and NAV path after distributions." }
+      },
+      {
+        symbol: "XBCI",
+        name: "NEOS Boosted Bitcoin High Income ETF",
+        benchmark: "BTC-USD",
+        benchmarkName: { zh: "Bitcoin", en: "Bitcoin" },
+        accent: "#f59e0b",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/xbci/",
+        structure: { zh: "Boosted Bitcoin income，偏更高波动的加密 income。", en: "Boosted Bitcoin income, a higher-volatility crypto-income expression." },
+        watch: { zh: "和 BTC 比，增强暴露和期权收入有没有抵消回撤。", en: "Versus BTC, watch whether boosted exposure and option income offset drawdowns." }
+      },
+      {
         symbol: "QQQI",
         name: "NEOS Nasdaq-100 High Income ETF",
         benchmark: "QQQ",
@@ -2547,6 +2580,94 @@
         url: "https://neosfunds.com/xqqi/",
         structure: { zh: "Boosted Nasdaq income，比 QQQI 更进攻。", en: "Boosted Nasdaq income, more aggressive than QQQI." },
         watch: { zh: "看回撤放大和上行放大是否值得。", en: "Watch whether amplified upside is worth amplified drawdowns." }
+      },
+      {
+        symbol: "BTCI",
+        name: "NEOS Bitcoin High Income ETF",
+        benchmark: "BTC-USD",
+        benchmarkName: { zh: "Bitcoin", en: "Bitcoin" },
+        accent: "#f97316",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/btci/",
+        structure: { zh: "Bitcoin high income，把加密资产波动转成分配。", en: "Bitcoin high income, converting crypto volatility into distributions." },
+        watch: { zh: "和 BTC 比，现金流叙事背后的净值折损。", en: "Versus BTC, watch NAV drag behind the cash-flow story." }
+      },
+      {
+        symbol: "NEHI",
+        name: "NEOS Ethereum High Income ETF",
+        benchmark: "ETH-USD",
+        benchmarkName: { zh: "Ethereum", en: "Ethereum" },
+        accent: "#8b5cf6",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/nehi/",
+        structure: { zh: "Ethereum high income，把 ETH 波动和期权收入结合。", en: "Ethereum high income, pairing ETH volatility with options income." },
+        watch: { zh: "和 ETH 比，趋势段是否被收入策略显著削弱。", en: "Versus ETH, watch whether trend participation is materially muted." }
+      },
+      {
+        symbol: "IYRI",
+        name: "NEOS Real Estate High Income ETF",
+        benchmark: "IYR",
+        benchmarkName: { zh: "美国地产 ETF 基准", en: "U.S. real-estate ETF benchmark" },
+        accent: "#ec4899",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/iyri/",
+        structure: { zh: "Real estate high income，地产暴露叠加 options income。", en: "Real-estate high income, combining property exposure with options income." },
+        watch: { zh: "和 IYR 比，利率敏感资产做 income 后净值是否更稳。", en: "Versus IYR, watch whether income makes rate-sensitive real estate steadier." }
+      },
+      {
+        symbol: "IAUI",
+        name: "NEOS Gold High Income ETF",
+        benchmark: "IAU",
+        benchmarkName: { zh: "黄金基准", en: "Gold benchmark" },
+        accent: "#facc15",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/iaui/",
+        structure: { zh: "Gold high income，黄金暴露叠加 options income。", en: "Gold high income, combining gold exposure with options income." },
+        watch: { zh: "和 IAU 比，黄金趋势行情里上行有没有被截断。", en: "Versus IAU, watch whether gold trend upside is capped." }
+      },
+      {
+        symbol: "MLPI",
+        name: "NEOS MLP & Energy Infrastructure High Income ETF",
+        benchmark: "AMLP",
+        benchmarkName: { zh: "MLP / 能源基础设施基准", en: "MLP / energy infrastructure benchmark" },
+        accent: "#fb923c",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/mlpi-mlp-high-income-etf/",
+        structure: { zh: "MLP 与能源基础设施 high income，偏实物资产现金流。", en: "MLP and energy infrastructure high income, leaning into real-asset cash flows." },
+        watch: { zh: "和 AMLP 比，能源 income 叠加期权后的总回报。", en: "Versus AMLP, watch total return after adding the options overlay." }
+      },
+      {
+        symbol: "QQQH",
+        name: "NEOS Nasdaq-100 Hedged Equity Income ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#60a5fa",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/qqqh/",
+        structure: { zh: "Nasdaq-100 hedged equity income，偏防守型收入表达。", en: "Nasdaq-100 hedged equity income, a more defensive income expression." },
+        watch: { zh: "和 QQQ 比，对冲有没有降低回撤，同时保留多少上涨。", en: "Versus QQQ, watch drawdown reduction and upside retention." }
+      },
+      {
+        symbol: "SPYH",
+        name: "NEOS S&P 500 Hedged Equity Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#22c55e",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/spyh/",
+        structure: { zh: "S&P 500 hedged equity income，偏防守型 broad-market income。", en: "S&P 500 hedged equity income, a defensive broad-market income style." },
+        watch: { zh: "和 SPY 比，对冲成本、回撤缓冲和上涨保留。", en: "Versus SPY, watch hedge cost, drawdown cushion, and upside retention." }
+      },
+      {
+        symbol: "NLSI",
+        name: "NEOS Long/Short Equity Income ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 粗略参照", en: "S&P 500 rough reference" },
+        accent: "#64748b",
+        benchmarkAccent: "#94a3b8",
+        url: "https://neosfunds.com/nlsi/",
+        structure: { zh: "Long/short equity income，不是纯多头指数替代。", en: "Long/short equity income, not a pure long-only index substitute." },
+        watch: { zh: "SPY 只是粗略参照，重点看多空结构是否降低波动。", en: "SPY is only a rough reference; focus on whether the long/short structure lowers volatility." }
       },
       {
         symbol: "ISPY",
