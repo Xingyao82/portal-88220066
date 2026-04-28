@@ -420,6 +420,101 @@
       line-height: 1.75;
     }
 
+    .rex-panel {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .rex-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .rex-content {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.86fr) minmax(0, 1.42fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .rex-overview,
+    .rex-chart {
+      min-height: 100%;
+    }
+
+    .rex-overview {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--card-accent, var(--accent)) 50%, rgba(255,255,255,.08));
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent, var(--accent)) 9%, rgba(255,255,255,.04)), rgba(255,255,255,.03));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-accent, var(--accent)) 14%, transparent);
+    }
+
+    .rex-overview h3 {
+      margin: 4px 0 0;
+      font-size: 1.22rem;
+      letter-spacing: -0.03em;
+    }
+
+    .rex-overview h3 span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    .rex-fact-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .rex-fact {
+      display: grid;
+      gap: 5px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .rex-fact span {
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.35;
+    }
+
+    .rex-fact strong {
+      color: var(--text);
+      font-size: 0.91rem;
+      line-height: 1.42;
+    }
+
+    .rex-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .rex-chart .compare-chart-legend {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rex-empty {
+      min-height: 260px;
+      align-content: center;
+    }
+
     .subgroup {
       display: grid;
       gap: 14px;
@@ -941,6 +1036,7 @@
     }
 
     @media (max-width: 1180px) {
+      .rex-content,
       .compare-chart-legend,
       .compare-grid,
       .summary-grid,
@@ -950,6 +1046,8 @@
     @media (max-width: 720px) {
       .shell { width: min(calc(100% - 18px), var(--max)); }
       .nav { flex-direction: column; align-items: flex-start; }
+      .rex-content,
+      .rex-chart .compare-chart-legend,
       .compare-chart-legend,
       .compare-grid,
       .summary-grid,
@@ -1089,6 +1187,20 @@
       </details>
     </section>
 
+    <section class="section" id="rex-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="rexTitle">REX Growth & Income</h2>
+          <p data-i18n="rexCopy">把 REX 官网这组 weekly growth & income ETF 放在一个项目里，切换 ETF 后直接和它自己的标的做复权对比。</p>
+        </div>
+        <div class="section-badge" data-i18n="rexBadge">REX / weekly + single-stock income</div>
+      </div>
+      <div class="rex-panel">
+        <div class="rex-selector" id="rex-selector" aria-label="REX Growth & Income ETF selector"></div>
+        <div class="rex-content" id="rex-content"></div>
+      </div>
+    </section>
+
     <section class="section" id="research-section">
       <div class="section-head">
         <div>
@@ -1155,6 +1267,15 @@
         zh: "这组也只做结构对比，不把短期分配率当长期结论。先看复权后总回报，再看分配来源、覆盖比例和税务规则。",
         en: "This block is also for structural comparison only. Do not treat short-term distribution rates as long-term conclusions. Check adjusted total return first, then distribution source, overwrite level, and tax rules."
       },
+      rexTitle: { zh: "REX Growth & Income", en: "REX Growth & Income" },
+      rexCopy: {
+        zh: "把 REX 官网这组 weekly growth & income ETF 放在一个项目里，切换 ETF 后直接和它自己的标的做复权对比。",
+        en: "A single workspace for the REX weekly growth-and-income lineup. Switch ETFs and compare the fund against its own underlying."
+      },
+      rexBadge: {
+        zh: "REX / 周配 + 单股 income",
+        en: "REX / weekly + single-stock income"
+      },
       advancedTitle: { zh: "高收益 / 期权 Income", en: "High-Yield / Options Income" },
       advancedCopy: {
         zh: "这组更偏 weekly、0DTE、single-stock covered call 和 provider 入口，收益看起来更猛，但结构也更复杂。",
@@ -1213,6 +1334,21 @@
         compareChartLatest: "当前",
         compareChartPeriodReturn: "区间复权回报",
         compareChartShort: "XQQI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
+        rexCurrent: "当前 ETF",
+        rexUnderlying: "对比标的",
+        rexStructure: "结构",
+        rexWatch: "优先观察",
+        rexOfficialFund: "打开 ETF 官网",
+        rexOfficialLineup: "打开 REX 全列表",
+        rexSource: "官网口径",
+        rexSourceRule: "周配；单股产品目标 1.05x-1.50x 日度标的暴露，约一半组合写 call",
+        rexCompareTitle: "ETF vs 本身标的",
+        rexCompareLoading: "正在加载 ETF 和标的的复权日线",
+        rexCompareError: "暂时没取到这组 ETF / 标的对比日线",
+        rexCompareBase: "复权后总回报，ETF 上市后的首个共同交易日 = 100",
+        rexCompareShort: "这组产品样本很短，先看已经跑出来的净值路径，不把分配率当长期收益。",
+        rexNoCompareTitle: "GIF 没有单一股票标的",
+        rexNoCompareCopy: "GIF 是 REX Growth & Income Universe ETF，不是单股产品。要看“ETF vs 本身标的”，切到 NVII、TSII、MSII 这些单股 ETF。",
         hubTitle: "平台入口",
         hubCopy: "这张卡不是单只 ETF 的复权走势，而是留作 provider 入口，适合继续点进去看新品、规则和产品线扩展。",
         hubFocus: "适合用来追踪新产品和发行方向。",
@@ -1330,6 +1466,21 @@
         compareChartLatest: "Now",
         compareChartPeriodReturn: "Adjusted return",
         compareChartShort: "XQQI still has a very short track record, so use this to read the live sample rather than make a long-term claim.",
+        rexCurrent: "Current ETF",
+        rexUnderlying: "Underlying",
+        rexStructure: "Structure",
+        rexWatch: "Watch first",
+        rexOfficialFund: "Open ETF page",
+        rexOfficialLineup: "Open REX lineup",
+        rexSource: "Official framing",
+        rexSourceRule: "Weekly distributions; single-stock funds target 1.05x-1.50x daily exposure and write calls on about half the portfolio",
+        rexCompareTitle: "ETF vs Underlying",
+        rexCompareLoading: "Loading adjusted daily data for the ETF and underlying",
+        rexCompareError: "Could not load this ETF / underlying comparison right now",
+        rexCompareBase: "Adjusted total return, first shared trading day after ETF launch = 100",
+        rexCompareShort: "These products have short live histories, so read the realized NAV path rather than treating distribution rate as long-term return.",
+        rexNoCompareTitle: "GIF has no single-stock underlying",
+        rexNoCompareCopy: "GIF is the REX Growth & Income Universe ETF rather than a single-stock product. For ETF vs underlying, switch to NVII, TSII, MSII, or another single-name ETF.",
         hubTitle: "Provider hub",
         hubCopy: "This card is a provider entry point rather than a single-ETF total-return view, so use it to inspect new launches, structures, and lineup changes.",
         hubFocus: "Useful for tracking new launches and product direction.",
@@ -2378,6 +2529,179 @@
       }
     ];
 
+    const rexGrowthIncomeEtfs = [
+      {
+        symbol: "GIF",
+        name: "REX Growth & Income Universe ETF",
+        underlying: "",
+        underlyingName: { zh: "无单一股票标的", en: "No single-stock underlying" },
+        accent: "#6366f1",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/gif/",
+        structure: {
+          zh: "Fund of funds，等权打包 REX Growth & Income 单股 ETF。",
+          en: "Fund-of-funds, equally weighted across REX Growth & Income single-stock ETFs."
+        },
+        watch: {
+          zh: "先看 REX 全家桶净值路径，再切到单只 ETF 看对应股票。",
+          en: "Use it for the whole REX basket, then switch to a single-name ETF for stock comparison."
+        }
+      },
+      {
+        symbol: "NVII",
+        name: "REX NVDA Growth & Income ETF",
+        underlying: "NVDA",
+        underlyingName: { zh: "NVIDIA", en: "NVIDIA" },
+        accent: "#22c55e",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/nvii/",
+        structure: {
+          zh: "NVDA 日度暴露 + 约半仓短期期权 income。",
+          en: "NVDA daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看 NVDA 上涨参与度和周配后的净值折损。",
+          en: "Watch NVDA upside participation and NAV drag after weekly distributions."
+        }
+      },
+      {
+        symbol: "TSII",
+        name: "REX TSLA Growth & Income ETF",
+        underlying: "TSLA",
+        underlyingName: { zh: "Tesla", en: "Tesla" },
+        accent: "#ef4444",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/tsii/",
+        structure: {
+          zh: "TSLA 日度暴露 + 约半仓短期期权 income。",
+          en: "TSLA daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看高波动单股被周配策略切走多少上行。",
+          en: "Watch how much upside a weekly-income overlay gives up on a volatile stock."
+        }
+      },
+      {
+        symbol: "MSII",
+        name: "REX MSTR Growth & Income ETF",
+        underlying: "MSTR",
+        underlyingName: { zh: "MicroStrategy", en: "MicroStrategy" },
+        accent: "#f97316",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/msii/",
+        structure: {
+          zh: "MSTR 日度暴露 + 约半仓短期期权 income。",
+          en: "MSTR daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看比特币相关波动下的净值侵蚀和回弹差异。",
+          en: "Watch NAV erosion and rebounds around Bitcoin-linked volatility."
+        }
+      },
+      {
+        symbol: "COII",
+        name: "REX COIN Growth & Income ETF",
+        underlying: "COIN",
+        underlyingName: { zh: "Coinbase", en: "Coinbase" },
+        accent: "#3b82f6",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/coii/",
+        structure: {
+          zh: "COIN 日度暴露 + 约半仓短期期权 income。",
+          en: "COIN daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看加密周期里标的弹性和 ETF 分配后的差距。",
+          en: "Watch the gap between crypto-cycle beta and the fund after distributions."
+        }
+      },
+      {
+        symbol: "HOII",
+        name: "REX HOOD Growth & Income ETF",
+        underlying: "HOOD",
+        underlyingName: { zh: "Robinhood", en: "Robinhood" },
+        accent: "#14b8a6",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/hoii/",
+        structure: {
+          zh: "HOOD 日度暴露 + 约半仓短期期权 income。",
+          en: "HOOD daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看交易活跃度叙事和单股波动如何影响总回报。",
+          en: "Watch how trading-activity narratives and single-name volatility affect total return."
+        }
+      },
+      {
+        symbol: "PLTI",
+        name: "REX PLTR Growth & Income ETF",
+        underlying: "PLTR",
+        underlyingName: { zh: "Palantir", en: "Palantir" },
+        accent: "#8b5cf6",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/plti/",
+        structure: {
+          zh: "PLTR 日度暴露 + 约半仓短期期权 income。",
+          en: "PLTR daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看 AI 热门股的趋势段是否被期权覆盖削弱。",
+          en: "Watch whether the options overlay mutes trend runs in a popular AI stock."
+        }
+      },
+      {
+        symbol: "CWII",
+        name: "REX CRWV Growth & Income ETF",
+        underlying: "CRWV",
+        underlyingName: { zh: "CoreWeave", en: "CoreWeave" },
+        accent: "#06b6d4",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/cwii/",
+        structure: {
+          zh: "CRWV 日度暴露 + 约半仓短期期权 income。",
+          en: "CRWV daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "这是 CRWV，不是 CRWD；样本会更短，先看实际可得数据。",
+          en: "This is CRWV, not CRWD; the sample can be shorter, so read the live data carefully."
+        }
+      },
+      {
+        symbol: "LLII",
+        name: "REX LLY Growth & Income ETF",
+        underlying: "LLY",
+        underlyingName: { zh: "Eli Lilly", en: "Eli Lilly" },
+        accent: "#ec4899",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/llii/",
+        structure: {
+          zh: "LLY 日度暴露 + 约半仓短期期权 income。",
+          en: "LLY daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看医药大单股回撤时 income overlay 是否能缓冲。",
+          en: "Watch whether the income overlay cushions drawdowns in a large pharma stock."
+        }
+      },
+      {
+        symbol: "WMTI",
+        name: "REX WMT Growth & Income ETF",
+        underlying: "WMT",
+        underlyingName: { zh: "Walmart", en: "Walmart" },
+        accent: "#f59e0b",
+        underlyingAccent: "#94a3b8",
+        url: "https://www.rexshares.com/wmti/",
+        structure: {
+          zh: "WMT 日度暴露 + 约半仓短期期权 income。",
+          en: "WMT daily exposure plus short-term call income on about half the portfolio."
+        },
+        watch: {
+          zh: "看低波消费股做周配后，是否还保留足够上涨参与。",
+          en: "Watch whether a lower-vol consumer stock keeps enough upside after weekly income."
+        }
+      }
+    ];
+
     const incomeResearch = [
       {
         name: "Lazy Portfolio ETF",
@@ -2451,13 +2775,16 @@
 
     const DEFAULT_TREND_INTERVAL = "1mo";
     const COMPARE_TREND_INTERVAL = "1d";
+    const DEFAULT_REX_SYMBOL = "NVII";
     const trendCache = new Map();
     const trendDataCache = new Map();
     let sortWarmRequestId = 0;
     let compareChartRequestId = 0;
+    let rexChartRequestId = 0;
     let tableHydrateRequestId = 0;
     let copyStatusTimer = null;
     const filterState = { scope: "all", style: "all", role: "all", sort: "default", display: "cards", preset: "default" };
+    let selectedRexSymbol = DEFAULT_REX_SYMBOL;
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -2521,6 +2848,8 @@
       if (roleOptions.some((option) => option.key === params.get("role"))) next.role = params.get("role");
       if (sortOptions.some((option) => option.key === params.get("sort"))) next.sort = params.get("sort");
       if (displayOptions.some((option) => option.key === params.get("display"))) next.display = params.get("display");
+      const rex = (params.get("rex") || "").trim().toUpperCase();
+      if (rexGrowthIncomeEtfs.some((item) => item.symbol === rex)) next.rex = rex;
       return next;
     }
 
@@ -2534,6 +2863,7 @@
       if (next.role) filterState.role = next.role;
       if (next.sort) filterState.sort = next.sort;
       if (next.display) filterState.display = next.display;
+      if (next.rex) selectedRexSymbol = next.rex;
       syncPresetFromFilters();
     }
 
@@ -2581,6 +2911,7 @@
       if (filterState.role !== "all") params.set("role", filterState.role);
       if (filterState.sort !== "default") params.set("sort", filterState.sort);
       if (filterState.display !== "cards") params.set("display", filterState.display);
+      if (selectedRexSymbol !== DEFAULT_REX_SYMBOL) params.set("rex", selectedRexSymbol);
       const query = params.toString();
       const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
       window.history.replaceState(null, "", nextUrl);
@@ -3111,6 +3442,207 @@
       }
     }
 
+    function selectedRexEtf() {
+      return rexGrowthIncomeEtfs.find((item) => item.symbol === selectedRexSymbol) || rexGrowthIncomeEtfs.find((item) => item.symbol === DEFAULT_REX_SYMBOL) || rexGrowthIncomeEtfs[0];
+    }
+
+    function rexSectionVisible() {
+      if (filterState.display === "table" || isResearchMode()) return false;
+      const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
+      const styleOk = ["all", "option"].includes(filterState.style);
+      const roleOk = ["all", "satellite", "watch"].includes(filterState.role);
+      return scopeOk && styleOk && roleOk;
+    }
+
+    function renderRexSelector(lang) {
+      const mount = document.getElementById("rex-selector");
+      if (!mount) return;
+      mount.innerHTML = rexGrowthIncomeEtfs.map((item) => {
+        const active = item.symbol === selectedRexSymbol ? " active" : "";
+        return `<button class="filter-chip${active}" type="button" data-rex-symbol="${item.symbol}" title="${item.name}">${item.symbol}</button>`;
+      }).join("");
+      mount.querySelectorAll("[data-rex-symbol]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedRexSymbol = button.getAttribute("data-rex-symbol") || DEFAULT_REX_SYMBOL;
+          renderPage(lang);
+        });
+      });
+    }
+
+    function rexOverviewTemplate(item, lang) {
+      const underlyingText = item.underlying
+        ? `${item.underlying} / ${item.underlyingName[lang]}`
+        : item.underlyingName[lang];
+      return `
+        <article class="rex-overview" style="--card-accent:${item.accent}">
+          <div>
+            <div class="meta">${labels[lang].rexCurrent}</div>
+            <h3>${item.symbol}<span>${item.name}</span></h3>
+          </div>
+          <div class="rex-fact-grid">
+            <div class="rex-fact">
+              <span>${labels[lang].rexUnderlying}</span>
+              <strong>${underlyingText}</strong>
+            </div>
+            <div class="rex-fact">
+              <span>${labels[lang].rexStructure}</span>
+              <strong>${item.structure[lang]}</strong>
+            </div>
+            <div class="rex-fact">
+              <span>${labels[lang].rexWatch}</span>
+              <strong>${item.watch[lang]}</strong>
+            </div>
+          </div>
+          <span class="trend-source">${labels[lang].rexSource}: ${labels[lang].rexSourceRule}</span>
+          <div class="rex-links">
+            <a class="visit" href="${item.url}" target="_blank" rel="noreferrer">${labels[lang].rexOfficialFund}</a>
+            <a class="visit" href="https://www.rexshares.com/rex-growth-and-income-etfs/" target="_blank" rel="noreferrer">${labels[lang].rexOfficialLineup}</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function rexChartPlaceholder(lang) {
+      return `
+        <div class="trend-block compare-chart-panel rex-empty">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].rexCompareTitle}</span>
+          </div>
+          <div class="trend-loading">${labels[lang].rexCompareLoading}</div>
+        </div>
+      `;
+    }
+
+    function rexChartError(lang) {
+      return `
+        <div class="trend-block compare-chart-panel rex-empty">
+          <div class="trend-head">
+            <span class="trend-label">${labels[lang].rexCompareTitle}</span>
+            <strong class="trend-return">--</strong>
+          </div>
+          <div class="trend-error">${labels[lang].rexCompareError}</div>
+        </div>
+      `;
+    }
+
+    function rexNoComparison(lang) {
+      return `
+        <div class="trend-block compare-chart-panel rex-empty">
+          <div class="compare-chart-head">
+            <div>
+              <span class="trend-label">${labels[lang].rexNoCompareTitle}</span>
+              <p class="compare-chart-copy">${labels[lang].rexNoCompareCopy}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function renderRexChart(lang, item, requestId) {
+      const mount = document.getElementById("rex-chart");
+      if (!mount) return;
+      if (!item.underlying) {
+        mount.innerHTML = rexNoComparison(lang);
+        return;
+      }
+
+      mount.innerHTML = rexChartPlaceholder(lang);
+
+      try {
+        const fundTrend = await getTrend(item.symbol, COMPARE_TREND_INTERVAL);
+        if (requestId !== rexChartRequestId) return;
+        if (!fundTrend?.inceptionTs) throw new Error(`Missing ${item.symbol} inception`);
+
+        const anchorTs = fundTrend.inceptionTs;
+        const compareConfigs = [
+          { symbol: item.symbol, color: item.accent },
+          { symbol: item.underlying, color: item.underlyingAccent }
+        ];
+        const trends = await Promise.all(compareConfigs.map((config) => getTrend(config.symbol, COMPARE_TREND_INTERVAL, anchorTs)));
+        if (requestId !== rexChartRequestId) return;
+
+        const normalized = compareConfigs
+          .map((config, index) => {
+            const series = normalizeCompareTrend(trends[index], anchorTs, config.color);
+            return series ? { ...series, symbol: config.symbol } : null;
+          })
+          .filter(Boolean);
+
+        if (normalized.length !== compareConfigs.length) throw new Error("Missing REX comparison series");
+
+        const latestTs = Math.max(...normalized.map((series) => series.latestTs));
+        const compareCopy = lang === "zh"
+          ? `${item.symbol} 和 ${item.underlying} 都按复权后总回报归一到 100，起点取 ${item.symbol} 上市后的首个共同交易日。`
+          : `${item.symbol} and ${item.underlying} are rebased to 100 on an adjusted total-return basis from the first shared trading day after ${item.symbol} launched.`;
+
+        mount.innerHTML = `
+          <div class="trend-block compare-chart-panel">
+            <div class="compare-chart-head">
+              <div>
+                <span class="trend-label">${labels[lang].rexCompareTitle}</span>
+                <p class="compare-chart-copy">${compareCopy}</p>
+              </div>
+              <div class="compare-chart-meta">
+                <span class="trend-source">${labels[lang].compareChartBase}: ${labels[lang].rexCompareBase}</span>
+                <span class="trend-source">${labels[lang].compareChartStart}: ${formatDayDate(anchorTs, lang)}</span>
+                <span class="trend-source">${labels[lang].compareChartLatest}: ${formatDayDate(latestTs, lang)}</span>
+              </div>
+            </div>
+            <div class="compare-chart-board">
+              ${buildCompareChartSvg(normalized, lang)}
+            </div>
+            <div class="compare-chart-legend">
+              ${normalized.map((series) => `
+                <div class="compare-chart-item" style="--line-color:${series.color}">
+                  <div class="compare-chart-item-top">
+                    <span class="compare-chart-name">
+                      <span class="compare-chart-swatch"></span>
+                      ${series.symbol}
+                    </span>
+                    <strong>${formatIndexValue(series.normalizedLatest, 1)}</strong>
+                  </div>
+                  <div class="compare-chart-stat">
+                    <span>${labels[lang].compareChartPeriodReturn}</span>
+                    <strong>${formatSignedPct(series.periodReturnPct)}</strong>
+                  </div>
+                  <div class="compare-chart-stat">
+                    <span>${labels[lang].compareChartStart}</span>
+                    <strong>${formatDayDate(series.startTs, lang)}</strong>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+            <div class="trend-source warn">${labels[lang].rexCompareShort}</div>
+            <div class="trend-meta">${labels[lang].trendTimeliness}</div>
+          </div>
+        `;
+      } catch (error) {
+        if (requestId !== rexChartRequestId) return;
+        mount.innerHTML = rexChartError(lang);
+      }
+    }
+
+    function renderRexSection(lang, requestId) {
+      const section = document.getElementById("rex-section");
+      const content = document.getElementById("rex-content");
+      if (!section || !content) return false;
+      const visible = rexSectionVisible();
+      section.hidden = !visible;
+      if (!visible) {
+        content.innerHTML = "";
+        return false;
+      }
+      const item = selectedRexEtf();
+      selectedRexSymbol = item.symbol;
+      renderRexSelector(lang);
+      content.innerHTML = `
+        ${rexOverviewTemplate(item, lang)}
+        <div class="rex-chart" id="rex-chart"></div>
+      `;
+      renderRexChart(lang, item, requestId);
+      return true;
+    }
+
     async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0) {
       if (!symbol) return null;
       const cacheKey = trendCacheKey(symbol, interval, fromTs);
@@ -3583,7 +4115,9 @@
         renderCompareSection(lang, config);
         renderCompareChart(lang, config, compareRequestId);
       });
-      const totalMatches = renderSections(lang);
+      const rexRequestId = ++rexChartRequestId;
+      const rexVisible = renderRexSection(lang, rexRequestId);
+      const totalMatches = renderSections(lang) + (rexVisible ? 1 : 0);
       renderFilterMeta(lang, totalMatches);
       hydrateTrendBlocks(lang);
       hydrateIncomeTableRows(lang);
