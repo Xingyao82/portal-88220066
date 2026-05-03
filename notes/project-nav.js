@@ -42,10 +42,7 @@
     if (!nav) return;
     const activeKey = currentKey(window.location.pathname);
     const currentLang = lang();
-    const items = NAV_ITEMS.filter((item) => {
-      if (!["optionsIncomeCompare", "etfCompare"].includes(item.key)) return true;
-      return ["finance", "income", "optionsIncomeCompare", "etfCompare"].includes(activeKey);
-    });
+    const items = NAV_ITEMS;
 
     nav.innerHTML = items.map((item) => {
       const activeClass = item.key === activeKey ? ' class="active"' : "";
