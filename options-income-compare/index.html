@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Income 导航 | 88220066.xyz</title>
-  <meta name="description" content="整理中国和美国市场里偏 income 的 ETF，按红利、债券、REITs 和期权增强分区。">
+  <title>期权 Income 对比台 | 88220066.xyz</title>
+  <meta name="description" content="把期权 income ETF 和对应标的放在同一张复权总回报图里比较。">
   <meta name="theme-color" content="#0f172a">
   <script src="../notes/site-i18n.js"></script>
   <style>
@@ -1065,12 +1065,12 @@
 <body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
   <div class="shell">
     <header class="nav">
-      <div class="brand" id="brand">88220066.xyz / Income 导航</div>
+      <div class="brand" id="brand">88220066.xyz / 期权 Income 对比台</div>
       <nav class="nav-links" aria-label="Primary">
         <a href="/ai-nav/">AI 导航</a>
         <a href="/finance-nav/">金融导航</a>
-        <a href="/income-nav/" class="active">Income 导航</a>
-        <a href="/options-income-compare/">期权 Income 对比台</a>
+        <a href="/income-nav/">Income 导航</a>
+        <a href="/options-income-compare/" class="active">期权 Income 对比台</a>
         <a href="/etf-compare/">ETF 对比</a>
         <a href="/free-api-nav/">API 导航</a>
         <a href="/tools-nav/">工具导航</a>
@@ -1080,128 +1080,45 @@
     </header>
 
     <section class="hero">
-      <div class="eyebrow" data-i18n="eyebrow">INCOME ETF</div>
-      <h1 data-i18n="heroTitle">Income 导航</h1>
+      <div class="eyebrow" data-i18n="eyebrow">OPTIONS INCOME</div>
+      <h1 data-i18n="heroTitle">期权 Income 对比台</h1>
+      <p class="hero-copy" data-i18n="heroCopy">选择一只期权 income ETF，直接和它对应的指数、股票、黄金、白银、铜矿或短债参照放在同一张复权总回报图里看。</p>
       <div class="summary-grid" id="stats"></div>
-      <div class="view-presets" id="view-presets" aria-label="View presets"></div>
-      <div class="preset-note" id="preset-note"></div>
-      <div class="active-summary" id="active-summary"></div>
-      <div class="share-row">
-        <button class="share-button" id="copy-view-link" type="button" data-i18n="copyLinkButton">复制当前视图链接</button>
-        <button class="share-button" id="reset-view" type="button" data-i18n="resetViewButton">重置筛选</button>
-        <span class="share-status" id="copy-view-status"></span>
-      </div>
-      <div class="filter-panel">
-        <div class="filter-row">
-          <div class="filter-label" data-i18n="scopeTitle">范围</div>
-          <div class="filter-group" id="scope-filters" aria-label="Scope filters"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label" data-i18n="styleFilterTitle">结构</div>
-          <div class="filter-group" id="style-filters" aria-label="Style filters"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label" data-i18n="roleFilterTitle">组合定位</div>
-          <div class="filter-group" id="role-filters" aria-label="Role filters"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label" data-i18n="sortFilterTitle">排序</div>
-          <div class="filter-group" id="sort-filters" aria-label="Sort filters"></div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-label" data-i18n="displayModeTitle">显示</div>
-          <div class="filter-group" id="display-filters" aria-label="Display filters"></div>
-        </div>
-        <div class="filter-help" id="filter-help"></div>
-      </div>
     </section>
 
-    <div class="empty-state" id="filter-empty"></div>
-
-    <section class="section income-table-section" id="income-table-section">
+    <section class="section" id="income-lab-section">
       <div class="section-head">
         <div>
-          <h2 data-i18n="incomeTableTitle">Income 对比表</h2>
-          <p data-i18n="incomeTableCopy">把当前筛选结果压成表格，先扫结构、定位、总回报、年化和成立时长。</p>
+          <h2 data-i18n="incomeLabTitle">期权 Income 对比台</h2>
+          <p data-i18n="incomeLabCopy">把 equity high income、boosted high income、alternative income、hedged equity income 和 REX 单股 income 集中到一个选择器里，直接看 ETF 和它该对照的底层基准。</p>
         </div>
-        <div class="section-badge" id="income-table-count"></div>
+        <div class="section-badge" data-i18n="incomeLabBadge">Options income / ETF vs benchmark</div>
       </div>
-      <div class="income-table-wrap">
-        <table class="income-table">
-          <thead id="income-table-head"></thead>
-          <tbody id="income-table-body"></tbody>
-        </table>
+      <div class="rex-panel">
+        <div class="rex-selector" id="income-lab-selector" aria-label="Options income ETF selector"></div>
+        <div class="rex-content" id="income-lab-content"></div>
       </div>
     </section>
 
-    <section class="section" id="china-section">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="chinaTitle">中国 Income ETF</h2>
-          <p data-i18n="chinaCopy">更偏防守型 income，先看红利和债券 ETF。</p>
-        </div>
-        <div class="section-badge" data-i18n="chinaBadge">中国 / 红利 + 债券</div>
-      </div>
-      <div class="grid" id="china-grid"></div>
-    </section>
-
-    <section class="section" id="us-section">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="usTitle">美国 Income ETF</h2>
-          <p data-i18n="usCopy">美国这块选择更全，适合把 dividend、covered call、REITs 和 bond 放一起比较。</p>
-        </div>
-        <div class="section-badge" data-i18n="usBadge">US / dividend + options + REITs + bonds</div>
-      </div>
-      <div class="grid" id="us-grid"></div>
-    </section>
-
-    <section class="section" id="advanced-section">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="advancedTitle">高收益 / 期权 Income</h2>
-          <p data-i18n="advancedCopy">这组更偏 weekly、0DTE、single-stock covered call 和 provider 入口，收益看起来更猛，但结构也更复杂。</p>
-        </div>
-        <div class="section-badge" data-i18n="advancedBadge">Advanced / options + weekly + single-stock</div>
-      </div>
-      <div class="grid" id="advanced-grid"></div>
-      <div class="subgroup high-risk" id="watch-subgroup" hidden>
-        <div class="subgroup-head">
-          <div>
-            <h3 id="watch-group-title" data-i18n="watchGroupTitle">高波动观察</h3>
-            <p data-i18n="watchGroupCopy">这组收益叙事更猛，但波动和净值侵蚀也更直接，适合单独看，不要和普通 options-income 混读。</p>
-          </div>
-          <div class="subgroup-risk" data-i18n="watchRiskBadge">高波动 / 高回撤风险</div>
-        </div>
-        <div class="grid" id="watch-grid"></div>
-      </div>
-    </section>
-
-    <section class="section" id="research-section">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="researchTitle">Income 研究与筛选</h2>
-          <p data-i18n="researchCopy">这组不是直接买的 ETF，而是拿来查分红节奏、收益率筛选、周配月配和 provider 动态的工具入口。</p>
-        </div>
-        <div class="section-badge" data-i18n="researchBadge">Research / screener + calendar + rankings</div>
-      </div>
-      <div class="grid" id="research-grid"></div>
-    </section>
   </div>
 
   <script>
     const pageCopy = {
-      pageTitle: { zh: "Income 导航 | 88220066.xyz", en: "Income Nav | 88220066.xyz" },
+      pageTitle: { zh: "期权 Income 对比台 | 88220066.xyz", en: "Options Income Compare Desk | 88220066.xyz" },
       pageDescription: {
-        zh: "整理中国和美国市场里偏 income 的 ETF，按红利、债券、REITs 和期权增强分区。",
-        en: "A curated list of income-oriented ETFs across China and the U.S., split into dividend, bonds, REITs, and option-income styles."
+        zh: "把期权 income ETF 和对应标的放在同一张复权总回报图里比较。",
+        en: "Compare options-income ETFs against their matching benchmarks on adjusted total-return charts."
       },
       navAi: { zh: "AI 导航", en: "AI Nav" },
       navFinance: { zh: "金融导航", en: "Finance" },
       navIncome: { zh: "Income 导航", en: "Income" },
       navTools: { zh: "工具导航", en: "Tools" },
-      eyebrow: { zh: "INCOME ETF", en: "INCOME ETF" },
-      heroTitle: { zh: "Income 导航", en: "Income Nav" },
+      eyebrow: { zh: "OPTIONS INCOME", en: "OPTIONS INCOME" },
+      heroTitle: { zh: "期权 Income 对比台", en: "Options Income Compare Desk" },
+      heroCopy: {
+        zh: "选择一只期权 income ETF，直接和它对应的指数、股票、黄金、白银、铜矿或短债参照放在同一张复权总回报图里看。",
+        en: "Pick an options-income ETF and compare it directly with its matching index, stock, gold, silver, copper miners, or short-duration reference."
+      },
       scopeTitle: { zh: "范围", en: "Scope" },
       styleFilterTitle: { zh: "结构", en: "Structure" },
       roleFilterTitle: { zh: "组合定位", en: "Portfolio role" },
@@ -1275,7 +1192,7 @@
 
     const labels = {
       zh: {
-        brand: "88220066.xyz / Income 导航",
+        brand: "88220066.xyz / 期权 Income 对比台",
         open: "打开",
         trendTitle: "复权后总走势",
         trendLoading: "正在加载成立以来复权走势",
@@ -1320,10 +1237,10 @@
         hubCopy: "这张卡不是单只 ETF 的复权走势，而是留作 provider 入口，适合继续点进去看新品、规则和产品线扩展。",
         hubFocus: "适合用来追踪新产品和发行方向。",
         stats: [
-          ["市场", "中国 + 美国"],
-          ["类型", "红利、债券、REITs、preferred、期权增强"],
-          ["使用方式", "先按结构筛，再自己看持仓、分配和税务规则"],
-          ["提醒", "income 不等于低波，更不等于保本"]
+          ["范围", "JEPI、JEPQ、NEOS、Goldman、REX、Kurv、YieldMax"],
+          ["对照", "指数、单股、贵金属、铜矿、短债"],
+          ["口径", "复权后总回报，统一归一到 100"],
+          ["提醒", "先看净值路径，不只看分配率"]
         ],
         typeLabel: "类型",
         marketLabel: "市场",
@@ -1404,7 +1321,7 @@
         filterEmpty: "这个筛选组合下还没有匹配项，先切回全部或换一个组合定位。"
       },
       en: {
-        brand: "88220066.xyz / Income Nav",
+        brand: "88220066.xyz / Options Income",
         open: "Open",
         trendTitle: "Adjusted total-return chart",
         trendLoading: "Loading adjusted total-return since inception",
@@ -1449,10 +1366,10 @@
         hubCopy: "This card is a provider entry point rather than a single-ETF total-return view, so use it to inspect new launches, structures, and lineup changes.",
         hubFocus: "Useful for tracking new launches and product direction.",
         stats: [
-          ["Markets", "China + U.S."],
-          ["Styles", "Dividend, bonds, REITs, preferreds, option income"],
-          ["Use", "Filter by structure first, then inspect holdings, distributions, and tax rules"],
-          ["Reminder", "Income is not the same as low volatility or principal safety"]
+          ["Scope", "JEPI, JEPQ, NEOS, Goldman, REX, Kurv, YieldMax"],
+          ["Benchmarks", "Indexes, single stocks, metals, copper miners, short-duration"],
+          ["Basis", "Adjusted total return, rebased to 100"],
+          ["Reminder", "Read NAV path first, not distribution rate alone"]
         ],
         typeLabel: "Type",
         marketLabel: "Market",
@@ -3787,10 +3704,7 @@
     }
 
     function incomeLabSectionVisible() {
-      if (filterState.display === "table" || isResearchMode()) return false;
-      const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
-      const styleOk = ["all", "option"].includes(filterState.style);
-      return scopeOk && styleOk;
+      return true;
     }
 
     function renderIncomeLabSelector(lang) {
@@ -4442,18 +4356,8 @@
           <strong>${value}</strong>
         </div>
       `).join("");
-      renderFilterButtons(lang);
-      const compareRequestId = ++compareChartRequestId;
-      compareBlocks.forEach((config) => {
-        renderCompareSection(lang, config);
-        renderCompareChart(lang, config, compareRequestId);
-      });
-      const totalMatches = renderSections(lang);
-      renderFilterMeta(lang, totalMatches);
-      hydrateTrendBlocks(lang);
-      hydrateIncomeTableRows(lang);
-      writeUrlState();
-      if (!options.skipWarm) warmVisibleTrendData(lang);
+      const incomeLabRequestId = ++incomeLabChartRequestId;
+      renderIncomeLabSection(lang, incomeLabRequestId);
     }
 
     applyUrlState();
