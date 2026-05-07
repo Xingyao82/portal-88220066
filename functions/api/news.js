@@ -23,6 +23,16 @@ const SOURCES = [
     url: "https://finance.yahoo.com/news/rssindex"
   },
   {
+    category: "usmarket",
+    source: "MarketWatch Markets",
+    url: "https://feeds.content.dowjones.io/public/rss/mw_marketpulse"
+  },
+  {
+    category: "usmarket",
+    source: "CNBC Markets",
+    url: "https://www.cnbc.com/id/15839135/device/rss/rss.html"
+  },
+  {
     category: "tech",
     source: "The Verge",
     url: "https://www.theverge.com/rss/index.xml"
@@ -41,6 +51,16 @@ const SOURCES = [
     category: "income",
     source: "ETF.com",
     url: "https://www.etf.com/feeds/news"
+  },
+  {
+    category: "etf",
+    source: "ETF Trends",
+    url: "https://www.etftrends.com/feed/"
+  },
+  {
+    category: "etf",
+    source: "ETF Trends ETF Building Blocks",
+    url: "https://www.etftrends.com/category/etf-building-blocks-channel/feed/"
   },
   {
     category: "ai",
@@ -62,14 +82,27 @@ const SOURCES = [
     source: "GitHub Blog",
     url: "https://github.blog/feed/"
   },
+  {
+    category: "chinafinance",
+    source: "Google News China Finance",
+    url: "https://news.google.com/rss/search?q=%E4%B8%AD%E5%9B%BD%20%E8%B4%A2%E7%BB%8F%20%E8%82%A1%E5%B8%82&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+  },
+  {
+    category: "chinafinance",
+    source: "Google News China Macro",
+    url: "https://news.google.com/rss/search?q=%E4%B8%AD%E5%9B%BD%20%E7%BB%8F%E6%B5%8E%20%E9%87%91%E8%9E%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+  },
 ];
 
 const CATEGORY_LABELS = {
   finance: { zh: "财经", en: "Finance" },
+  usmarket: { zh: "美股市场", en: "U.S. Markets" },
   tech: { zh: "科技", en: "Tech" },
   income: { zh: "Income", en: "Income" },
+  etf: { zh: "ETF / 基金", en: "ETF / Funds" },
   ai: { zh: "AI", en: "AI" },
-  github: { zh: "GitHub 热门", en: "GitHub Hot" }
+  github: { zh: "GitHub 热门", en: "GitHub Hot" },
+  chinafinance: { zh: "中国财经", en: "China Finance" }
 };
 
 function decodeEntities(value = "") {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新闻 | 88220066.xyz</title>
-  <meta name="description" content="自动更新财经、科技、Income、AI 和 GitHub 热门新闻。">
+  <meta name="description" content="自动更新财经、美股市场、ETF / 基金、中国财经、科技、Income、AI 和 GitHub 热门新闻。">
   <meta name="theme-color" content="#f8fafc">
   <script src="../notes/site-i18n.js"></script>
   <style>
@@ -207,8 +207,8 @@
     const pageCopy = {
       pageTitle: { zh: "新闻 | 88220066.xyz", en: "News | 88220066.xyz" },
       pageDescription: {
-        zh: "自动更新财经、科技、Income、AI 和 GitHub 热门新闻。",
-        en: "Auto-updated finance, tech, income, AI, and GitHub news."
+        zh: "自动更新财经、美股市场、ETF / 基金、中国财经、科技、Income、AI 和 GitHub 热门新闻。",
+        en: "Auto-updated finance, U.S. markets, ETF / funds, China finance, tech, income, AI, and GitHub news."
       },
       heroTitle: { zh: "新闻", en: "News" },
       leadTitle: { zh: "最新重点", en: "Latest" },
@@ -237,9 +237,12 @@
     };
 
     const LEAD_COUNT = 4;
-    const categoryOrder = ["all", "finance", "tech", "income", "ai", "github"];
+    const categoryOrder = ["all", "finance", "usmarket", "etf", "chinafinance", "tech", "income", "ai", "github"];
     const fallbackCategories = {
       finance: { zh: "财经", en: "Finance" },
+      usmarket: { zh: "美股市场", en: "U.S. Markets" },
+      etf: { zh: "ETF / 基金", en: "ETF / Funds" },
+      chinafinance: { zh: "中国财经", en: "China Finance" },
       tech: { zh: "科技", en: "Tech" },
       income: { zh: "Income", en: "Income" },
       ai: { zh: "AI", en: "AI" },
