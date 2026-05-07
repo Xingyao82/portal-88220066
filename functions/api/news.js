@@ -344,10 +344,14 @@ async function fetchFreshNews(env, category) {
   const selectedSources = SOURCES.filter((source) => category === "all" || source.category === category);
   const sourceResults = await Promise.all(selectedSources.map(fetchSource));
   const items = uniqueByUrl(sourceResults.flatMap((result) => result.items));
-  const itemsForArchive = env.AI
-    ? await Promise.all(items.slice(0, TRANSLATE_LIMIT_PER_REQUEST).map((item) => translateItem(env, item)))
-    : items;
-  return { sourceResults, items: itemsForArchive };
+  if (!env.AI) return { sourceResults, items };
+
+  const translated = await Promise.all(items.slice(0, TRANSLATE_LIMIT_PER_REQUEST).map((item) => translateItem(env, item)));
+  const translatedById = new Map(translated.map((item) => [item.id, item]));
+  return {
+    sourceResults,
+    items: items.map((item) => translatedById.get(item.id) || item)
+  };
 }
 
 export async function onRequestGet(context) {
