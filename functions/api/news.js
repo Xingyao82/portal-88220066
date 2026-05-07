@@ -3,7 +3,10 @@ const DEFAULT_HEADERS = {
   Accept: "application/rss+xml, application/xml, text/xml, application/json, text/plain"
 };
 
-const MAX_ITEMS_PER_SOURCE = 18;
+const DEFAULT_ITEMS_PER_SOURCE = 18;
+const SOURCE_ITEM_LIMITS = {
+  chinafinance: 36
+};
 const MAX_AGE_DAYS = 90;
 const CACHE_SECONDS = 900;
 const ARCHIVE_REFRESH_MS = 15 * 60 * 1000;
@@ -102,6 +105,26 @@ const SOURCES = [
     source: "Google News China Macro",
     url: "https://news.google.com/rss/search?q=%E4%B8%AD%E5%9B%BD%20%E7%BB%8F%E6%B5%8E%20%E9%87%91%E8%9E%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
   },
+  {
+    category: "chinafinance",
+    source: "Google News A/H Shares",
+    url: "https://news.google.com/rss/search?q=A%E8%82%A1%20%E6%B8%AF%E8%82%A1%20%E4%B8%AD%E5%9B%BD%E8%82%A1%E5%B8%82&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+  },
+  {
+    category: "chinafinance",
+    source: "Google News China ETF Funds",
+    url: "https://news.google.com/rss/search?q=%E4%B8%AD%E5%9B%BD%20ETF%20%E5%9F%BA%E9%87%91%20%E5%80%BA%E5%88%B8&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+  },
+  {
+    category: "chinafinance",
+    source: "Google News China Finance Media",
+    url: "https://news.google.com/rss/search?q=%E8%B4%A2%E6%96%B0%20OR%20%E7%AC%AC%E4%B8%80%E8%B4%A2%E7%BB%8F%20OR%20%E8%B4%A2%E8%81%94%E7%A4%BE&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+  },
+  {
+    category: "chinafinance",
+    source: "Xinhua Finance",
+    url: "http://www.news.cn/fortune/news_fortune.xml"
+  },
 ];
 
 const CATEGORY_LABELS = {
@@ -170,8 +193,9 @@ function normalizeDate(raw) {
 }
 
 function parseFeed(xml, sourceConfig) {
+  const itemLimit = SOURCE_ITEM_LIMITS[sourceConfig.category] || DEFAULT_ITEMS_PER_SOURCE;
   return itemBlocks(xml)
-    .slice(0, MAX_ITEMS_PER_SOURCE)
+    .slice(0, itemLimit)
     .map((block) => {
       const title = textBetween(block, "title");
       const link = textBetween(block, "link") || attrValue(block, "link", "href");
