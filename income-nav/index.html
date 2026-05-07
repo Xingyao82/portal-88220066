@@ -1355,6 +1355,7 @@
         compareChartShort: "XQQI 样本还很短，这里只看这段实际跑出来的净值差异，不下长期结论。",
         incomeLabCurrent: "当前产品",
         incomeLabUnderlying: "对照基准",
+        incomeLabFee: "手续费",
         incomeLabStructure: "结构",
         incomeLabWatch: "优先观察",
         incomeLabOfficialFund: "打开产品官网",
@@ -1491,6 +1492,7 @@
         compareChartShort: "XQQI still has a very short track record, so use this to read the live sample rather than make a long-term claim.",
         incomeLabCurrent: "Current product",
         incomeLabUnderlying: "Benchmark",
+        incomeLabFee: "Expense ratio",
         incomeLabStructure: "Structure",
         incomeLabWatch: "Watch first",
         incomeLabOfficialFund: "Open product page",
@@ -3344,6 +3346,35 @@
     let selectedIncomeLabSymbol = DEFAULT_INCOME_LAB_SYMBOL;
     let selectedIncomeLabBasis = DEFAULT_INCOME_LAB_BASIS;
     let activeLang = "zh";
+    const incomeLabExpenseRatios = {
+      JEPI: "0.35%",
+      JEPQ: "0.35%",
+      QYLD: "0.60%",
+      DIVO: "0.56%",
+      SPYI: "0.68%",
+      GPIX: "0.29%",
+      XSPI: "0.68%",
+      QQQI: "0.68%",
+      GPIQ: "0.29%",
+      XQQI: "0.68%",
+      ISPY: "0.55%",
+      XDTE: "0.79%",
+      TSPY: "0.55%",
+      MSFY: "0.99%",
+      KQQQ: "0.99%",
+      KYLD: "1.00%",
+      KGLD: "1.00%",
+      KSLV: "1.00%",
+      KCOP: "0.99%",
+      AMZP: "0.99%",
+      AAPY: "0.99%",
+      GOOP: "0.99%",
+      NFLP: "0.99%",
+      TSLP: "0.99%",
+      TSLY: "0.99%",
+      MSTY: "0.99%",
+      YMAX: "1.28%"
+    };
 
     const sectionConfigs = [
       { key: "china", sectionId: "china-section", gridId: "china-grid", items: chinaEtfs },
@@ -4098,6 +4129,7 @@
       const benchmarkText = item.benchmark
         ? `${item.benchmark} / ${item.benchmarkName[lang]}`
         : item.benchmarkName[lang];
+      const expenseRatio = item.expenseRatio || incomeLabExpenseRatios[item.symbol] || "";
       return `
         <article class="rex-overview" style="--card-accent:${item.accent}">
           <div>
@@ -4109,6 +4141,12 @@
               <span>${labels[lang].incomeLabUnderlying}</span>
               <strong>${benchmarkText}</strong>
             </div>
+            ${expenseRatio ? `
+              <div class="rex-fact">
+                <span>${labels[lang].incomeLabFee}</span>
+                <strong>${expenseRatio}</strong>
+              </div>
+            ` : ""}
             <div class="rex-fact">
               <span>${labels[lang].incomeLabStructure}</span>
               <strong>${item.structure[lang]}</strong>
