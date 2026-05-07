@@ -435,6 +435,33 @@
       gap: 8px;
     }
 
+    .rex-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .income-basis-toggle {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    .income-basis-toggle .filter-chip {
+      margin: 0;
+    }
+
+    .rex-selector-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .rex-content {
       display: grid;
       grid-template-columns: minmax(260px, 0.86fr) minmax(0, 1.42fr);
@@ -1208,6 +1235,7 @@
         trendSourceLabel: "口径",
         trendSourceCn: "东财累计净值",
         trendSourceUs: "Yahoo adjusted close",
+        trendSourceUsPrice: "Yahoo close",
         trendTimeliness: "一般会跟到最近一个交易日，免费源偶尔会慢一拍。",
         trendYoungFund: "样本还短，年化参考意义有限。",
         trendRiskHot: "高波动 income，别只看分配率。",
@@ -1231,6 +1259,12 @@
         incomeLabCompareError: "暂时没取到这组 ETF / 基准对比日线",
         incomeLabCompareBase: "复权后总回报，ETF 上市后的首个共同交易日 = 100",
         incomeLabCompareShort: "先看真实净值路径，不把短期分配率当长期收益。",
+        incomeLabBasisAdjusted: "复权",
+        incomeLabBasisPrice: "不复权",
+        incomeLabCompareBaseAdjusted: "复权后总回报，ETF 上市后的首个共同交易日 = 100",
+        incomeLabCompareBasePrice: "不复权收盘价，ETF 上市后的首个共同交易日 = 100",
+        incomeLabCompareShortAdjusted: "先看真实净值路径，不把短期分配率当长期收益。",
+        incomeLabCompareShortPrice: "不复权只看价格路径，会忽略分红再投入和拆分调整。",
         incomeLabNoCompareTitle: "这个产品没有单一可比基准",
         incomeLabNoCompareCopy: "它更像打包型 income 产品，不能硬塞成单一股票或单一指数对比。先看官网结构和成立后复权走势。",
         hubTitle: "平台入口",
@@ -1238,8 +1272,8 @@
         hubFocus: "适合用来追踪新产品和发行方向。",
         stats: [
           ["范围", "JEPI、JEPQ、NEOS、Goldman、REX、Kurv、YieldMax"],
-          ["对照", "指数、单股、贵金属、铜矿、短债"],
-          ["口径", "复权后总回报，统一归一到 100"],
+          ["排序", "SPY 底层、QQQ 底层、其它资产"],
+          ["口径", "可切换复权 / 不复权"],
           ["提醒", "先看净值路径，不只看分配率"]
         ],
         typeLabel: "类型",
@@ -1337,6 +1371,7 @@
         trendSourceLabel: "Source",
         trendSourceCn: "Eastmoney accumulated NAV",
         trendSourceUs: "Yahoo adjusted close",
+        trendSourceUsPrice: "Yahoo close",
         trendTimeliness: "Usually up to the latest trading day, though free sources can lag a bit.",
         trendYoungFund: "Short track record, so annualized return needs extra caution.",
         trendRiskHot: "High-vol income product. Do not judge it by yield alone.",
@@ -1360,6 +1395,12 @@
         incomeLabCompareError: "Could not load this ETF / benchmark comparison right now",
         incomeLabCompareBase: "Adjusted total return, first shared trading day after ETF launch = 100",
         incomeLabCompareShort: "Read the realized NAV path first; do not treat short-term distribution rate as long-term return.",
+        incomeLabBasisAdjusted: "Adjusted",
+        incomeLabBasisPrice: "Price",
+        incomeLabCompareBaseAdjusted: "Adjusted total return, first shared trading day after ETF launch = 100",
+        incomeLabCompareBasePrice: "Unadjusted close, first shared trading day after ETF launch = 100",
+        incomeLabCompareShortAdjusted: "Read the realized NAV path first; do not treat short-term distribution rate as long-term return.",
+        incomeLabCompareShortPrice: "Price mode ignores distribution reinvestment and split adjustments.",
         incomeLabNoCompareTitle: "No single clean benchmark",
         incomeLabNoCompareCopy: "This is a packaged income product, so forcing it against one stock or index would be misleading. Start with structure and live adjusted return.",
         hubTitle: "Provider hub",
@@ -1367,8 +1408,8 @@
         hubFocus: "Useful for tracking new launches and product direction.",
         stats: [
           ["Scope", "JEPI, JEPQ, NEOS, Goldman, REX, Kurv, YieldMax"],
-          ["Benchmarks", "Indexes, single stocks, metals, copper miners, short-duration"],
-          ["Basis", "Adjusted total return, rebased to 100"],
+          ["Order", "SPY first, QQQ second, then other assets"],
+          ["Basis", "Adjusted / price-only toggle"],
           ["Reminder", "Read NAV path first, not distribution rate alone"]
         ],
         typeLabel: "Type",
@@ -3153,6 +3194,7 @@
     const DEFAULT_TREND_INTERVAL = "1mo";
     const COMPARE_TREND_INTERVAL = "1d";
     const DEFAULT_INCOME_LAB_SYMBOL = "JEPI";
+    const DEFAULT_INCOME_LAB_BASIS = "adjusted";
     const OPTIONS_COMPARE_SYMBOLS = new Set(optionsIncomeCompareEtfs.map((item) => item.symbol));
     const trendCache = new Map();
     const trendDataCache = new Map();
@@ -3163,6 +3205,7 @@
     let copyStatusTimer = null;
     const filterState = { scope: "all", style: "all", role: "all", sort: "default", display: "cards", preset: "default" };
     let selectedIncomeLabSymbol = DEFAULT_INCOME_LAB_SYMBOL;
+    let selectedIncomeLabBasis = DEFAULT_INCOME_LAB_BASIS;
     let activeLang = "zh";
 
     const sectionConfigs = [
@@ -3228,6 +3271,8 @@
       if (displayOptions.some((option) => option.key === params.get("display"))) next.display = params.get("display");
       const focus = (params.get("focus") || "").trim().toUpperCase();
       if (optionsIncomeCompareEtfs.some((item) => item.symbol === focus)) next.focus = focus;
+      const basis = (params.get("basis") || "").trim().toLowerCase();
+      if (["adjusted", "price"].includes(basis)) next.basis = basis;
       return next;
     }
 
@@ -3242,6 +3287,7 @@
       if (next.sort) filterState.sort = next.sort;
       if (next.display) filterState.display = next.display;
       if (next.focus) selectedIncomeLabSymbol = next.focus;
+      if (next.basis) selectedIncomeLabBasis = next.basis;
       syncPresetFromFilters();
     }
 
@@ -3290,6 +3336,7 @@
       if (filterState.sort !== "default") params.set("sort", filterState.sort);
       if (filterState.display !== "cards") params.set("display", filterState.display);
       if (selectedIncomeLabSymbol !== DEFAULT_INCOME_LAB_SYMBOL) params.set("focus", selectedIncomeLabSymbol);
+      if (selectedIncomeLabBasis !== DEFAULT_INCOME_LAB_BASIS) params.set("basis", selectedIncomeLabBasis);
       const query = params.toString();
       const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
       window.history.replaceState(null, "", nextUrl);
@@ -3331,8 +3378,8 @@
       return Number(value.toFixed(digits)).toFixed(digits);
     }
 
-    function trendCacheKey(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0) {
-      return `${symbol}::${interval}::${fromTs || 0}`;
+    function trendCacheKey(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0, basis = DEFAULT_INCOME_LAB_BASIS) {
+      return `${symbol}::${interval}::${fromTs || 0}::${basis}`;
     }
 
     function getCachedTrend(symbol, interval = DEFAULT_TREND_INTERVAL) {
@@ -3824,6 +3871,22 @@
       return optionsIncomeCompareEtfs.find((item) => item.symbol === selectedIncomeLabSymbol) || optionsIncomeCompareEtfs.find((item) => item.symbol === DEFAULT_INCOME_LAB_SYMBOL) || optionsIncomeCompareEtfs[0];
     }
 
+    function incomeLabRank(item) {
+      if (item.benchmark === "SPY") return 0;
+      if (item.benchmark === "QQQ") return 1;
+      return 2;
+    }
+
+    function sortedIncomeLabEtfs() {
+      return optionsIncomeCompareEtfs
+        .map((item, index) => ({ item, index }))
+        .sort((left, right) => {
+          const rankDiff = incomeLabRank(left.item) - incomeLabRank(right.item);
+          return rankDiff || left.index - right.index;
+        })
+        .map((entry) => entry.item);
+    }
+
     function incomeLabSectionVisible() {
       return true;
     }
@@ -3831,13 +3894,29 @@
     function renderIncomeLabSelector(lang) {
       const mount = document.getElementById("income-lab-selector");
       if (!mount) return;
-      mount.innerHTML = optionsIncomeCompareEtfs.map((item) => {
-        const active = item.symbol === selectedIncomeLabSymbol ? " active" : "";
-        return `<button class="filter-chip${active}" type="button" data-income-lab-symbol="${item.symbol}" title="${item.name}">${item.symbol}</button>`;
-      }).join("");
+      mount.innerHTML = `
+        <div class="rex-toolbar">
+          <div class="rex-selector-list">
+            ${sortedIncomeLabEtfs().map((item) => {
+              const active = item.symbol === selectedIncomeLabSymbol ? " active" : "";
+              return `<button class="filter-chip${active}" type="button" data-income-lab-symbol="${item.symbol}" title="${item.name}">${item.symbol}</button>`;
+            }).join("")}
+          </div>
+          <div class="income-basis-toggle" aria-label="Return basis">
+            <button class="filter-chip${selectedIncomeLabBasis === "adjusted" ? " active" : ""}" type="button" data-income-lab-basis="adjusted">${labels[lang].incomeLabBasisAdjusted}</button>
+            <button class="filter-chip${selectedIncomeLabBasis === "price" ? " active" : ""}" type="button" data-income-lab-basis="price">${labels[lang].incomeLabBasisPrice}</button>
+          </div>
+        </div>
+      `;
       mount.querySelectorAll("[data-income-lab-symbol]").forEach((button) => {
         button.addEventListener("click", () => {
           selectedIncomeLabSymbol = button.getAttribute("data-income-lab-symbol") || DEFAULT_INCOME_LAB_SYMBOL;
+          renderPage(lang);
+        });
+      });
+      mount.querySelectorAll("[data-income-lab-basis]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedIncomeLabBasis = button.getAttribute("data-income-lab-basis") === "price" ? "price" : "adjusted";
           renderPage(lang);
         });
       });
@@ -3921,7 +4000,7 @@
       mount.innerHTML = incomeLabChartPlaceholder(lang);
 
       try {
-        const fundTrend = await getTrend(item.symbol, COMPARE_TREND_INTERVAL);
+        const fundTrend = await getTrend(item.symbol, COMPARE_TREND_INTERVAL, 0, selectedIncomeLabBasis);
         if (requestId !== incomeLabChartRequestId) return;
         if (!fundTrend?.inceptionTs) throw new Error(`Missing ${item.symbol} inception`);
 
@@ -3930,7 +4009,7 @@
           { symbol: item.symbol, color: item.accent },
           { symbol: item.benchmark, color: item.benchmarkAccent }
         ];
-        const trends = await Promise.all(compareConfigs.map((config) => getTrend(config.symbol, COMPARE_TREND_INTERVAL, anchorTs)));
+        const trends = await Promise.all(compareConfigs.map((config) => getTrend(config.symbol, COMPARE_TREND_INTERVAL, anchorTs, selectedIncomeLabBasis)));
         if (requestId !== incomeLabChartRequestId) return;
 
         const normalized = compareConfigs
@@ -3944,8 +4023,8 @@
 
         const latestTs = Math.max(...normalized.map((series) => series.latestTs));
         const compareCopy = lang === "zh"
-          ? `${item.symbol} 和 ${item.benchmark} 都按复权后总回报归一到 100，起点取 ${item.symbol} 上市后的首个共同交易日。`
-          : `${item.symbol} and ${item.benchmark} are rebased to 100 on an adjusted total-return basis from the first shared trading day after ${item.symbol} launched.`;
+          ? `${item.symbol} 和 ${item.benchmark} 都按${selectedIncomeLabBasis === "price" ? "不复权收盘价" : "复权后总回报"}归一到 100，起点取 ${item.symbol} 上市后的首个共同交易日。`
+          : `${item.symbol} and ${item.benchmark} are rebased to 100 on a ${selectedIncomeLabBasis === "price" ? "price-only" : "total-return adjusted"} basis from the first shared trading day after ${item.symbol} launched.`;
 
         mount.innerHTML = `
           <div class="trend-block compare-chart-panel">
@@ -3955,7 +4034,7 @@
                 <p class="compare-chart-copy">${compareCopy}</p>
               </div>
               <div class="compare-chart-meta">
-                <span class="trend-source">${labels[lang].compareChartBase}: ${labels[lang].incomeLabCompareBase}</span>
+                <span class="trend-source">${labels[lang].compareChartBase}: ${selectedIncomeLabBasis === "price" ? labels[lang].incomeLabCompareBasePrice : labels[lang].incomeLabCompareBaseAdjusted}</span>
                 <span class="trend-source">${labels[lang].compareChartStart}: ${formatDayDate(anchorTs, lang)}</span>
                 <span class="trend-source">${labels[lang].compareChartLatest}: ${formatDayDate(latestTs, lang)}</span>
               </div>
@@ -3984,7 +4063,7 @@
                 </div>
               `).join("")}
             </div>
-            <div class="trend-source warn">${labels[lang].incomeLabCompareShort}</div>
+            <div class="trend-source warn">${selectedIncomeLabBasis === "price" ? labels[lang].incomeLabCompareShortPrice : labels[lang].incomeLabCompareShortAdjusted}</div>
             <div class="trend-meta">${labels[lang].trendTimeliness}</div>
           </div>
         `;
@@ -4015,15 +4094,16 @@
       return true;
     }
 
-    async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0) {
+    async function getTrend(symbol, interval = DEFAULT_TREND_INTERVAL, fromTs = 0, basis = DEFAULT_INCOME_LAB_BASIS) {
       if (!symbol) return null;
-      const cacheKey = trendCacheKey(symbol, interval, fromTs);
+      const cacheKey = trendCacheKey(symbol, interval, fromTs, basis);
       if (!trendCache.has(cacheKey)) {
         const params = new URLSearchParams({
           symbol,
           interval
         });
         if (fromTs) params.set("from", String(fromTs));
+        if (basis !== DEFAULT_INCOME_LAB_BASIS) params.set("basis", basis);
         trendCache.set(
           cacheKey,
           fetch(`/api/total-return?${params}`)
