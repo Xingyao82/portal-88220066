@@ -309,6 +309,18 @@
       color: #f59e0b;
     }
 
+    .filter-chip.negative-return {
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.5);
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .filter-chip.outperform-return {
+      color: #f59e0b;
+      border-color: rgba(245, 158, 11, 0.55);
+      background: rgba(245, 158, 11, 0.13);
+    }
+
     .compare-chart-stat span {
       color: var(--muted);
       font-size: 0.82rem;
@@ -4011,6 +4023,12 @@
         .map((entry) => entry.item);
     }
 
+    function returnStatusClass(fundReturn, benchmarkReturn) {
+      if (selectedIncomeLabBasis === "price" && Number(fundReturn) < 0) return "negative-return";
+      if (selectedIncomeLabBasis === "adjusted" && Number(fundReturn) > Number(benchmarkReturn)) return "outperform-return";
+      return "";
+    }
+
     function incomeLabSectionVisible() {
       if (filterState.display === "table" || isResearchMode()) return false;
       const scopeOk = ["all", "us", "advanced"].includes(filterState.scope);
@@ -4047,6 +4065,32 @@
           renderPage(lang);
         });
       });
+    }
+
+    async function hydrateIncomeLabSelectorStatus(requestId) {
+      const items = sortedIncomeLabEtfs().filter((item) => item.benchmark);
+      let cursor = 0;
+      const worker = async () => {
+        while (cursor < items.length) {
+          const item = items[cursor];
+          cursor += 1;
+          try {
+            const fundTrend = await getTrend(item.symbol, COMPARE_TREND_INTERVAL, 0, selectedIncomeLabBasis);
+            if (requestId !== incomeLabChartRequestId || !fundTrend?.inceptionTs) return;
+            const benchmarkTrend = await getTrend(item.benchmark, COMPARE_TREND_INTERVAL, fundTrend.inceptionTs, selectedIncomeLabBasis);
+            if (requestId !== incomeLabChartRequestId) return;
+            const statusClass = returnStatusClass(fundTrend.totalReturnPct, benchmarkTrend.totalReturnPct);
+            const button = document.querySelector(`[data-income-lab-symbol="${item.symbol}"]`);
+            if (button) {
+              button.classList.toggle("negative-return", statusClass === "negative-return");
+              button.classList.toggle("outperform-return", statusClass === "outperform-return");
+            }
+          } catch (error) {
+            return;
+          }
+        }
+      };
+      await Promise.all(Array.from({ length: Math.min(6, items.length) }, worker));
     }
 
     function incomeLabOverviewTemplate(item, lang) {
@@ -4151,13 +4195,11 @@
         const latestTs = Math.max(...normalized.map((series) => series.latestTs));
         const fundSeries = normalized.find((series) => series.symbol === item.symbol);
         const benchmarkSeries = normalized.find((series) => series.symbol === item.benchmark);
-        const fundOutperformsBenchmark = selectedIncomeLabBasis === "adjusted"
-          && fundSeries
-          && benchmarkSeries
-          && fundSeries.periodReturnPct > benchmarkSeries.periodReturnPct;
         const returnClass = (series) => {
+          if (series.symbol === item.symbol && fundSeries && benchmarkSeries) {
+            return returnStatusClass(fundSeries.periodReturnPct, benchmarkSeries.periodReturnPct);
+          }
           if (selectedIncomeLabBasis === "price" && series.periodReturnPct < 0) return "negative-return";
-          if (fundOutperformsBenchmark && series.symbol === item.symbol) return "outperform-return";
           return "";
         };
         const compareCopy = lang === "zh"
@@ -4224,6 +4266,7 @@
       const item = selectedIncomeLabEtf();
       selectedIncomeLabSymbol = item.symbol;
       renderIncomeLabSelector(lang);
+      hydrateIncomeLabSelectorStatus(requestId);
       content.innerHTML = `
         ${incomeLabOverviewTemplate(item, lang)}
         <div class="rex-chart" id="income-lab-chart"></div>
