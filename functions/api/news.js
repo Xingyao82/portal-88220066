@@ -192,6 +192,10 @@ function normalizeDate(raw) {
   return date;
 }
 
+function isChineseText(value = "") {
+  return /[\u3400-\u9fff]/.test(value);
+}
+
 function parseFeed(xml, sourceConfig) {
   const itemLimit = SOURCE_ITEM_LIMITS[sourceConfig.category] || DEFAULT_ITEMS_PER_SOURCE;
   return itemBlocks(xml)
@@ -333,6 +337,13 @@ async function translateText(env, text) {
 }
 
 async function translateItem(env, item) {
+  if (isChineseText(`${item.title} ${item.summary}`)) {
+    return {
+      ...item,
+      titleZh: item.titleZh || item.title,
+      summaryZh: item.summaryZh || item.summary
+    };
+  }
   if (!env.AI) return item;
   const [titleZh, summaryZh] = await Promise.all([
     translateText(env, item.title),
