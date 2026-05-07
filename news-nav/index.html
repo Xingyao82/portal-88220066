@@ -248,7 +248,14 @@
       ai: { zh: "AI", en: "AI" },
       github: { zh: "GitHub 热门", en: "GitHub Hot" }
     };
-    const state = { category: "all", query: "", items: [], categories: fallbackCategories, updatedAt: "" };
+    const state = {
+      category: "all",
+      query: "",
+      items: [],
+      categoryItems: {},
+      categories: fallbackCategories,
+      updatedAt: ""
+    };
 
     const statusEl = document.getElementById("status");
     const searchEl = document.getElementById("search");
@@ -284,7 +291,8 @@
 
     function filteredItems(lang) {
       const query = state.query.toLowerCase();
-      return state.items.filter((item) => {
+      const sourceItems = state.category === "all" ? state.items : (state.categoryItems[state.category] || state.items);
+      return sourceItems.filter((item) => {
         const inCategory = state.category === "all" || item.category === state.category;
         const text = [item.title, item.titleZh, item.summary, item.summaryZh, item.source, categoryLabel(item.category, lang)].join(" ").toLowerCase();
         return inCategory && (!query || text.includes(query));
@@ -337,13 +345,26 @@
       statusEl.textContent = `${labels[lang].updated}: ${updated}`;
     }
 
-    async function loadNews(lang) {
+    async function fetchNews(category = "all") {
+      const params = new URLSearchParams({ days: "90" });
+      if (category !== "all") {
+        params.set("category", category);
+        params.set("translateCategory", category);
+      }
+      const response = await fetch(`/api/news?${params}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    }
+
+    async function loadNews(lang, category = "all") {
       statusEl.textContent = labels[lang].loading;
       try {
-        const response = await fetch("/api/news?days=90");
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const payload = await response.json();
-        state.items = payload.items || [];
+        const payload = await fetchNews(category);
+        if (category === "all") {
+          state.items = payload.items || [];
+        } else {
+          state.categoryItems[category] = payload.items || [];
+        }
         state.categories = payload.categories || fallbackCategories;
         state.updatedAt = payload.updatedAt || new Date().toISOString();
       } catch (error) {
@@ -358,6 +379,9 @@
       if (!button) return;
       state.category = button.dataset.category;
       renderPage(window.SiteI18n.getLang());
+      if (state.category !== "all" && !state.categoryItems[state.category]) {
+        loadNews(window.SiteI18n.getLang(), state.category);
+      }
     });
 
     searchEl.addEventListener("input", () => {

@@ -7,7 +7,7 @@ const MAX_ITEMS_PER_SOURCE = 18;
 const MAX_AGE_DAYS = 90;
 const CACHE_SECONDS = 900;
 const ARCHIVE_REFRESH_MS = 15 * 60 * 1000;
-const TRANSLATE_LIMIT_PER_REQUEST = 48;
+const TRANSLATE_LIMIT_PER_REQUEST = 72;
 const TITLE_MAX_LENGTH = 220;
 const SUMMARY_MAX_LENGTH = 700;
 
@@ -49,8 +49,18 @@ const SOURCES = [
   },
   {
     category: "income",
-    source: "ETF.com",
-    url: "https://www.etf.com/feeds/news"
+    source: "Google News Income ETF",
+    url: "https://news.google.com/rss/search?q=income%20ETF%20covered%20call%20ETF%20JEPI%20JEPQ&hl=en-US&gl=US&ceid=US:en"
+  },
+  {
+    category: "income",
+    source: "Google News Covered Call ETF",
+    url: "https://news.google.com/rss/search?q=covered%20call%20ETF%20income%20ETF%20yield&hl=en-US&gl=US&ceid=US:en"
+  },
+  {
+    category: "income",
+    source: "ETF Database",
+    url: "https://etfdb.com/feed/"
   },
   {
     category: "etf",
