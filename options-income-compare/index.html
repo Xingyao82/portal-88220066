@@ -301,6 +301,10 @@
       font-weight: 700;
     }
 
+    .compare-chart-item strong.negative-return {
+      color: #ef4444;
+    }
+
     .compare-chart-stat span {
       color: var(--muted);
       font-size: 0.82rem;
@@ -3882,7 +3886,7 @@
                   </div>
                   <div class="compare-chart-stat">
                     <span>${labels[lang].compareChartPeriodReturn}</span>
-                    <strong>${formatSignedPct(series.periodReturnPct)}</strong>
+                    <strong class="${selectedIncomeLabBasis === "price" && series.periodReturnPct < 0 ? "negative-return" : ""}">${formatSignedPct(series.periodReturnPct)}</strong>
                   </div>
                   <div class="compare-chart-stat">
                     <span>${labels[lang].compareChartStart}</span>
