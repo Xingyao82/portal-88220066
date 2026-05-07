@@ -219,9 +219,7 @@
         updated: "更新",
         items: "条",
         empty: "当前没有匹配新闻。",
-        loading: "加载中",
-        storage: "Cloudflare 缓存，不占 VPS 内存",
-        retention: "90 天过滤"
+        loading: "加载中"
       },
       en: {
         brand: "88220066.xyz / News",
@@ -230,9 +228,7 @@
         updated: "Updated",
         items: "items",
         empty: "No matching news.",
-        loading: "Loading",
-        storage: "Cloudflare cache, no VPS memory",
-        retention: "90-day filter"
+        loading: "Loading"
       }
     };
 
@@ -322,11 +318,11 @@
       const items = filteredItems(lang);
       const [leadItem, ...rest] = items;
       leadCountEl.textContent = `${items.length} ${labels[lang].items}`;
-      feedCountEl.textContent = labels[lang].storage;
+      feedCountEl.textContent = "";
       leadEl.innerHTML = leadItem ? articleTemplate(leadItem, lang, true) : `<div class="empty">${labels[lang].empty}</div>`;
       feedEl.innerHTML = rest.length ? rest.map((item) => articleTemplate(item, lang)).join("") : `<div class="empty">${labels[lang].empty}</div>`;
       const updated = state.updatedAt ? formatTime(state.updatedAt, lang) : labels[lang].loading;
-      statusEl.innerHTML = `${labels[lang].updated}: ${updated}<br>${labels[lang].retention} / ${labels[lang].storage}`;
+      statusEl.textContent = `${labels[lang].updated}: ${updated}`;
     }
 
     async function loadNews(lang) {
