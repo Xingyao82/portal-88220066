@@ -214,7 +214,7 @@
     const labels = {
       zh: {
         brand: "88220066.xyz / 新闻",
-        search: "搜索标题、来源、分类",
+        search: "搜索标题、译文、来源、分类",
         all: "全部",
         updated: "更新",
         items: "条",
@@ -223,7 +223,7 @@
       },
       en: {
         brand: "88220066.xyz / News",
-        search: "Search title, source, category",
+        search: "Search title, translation, source, category",
         all: "All",
         updated: "Updated",
         items: "items",
@@ -280,17 +280,21 @@
       const query = state.query.toLowerCase();
       return state.items.filter((item) => {
         const inCategory = state.category === "all" || item.category === state.category;
-        const text = [item.title, item.summary, item.source, categoryLabel(item.category, lang)].join(" ").toLowerCase();
+        const text = [item.title, item.titleZh, item.summary, item.summaryZh, item.source, categoryLabel(item.category, lang)].join(" ").toLowerCase();
         return inCategory && (!query || text.includes(query));
       });
     }
 
     function articleTemplate(item, lang, lead = false) {
       const titleTag = lead ? "h2" : "h3";
-      const title = escapeHtml(item.title);
+      const titleText = lang === "zh" && item.titleZh ? item.titleZh : item.title;
+      const originalTitle = lang === "zh" && item.titleZh ? item.title : "";
+      const summaryText = lang === "zh" && item.summaryZh ? item.summaryZh : item.summary;
+      const title = escapeHtml(titleText);
       const source = escapeHtml(item.source);
       const itemUrl = escapeHtml(item.url);
-      const summary = escapeHtml((item.summary || "").slice(0, lead ? 220 : 150));
+      const summary = escapeHtml((summaryText || "").slice(0, lead ? 220 : 150));
+      const original = escapeHtml(originalTitle);
       return `
         <article class="${lead ? "lead-card" : "article"}">
           <div class="meta-row">
@@ -299,6 +303,7 @@
             <span>${formatTime(item.publishedAt, lang)}</span>
           </div>
           <${titleTag}><a href="${itemUrl}" target="_blank" rel="noreferrer">${title}</a></${titleTag}>
+          ${original ? `<p class="meta">${original}</p>` : ""}
           ${summary ? `<p class="summary">${summary}</p>` : ""}
         </article>
       `;

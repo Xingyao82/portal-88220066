@@ -1,0 +1,11 @@
+name = "portal-88220066"
+pages_build_output_dir = "."
+compatibility_date = "2026-05-07"
+
+[[d1_databases]]
+binding = "NEWS_DB"
+database_name = "portal_88220066_news"
+database_id = "57b8ec32-33a0-4f6d-b0e5-641c1e515818"
+
+[ai]
+binding = "AI"
