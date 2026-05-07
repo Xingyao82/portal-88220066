@@ -92,7 +92,7 @@
       border-radius: 8px;
       overflow: hidden;
     }
-    .news-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .news-grid { display: grid; grid-template-columns: 1.08fr 0.92fr; }
     .lead, .feed { padding: 18px; }
     .lead { border-right: 1px solid var(--line); }
     .section-title {
@@ -111,6 +111,10 @@
       border-radius: 8px;
       border: 1px solid rgba(37, 99, 235, 0.18);
       background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(255,255,255,0.92));
+    }
+    .lead-stack {
+      display: grid;
+      gap: 12px;
     }
     .lead-card h2 { margin: 0; font-size: 1.45rem; line-height: 1.25; }
     .lead-card p, .summary, .meta { margin: 0; color: var(--muted); line-height: 1.65; }
@@ -203,8 +207,8 @@
     const pageCopy = {
       pageTitle: { zh: "新闻 | 88220066.xyz", en: "News | 88220066.xyz" },
       pageDescription: {
-        zh: "自动更新财经、科技、Income、AI、X、GitHub 和 Reddit 热门新闻。",
-        en: "Auto-updated finance, tech, income, AI, X, GitHub, and Reddit news."
+        zh: "自动更新财经、科技、Income、AI 和 GitHub 热门新闻。",
+        en: "Auto-updated finance, tech, income, AI, and GitHub news."
       },
       heroTitle: { zh: "新闻", en: "News" },
       leadTitle: { zh: "最新重点", en: "Latest" },
@@ -232,15 +236,14 @@
       }
     };
 
-    const categoryOrder = ["all", "finance", "tech", "income", "ai", "x", "github", "reddit"];
+    const LEAD_COUNT = 4;
+    const categoryOrder = ["all", "finance", "tech", "income", "ai", "github"];
     const fallbackCategories = {
       finance: { zh: "财经", en: "Finance" },
       tech: { zh: "科技", en: "Tech" },
       income: { zh: "Income", en: "Income" },
       ai: { zh: "AI", en: "AI" },
-      x: { zh: "X 热门", en: "X Hot" },
-      github: { zh: "GitHub 热门", en: "GitHub Hot" },
-      reddit: { zh: "Reddit 热门", en: "Reddit Hot" }
+      github: { zh: "GitHub 热门", en: "GitHub Hot" }
     };
     const state = { category: "all", query: "", items: [], categories: fallbackCategories, updatedAt: "" };
 
@@ -321,10 +324,11 @@
       searchEl.placeholder = labels[lang].search;
       renderChips(lang);
       const items = filteredItems(lang);
-      const [leadItem, ...rest] = items;
+      const leadItems = items.slice(0, LEAD_COUNT);
+      const rest = items.slice(LEAD_COUNT);
       leadCountEl.textContent = `${items.length} ${labels[lang].items}`;
       feedCountEl.textContent = "";
-      leadEl.innerHTML = leadItem ? articleTemplate(leadItem, lang, true) : `<div class="empty">${labels[lang].empty}</div>`;
+      leadEl.innerHTML = leadItems.length ? `<div class="lead-stack">${leadItems.map((item) => articleTemplate(item, lang, true)).join("")}</div>` : `<div class="empty">${labels[lang].empty}</div>`;
       feedEl.innerHTML = rest.length ? rest.map((item) => articleTemplate(item, lang)).join("") : `<div class="empty">${labels[lang].empty}</div>`;
       const updated = state.updatedAt ? formatTime(state.updatedAt, lang) : labels[lang].loading;
       statusEl.textContent = `${labels[lang].updated}: ${updated}`;

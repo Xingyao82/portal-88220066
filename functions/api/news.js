@@ -7,7 +7,7 @@ const MAX_ITEMS_PER_SOURCE = 18;
 const MAX_AGE_DAYS = 90;
 const CACHE_SECONDS = 900;
 const ARCHIVE_REFRESH_MS = 15 * 60 * 1000;
-const TRANSLATE_LIMIT_PER_REQUEST = 24;
+const TRANSLATE_LIMIT_PER_REQUEST = 48;
 const TITLE_MAX_LENGTH = 220;
 const SUMMARY_MAX_LENGTH = 700;
 
@@ -53,11 +53,6 @@ const SOURCES = [
     url: "https://techcrunch.com/category/artificial-intelligence/feed/"
   },
   {
-    category: "x",
-    source: "Google News X Hot",
-    url: "https://news.google.com/rss/search?q=Twitter%20X%20trending%20AI%20markets&hl=en-US&gl=US&ceid=US:en"
-  },
-  {
     category: "github",
     source: "GitHub Trending",
     url: "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml"
@@ -67,16 +62,6 @@ const SOURCES = [
     source: "GitHub Blog",
     url: "https://github.blog/feed/"
   },
-  {
-    category: "reddit",
-    source: "Google News Reddit Tech",
-    url: "https://news.google.com/rss/search?q=reddit%20technology%20AI%20github&hl=en-US&gl=US&ceid=US:en"
-  },
-  {
-    category: "reddit",
-    source: "Google News Reddit Investing",
-    url: "https://news.google.com/rss/search?q=reddit%20investing%20stocks%20ETF&hl=en-US&gl=US&ceid=US:en"
-  }
 ];
 
 const CATEGORY_LABELS = {
@@ -84,9 +69,7 @@ const CATEGORY_LABELS = {
   tech: { zh: "科技", en: "Tech" },
   income: { zh: "Income", en: "Income" },
   ai: { zh: "AI", en: "AI" },
-  x: { zh: "X 热门", en: "X Hot" },
-  github: { zh: "GitHub 热门", en: "GitHub Hot" },
-  reddit: { zh: "Reddit 热门", en: "Reddit Hot" }
+  github: { zh: "GitHub 热门", en: "GitHub Hot" }
 };
 
 function decodeEntities(value = "") {
@@ -358,6 +341,7 @@ export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const env = context.env || {};
   const category = (url.searchParams.get("category") || "all").trim().toLowerCase();
+  const translateCategory = (url.searchParams.get("translateCategory") || "").trim().toLowerCase();
   const daysParam = Math.max(1, Math.min(MAX_AGE_DAYS, Number(url.searchParams.get("days") || MAX_AGE_DAYS) || MAX_AGE_DAYS));
   const maxAgeMs = daysParam * 24 * 60 * 60 * 1000;
   const now = Date.now();
@@ -379,8 +363,12 @@ export async function onRequestGet(context) {
       await pruneArchive(db, MAX_AGE_DAYS);
       await writeLastRefresh(db, new Date().toISOString());
     }
-    items = await readArchivedItems(db, category, daysParam);
+    const readCategory = translateCategory || category;
+    items = await readArchivedItems(db, readCategory, daysParam);
     items = await hydrateMissingTranslations(env, db, items);
+    if (translateCategory && category !== translateCategory) {
+      items = await readArchivedItems(db, category, daysParam);
+    }
   } else {
     const fresh = await fetchFreshNews(env, category);
     sourceResults = fresh.sourceResults;
