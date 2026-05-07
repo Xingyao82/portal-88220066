@@ -367,7 +367,8 @@ export async function onRequestGet(context) {
     items = await readArchivedItems(db, readCategory, daysParam);
     items = await hydrateMissingTranslations(env, db, items);
     if (translateCategory && category !== translateCategory) {
-      items = await readArchivedItems(db, category, daysParam);
+      const translatedById = new Map(items.map((item) => [item.id, item]));
+      items = (await readArchivedItems(db, category, daysParam)).map((item) => translatedById.get(item.id) || item);
     }
   } else {
     const fresh = await fetchFreshNews(env, category);
