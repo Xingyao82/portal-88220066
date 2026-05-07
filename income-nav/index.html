@@ -305,6 +305,10 @@
       color: #ef4444;
     }
 
+    .compare-chart-item strong.outperform-return {
+      color: #f59e0b;
+    }
+
     .compare-chart-stat span {
       color: var(--muted);
       font-size: 0.82rem;
@@ -4145,6 +4149,17 @@
         if (normalized.length !== compareConfigs.length) throw new Error("Missing income-lab comparison series");
 
         const latestTs = Math.max(...normalized.map((series) => series.latestTs));
+        const fundSeries = normalized.find((series) => series.symbol === item.symbol);
+        const benchmarkSeries = normalized.find((series) => series.symbol === item.benchmark);
+        const fundOutperformsBenchmark = selectedIncomeLabBasis === "adjusted"
+          && fundSeries
+          && benchmarkSeries
+          && fundSeries.periodReturnPct > benchmarkSeries.periodReturnPct;
+        const returnClass = (series) => {
+          if (selectedIncomeLabBasis === "price" && series.periodReturnPct < 0) return "negative-return";
+          if (fundOutperformsBenchmark && series.symbol === item.symbol) return "outperform-return";
+          return "";
+        };
         const compareCopy = lang === "zh"
           ? `${item.symbol} 和 ${item.benchmark} 都按${selectedIncomeLabBasis === "price" ? "不复权收盘价" : "复权后总回报"}归一到 100，起点取 ${item.symbol} 上市后的首个共同交易日。`
           : `${item.symbol} and ${item.benchmark} are rebased to 100 on a ${selectedIncomeLabBasis === "price" ? "price-only" : "total-return adjusted"} basis from the first shared trading day after ${item.symbol} launched.`;
@@ -4177,7 +4192,7 @@
                   </div>
                   <div class="compare-chart-stat">
                     <span>${labels[lang].compareChartPeriodReturn}</span>
-                    <strong>${formatSignedPct(series.periodReturnPct)}</strong>
+                    <strong class="${returnClass(series)}">${formatSignedPct(series.periodReturnPct)}</strong>
                   </div>
                   <div class="compare-chart-stat">
                     <span>${labels[lang].compareChartStart}</span>
