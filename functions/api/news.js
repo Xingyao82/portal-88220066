@@ -130,6 +130,7 @@ const SOURCES = [
 const CATEGORY_LABELS = {
   finance: { zh: "财经", en: "Finance" },
   usmarket: { zh: "美股市场", en: "U.S. Markets" },
+  ipo: { zh: "新股申购", en: "IPO Subscriptions" },
   tech: { zh: "科技", en: "Tech" },
   income: { zh: "Income", en: "Income" },
   etf: { zh: "ETF / 基金", en: "ETF / Funds" },
@@ -246,6 +247,99 @@ function uniqueByUrl(items) {
     seen.add(key);
     return true;
   });
+}
+
+function stripHtmlTableCell(value = "") {
+  return decodeEntities(String(value)).replace(/\s+/g, " ").trim();
+}
+
+function parseDateToIso(value = "") {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return new Date().toISOString();
+  return date.toISOString();
+}
+
+async function fetchAshareIpoItems() {
+  const today = new Date().toISOString().slice(0, 10);
+  const url = new URL("https://datacenter-web.eastmoney.com/api/data/v1/get");
+  Object.entries({
+    reportName: "RPTA_APP_IPOAPPLY",
+    columns: "SECURITY_CODE,SECURITY_NAME,APPLY_DATE,APPLY_CODE,TRADE_MARKET,MARKET_TYPE_NEW,ONLINE_APPLY_UPPER,ISSUE_NUM,SECUCODE",
+    sortColumns: "APPLY_DATE,SECURITY_CODE",
+    sortTypes: "-1,-1",
+    pageSize: "20",
+    pageNumber: "1",
+    source: "WEB",
+    client: "WEB",
+    filter: `((APPLY_DATE>='${today}'))`
+  }).forEach(([key, value]) => url.searchParams.set(key, value));
+  const response = await fetch(url.toString(), {
+    headers: { ...DEFAULT_HEADERS, Referer: "https://data.eastmoney.com/" },
+    cf: { cacheTtl: CACHE_SECONDS, cacheEverything: true }
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const payload = await response.json();
+  return (payload?.result?.data || []).slice(0, 12).map((row) => {
+    const applyDate = row.APPLY_DATE ? row.APPLY_DATE.slice(0, 10) : today;
+    const market = [row.TRADE_MARKET, row.MARKET_TYPE_NEW].filter(Boolean).join(" / ");
+    const limitText = row.ONLINE_APPLY_UPPER ? `申购上限 ${row.ONLINE_APPLY_UPPER}` : "申购上限待更新";
+    const issueNum = row.ISSUE_NUM ? `发行 ${row.ISSUE_NUM} 万股` : "发行规模待更新";
+    return {
+      id: stableId(`ipo:ashare:${row.SECUCODE || row.SECURITY_CODE}`),
+      category: "ipo",
+      categoryLabel: CATEGORY_LABELS.ipo,
+      source: "A股新股申购",
+      title: `${row.SECURITY_NAME} ${applyDate} 申购`,
+      titleZh: `${row.SECURITY_NAME} ${applyDate} 申购`,
+      summary: `${market}. Apply code ${row.APPLY_CODE || "-"}. ${limitText}. ${issueNum}.`,
+      summaryZh: `${market}。申购代码 ${row.APPLY_CODE || "-" }。${limitText}。${issueNum}。`,
+      url: "https://data.eastmoney.com/xg/xg/default.html",
+      publishedAt: parseDateToIso(applyDate),
+      ageHours: 0
+    };
+  });
+}
+
+async function fetchUsIpoItems() {
+  const response = await fetch("https://stockanalysis.com/ipos/calendar/", {
+    headers: DEFAULT_HEADERS,
+    cf: { cacheTtl: CACHE_SECONDS, cacheEverything: true }
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const html = await response.text();
+  const rows = [...html.matchAll(/<tr class="svelte-[^"]*">([\s\S]*?)<\/tr>/g)].map((match) => match[1]);
+  const currentYear = new Date().getFullYear();
+  return rows.map((row) => {
+    const cells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((cell) => stripHtmlTableCell(cell[1]));
+    if (cells.length < 4) return null;
+    const [ipoDate, symbol, company, exchange, priceRange = "", shares = "", dealSize = ""] = cells;
+    const parsedDate = new Date(`${ipoDate} ${currentYear}`);
+    const thisYearIso = Number.isNaN(parsedDate.getTime()) ? new Date().toISOString() : parsedDate.toISOString();
+    const summary = [exchange, priceRange && `Price ${priceRange}`, shares && `Shares ${shares}`, dealSize && `Deal ${dealSize}`].filter(Boolean).join(". ");
+    return {
+      id: stableId(`ipo:us:${symbol}:${ipoDate}`),
+      category: "ipo",
+      categoryLabel: CATEGORY_LABELS.ipo,
+      source: "港美股当日申购 / IPO",
+      title: `${symbol} ${ipoDate} IPO`,
+      titleZh: "",
+      summary,
+      summaryZh: "",
+      url: `https://stockanalysis.com/stocks/${String(symbol).toLowerCase()}/`,
+      publishedAt: thisYearIso,
+      ageHours: 0
+    };
+  }).filter(Boolean).slice(0, 12);
+}
+
+async function fetchIpoItems(env) {
+  const results = await Promise.allSettled([fetchAshareIpoItems(), fetchUsIpoItems()]);
+  const items = results.flatMap((result) => result.status === "fulfilled" ? result.value : []);
+  const unique = uniqueByUrl(items);
+  if (!env.AI) return unique;
+  const translated = await Promise.all(unique.slice(0, TRANSLATE_LIMIT_PER_REQUEST).map((item) => translateItem(env, item)));
+  const translatedById = new Map(translated.map((item) => [item.id, item]));
+  return unique.map((item) => translatedById.get(item.id) || item);
 }
 
 function hasD1(env = {}) {
@@ -402,6 +496,30 @@ async function hydrateMissingTranslations(env, db, items) {
 }
 
 async function fetchFreshNews(env, category) {
+  if (category === "ipo") {
+    const items = await fetchIpoItems(env);
+    return {
+      sourceResults: [
+        { source: "A股新股申购", category: "ipo", ok: items.some((item) => item.source === "A股新股申购"), count: items.filter((item) => item.source === "A股新股申购").length, items: [] },
+        { source: "港美股当日申购 / IPO", category: "ipo", ok: items.some((item) => item.source === "港美股当日申购 / IPO"), count: items.filter((item) => item.source === "港美股当日申购 / IPO").length, items: [] }
+      ],
+      items
+    };
+  }
+  if (category === "all") {
+    const ipoItems = await fetchIpoItems(env);
+    const selectedSources = SOURCES;
+    const sourceResults = await Promise.all(selectedSources.map(fetchSource));
+    const items = uniqueByUrl([...sourceResults.flatMap((result) => result.items), ...ipoItems]);
+    return {
+      sourceResults: [
+        ...sourceResults,
+        { source: "A股新股申购", category: "ipo", ok: ipoItems.some((item) => item.source === "A股新股申购"), count: ipoItems.filter((item) => item.source === "A股新股申购").length, items: [] },
+        { source: "港美股当日申购 / IPO", category: "ipo", ok: ipoItems.some((item) => item.source === "港美股当日申购 / IPO"), count: ipoItems.filter((item) => item.source === "港美股当日申购 / IPO").length, items: [] }
+      ],
+      items
+    };
+  }
   const selectedSources = SOURCES.filter((source) => category === "all" || source.category === category);
   const sourceResults = await Promise.all(selectedSources.map(fetchSource));
   const items = uniqueByUrl(sourceResults.flatMap((result) => result.items));
