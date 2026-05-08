@@ -232,7 +232,7 @@
         en: "Auto-updated finance, U.S. markets, ETF / funds, China finance, tech, income, AI, and GitHub news."
       },
       heroTitle: { zh: "新闻", en: "News" },
-      leadTitle: { zh: "最新重点", en: "Latest" },
+      leadTitle: { zh: "重点新闻", en: "Featured" },
       feedTitle: { zh: "新闻流", en: "Feed" }
     };
 
@@ -358,8 +358,8 @@
       const items = filteredItems(lang);
       const leadItems = items.slice(0, LEAD_COUNT);
       const rest = items.slice(LEAD_COUNT);
-      leadCountEl.textContent = `${items.length} ${labels[lang].items}`;
-      feedCountEl.textContent = "";
+      leadCountEl.textContent = `${leadItems.length} / ${items.length} ${labels[lang].items}`;
+      feedCountEl.textContent = `${rest.length} ${labels[lang].items}`;
       leadEl.innerHTML = leadItems.length ? `<div class="lead-stack">${leadItems.map((item) => articleTemplate(item, lang, true)).join("")}</div>` : `<div class="empty">${labels[lang].empty}</div>`;
       feedEl.innerHTML = rest.length ? rest.map((item) => articleTemplate(item, lang)).join("") : `<div class="empty">${labels[lang].empty}</div>`;
       const updated = state.updatedAt ? formatTime(state.updatedAt, lang) : labels[lang].loading;
