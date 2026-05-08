@@ -250,7 +250,7 @@ function uniqueByUrl(items) {
 }
 
 function stripHtmlTableCell(value = "") {
-  return decodeEntities(String(value)).replace(/\s+/g, " ").trim();
+  return decodeEntities(String(value)).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function parseDateToIso(value = "") {
