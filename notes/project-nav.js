@@ -6,7 +6,6 @@
     { key: "optionsIncomeCompare", href: "/options-income-compare/", zh: "期权 Income 对比台", en: "Options Income" },
     { key: "etfCompare", href: "/etf-compare/", zh: "ETF 对比", en: "ETF Compare" },
     { key: "news", href: "/news-nav/", zh: "新闻", en: "News" },
-    { key: "api", href: "/free-api-nav/", zh: "API 导航", en: "API" },
     { key: "tools", href: "/tools-nav/", zh: "工具导航", en: "Tools" },
     { key: "english", href: "/english-tools/", zh: "英语导航", en: "English" },
     { key: "skills", href: "/skills-nav/", zh: "技能", en: "Skills" }
@@ -18,7 +17,6 @@
     if (pathname.startsWith("/options-income-compare/")) return "optionsIncomeCompare";
     if (pathname.startsWith("/etf-compare/")) return "etfCompare";
     if (pathname.startsWith("/news-nav/")) return "news";
-    if (pathname.startsWith("/free-api-nav/")) return "api";
     if (pathname.startsWith("/tools-nav/") || pathname.startsWith("/asterlab-tools/")) return "tools";
     if (pathname.startsWith("/english-tools/") || pathname.startsWith("/dictation/")) return "english";
     if (
