@@ -206,7 +206,7 @@ function cleanFeedAuthor(raw = "") {
   const value = stripTags(raw);
   const xAuthorStart = value.indexOf("(X：");
   if (xAuthorStart >= 0) {
-    return value.slice(xAuthorStart + 1).replace(/\)+$/, "").trim();
+    return value.slice(xAuthorStart + 1).replace(/\)$/, "").trim();
   }
   const wrapped = value.match(/\(([^)]+)\)\s*$/);
   return wrapped ? wrapped[1].trim() : value;
