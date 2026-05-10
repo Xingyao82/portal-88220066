@@ -212,6 +212,16 @@ function cleanFeedAuthor(raw = "") {
   return wrapped ? wrapped[1].trim() : value;
 }
 
+function cleanDisplaySource(raw = "") {
+  const source = cleanFeedAuthor(raw);
+  if (/^X：/.test(source)) {
+    const openCount = (source.match(/\(/g) || []).length;
+    const closeCount = (source.match(/\)/g) || []).length;
+    return closeCount < openCount ? `${source})` : source;
+  }
+  return source;
+}
+
 function isChineseText(value = "") {
   return /[\u3400-\u9fff]/.test(value);
 }
@@ -417,7 +427,7 @@ function rowToItem(row) {
     id: row.id,
     category: row.category,
     categoryLabel: CATEGORY_LABELS[row.category],
-    source: row.source,
+    source: cleanDisplaySource(row.source),
     title: row.title,
     titleZh: row.title_zh || "",
     summary: row.summary || "",
