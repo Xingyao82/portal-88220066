@@ -5,7 +5,8 @@ const DEFAULT_HEADERS = {
 
 const DEFAULT_ITEMS_PER_SOURCE = 18;
 const SOURCE_ITEM_LIMITS = {
-  chinafinance: 36
+  chinafinance: 36,
+  xhot: 30
 };
 const MAX_AGE_DAYS = 90;
 const CACHE_SECONDS = 900;
@@ -86,6 +87,13 @@ const SOURCES = [
     url: "https://techcrunch.com/category/artificial-intelligence/feed/"
   },
   {
+    category: "xhot",
+    source: "AIHOT X 热点",
+    url: "https://aihot.virxact.com/feed/all.xml",
+    xOnly: true,
+    sourceFromAuthor: true
+  },
+  {
     category: "github",
     source: "GitHub Trending",
     url: "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml"
@@ -135,6 +143,7 @@ const CATEGORY_LABELS = {
   income: { zh: "Income", en: "Income" },
   etf: { zh: "ETF / 基金", en: "ETF / Funds" },
   ai: { zh: "AI", en: "AI" },
+  xhot: { zh: "X 热点", en: "X Hot" },
   github: { zh: "GitHub 热门", en: "GitHub Hot" },
   chinafinance: { zh: "中国财经", en: "China Finance" }
 };
@@ -193,6 +202,16 @@ function normalizeDate(raw) {
   return date;
 }
 
+function cleanFeedAuthor(raw = "") {
+  const value = stripTags(raw);
+  const xAuthorStart = value.indexOf("(X：");
+  if (xAuthorStart >= 0) {
+    return value.slice(xAuthorStart + 1).replace(/\)+$/, "").trim();
+  }
+  const wrapped = value.match(/\(([^)]+)\)\s*$/);
+  return wrapped ? wrapped[1].trim() : value;
+}
+
 function isChineseText(value = "") {
   return /[\u3400-\u9fff]/.test(value);
 }
@@ -205,13 +224,15 @@ function parseFeed(xml, sourceConfig) {
       const title = textBetween(block, "title");
       const link = textBetween(block, "link") || attrValue(block, "link", "href");
       const summary = textBetween(block, "description") || textBetween(block, "summary") || textBetween(block, "content");
+      const author = cleanFeedAuthor(textBetween(block, "author"));
       const publishedAt = normalizeDate(textBetween(block, "pubDate") || textBetween(block, "updated") || textBetween(block, "published"));
       if (!title || !link) return null;
+      if (sourceConfig.xOnly && !/^https:\/\/x\.com\//i.test(link) && !/^X：/.test(author)) return null;
       return {
         id: stableId(`${sourceConfig.category}:${link}`),
         category: sourceConfig.category,
         categoryLabel: CATEGORY_LABELS[sourceConfig.category],
-        source: sourceConfig.source,
+        source: sourceConfig.sourceFromAuthor && author ? author : sourceConfig.source,
         title: clampText(title, TITLE_MAX_LENGTH),
         titleZh: "",
         summary: clampText(summary),
