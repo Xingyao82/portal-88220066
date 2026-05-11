@@ -2404,6 +2404,62 @@
       }
     ];
 
+    function roundhillWeeklyPayItem(config) {
+      const benchmarkName = config.benchmarkName || { zh: config.benchmark, en: config.benchmark };
+      return {
+        symbol: config.symbol,
+        name: config.name,
+        benchmark: config.benchmark,
+        benchmarkName,
+        accent: config.accent || "#7c3aed",
+        benchmarkAccent: config.benchmarkAccent || "#94a3b8",
+        url: `https://www.roundhillinvestments.com/etf/${config.symbol.toLowerCase()}/`,
+        expenseRatio: config.expenseRatio || "0.99%",
+        role: "watch",
+        style: "option",
+        structure: config.structure || {
+          zh: `${benchmarkName.zh} WeeklyPay option income，把标的波动转成周配收入。`,
+          en: `${benchmarkName.en} WeeklyPay option income, converting underlying volatility into weekly distributions.`
+        },
+        watch: config.watch || {
+          zh: `和 ${config.benchmark} 比，重点看周配收入是否抵消上涨被截断和净值磨损。`,
+          en: `Versus ${config.benchmark}, watch whether weekly income offsets capped upside and NAV drag.`
+        }
+      };
+    }
+
+    const roundhillWeeklyPayEtfs = [
+      roundhillWeeklyPayItem({ symbol: "QDTE", name: "Roundhill Nasdaq-100 0DTE Covered Call Strategy ETF", benchmark: "QQQ", benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" }, accent: "#2563eb", structure: { zh: "Nasdaq-100 0DTE covered call，偏周配和高频波动收入。", en: "Nasdaq-100 0DTE covered call, built around weekly income and high-frequency volatility harvesting." } }),
+      roundhillWeeklyPayItem({ symbol: "RDTE", name: "Roundhill Russell 2000 0DTE Covered Call Strategy ETF", benchmark: "IWM", benchmarkName: { zh: "Russell 2000 基准", en: "Russell 2000 benchmark" }, accent: "#0f766e", structure: { zh: "Russell 2000 0DTE covered call，把小盘股波动转成周配收入。", en: "Russell 2000 0DTE covered call, converting small-cap volatility into weekly income." } }),
+      roundhillWeeklyPayItem({ symbol: "MAGY", name: "Roundhill Magnificent Seven Covered Call ETF", benchmark: "MAGS", benchmarkName: { zh: "Magnificent Seven 基准", en: "Magnificent Seven benchmark" }, accent: "#9333ea" }),
+      roundhillWeeklyPayItem({ symbol: "NVDW", name: "Roundhill NVDA WeeklyPay ETF", benchmark: "NVDA", benchmarkName: { zh: "NVIDIA", en: "NVIDIA" }, accent: "#76b900" }),
+      roundhillWeeklyPayItem({ symbol: "TSLW", name: "Roundhill TSLA WeeklyPay ETF", benchmark: "TSLA", benchmarkName: { zh: "Tesla", en: "Tesla" }, accent: "#dc2626" }),
+      roundhillWeeklyPayItem({ symbol: "AAPW", name: "Roundhill AAPL WeeklyPay ETF", benchmark: "AAPL", benchmarkName: { zh: "Apple", en: "Apple" }, accent: "#64748b" }),
+      roundhillWeeklyPayItem({ symbol: "AMDW", name: "Roundhill AMD WeeklyPay ETF", benchmark: "AMD", benchmarkName: { zh: "AMD", en: "AMD" }, accent: "#ef4444" }),
+      roundhillWeeklyPayItem({ symbol: "AMZW", name: "Roundhill AMZN WeeklyPay ETF", benchmark: "AMZN", benchmarkName: { zh: "Amazon", en: "Amazon" }, accent: "#f59e0b" }),
+      roundhillWeeklyPayItem({ symbol: "ARMW", name: "Roundhill ARM WeeklyPay ETF", benchmark: "ARM", benchmarkName: { zh: "ARM", en: "ARM" }, accent: "#0891b2" }),
+      roundhillWeeklyPayItem({ symbol: "AVGW", name: "Roundhill AVGO WeeklyPay ETF", benchmark: "AVGO", benchmarkName: { zh: "Broadcom", en: "Broadcom" }, accent: "#7c2d12" }),
+      roundhillWeeklyPayItem({ symbol: "BABW", name: "Roundhill BABA WeeklyPay ETF", benchmark: "BABA", benchmarkName: { zh: "Alibaba", en: "Alibaba" }, accent: "#ea580c" }),
+      roundhillWeeklyPayItem({ symbol: "BRKW", name: "Roundhill BRK WeeklyPay ETF", benchmark: "BRK-B", benchmarkName: { zh: "Berkshire Hathaway", en: "Berkshire Hathaway" }, accent: "#1d4ed8" }),
+      roundhillWeeklyPayItem({ symbol: "COIW", name: "Roundhill COIN WeeklyPay ETF", benchmark: "COIN", benchmarkName: { zh: "Coinbase", en: "Coinbase" }, accent: "#2563eb" }),
+      roundhillWeeklyPayItem({ symbol: "COSW", name: "Roundhill COST WeeklyPay ETF", benchmark: "COST", benchmarkName: { zh: "Costco", en: "Costco" }, accent: "#0f766e" }),
+      roundhillWeeklyPayItem({ symbol: "GOOW", name: "Roundhill GOOGL WeeklyPay ETF", benchmark: "GOOGL", benchmarkName: { zh: "Alphabet", en: "Alphabet" }, accent: "#4285f4" }),
+      roundhillWeeklyPayItem({ symbol: "HOOW", name: "Roundhill HOOD WeeklyPay ETF", benchmark: "HOOD", benchmarkName: { zh: "Robinhood", en: "Robinhood" }, accent: "#22c55e" }),
+      roundhillWeeklyPayItem({ symbol: "METW", name: "Roundhill META WeeklyPay ETF", benchmark: "META", benchmarkName: { zh: "Meta", en: "Meta" }, accent: "#2563eb" }),
+      roundhillWeeklyPayItem({ symbol: "MSFW", name: "Roundhill MSFT WeeklyPay ETF", benchmark: "MSFT", benchmarkName: { zh: "Microsoft", en: "Microsoft" }, accent: "#10b981" }),
+      roundhillWeeklyPayItem({ symbol: "MSTW", name: "Roundhill MSTR WeeklyPay ETF", benchmark: "MSTR", benchmarkName: { zh: "MicroStrategy", en: "MicroStrategy" }, accent: "#f97316" }),
+      roundhillWeeklyPayItem({ symbol: "NFLW", name: "Roundhill NFLX WeeklyPay ETF", benchmark: "NFLX", benchmarkName: { zh: "Netflix", en: "Netflix" }, accent: "#e50914" }),
+      roundhillWeeklyPayItem({ symbol: "PLTW", name: "Roundhill PLTR WeeklyPay ETF", benchmark: "PLTR", benchmarkName: { zh: "Palantir", en: "Palantir" }, accent: "#0f172a" }),
+      roundhillWeeklyPayItem({ symbol: "UBEW", name: "Roundhill UBER WeeklyPay ETF", benchmark: "UBER", benchmarkName: { zh: "Uber", en: "Uber" }, accent: "#111827" }),
+      roundhillWeeklyPayItem({ symbol: "UNHW", name: "Roundhill UNH WeeklyPay ETF", benchmark: "UNH", benchmarkName: { zh: "UnitedHealth", en: "UnitedHealth" }, accent: "#1e40af" }),
+      roundhillWeeklyPayItem({ symbol: "GDXW", name: "Roundhill GDX WeeklyPay ETF", benchmark: "GDX", benchmarkName: { zh: "Gold Miners ETF", en: "Gold Miners ETF" }, accent: "#ca8a04", structure: { zh: "金矿股 ETF 相关 WeeklyPay option income，底层不是单股。", en: "Gold-miners ETF WeeklyPay option income, built on an ETF rather than a single stock." } }),
+      roundhillWeeklyPayItem({ symbol: "GLDW", name: "Roundhill GLD WeeklyPay ETF", benchmark: "GLD", benchmarkName: { zh: "Gold ETF", en: "Gold ETF" }, accent: "#d97706", structure: { zh: "黄金 ETF 相关 WeeklyPay option income，底层是商品资产 ETF。", en: "Gold ETF WeeklyPay option income, built on a commodity ETF." } }),
+      roundhillWeeklyPayItem({ symbol: "TSYW", name: "Roundhill TLT WeeklyPay ETF", benchmark: "TLT", benchmarkName: { zh: "长期美债 ETF", en: "Long Treasury ETF" }, accent: "#0f766e", structure: { zh: "长期美债 ETF 相关 WeeklyPay option income，底层利率敏感。", en: "Long Treasury ETF WeeklyPay option income with rate-sensitive exposure." } }),
+      roundhillWeeklyPayItem({ symbol: "YBTC", name: "Roundhill Bitcoin Covered Call Strategy ETF", benchmark: "BTC-USD", benchmarkName: { zh: "Bitcoin", en: "Bitcoin" }, accent: "#f7931a", structure: { zh: "Bitcoin 相关 covered call income，底层波动和交易时段都不同于股票 ETF。", en: "Bitcoin-linked covered-call income; volatility and trading behavior differ from equity ETFs." } }),
+      roundhillWeeklyPayItem({ symbol: "YETH", name: "Roundhill Ether Covered Call Strategy ETF", benchmark: "ETH-USD", benchmarkName: { zh: "Ether", en: "Ether" }, accent: "#627eea", structure: { zh: "Ether 相关 covered call income，适合和 YBTC 分开观察。", en: "Ether-linked covered-call income, best reviewed separately from YBTC." } }),
+      roundhillWeeklyPayItem({ symbol: "TOPW", name: "Roundhill Top 20 WeeklyPay ETF", benchmark: "SPY", benchmarkName: { zh: "S&P 500 粗略参照", en: "S&P 500 rough reference" }, accent: "#9333ea", structure: { zh: "Roundhill WeeklyPay 组合型产品，用 SPY 只是粗略参照。", en: "A Roundhill WeeklyPay basket product; SPY is only a rough reference." } })
+    ];
+
     const optionsIncomeCompareEtfs = [
       {
         symbol: "JEPI",
@@ -2658,6 +2714,7 @@
         structure: { zh: "S&P 500 0DTE covered call，偏周配和高频波动货币化。", en: "S&P 500 0DTE covered call, built around weekly income and high-frequency volatility harvesting." },
         watch: { zh: "看 0DTE 收入是否真的抵消净值磨损。", en: "Watch whether 0DTE income really offsets NAV decay." }
       },
+      ...roundhillWeeklyPayEtfs,
       {
         symbol: "TSPY",
         name: "TappAlpha SPY Growth & Daily Income ETF",
