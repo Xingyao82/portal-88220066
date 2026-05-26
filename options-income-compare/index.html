@@ -2484,6 +2484,30 @@
         watch: { zh: "和 QQQ 比，科技趋势段被收入策略削掉多少。", en: "Versus QQQ, watch how much tech upside the income overlay gives up." }
       },
       {
+        symbol: "ROCY",
+        name: "JPMorgan Equity Premium Yield ETF",
+        benchmark: "SPY",
+        benchmarkName: { zh: "S&P 500 基准", en: "S&P 500 benchmark" },
+        accent: "#0f766e",
+        benchmarkAccent: "#94a3b8",
+        url: "https://am.jpmorgan.com/us/en/asset-management/adv/products/jpmorgan-equity-premium-yield-etf-etf-shares-46657c855",
+        expenseRatio: "0.35%",
+        structure: { zh: "JPMorgan broad equity premium yield，使用 call spreads / options overlay，目标是更高分配和 ROC 税务递延。", en: "JPMorgan broad equity premium yield strategy using call spreads / options overlay, targeting higher distributions and ROC tax deferral." },
+        watch: { zh: "和 SPY / JEPI 比，重点看更高 yield 目标下的上涨参与和 ROC 来源。", en: "Versus SPY / JEPI, watch upside participation and the source of ROC under the higher-yield target." }
+      },
+      {
+        symbol: "ROCQ",
+        name: "JPMorgan Nasdaq Equity Premium Yield ETF",
+        benchmark: "QQQ",
+        benchmarkName: { zh: "Nasdaq-100 基准", en: "Nasdaq-100 benchmark" },
+        accent: "#7c3aed",
+        benchmarkAccent: "#94a3b8",
+        url: "https://am.jpmorgan.com/us/en/asset-management/adv/products/jpmorgan-nasdaq-equity-premium-yield-etf-etf-shares-46657c848",
+        expenseRatio: "0.35%",
+        structure: { zh: "JPMorgan Nasdaq equity premium yield，使用 call spreads / options overlay，目标是更高分配和 ROC 税务递延。", en: "JPMorgan Nasdaq equity premium yield strategy using call spreads / options overlay, targeting higher distributions and ROC tax deferral." },
+        watch: { zh: "和 QQQ / JEPQ 比，重点看纳指上涨段被高分配结构截断多少。", en: "Versus QQQ / JEPQ, watch how much Nasdaq upside is capped by the higher-distribution structure." }
+      },
+      {
         symbol: "QYLD",
         name: "Global X Nasdaq 100 Covered Call ETF",
         benchmark: "QQQ",
@@ -3333,6 +3357,8 @@
     const incomeLabExpenseRatios = {
       JEPI: "0.35%",
       JEPQ: "0.35%",
+      ROCY: "0.35%",
+      ROCQ: "0.35%",
       QYLD: "0.60%",
       DIVO: "0.56%",
       SPYI: "0.68%",
