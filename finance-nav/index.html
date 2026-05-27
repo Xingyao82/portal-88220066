@@ -351,7 +351,7 @@
         allScene: "\u5168\u90E8\u65B9\u5411",
         allAccess: "\u5168\u90E8\u8BBF\u95EE\u65B9\u5F0F",
         stats: [
-          ["\u5F53\u524D\u6536\u5F55", "13 \u4E2A\u514D\u8D39\u91D1\u878D\u8D44\u6E90"],
+          ["\u5F53\u524D\u6536\u5F55", "12 \u4E2A\u514D\u8D39\u91D1\u878D\u8D44\u6E90"],
           ["\u8986\u76D6\u573A\u666F", "\u91CF\u5316\u3001\u5DE5\u5177\u3001\u5B8F\u89C2\u6570\u636E\u3001\u56FE\u8868\u3001\u62AB\u9732\u3001API"],
           ["\u6807\u6CE8\u65B9\u5F0F", "\u5B8C\u5168\u514D\u8D39 / \u514D\u8D39\u5C42 / \u516C\u5F00\u6570\u636E"],
           ["\u7B5B\u9009\u903B\u8F91", "\u4F18\u5148\u5B98\u7F51\u3001\u516C\u5F00\u6570\u636E\u548C\u80FD\u76F4\u63A5\u6253\u5F00\u7684\u5165\u53E3"]
@@ -368,7 +368,7 @@
         allScene: "All Focus Areas",
         allAccess: "All Access Modes",
         stats: [
-          ["Current List", "13 free finance resources"],
+          ["Current List", "12 free finance resources"],
           ["Coverage", "Quant, tools, macro data, charts, filings, research, APIs"],
           ["Labels", "Fully free / free tier / public data"],
           ["Selection Rule", "Official, usable, and directly accessible"]
@@ -438,23 +438,6 @@
         tags: {
           zh: ["\u91CF\u5316", "\u56DE\u6D4B", "\u7B56\u7565"],
           en: ["quant", "backtest", "strategy"]
-        }
-      },
-      {
-        name: "\u80A1\u6307\u671F\u8D27\u5347\u8D34\u6C34",
-        category: "quant",
-        status: "full",
-        scene: "quant",
-        access: "instant",
-        accent: "#c58e5b",
-        url: "/futures-basis/",
-        summary: {
-          zh: "\u7528\u516C\u5F00\u7F51\u9875\u884C\u60C5\u505A 15 \u5206\u949F\u5EF6\u8FDF\u5C55\u793A\uff0c\u76F4\u63A5\u770B IF\u3001IH\u3001IC\u3001IM \u4E0D\u540C\u671F\u9650\u5408\u7EA6\u7684\u5347\u8D34\u6C34\u3001\u5269\u4F59\u5929\u6570\u548C\u591A\u5355\u6301\u6709\u5E74\u5316\u3002",
-          en: "A 15-minute delayed tool for IF, IH, IC, and IM contracts, including basis and long-hold annualized carry."
-        },
-        tags: {
-          zh: ["\u80A1\u6307\u671F\u8D27", "\u57FA\u5DEE", "\u5E74\u5316"],
-          en: ["index futures", "basis", "annualized"]
         }
       },
       {
@@ -647,7 +630,7 @@
     ];
 
     const state = { category: "all", status: "all", scene: "all", access: "all", search: "" };
-    const quickNames = new Set(["TradingView", "QuantConnect", "股指期货升贴水", "FRED", "SEC EDGAR", "Alpha Vantage", "Treasury Yield Curve"]);
+    const quickNames = new Set(["TradingView", "QuantConnect", "FRED", "SEC EDGAR", "Alpha Vantage", "Treasury Yield Curve"]);
     const categoryEl = document.getElementById("category-chips");
     const statusEl = document.getElementById("status-chips");
     const sceneEl = document.getElementById("scene-chips");
