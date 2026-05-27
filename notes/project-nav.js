@@ -6,12 +6,14 @@
     { key: "etfCompare", href: "/etf-compare/", zh: "ETF 对比", en: "ETF Compare" },
     { key: "news", href: "/news-nav/", zh: "新闻", en: "News" },
     { key: "futuresBasis", href: "/futures-basis/", zh: "股指期货", en: "Futures Basis" },
+    { key: "usEtfPremium", href: "/us-etf-premium/", zh: "美股 ETF 溢价", en: "US ETF Premium" },
     { key: "skills", href: "/skills-nav/", zh: "技能", en: "Skills" }
   ];
 
   function currentKey(pathname) {
     if (pathname.startsWith("/finance-nav/")) return "finance";
     if (pathname.startsWith("/futures-basis/")) return "futuresBasis";
+    if (pathname.startsWith("/us-etf-premium/")) return "usEtfPremium";
     if (pathname.startsWith("/income-nav/")) return "income";
     if (pathname.startsWith("/options-income-compare/")) return "optionsIncomeCompare";
     if (pathname.startsWith("/etf-compare/")) return "etfCompare";

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美股 ETF 溢价 | 88220066.xyz</title>
+  <meta name="description" content="查看 A 股市场里美股 ETF 的交易价格、估算净值和溢价率。">
+  <script src="../notes/site-i18n.js"></script>
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --panel: #ffffff;
+      --line: rgba(58, 52, 44, .12);
+      --text: #201c18;
+      --muted: #746a5f;
+      --accent: #2f6df6;
+      --soft: #edf3ff;
+      --gold: #a76b00;
+      --red: #c2410c;
+      --green: #16794c;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: 26px 0 46px; }
+    .nav, .hero, .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 18px; }
+    .brand { font-weight: 800; }
+    .links { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+    .links a { padding: 7px 9px; border-radius: 8px; }
+    .links a.active { background: var(--soft); color: var(--accent); font-weight: 800; }
+    .hero { margin-top: 14px; padding: 22px; }
+    .hero-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+    .eyebrow { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { margin: 8px 0 0; font-size: clamp(28px, 5vw, 46px); line-height: 1.08; letter-spacing: 0; }
+    .hero-copy { margin: 12px 0 0; color: var(--muted); line-height: 1.8; max-width: 760px; }
+    .status-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill { display: inline-flex; align-items: center; min-height: 34px; padding: 0 11px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); background: #fff; font-size: 13px; font-weight: 700; }
+    .pill.primary { color: var(--accent); background: var(--soft); border-color: rgba(47, 109, 246, .22); }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+    .summary-card { background: #fbfaf8; border: 1px solid var(--line); border-radius: 8px; padding: 14px; min-height: 78px; }
+    .summary-card span { display: block; color: var(--muted); font-size: 12px; }
+    .summary-card strong { display: block; margin-top: 8px; font-size: 18px; }
+    .panel { margin-top: 14px; padding: 18px; }
+    .panel-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-end; margin-bottom: 14px; }
+    h2 { margin: 0; font-size: 20px; }
+    .panel-head p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .chip { min-height: 34px; padding: 0 11px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
+    .chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1060px; background: #fff; }
+    th, td { padding: 13px 12px; border-bottom: 1px solid var(--line); text-align: right; vertical-align: middle; white-space: nowrap; }
+    th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+    th { color: var(--muted); font-size: 12px; background: #fbfaf8; position: sticky; top: 0; z-index: 1; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .fund-code { font-weight: 850; }
+    .fund-name { color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .premium { font-weight: 900; }
+    .risk-extreme, .risk-high { color: var(--red); }
+    .risk-elevated { color: var(--gold); }
+    .risk-discount { color: var(--green); }
+    .tag { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border-radius: 8px; background: #f4f1eb; color: var(--muted); font-size: 12px; }
+    .source-link { color: var(--accent); font-weight: 800; }
+    .loading, .error, .empty { border: 1px dashed var(--line); border-radius: 8px; padding: 18px; color: var(--muted); background: #fbfaf8; }
+    .error { color: var(--red); }
+    .note-list { margin: 0; padding-left: 18px; color: var(--muted); line-height: 1.9; }
+    .note-list strong { color: var(--text); }
+    @media (max-width: 780px) {
+      .shell { width: min(calc(100% - 18px), var(--max)); }
+      .hero, .panel { padding: 16px; }
+      .nav, .hero-top, .panel-head { flex-direction: column; align-items: flex-start; }
+      .status-row, .filters { justify-content: flex-start; }
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="../notes/page-sync.css">
+  <script defer src="../notes/project-nav.js"></script>
+</head>
+<body data-i18n-title="pageTitle" data-i18n-description="pageDescription">
+  <div class="shell">
+    <header class="nav">
+      <div class="brand">88220066.xyz / 美股 ETF 溢价</div>
+      <nav class="links" aria-label="Primary"></nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow" data-i18n="eyebrow">US ETF PREMIUM</div>
+          <h1 data-i18n="heroTitle">美股 ETF 溢价</h1>
+          <p class="hero-copy" data-i18n="heroCopy">A 股里的纳指、标普、美股行业 ETF 经常因为额度、时差和情绪出现高溢价。这里用公开行情和估算净值做列表，先看溢价率，再决定要不要追。</p>
+        </div>
+        <div class="status-row">
+          <span class="pill primary" data-i18n="delayPill">价格约 15 分钟级别</span>
+          <span class="pill" data-i18n="cachePill">本站 5 分钟缓存</span>
+        </div>
+      </div>
+      <div class="summary-grid" id="summary-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 data-i18n="tableTitle">溢价列表</h2>
+          <p data-i18n="tableCopy">默认按估算净值溢价排序。没有估算净值时，用最新官方净值做备选，但这种口径会更滞后。</p>
+        </div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div id="status" class="loading" data-i18n="loading">正在读取公开数据…</div>
+      <div class="table-wrap" id="table-wrap" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="thFund">基金</th>
+              <th data-i18n="thTarget">标的</th>
+              <th data-i18n="thPrice">现价</th>
+              <th data-i18n="thPremium">估算溢价</th>
+              <th data-i18n="thOfficialPremium">官方净值溢价</th>
+              <th data-i18n="thEstimatedNav">估算净值</th>
+              <th data-i18n="thOfficialNav">官方净值</th>
+              <th data-i18n="thChange">涨跌幅</th>
+              <th data-i18n="thTurnover">成交额</th>
+              <th data-i18n="thUpdate">估算时间</th>
+              <th data-i18n="thOpen">打开</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 data-i18n="notesTitle">口径</h2>
+        </div>
+      </div>
+      <ul class="note-list">
+        <li data-i18n="note1"><strong>估算溢价</strong> = A 股 ETF 现价 / 估算净值 - 1，更适合盘中观察。</li>
+        <li data-i18n="note2"><strong>官方净值溢价</strong> = A 股 ETF 现价 / 最新官方净值 - 1，净值日期通常更慢，隔夜时会放大偏差。</li>
+        <li data-i18n="note3">价格来自公开行情页，通常按公开源延迟展示，可按约 15 分钟级别理解；估算净值以源站返回的估算时间为准。</li>
+        <li data-i18n="note4">QDII / 跨境 ETF 的高溢价可能快速回落，不等于标的涨幅。</li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    const messages = {
+      pageTitle: { zh: "美股 ETF 溢价 | 88220066.xyz", en: "US ETF Premium | 88220066.xyz" },
+      pageDescription: { zh: "查看 A 股市场里美股 ETF 的交易价格、估算净值和溢价率。", en: "Track A-share listed U.S. ETF price, estimated NAV, and premium." },
+      eyebrow: { zh: "US ETF PREMIUM", en: "US ETF PREMIUM" },
+      heroTitle: { zh: "美股 ETF 溢价", en: "US ETF Premium" },
+      heroCopy: {
+        zh: "A 股里的纳指、标普、美股行业 ETF 经常因为额度、时差和情绪出现高溢价。这里用公开行情和估算净值做列表，先看溢价率，再决定要不要追。",
+        en: "A-share listed Nasdaq, S&P 500, and U.S. sector ETFs can trade at high premiums because of quota, time-zone, and sentiment gaps. This page lists public quotes and estimated NAVs so you can check the premium before chasing."
+      },
+      delayPill: { zh: "价格约 15 分钟级别", en: "Quote roughly 15-min level" },
+      cachePill: { zh: "本站 5 分钟缓存", en: "5-min site cache" },
+      tableTitle: { zh: "溢价列表", en: "Premium List" },
+      tableCopy: {
+        zh: "默认按估算净值溢价排序。没有估算净值时，用最新官方净值做备选，但这种口径会更滞后。",
+        en: "Sorted by estimated-NAV premium by default. If estimated NAV is missing, latest official NAV is used as a slower fallback."
+      },
+      loading: { zh: "正在读取公开数据…", en: "Loading public data..." },
+      loadFailed: { zh: "暂时没取到公开数据。", en: "Unable to load public data right now." },
+      all: { zh: "全部", en: "All" },
+      nasdaq: { zh: "纳指", en: "Nasdaq" },
+      sp500: { zh: "标普", en: "S&P 500" },
+      other: { zh: "其他美股", en: "Other U.S." },
+      summaryUpdated: { zh: "最近刷新", en: "Last Refresh" },
+      summaryCount: { zh: "覆盖数量", en: "Coverage" },
+      summaryMax: { zh: "最高估算溢价", en: "Highest Premium" },
+      summaryDelay: { zh: "数据延迟", en: "Delay" },
+      summaryDelayValue: { zh: "价格约 15 分钟级别", en: "Quote roughly 15-min level" },
+      thFund: { zh: "基金", en: "Fund" },
+      thTarget: { zh: "标的", en: "Target" },
+      thPrice: { zh: "现价", en: "Price" },
+      thPremium: { zh: "估算溢价", en: "Est. Premium" },
+      thOfficialPremium: { zh: "官方净值溢价", en: "Official NAV Premium" },
+      thEstimatedNav: { zh: "估算净值", en: "Est. NAV" },
+      thOfficialNav: { zh: "官方净值", en: "Official NAV" },
+      thChange: { zh: "涨跌幅", en: "Change" },
+      thTurnover: { zh: "成交额", en: "Turnover" },
+      thUpdate: { zh: "估算时间", en: "Estimate Time" },
+      thOpen: { zh: "打开", en: "Open" },
+      open: { zh: "源站", en: "Source" },
+      notesTitle: { zh: "口径", en: "Method" },
+      note1: { zh: "估算溢价 = A 股 ETF 现价 / 估算净值 - 1，更适合盘中观察。", en: "Estimated premium = A-share ETF price / estimated NAV - 1. It is better for intraday checks." },
+      note2: { zh: "官方净值溢价 = A 股 ETF 现价 / 最新官方净值 - 1，净值日期通常更慢，隔夜时会放大偏差。", en: "Official NAV premium = A-share ETF price / latest official NAV - 1. The official NAV date is usually slower and can distort overnight comparisons." },
+      note3: { zh: "价格来自公开行情页，通常按公开源延迟展示，可按约 15 分钟级别理解；估算净值以源站返回的估算时间为准。", en: "Prices come from public quote pages and should be treated as source-delayed, roughly 15-minute level. Estimated NAV uses the source-provided estimate time." },
+      note4: { zh: "QDII / 跨境 ETF 的高溢价可能快速回落，不等于标的涨幅。", en: "High premiums in QDII or cross-border ETFs can mean-revert quickly and are not the same as underlying index gains." }
+    };
+
+    const state = { items: [], filter: "all", loading: true, error: "" };
+    const summaryGrid = document.getElementById("summary-grid");
+    const filtersEl = document.getElementById("filters");
+    const statusEl = document.getElementById("status");
+    const tableWrap = document.getElementById("table-wrap");
+    const tableBody = document.getElementById("table-body");
+
+    function lang() {
+      return window.SiteI18n.getLang();
+    }
+
+    function text(key) {
+      return messages[key]?.[lang()] || key;
+    }
+
+    function formatNumber(value, digits = 3) {
+      if (!Number.isFinite(value)) return "--";
+      return new Intl.NumberFormat(lang() === "en" ? "en-US" : "zh-CN", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      }).format(value);
+    }
+
+    function formatPct(value, digits = 2) {
+      if (!Number.isFinite(value)) return "--";
+      const sign = value > 0 ? "+" : "";
+      return `${sign}${formatNumber(value, digits)}%`;
+    }
+
+    function formatMoney(value) {
+      if (!Number.isFinite(value)) return "--";
+      if (lang() === "en") {
+        if (value >= 100000000) return `¥${formatNumber(value / 100000000, 2)} hundred million`;
+        if (value >= 10000) return `¥${formatNumber(value / 10000, 2)} ten-thousand`;
+        return `¥${formatNumber(value, 0)}`;
+      }
+      return value >= 100000000 ? `${formatNumber(value / 100000000, 2)} 亿` : `${formatNumber(value / 10000, 2)} 万`;
+    }
+
+    function visibleItems() {
+      if (state.filter === "all") return state.items;
+      if (state.filter === "other") return state.items.filter((item) => !["nasdaq", "sp500"].includes(item.group));
+      return state.items.filter((item) => item.group === state.filter);
+    }
+
+    function riskClass(item) {
+      return `risk-${item.riskLevel || "unknown"}`;
+    }
+
+    function renderFilters() {
+      const filters = [
+        ["all", text("all")],
+        ["nasdaq", text("nasdaq")],
+        ["sp500", text("sp500")],
+        ["other", text("other")]
+      ];
+      filtersEl.innerHTML = filters.map(([key, label]) => (
+        `<button class="chip${state.filter === key ? " active" : ""}" type="button" data-filter="${key}">${label}</button>`
+      )).join("");
+      filtersEl.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.filter = button.getAttribute("data-filter") || "all";
+          render();
+        });
+      });
+    }
+
+    function renderSummary() {
+      const maxPremium = state.items.find((item) => Number.isFinite(item.premiumPct));
+      const cards = [
+        [text("summaryUpdated"), state.fetchedAtShanghai || "--"],
+        [text("summaryCount"), `${state.items.length || 0} ${lang() === "en" ? "ETFs" : "只 ETF"}`],
+        [text("summaryMax"), maxPremium ? `${maxPremium.code} ${formatPct(maxPremium.premiumPct, 2)}` : "--"],
+        [text("summaryDelay"), text("summaryDelayValue")]
+      ];
+      summaryGrid.innerHTML = cards.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+    }
+
+    function renderTable() {
+      const items = visibleItems();
+      if (state.loading) {
+        statusEl.hidden = false;
+        tableWrap.hidden = true;
+        statusEl.className = "loading";
+        statusEl.textContent = text("loading");
+        return;
+      }
+      if (state.error) {
+        statusEl.hidden = false;
+        tableWrap.hidden = true;
+        statusEl.className = "error";
+        statusEl.textContent = state.error;
+        return;
+      }
+      statusEl.hidden = true;
+      tableWrap.hidden = false;
+      tableBody.innerHTML = items.map((item) => `
+        <tr>
+          <td>
+            <div class="fund-code">${item.code}</div>
+            <div class="fund-name">${item.name}</div>
+          </td>
+          <td><span class="tag">${item.target}</span></td>
+          <td>${formatNumber(item.price, 3)}</td>
+          <td class="premium ${riskClass(item)}">${formatPct(item.estimatedPremiumPct, 2)}</td>
+          <td class="${riskClass(item)}">${formatPct(item.officialPremiumPct, 2)}</td>
+          <td>${formatNumber(item.estimatedNav, 4)}</td>
+          <td>${formatNumber(item.officialNav, 4)}<div class="fund-name">${item.officialNavDate || "--"}</div></td>
+          <td class="${Number(item.changePct) >= 0 ? "risk-high" : "risk-discount"}">${formatPct(item.changePct, 2)}</td>
+          <td>${formatMoney(item.turnover)}</td>
+          <td>${item.estimateTime || "--"}</td>
+          <td><a class="source-link" href="${item.fundPage}" target="_blank" rel="noreferrer">${text("open")}</a></td>
+        </tr>
+      `).join("");
+    }
+
+    function render() {
+      renderFilters();
+      renderSummary();
+      renderTable();
+    }
+
+    async function loadData() {
+      state.loading = true;
+      state.error = "";
+      render();
+      try {
+        const response = await fetch("/api/us-etf-premium", { headers: { accept: "application/json" } });
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) throw new Error(payload.error || text("loadFailed"));
+        state.items = payload.items || [];
+        state.fetchedAtShanghai = payload.fetchedAtShanghai || "--";
+      } catch (error) {
+        state.error = error.message || text("loadFailed");
+      } finally {
+        state.loading = false;
+        render();
+      }
+    }
+
+    let booted = false;
+    window.SiteI18n.bindPage(messages, () => {
+      render();
+      if (!booted) {
+        booted = true;
+        loadData();
+      }
+    });
+  </script>
+</body>
+</html>
