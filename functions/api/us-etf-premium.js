@@ -24,7 +24,8 @@ const FUNDS = [
   { code: "513400", market: "SH", group: "dow", target: "Dow Jones", provider: "鹏华", name: "道琼斯ETF鹏华" },
   { code: "513850", market: "SH", group: "largecap", target: "U.S. 50", provider: "易方达", name: "美国50ETF易方达" },
   { code: "159509", market: "SZ", group: "sector", target: "Nasdaq Tech", provider: "景顺长城", name: "纳指科技ETF景顺" },
-  { code: "159518", market: "SZ", group: "sector", target: "S&P Oil & Gas", provider: "嘉实", name: "标普油气ETF嘉实" }
+  { code: "159518", market: "SZ", group: "sector", target: "S&P Oil & Gas", provider: "嘉实", name: "标普油气ETF嘉实" },
+  { code: "160644", market: "SZ", group: "active", target: "HK / U.S. Internet", provider: "鹏华", name: "鹏华港美互联股票人民币" }
 ];
 
 function secid(fund) {

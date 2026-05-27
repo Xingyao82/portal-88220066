@@ -96,7 +96,7 @@
         <div>
           <div class="eyebrow" data-i18n="eyebrow">US ETF PREMIUM</div>
           <h1 data-i18n="heroTitle">美股 ETF 溢价</h1>
-          <p class="hero-copy" data-i18n="heroCopy">A 股里的纳指、标普、美股行业 ETF 经常因为额度、时差和情绪出现高溢价。这里用公开行情和估算净值做列表，先看溢价率，再决定要不要追。</p>
+          <p class="hero-copy" data-i18n="heroCopy">A 股里的纳指、标普、美股行业 ETF 和部分跨境基金经常因为额度、时差和情绪出现高溢价。这里用公开行情和估算净值做列表，先看溢价率，再决定要不要追。</p>
         </div>
         <div class="status-row">
           <span class="pill primary" data-i18n="delayPill">价格约 15 分钟级别</span>
@@ -159,8 +159,8 @@
       eyebrow: { zh: "US ETF PREMIUM", en: "US ETF PREMIUM" },
       heroTitle: { zh: "美股 ETF 溢价", en: "US ETF Premium" },
       heroCopy: {
-        zh: "A 股里的纳指、标普、美股行业 ETF 经常因为额度、时差和情绪出现高溢价。这里用公开行情和估算净值做列表，先看溢价率，再决定要不要追。",
-        en: "A-share listed Nasdaq, S&P 500, and U.S. sector ETFs can trade at high premiums because of quota, time-zone, and sentiment gaps. This page lists public quotes and estimated NAVs so you can check the premium before chasing."
+        zh: "A 股里的纳指、标普、美股行业 ETF 和部分跨境基金经常因为额度、时差和情绪出现高溢价。这里用公开行情和估算净值做列表，先看溢价率，再决定要不要追。",
+        en: "A-share listed Nasdaq, S&P 500, U.S. sector ETFs, and some cross-border funds can trade at high premiums because of quota, time-zone, and sentiment gaps. This page lists public quotes and estimated NAVs so you can check the premium before chasing."
       },
       delayPill: { zh: "价格约 15 分钟级别", en: "Quote roughly 15-min level" },
       cachePill: { zh: "本站 5 分钟缓存", en: "5-min site cache" },
@@ -270,7 +270,7 @@
       const maxPremium = state.items.find((item) => Number.isFinite(item.premiumPct));
       const cards = [
         [text("summaryUpdated"), state.fetchedAtShanghai || "--"],
-        [text("summaryCount"), `${state.items.length || 0} ${lang() === "en" ? "ETFs" : "只 ETF"}`],
+        [text("summaryCount"), `${state.items.length || 0} ${lang() === "en" ? "funds" : "只基金"}`],
         [text("summaryMax"), maxPremium ? `${maxPremium.code} ${formatPct(maxPremium.premiumPct, 2)}` : "--"],
         [text("summaryDelay"), text("summaryDelayValue")]
       ];
