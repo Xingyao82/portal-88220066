@@ -27,8 +27,8 @@ ok(appJs.includes('url.searchParams.set("tool", state.activeTool)'), "deep-link 
 ok(appJs.includes('window.addEventListener("popstate", handlePopState)'), "history navigation handler is wired");
 ok(appJs.includes('copyCurrentToolDeepLink'), "copy deep-link action exists");
 ok(toolsIndex.includes('id="copy-deep-link-btn"'), "deep-link button is present in tools UI");
-ok(portalIndex.includes('url=/ai-nav/'), "portal home redirects to /ai-nav/");
-ok(portalIndex.includes('href="/ai-nav/"'), "portal home fallback links to /ai-nav/");
+ok(portalIndex.includes('url=/income-nav/'), "portal home redirects to /income-nav/");
+ok(portalIndex.includes('href="/income-nav/"'), "portal home fallback links to /income-nav/");
 ok(!toolsIndex.includes('href="README.md"'), "tools footer does not link to missing README.md");
 
 console.log("\nSummary");
