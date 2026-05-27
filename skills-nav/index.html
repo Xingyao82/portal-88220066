@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>技能 | 88220066.xyz</title>
-  <meta name="description" content="网站里可以直接使用的技能页面。">
+  <meta name="description" content="网站里可以直接使用的技能页面，包含 Kindle 传书和量化研究工具。">
   <script src="../notes/site-i18n.js"></script>
   <style>
     :root{--bg:#f8f6f2;--panel:#ffffff;--line:rgba(120,98,73,.14);--text:#221b14;--muted:#7a6a59;--accent:#c58e5b;--accent-soft:#fbf2e9;--max:1060px}
@@ -22,6 +22,7 @@
     .section{margin-top:16px;padding:20px}
     .section h2{margin:0 0 14px;font-size:1.2rem}
     .card{padding:20px}
+    .card + .card{margin-top:14px}
     .head{display:flex;align-items:center;gap:12px}
     .logo{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:14px;background:var(--accent-soft);color:#8a6238;font-weight:700}
     .meta{color:var(--muted);font-size:.92rem}
@@ -84,12 +85,44 @@
           <li data-i18n="step4">Kindle 打开取书页，输入数字码下载。</li>
         </ol>
       </article>
+
+      <article class="card">
+        <div class="head">
+          <div class="logo">IF</div>
+          <div>
+            <div style="font-weight:700;font-size:1.1rem" data-i18n="futuresSkillTitle">股指期货升贴水</div>
+            <div class="meta" data-i18n="futuresSkillMeta">量化与回测 / 量化研究</div>
+          </div>
+        </div>
+
+        <p data-i18n="futuresSkillCopy">用公开网页数据做 15 分钟延迟展示，查看 IF、IH、IC、IM 不同期限合约的升贴水、剩余天数和多单持有年化。</p>
+
+        <div class="tags">
+          <span class="chip" data-i18n="chipWeb">网页直接用</span>
+          <span class="chip" data-i18n="chipQuant">量化研究</span>
+          <span class="chip" data-i18n="chipFutures">股指期货</span>
+          <span class="chip" data-i18n="chipBasis">升贴水</span>
+          <span class="chip" data-i18n="chipCarry">多单年化</span>
+        </div>
+
+        <div class="btn-row">
+          <a class="btn" href="/futures-basis/" data-i18n="openToolBtn">打开工具</a>
+          <a class="ghost" href="/finance-nav/" data-i18n="financeNavBtn">金融导航</a>
+        </div>
+
+        <ol class="steps">
+          <li data-i18n="futuresStep1">先看各指数近月、次月、季月合约的升贴水。</li>
+          <li data-i18n="futuresStep2">重点看多单持有年化，不把短期贴水直接当无风险收益。</li>
+          <li data-i18n="futuresStep3">手动试算区可以改现货、期货、到期日和保证金比例。</li>
+          <li data-i18n="futuresStep4">交易前再核对期货公司保证金、手续费和实时行情。</li>
+        </ol>
+      </article>
     </section>
   </div>
   <script>
     const pageCopy = {
       pageTitle: { zh: "技能 | 88220066.xyz", en: "Skills | 88220066.xyz" },
-      pageDescription: { zh: "网站里可以直接使用的技能页面。", en: "Skills and utilities you can use directly on the site." },
+      pageDescription: { zh: "网站里可以直接使用的技能页面，包含 Kindle 传书和量化研究工具。", en: "Skills and quant research utilities you can use directly on the site." },
       brand: { zh: "88220066.xyz / 技能", en: "88220066.xyz / Skills" },
       heroTitle: { zh: "技能", en: "Skills" },
       sectionTitle: { zh: "技能列表", en: "Skill List" },
@@ -105,7 +138,20 @@
       step1: { zh: "电脑打开上传页，传一本书。", en: "Open the upload page on desktop and upload one book." },
       step2: { zh: "文件名只用英文字母和数字，不要带中文和标点。", en: "Use only English letters and numbers in the filename. Avoid Chinese characters and punctuation." },
       step3: { zh: "页面给出 4 位数字取书码。", en: "The page gives you a 4-digit pickup code." },
-      step4: { zh: "Kindle 打开取书页，输入数字码下载。", en: "Open the pickup page on Kindle and enter the code to download." }
+      step4: { zh: "Kindle 打开取书页，输入数字码下载。", en: "Open the pickup page on Kindle and enter the code to download." },
+      futuresSkillTitle: { zh: "股指期货升贴水", en: "Index Futures Basis" },
+      futuresSkillMeta: { zh: "量化与回测 / 量化研究", en: "Quant and backtesting / Quant research" },
+      futuresSkillCopy: { zh: "用公开网页数据做 15 分钟延迟展示，查看 IF、IH、IC、IM 不同期限合约的升贴水、剩余天数和多单持有年化。", en: "Use public web data with a 15-minute delay to review basis, days to expiry, and long-side annualized carry for IF, IH, IC, and IM futures contracts." },
+      chipQuant: { zh: "量化研究", en: "Quant research" },
+      chipFutures: { zh: "股指期货", en: "Index futures" },
+      chipBasis: { zh: "升贴水", en: "Basis" },
+      chipCarry: { zh: "多单年化", en: "Long carry" },
+      openToolBtn: { zh: "打开工具", en: "Open Tool" },
+      financeNavBtn: { zh: "金融导航", en: "Finance Nav" },
+      futuresStep1: { zh: "先看各指数近月、次月、季月合约的升贴水。", en: "Start with the front-month, next-month, and quarterly contract basis for each index." },
+      futuresStep2: { zh: "重点看多单持有年化，不把短期贴水直接当无风险收益。", en: "Focus on long-side annualized carry, and do not treat short-term discount as risk-free yield." },
+      futuresStep3: { zh: "手动试算区可以改现货、期货、到期日和保证金比例。", en: "Use the manual calculator to adjust spot, futures price, expiry date, and margin ratio." },
+      futuresStep4: { zh: "交易前再核对期货公司保证金、手续费和实时行情。", en: "Before trading, recheck broker margin, fees, and real-time quotes." }
     };
     window.SiteI18n.bindPage(pageCopy);
   </script>
