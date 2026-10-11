@@ -1,0 +1,14 @@
+{
+  "name": "portal-88220066-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node test-resilience.mjs",
+    "build": "node build.mjs",
+    "check": "npm test && npm run build && node --check worker.mjs",
+    "deploy": "sh deploy.sh"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}
