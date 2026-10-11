@@ -1,0 +1,13 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=path.dirname(fileURLToPath(import.meta.url));
+for (const name of ['total-return','a-share-sectors','us-sectors','_middleware']) await readFile(path.join(root,'functions/api',name+'.js'));
+execFileSync('npx',['wrangler','pages','functions','build','functions','--outdir','compiled','--minify'],{cwd:root,stdio:'inherit'});
+const source=await readFile(path.join(root,'compiled/index.js'),'utf8');
+const match=/export\{(\w+) as default\};?\s*$/.exec(source);
+if (!match) throw new Error('Unexpected compiler output: refusing to generate an incomplete Worker');
+const tail=await readFile(path.join(root,'wrapper-tail.mjs'),'utf8');
+await writeFile(path.join(root,'worker.mjs'),source.slice(0,match.index)+'const pages='+match[1]+';\n'+tail);
+console.log('Worker build complete with all Functions and resilience middleware.');
